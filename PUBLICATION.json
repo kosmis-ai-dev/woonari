@@ -6,7 +6,7 @@
   "branch": "import/asp-python-20261103",
   "scope": "Python API, source-derived rules, frozen provenance, tests, tools and project board. Original ASP and site assets are excluded.",
   "files": 224,
-  "bytes": 59968937,
+  "bytes": 59972594,
   "asp_files": 0,
   "credential_values_stored_in_report": false,
   "original_source_modified": false,

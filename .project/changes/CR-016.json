@@ -3,7 +3,7 @@
   "title": "최신 Python 전용 코드 Git push",
   "request": "git push",
   "summary": "최신Python전용작업본을승인된GitHub저장소의별도게시브랜치로업로드한다. 기존로컬ASP/LFS커밋은보존하되새게시이력의부모에포함하지않고기본계정·SSH·Keychain인증을재사용하지않는다. 현재전용로그인/작성자/인증이없으므로게시사본·이력·검증을먼저준비하고사용자지정값및전용로그인후커밋/push한다.",
-  "status": "in-progress",
+  "status": "done",
   "impact": {
     "features": [
       "F05",
@@ -48,6 +48,12 @@
       "by": "ai",
       "change": "CR-016",
       "text": "전용 계정·작성자 확인 및 GitHub 계정/저장소 쓰기 권한 검증 성공. T014 완료/T012 실제 원격 업로드 진행."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "전용 GitHub 인증·작성자·원격 쓰기 권한 검증과 Python 전용 브랜치 실제 push/fetch 확인 완료. 초기 ASP 전체 게시 범위는 후속 CR012 Python 전용 사용자 지시를 적용했다."
     }
   ]
 }

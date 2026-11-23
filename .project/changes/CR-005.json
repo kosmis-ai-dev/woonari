@@ -3,7 +3,7 @@
   "title": "ASP·Python 전체 소스를 GitHub에 배포",
   "request": "Asp 코드포함해서 전부 올려야 한다",
   "summary": "사용자가 지정한 https://github.com/kosmis-ai-dev/woonari.git 에 ASP 원본, Python API, 프로젝트 보드와 정적 자산을 배포한다. 원본은 보존하고 배포 복사본의 자격증명만 치환하며 가상환경·개인정보 여부 미확인 DB·운영 로그는 제외한다. 대용량 영상은 Git LFS로 보존한다.",
-  "status": "in-progress",
+  "status": "done",
   "impact": {
     "features": [
       "F05"
@@ -18,7 +18,7 @@
     "planChanged": true
   },
   "createdAt": "2026-11-03",
-  "updatedAt": "2026-11-18",
+  "updatedAt": "2026-11-23",
   "history": [
     {
       "date": "2026-11-03",
@@ -49,6 +49,12 @@
       "by": "ai",
       "change": "CR-012",
       "text": "최신 사용자지시에 따라 활성/배포 작업본을 Python 전용으로 변경. 초기 ASP·영상 포함 범위는 비공개 원본보관으로 대체하며 원격업로드는 전용 로그인/작성자 확인 대기를 유지한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-005",
+      "text": "전용 GitHub 인증·작성자·원격 쓰기 권한 검증과 Python 전용 브랜치 실제 push/fetch 확인 완료. 초기 ASP 전체 게시 범위는 후속 CR012 Python 전용 사용자 지시를 적용했다."
     }
   ]
 }

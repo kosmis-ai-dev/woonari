@@ -3,7 +3,7 @@
   "title": "Woonari 실행·대시보드·Git·AWS 계정 분리",
   "request": "지금 프로젝트는 완전 별개의 프로젝트이다. 프로젝트 대시보드도 별도이고 git 연결계정으로 진행해야 하고 aws 계정도 신규로 생성된 계정으로 진행하게 된다.  시스템을 완전히 분리시켜줘야 하낟.",
   "summary": "Woonari 전용 실행기와 사설 설정 폴더를 만들고 API·보드를 독립 포트에서 실행한다. 공용 Git/SSH/AI/AWS 환경과 자격증명 자동 사용을 차단한다. GitHub는 지정 사용자·저장소, AWS는 신규 계정 ID를 확인해야 명령이 실행되며 실제 계정 연결은 사용자 정보/로그인 후 검증한다.",
-  "status": "in-progress",
+  "status": "done",
   "impact": {
     "features": [
       "F04",
@@ -21,7 +21,7 @@
     "planChanged": true
   },
   "createdAt": "2026-11-04",
-  "updatedAt": "2026-11-05",
+  "updatedAt": "2026-11-23",
   "history": [
     {
       "date": "2026-11-04",
@@ -52,6 +52,12 @@
       "by": "ai",
       "change": "CR-006",
       "text": "사용자 신규 액세스 키 설정 완료 후 ./woonari aws sts get-caller-identity 실호출 성공. 프로젝트 전용 woonari 프로필·ap-northeast-2 리전 및 STS 계정 ID의 지정 신규 계정 일치 검증 완료. 비밀 키 값은 출력/기록하지 않았고 공용 AWS 설정은 사용하지 않음. AWS 리소스 생성/권한 변경 없음. 남은 T-014 조건은 전용 GitHub 로그인명·커밋 작성자 및 저장소 쓰기 권한 확인이므로 blocked 유지."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "전용 GitHub 인증·작성자·원격 쓰기 권한 검증과 Python 전용 브랜치 실제 push/fetch 확인 완료. 초기 ASP 전체 게시 범위는 후속 CR012 Python 전용 사용자 지시를 적용했다."
     }
   ]
 }

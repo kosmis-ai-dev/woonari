@@ -2,7 +2,7 @@
   "id": "T-012",
   "title": "Python 전용 저장소 준비 및 GitHub 업로드",
   "stage": "SM",
-  "status": "doing",
+  "status": "done",
   "features": [
     "F05"
   ],
@@ -75,6 +75,12 @@
       "by": "ai",
       "change": "CR-016",
       "text": "전용 계정·작성자·원격 쓰기 권한 확인 완료. 검증된 Python 전용 신규 브랜치의 커밋과 실제 push에 착수한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "완료: 사용자 확인 전용 계정·작성자로 Python225파일을 부모 없는 publish/python-api-20261123 브랜치에 커밋/push 성공. 원격 fetch 재조회로 HEAD 동일 확인. 기존 ASP/LFS 로컬 ref 보존, main/force/merge 없음. 게시 검증과 관련83테스트 통과."
     }
   ]
 }
