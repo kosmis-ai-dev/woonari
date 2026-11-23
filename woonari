@@ -1,0 +1,103 @@
+#!/usr/bin/env -S python3 -I
+"""Project-only entry point. T-013 / F06 / CR-006."""
+
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "tools"))
+
+from project_context import init, load_config, save_config
+
+
+def main():
+    args = sys.argv[1:]
+    if not args or args[0] in ("help", "--help", "-h"):
+        print("Woonari 전용 실행기\n"
+              "  ./woonari init                  프로젝트 전용 설정 생성\n"
+              "  ./woonari start|stop|status     API(9090)·별도 대시보드 관리\n"
+              "  ./woonari config show          계정 지정 상태(비밀값 제외)\n"
+              "  ./woonari config set KEY VALUE dashboard_port, git.login/name/email, aws.account_id/region\n"
+              "  ./woonari git ...              전용 인증으로 Git 실행\n"
+              "  ./woonari gh ...               전용 GitHub 인증\n"
+              "  ./woonari db check             inter 시크릿으로 MySQL 연결 점검\n"
+              "  ./woonari db import-manse SQL  SQL 원본으로 로컬 만세력 DB 구축\n"
+              "  ./woonari db sync-manse        로컬 만세력을 MySQL woonari에 적재\n"
+              "  ./woonari db sync-restored DIR 복원 판정 자료를 woonari의 별도 표에 적재\n"
+              "  ./woonari db sync-fortune-data DIR 비회원 un 정의·사전 자료 전체 적재\n"
+              "  ./woonari aws ...              지정 AWS 계정 검증 후 실행")
+        return 0
+    command, rest = args[0], args[1:]
+    if command == "init":
+        init()
+        from isolated_git import REPOSITORY, configure_repository
+        if (REPOSITORY / ".git").is_dir():
+            configure_repository()
+        print("Woonari 전용 설정: .local/woonari/ (다른 프로젝트의 설정을 가져오지 않음)")
+        return 0
+    if command == "config":
+        config = load_config()
+        if rest == ["show"]:
+            print(json.dumps(config, ensure_ascii=False, indent=2))
+            return 0
+        if len(rest) == 3 and rest[0] == "set":
+            key, value = rest[1:]
+            if key in ("api_port", "dashboard_port"):
+                config[key] = int(value)
+            elif key in ("git.login", "git.name", "git.email", "aws.account_id", "aws.region"):
+                section, field = key.split(".")
+                config[section][field] = value
+            else:
+                raise RuntimeError("This config field cannot be changed by this command.")
+            save_config(config)
+            print(f"Woonari 설정 갱신: {key}")
+            return 0
+        raise RuntimeError("Use config show or config set KEY VALUE.")
+    if command in ("start", "stop", "status"):
+        from isolated_runtime import main as run
+        return run([command, *rest])
+    if command in ("git", "gh"):
+        from isolated_git import main as run
+        return run([command, *rest])
+    if command == "aws":
+        from isolated_aws import main as run
+        return run(rest)
+    if command == "db":
+        import subprocess
+
+        from project_context import ROOT, clean_env, fail
+
+        if rest == ["check"]:
+            script, arguments = "isolated_db.py", ["check"]
+        elif len(rest) == 2 and rest[0] == "import-manse":
+            script, arguments = "import_manse.py", rest[1:]
+        elif rest == ["sync-manse"] or (
+            len(rest) == 3 and rest[:2] == ["sync-manse", "--database"]
+        ):
+            script, arguments = "mysql_manse.py", rest[1:]
+        elif len(rest) == 2 and rest[0] == "sync-restored":
+            script, arguments = "mysql_restored_fortune.py", rest[1:]
+        elif len(rest) == 2 and rest[0] == "sync-fortune-data":
+            script, arguments = "mysql_fortune_archive.py", rest[1:]
+        else:
+            fail("사용법: ./woonari db check | import-manse SQL | sync-manse [--database NAME] | sync-restored DIR")
+        python = ROOT / "python_api/.venv/bin/python"
+        if not python.is_file():
+            fail("python_api/.venv를 만들고 python_api/requirements.lock을 설치하세요.")
+        return subprocess.run(
+            [str(python), "-I", str(ROOT / "tools" / script), *arguments],
+            cwd=ROOT,
+            env=clean_env(),
+            check=False,
+        ).returncode
+    raise RuntimeError("Unknown command. Run ./woonari --help.")
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main())
+    except (RuntimeError, ValueError) as exc:
+        print(f"Woonari: {exc}", file=sys.stderr)
+        sys.exit(1)
+    except KeyboardInterrupt:
+        sys.exit(130)

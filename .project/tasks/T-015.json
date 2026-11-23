@@ -1,0 +1,56 @@
+{
+  "id": "T-015",
+  "title": "Secrets Manager inter를 통한 MySQL 연결 준비",
+  "stage": "S4",
+  "status": "done",
+  "features": [
+    "F07",
+    "F06"
+  ],
+  "dependsOn": [
+    "T-013"
+  ],
+  "changes": [
+    "CR-007",
+    "CR-009"
+  ],
+  "description": "전용 AWS 프로필에서 inter 시크릿의 현재 버전을 읽어 Woonari에서 MySQL에 연결한다. 명령으로 로그인과 SELECT 1을 검증하고 결과만 출력한다.",
+  "acceptance": [
+    "프로젝트 전용 AWS 프로필과 inter AWSCURRENT 사용",
+    "접속 정보의 출력·소스 저장 없이 TLS 서버 인증 및 SELECT 1 지원",
+    "드라이버 설치와 합성 검증 통과",
+    "AWS에서 inter 조회 및 실제 MySQL SELECT 1 성공 확인"
+  ],
+  "tests": [
+    "tools/test_isolated_db.py",
+    "tools/test_isolated_aws.py"
+  ],
+  "createdAt": "2026-11-13",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-13",
+      "by": "ai",
+      "change": "CR-007",
+      "text": "사용자가 MySQL 접속 준비와 Secrets Manager inter 사용을 요청. 전용 AWS 조회에서 Organizations SCP 명시적 거부를 확인하여 연결 도구 구현과 합성 검증을 진행한다."
+    },
+    {
+      "date": "2026-11-13",
+      "by": "ai",
+      "change": "CR-007",
+      "text": "Secrets Manager 응답이 AWS CLI 이력 파일에 남지 않도록 프로젝트 프로필의 cli_history 활성화 상태에서는 해당 서비스를 호출하기 전에 차단한다."
+    },
+    {
+      "date": "2026-11-13",
+      "by": "ai",
+      "change": "CR-007",
+      "text": "MySQL 연결 함수와 ./woonari db check를 구현하고 PyMySQL 1.2.1 및 AWS 공식 RDS CA 번들을 프로젝트에 설치했다. Python API 190건과 도구 112건 검증 통과. 실제 명령은 현재 AWS Organizations SCP 명시적 거부로 inter의 AWSCURRENT 조회 단계에서 종료한다. 실제 로그인과 SELECT 1은 권한 복구 후 재검증한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자가 지정한 시크릿 ARN의 ap-southeast-2에서 조회·TLS 로그인·woonari DB SELECT 1 성공. 이전 기본 리전 조회 차단을 해소하여 연결 검증 완료."
+    }
+  ]
+}

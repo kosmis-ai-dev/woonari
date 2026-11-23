@@ -1,0 +1,51 @@
+{
+  "id": "T-008",
+  "title": "미확보 상용 판정 DB·DLL 연결 및 등가결과 검증",
+  "stage": "SM",
+  "status": "blocked",
+  "features": [
+    "F02",
+    "F04"
+  ],
+  "dependsOn": [
+    "T-005",
+    "T-007"
+  ],
+  "changes": [
+    "CR-001",
+    "CR-014"
+  ],
+  "description": "yearfortune의 section/행구성/별점/기간/mark와 NHCP5.NHUnse 내부직업판정, tbAisyo 날짜분류의 원본이 현재 폴더에 없음. 새 알고리즘이나 AI로 대체하지 않는다. 원본 확보후 연결·원본서비스비교가 필요하다.",
+  "acceptance": [
+    "원본 판정필드/DLL/숙분류를신뢰가능한출처로확보",
+    "미확보3종판정완료후에만ready_for_ai true 및원본최종선택키확정",
+    "원본서비스결과와비교회귀검증"
+  ],
+  "tests": [
+    "python_api/tests/test_legacy_t_005.py",
+    "python_api/tests/test_legacy_t_007.py",
+    "python_api/tests/test_api.py"
+  ],
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "현재MSSQL연결실패, 저장소DLL/SQLdump없음, MDB에서도해당판정테이블명미발견. 조회·호출원형및안전한차단은구현완료. 원본판정자료없이는동일판정구현불가로대기."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "새MSSQL백업제공으로자료확보가능성을T-029~031에서조사한다. 실제테이블확인전기존외부자료대기상태는유지한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "CR-014복원검증: 구yearfortune del 0행, 새표2021~2050년빈초기행. 개인키/성별/항목/월간매핑및실제2027판정자료가없어원본개인판정대조는계속자료대기한다. 복원과staging적재/진단은T-029~T-031로추적한다."
+    }
+  ]
+}

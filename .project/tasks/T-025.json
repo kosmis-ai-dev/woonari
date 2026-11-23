@@ -1,0 +1,53 @@
+{
+  "id": "T-025",
+  "title": "Python 코드만으로 개발·실행할 프로젝트 준비",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F10",
+    "F05",
+    "F06",
+    "F07"
+  ],
+  "dependsOn": [
+    "T-024"
+  ],
+  "changes": [
+    "CR-012"
+  ],
+  "description": "ASP·과거 사이트를 해시 검증 후 비공개 보관하고 활성/배포 작업본을 Python API·정적 규칙·만세력·검증자료·전용 도구·보드만으로 구성한다. 원본 없는 전체 테스트·wheel·로컬306예시를 검증한다.",
+  "acceptance": [
+    "ASP런타임/소스파일없는독립Python실행구성",
+    "전용9090API·DB·Bedrock·보드설정분리유지",
+    "검증자료·테스트·실행문서포함",
+    "Python작업본독립실행/테스트검증"
+  ],
+  "tests": [
+    "python_api/tests/",
+    "tools/test_prepare_github.py",
+    "tools/test_repository_secrets.py",
+    "tools/test_isolated_runtime.py"
+  ],
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "사용자추가요청2건을큐에접수. CR-011 연결구현마무리후 미이식기능분류→Python전환→Python전용작업본순으로진행한다. AWS실생성외부대기T-022는별도추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "선행 T-024 완료 후 착수. 활성 ASP 분리→원본 없는 전체 테스트·wheel→9090/18101 재시작→한글306예시 실HTTP→Python 배포사본 검증 순서."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "완료 — ASP1445개 포함36,094파일을 비공개 보관하고 전후해시/출처1453개 일치 확인. 활성ASP0. 원본 없는 전체pytest1252개+40subtests/Ruff/compileall통과. wheel43개 런타임파일 동일·추출별도실행·SQLite계산 확인. 실제MySQL9090에서306개한글POST예시(include_ai=false)전부200, API/보드가동. 최초Python배포사본189파일/ASP0/잔여비밀패턴0/출처해시일치. 원격push는전용인증대기, 실제AI는T-022별도대기."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "change": "CR-012",
+  "task": "T-025",
+  "prepared_date": "2026-11-23",
+  "repository": "https://github.com/kosmis-ai-dev/woonari.git",
+  "branch": "import/asp-python-20261103",
+  "scope": "Python API, source-derived rules, frozen provenance, tests, tools and project board. Original ASP and site assets are excluded.",
+  "files": 224,
+  "bytes": 59968937,
+  "asp_files": 0,
+  "credential_values_stored_in_report": false,
+  "original_source_modified": false,
+  "redacted_files": [],
+  "excluded": [
+    {
+      "path": ".DS_Store",
+      "reason": "OS metadata"
+    }
+  ],
+  "excluded_directory_rules": [
+    ".git",
+    ".local",
+    ".publish",
+    ".publish-tools",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "_gabia",
+    "old/log/injection_log",
+    "python_api/build",
+    "python_api/dist",
+    "venv"
+  ],
+  "exclusion_counts": {
+    "OS metadata": 1
+  },
+  "lfs": [],
+  "validation": {
+    "line_endings": "preserved",
+    "active_asp_files": 0,
+    "archived_provenance_asp_files": 1445,
+    "source_manifest": "original hashes cross-checked with frozen provenance; ASP absent",
+    "python_tests": "run separately in the publication checkout before push"
+  }
+}

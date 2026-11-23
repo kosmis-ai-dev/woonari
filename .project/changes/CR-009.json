@@ -1,0 +1,58 @@
+{
+  "id": "CR-009",
+  "title": "제공 SQL 기반 만세력 데이터베이스와 사주 계산 연동",
+  "request": "/Users/kosmis/Downloads/script.sql\n이게 만세력을 구할수 있는 스크립트 파일이다. 이거를 바탕으로 사주 계산을 할수 있게 데이터베이스를 생성하고 해당 데이터를 넣어야 하면 넣어서 구축해줘\n추가 지시: 전달한 ap-southeast-2의 inter 시크릿 ARN으로 접속하며, 대상 DB는 woonari. API도 같은 DB에 연결한다.",
+  "summary": "사용자 SQL의 73,414행을 MySQL woonari에 실제 적재하고 API9090이 같은 전용 시크릿의 DB를 조회하도록 연결했다. ASP 시간 경계·출력 판정을 보존하고 데이터 중복·특이값을 Swagger와문서에알린다.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F01",
+      "F02",
+      "F04",
+      "F08",
+      "F07",
+      "F06",
+      "F03",
+      "F05"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-017",
+      "T-018"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [
+      "T-015"
+    ],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 제공 script.sql의 tb_manse 73,414행을 검증해 만세력 DB로 구축하고 사주 계산에 연결한다. 원격 inter 조회는 SCP 거부 상태이므로 로컬 DB를 먼저 구축하고 MySQL 적재 명령을 제공한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 추가 지시 반영: 실제 시크릿 ARN의 리전으로 조회하고 woonari DB에 데이터 적재·API 연결. TLS 접속·적재 검증 성공."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "CR-009 완료: MySQL woonari.tb_manse 73,414행 적재·재실행 already_present·전체 해시 일치. API9090의 MySQL 사주/입춘경계/중복음력422/일간un200 검증. Python API301건·도구169건과40subtests·Ruff 통과. 배포 wheel에 동일 SQLite 스냅샷 포함 확인. 원본 ASP 미변경."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "배포 사본에 비밀값 없이 새 만세력 DB 자산과 코드를 포함한다. Git 인증·작성자 대기는 기존 T-012/T-014 상태를 유지한다."
+    }
+  ]
+}

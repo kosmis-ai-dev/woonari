@@ -1,0 +1,42 @@
+{
+  "id": "T-011",
+  "title": "ASP 전체 서비스 이름·문제·해결안 Swagger 공개",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F04"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-004"
+  ],
+  "description": "ASP 서비스 전체를 원본 내비게이션·결과 코드에 근거해 조사하고 실제 이름/별칭/출처·이식 상태·문제 원인·해결에 필요한 자료를 Swagger의 개별 조회와 전체 목록으로 공개. 과거 연도판·중복·보조 코드도 누락 없이 추적한다.",
+  "acceptance": [
+    "old/unse 전체 디렉터리 및 확인된 하위 서비스가 명시적 이름·근거로 목록에 포함",
+    "미이식과 원본 판정 자료 부재를 구분하고 항목별 이유·해결 조치·출처 표시",
+    "Swagger에서 모든 항목의 상태와 문제를 개별로 조회 가능",
+    "기존10종 계산/AI 계약 유지 및 목록 커버리지·진단 API·OpenAPI 검증",
+    "로컬 서버와 기능 명세/가이드 반영"
+  ],
+  "tests": [
+    "python_api/tests/test_legacy_catalog.py",
+    "python_api/tests/test_swagger_guide.py",
+    "python_api/tests/test_api.py"
+  ],
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-02",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-004",
+      "text": "착수: 전체 원본 이름/소스 매핑과 의존성 조사를 병렬 진행."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-004",
+      "text": "완료 — 전체190테스트·ruff·compileall 통과. 전체68디렉터리/성인8/loveunse26/interlife114파일·98그룹/XML90메뉴 커버리지 검증. 최종306개 개별GET·목록 실HTTP 및 Swagger UI의 IM90 원인/해결 안내 확인. 실제AI생성은 미실행."
+    }
+  ]
+}

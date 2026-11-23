@@ -1,0 +1,221 @@
+{
+  "id": "F03",
+  "name": "AI 해석",
+  "status": "changing",
+  "summary": "OpenAI 구조화된 한국어 해석, 환경변수 설정, 계산 전용 모드 및 외부 오류 처리.",
+  "dependsOn": [
+    "F02"
+  ],
+  "code": [
+    "python_api/app/ai.py",
+    "python_api/app/config.py",
+    "python_api/tests/test_ai.py",
+    "python_api/app/bedrock.py",
+    "python_api/tests/test_bedrock.py",
+    "python_api/tests/test_service_bedrock_contract.py",
+    "python_api/app/service_models.py",
+    "python_api/app/ai_quota.py",
+    "python_api/tests/test_ai_quota.py",
+    "python_api/tests/test_daily_ai_limit_api.py",
+    "tools/bedrock_key.py",
+    "tools/test_bedrock_key.py",
+    "tools/isolated_bedrock.py",
+    "python_api/tests/test_ai_grounding_policy.py",
+    "python_api/app/restored_fortune.py",
+    "tools/mysql_fortune_archive.py",
+    "tools/test_mysql_fortune_archive.py",
+    "python_api/app/data/fortune_archive_registry.json",
+    "python_api/app/source_archive.py",
+    "python_api/app/source_catalog.py",
+    "python_api/tests/test_source_archive.py",
+    "python_api/tests/test_source_catalog.py",
+    "docs/un-data-restore.md"
+  ],
+  "tasks": [
+    "T-003",
+    "T-018",
+    "T-020",
+    "T-021",
+    "T-022",
+    "T-024",
+    "T-026",
+    "T-027",
+    "T-028",
+    "T-031",
+    "T-034",
+    "T-035"
+  ],
+  "changes": [
+    "CR-001",
+    "CR-009",
+    "CR-010",
+    "CR-011",
+    "CR-012",
+    "CR-013",
+    "CR-014",
+    "CR-015"
+  ],
+  "spec": "## 문장 생성 경계\nPython이사주·점수·분기·선택키·기간·narrative_contract를확정하고AI는요약/항목본문/실천조언을작성한다. ready_for_ai=false는503,계산전용의AI요청은422다. 이름·원시생년월일시·번호·쿠키·회원정보·키는모델입력/사용량원장에넣지않는다.\n현재fortune-ko-v6-source-definitions는항목별작성범위를정한다. 사주/점수/원본anchor없는불투명키는일반조언만,어제/내일은미제공날짜판정금지다. 서버가검증한해당source_anchors만grounded_source_definition으로문장화하고실제전생/가족/미래를입증한사실로단정하지않는다. 민감한수명/사망/질병원문과없는문구는Saju존재여부와무관하게항목별일반조언으로제한한다. 검증된당사주원문이있으면해당항목만근거범위를확장한다. 본문내내부변수·수식·조회키·테이블명노출은502로거부한다.\n## 제공자와 고정 출력\nBedrockClaudeSonnet4.6/global추론프로필/ap-northeast-2의명시iam|api_key모드만사용한다. 사용자승인AI별도계정을BEDROCK_ACCOUNT_ID와authenticated profile ARN으로대조하고DB/CLI계정과혼용/자동fallback하지않는다. 장기키는전용ai/bedrock.env,설정은api.env만읽는다. trust_env=false/리다이렉트0/자동재시도0/계정검증300초cache/maxTokens8192/timeout90초다. OpenAI선택모드는기존Responses/store=false/엄격검증을유지한다.\nClaude요청스키마는해당요청의허용targetID/topic/evidenceID enum을제공한다. 정확한항목집합·누락·중복·본문·필수근거를검증한뒤복사본의제목만Python고정계약으로바인딩한다. 본문·계산·근거는변경하거나누락을채우지않는다. 최종API검증은고정제목/항목/근거를다시확인한다.\n## 호출 상한과 검증\n한국시간자정기준일100시도상한을전용영속SQLite원장으로모든경로/별칭/모델이공유한다. 모델전송예약후오류/타임아웃/계약실패도환불없고입력/자료/인증사전검증실패는미차감이다. 초과429,원장삭제/손상/권한/시계역행503,자동재시도없음. GET /v1/ai-usage는인증과상한을유지한다.\nCR015실제평생13항목과탄생화2항목생성/계산불변/사람본문검토통과. 최초꽃계약불일치1회는유지하고고정제목바인딩보강후재검증했다. 이번3시도/기존포함당일9/100이며사용량초기화없다.",
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "사용자 구현 요청에 따라 기획 확정 및 착수"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-003 착수"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-003 완료: AI 경로 7개 테스트 통과. 실 API 호출은 키 미설정으로 미실행"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-004 통합 검증 완료: 전체61개 테스트 통과 및 현재 명세/문서 동기화."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "상용 ASP 기준으로 판정 보존, 문구 조회만 AI 교체. 사용자 진행 지시에 따라 착수."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "ASP기준 재작업 검증: 전체154테스트/린트/컴파일/실HTTP통과. 7종판정완료, 미확보판정3종은생성차단. T-008 의존성연결대기."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "CR-009 완료: MySQL woonari.tb_manse 73,414행 적재·재실행 already_present·전체 해시 일치. API9090의 MySQL 사주/입춘경계/중복음력422/일간un200 검증. Python API301건·도구169건과40subtests·Ruff 통과. 배포 wheel에 동일 SQLite 스냅샷 포함 확인. 원본 ASP 미변경."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "사용자가 검증된 윤달 표시 오류 수정에 동의했다. 원본 SQL/tb_manse/해시는 유지하고 버전 있는 10행 교정표를 사주 조회에 적용한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실제 un 문장 요청을 대기열에 등록. 사용자 지시대로 CR-010 윤달 교정·검증 완료 후 착수하며 현재는 기능 구현하지 않는다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "T-019 코드·문서·정책 현재 상태 동기화. 원본 보존형10행윤달교정 적용, T-020 실 MySQL API 검증 진행."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "CR-010 완료: MySQL9090 API에서10행양력↔음력결과동일·이전4중복평달입력정상·없는윤30일422·일일/월간un200을확인했다. 원격원본73414행해시유지/already_present, API355+도구169/40subtests·Ruff·wheel교정표포함통과."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실 Claude 호출은 AWS 신규 계정 검증 중으로 거부됨. 연결코드/본문표시 구현과 실제생성검증을 분리해 외부 대기를 명확히 기록한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "BedrockClaude실API생성200확인후본문품질추가검증중. 제공자별readiness/IAM전용CLI/content우선응답/AI-firstSwagger와원본판정·교정유지를명세화한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "최종상태:실제Claude본문응답1회200이나초기자동구독후AnthropicFTU양식미제출로지속호출거부확인. GetUseCaseForModelAccess는조직SCP명시거부. 연결/본문코드는완료했고실호출반복검증T-022는권한있는관리자양식제출대기. 실제생성가능으로위장하지않고전용503bedrock_use_case_required반환."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-023분류완료:271항목=원본누락95/COM10/일반판정DB8/interlife판정DB74/달력검토21/배열검토6/소스계산검토57. 상세보고서와57후보부터확정소스계산이식계획을기록했다. 간접DB의존추가검토는T-024상세분기추적으로이어간다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-024: 서비스별 원본 달력 근거와 사주 없는 분석을 AI payload에 반영하고62개 계약의Bedrock 모의전송검증 통과. 다항목기본토큰8192."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-026: 누락 원본·COM 내부 구현·판정 자료·상용 검증 사례 확보를 별도 차단 작업으로 연결한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "장기키와전용계정검증·일일100회상한·사용량조회·소량실테스트를반영한다. 미지원2027판정을AI로대체하지않는다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "T-027: 별도AI계정장기키·영속일일상한·사용량API 구현과모의검증을현재명세에반영. 실제생성은T-028진행."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "T-028: 실제V4문장의근거없는추정·코드노출을발견해V5범위정책/검증으로보강했고실제3건재검수통과. 총6회차감·원본계산불변·전체1349회귀통과."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "T-028 완료: 별도AI장기키·영속100상한·V5실본문/기계계약·현재상태표시·199파일Python배포검증을반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "백업복원으로원본판정자료확보를진행한다. 확인전서비스완료로표시하지않는다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-030/T-031: 복원자료선별적재·초기행품질·Python진단과미확정개인판정경계를명세에반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-031: 전체회귀/실제MySQL·API·AI미차감·wheel검증완료. 2027개인판정미완성원인과자료대기상태를반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T-032~T-035: 전체비회원un정의복원·검증조회연결·전체오류검증예정."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T032~T035 현재명세로정리:78표100929행복원/7표970행검증연결/64해석계약/631경로/V6원문근거·Python고정제목/306예시200/대표실AI2종과누락자료경계."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T035최종검증완료. 기능의기존외부원본/인증대기작업은그대로구분한다."
+    }
+  ]
+}

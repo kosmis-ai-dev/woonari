@@ -1,0 +1,66 @@
+{
+  "id": "T-024",
+  "title": "미이식 서비스의 ASP 판정·선택 로직 Python 전환",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F09",
+    "F02",
+    "F04",
+    "F03"
+  ],
+  "dependsOn": [
+    "T-023"
+  ],
+  "changes": [
+    "CR-012"
+  ],
+  "description": "확보된원본소스의실행분기를Python서비스모듈로전환하고확정불가한수치DB/DLL/누락원본의존성은진단으로분리한다. 기존10종API유지하며서비스별실행API와한글입력·출력계약을추가한다.",
+  "acceptance": [
+    "분류된미이식계산·조회규칙을원본근거에맞춰전환",
+    "한글테스트경로·입력·상태·해석계약제공",
+    "알고리즘·판정자료미확보항목을정상계산으로위장하지않음",
+    "원본분기별회귀검증과기능명세일치"
+  ],
+  "tests": [
+    "python_api/tests/test_ported_data_rules.py",
+    "python_api/tests/test_ported_direct.py",
+    "python_api/tests/test_ported_interlife.py",
+    "python_api/tests/test_ported_interlife_chart.py",
+    "python_api/tests/test_ported_interlife_dependencies.py",
+    "python_api/tests/test_ported_interlife_display.py",
+    "python_api/tests/test_ported_interlife_extra.py",
+    "python_api/tests/test_ported_interlife_leaves.py",
+    "python_api/tests/test_ported_loveunse.py",
+    "python_api/tests/test_ported_remaining.py",
+    "python_api/tests/test_ported_template.py",
+    "python_api/tests/test_ported_ziwei.py",
+    "python_api/tests/test_interlife_ast_audit.py",
+    "python_api/tests/test_interlife_rows.py",
+    "python_api/tests/test_service_engine.py",
+    "python_api/tests/test_service_bedrock_contract.py",
+    "python_api/tests/test_legacy_catalog.py"
+  ],
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "사용자추가요청2건을큐에접수. CR-011 연결구현마무리후 미이식기능분류→Python전환→Python전용작업본순으로진행한다. AWS실생성외부대기T-022는별도추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-023분류완료:271항목=원본누락95/COM10/일반판정DB8/interlife판정DB74/달력검토21/배열검토6/소스계산검토57. 상세보고서와57후보부터확정소스계산이식계획을기록했다. 간접DB의존추가검토는T-024상세분기추적으로이어간다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "확보된 소스 전환 완료: 추가166+기존10=176 실행 항목(계약준비62/달력전용2/부분112). f_Saju·F029·자미 전체 규칙과74개 leaf의77진입점·59,554구문을 Python/정적규칙으로 이식. 신규 leaf·정적binding·known-row 루트검증120개와 전체Ruff/compileall 통과. source_required의 실제자료 확보는 T-026 blocked로 별도 추적한다."
+    }
+  ]
+}

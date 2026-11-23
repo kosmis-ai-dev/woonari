@@ -1,0 +1,156 @@
+{
+  "id": "F09",
+  "name": "ASP 미이식 기능 Python 전환",
+  "status": "changing",
+  "summary": "미이식 항목을 기능 단위로 정리하고 원본 판정·선택·입출력을 Python으로 전환한다.",
+  "dependsOn": [
+    "F01",
+    "F02"
+  ],
+  "code": [
+    "python_api/docs/migration_audit.json",
+    "python_api/app/service_engine.py",
+    "python_api/app/service_models.py",
+    "python_api/tests/test_service_engine.py",
+    "python_api/app/ported_data_rules.py",
+    "python_api/app/ported_direct.py",
+    "python_api/app/ported_interlife.py",
+    "python_api/app/ported_interlife_chart.py",
+    "python_api/app/ported_interlife_dependencies.py",
+    "python_api/app/ported_interlife_display.py",
+    "python_api/app/ported_interlife_extra.py",
+    "python_api/app/ported_interlife_leaves.py",
+    "python_api/app/ported_loveunse.py",
+    "python_api/app/ported_remaining.py",
+    "python_api/app/ported_template.py",
+    "python_api/app/ported_ziwei.py",
+    "python_api/tests/test_ported_data_rules.py",
+    "python_api/tests/test_ported_direct.py",
+    "python_api/tests/test_ported_interlife.py",
+    "python_api/tests/test_ported_interlife_chart.py",
+    "python_api/tests/test_ported_interlife_dependencies.py",
+    "python_api/tests/test_ported_interlife_display.py",
+    "python_api/tests/test_ported_interlife_extra.py",
+    "python_api/tests/test_ported_interlife_leaves.py",
+    "python_api/tests/test_ported_loveunse.py",
+    "python_api/tests/test_ported_remaining.py",
+    "python_api/tests/test_ported_template.py",
+    "python_api/tests/test_ported_ziwei.py",
+    "python_api/tests/test_interlife_ast_audit.py",
+    "python_api/tests/test_interlife_rows.py",
+    "python_api/tools/freeze_interlife_rules.py",
+    "python_api/app/data/interlife_leaves_rules.json",
+    "python_api/app/data/ported_interlife_extra_rules.json",
+    "python_api/app/data/ported_remaining_rules.json",
+    "python_api/app/data/ported_ziwei_rules.json",
+    "python_api/tools/data/legacy_source_inventory.json",
+    "python_api/docs/interlife_active_outputs.json",
+    "python_api/docs/interlife_remaining_dependencies.json",
+    "python_api/docs/source-rules.md",
+    "python_api/app/data/interlife_dependency_tables.json",
+    "python_api/app/data/ported_interlife_chart.json",
+    "python_api/app/data/ported_interlife_display.json",
+    "python_api/app/restored_fortune.py",
+    "docs/mssql-restore.md",
+    "tools/mysql_fortune_archive.py",
+    "tools/test_mysql_fortune_archive.py",
+    "python_api/app/data/fortune_archive_registry.json",
+    "python_api/app/source_archive.py",
+    "python_api/app/source_catalog.py",
+    "python_api/tests/test_source_archive.py",
+    "python_api/tests/test_source_catalog.py",
+    "docs/un-data-restore.md"
+  ],
+  "tasks": [
+    "T-023",
+    "T-024",
+    "T-026",
+    "T-030",
+    "T-031",
+    "T-032",
+    "T-034",
+    "T-035"
+  ],
+  "changes": [
+    "CR-012",
+    "CR-014",
+    "CR-015"
+  ],
+  "spec": "## Python 전환과 원본 동작\n전체306항목의한글POST·입력·원본문제·필요자료·python_module을제공한다. 직접/연애/remaining/interlife/template/extra/dependencies/chart/data_rules/leaves모듈은정적ASP배열·VB Mod/Round·UI성별·변수덮어쓰기·날짜/쿠키·출력순서를보존한다. 원본별달력/f_Saju/자미/F029프로필을임의공통달력으로대체하지않는다.\n74interlife leaf/77진입점/28함수/59554구문은정적AST/Python으로계상했고미계상0이다. source_form은동결Request키의문자열만허용하고birth/partner/성별/달력덮어쓰기는거부한다. 수동source_queries의행/열/순서/record_count는검증하나인증자료로취급하지않고계산에실제소비된필드만추적한다. 전화·번호·주소·이름원문을해석에전달하지않는다.\n## 복원 자료와 미완성 부분\n비회원78표를복원하고7표의원본선택키/열/유일행/원문해시를실행에연결했다. 꽃/양력보석은실제사실항목과문구계약을준비하고전생/평생은표준원문을근거로사용한다. 탄생일은주본문을복원해도사건/인물표가없어부분계산이다. 차량/휴대폰/주소의없는문구키는일반조언으로제한한다.\n미작성2027연간/새표의미확정개인키/궁합tbAisyo/직업COM/일부interlife·행성·택일/상용정답은여전히자료대기다. 없는산식·점수·분류를AI나외부패키지로만들지않는다. 원본실행완전등가성은상용대조없이보장하지않는다.\n\n공식MySQL연결기준Python실행경로176개(추가핸들러166+기존10):해석계약준비64/달력계산완료2/부분계산110. 이외원본·COM코드미확보105/묶음·보조17/과거판8로전체306항목이다. DB미연결시새꽃/보석2종은자료대기로돌아간다. 진단HTTP200을최종un완료로세지않는다.",
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "사용자추가요청2건을큐에접수. CR-011 연결구현마무리후 미이식기능분류→Python전환→Python전용작업본순으로진행한다. AWS실생성외부대기T-022는별도추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "선행Bedrock연결구현·검증·배포사본검증완료. Anthropic폼외부대기는T-022별도추적하고다음순서T-023미이식실행기능분류에착수."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-023분류완료:271항목=원본누락95/COM10/일반판정DB8/interlife판정DB74/달력검토21/배열검토6/소스계산검토57. 상세보고서와57후보부터확정소스계산이식계획을기록했다. 간접DB의존추가검토는T-024상세분기추적으로이어간다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-024: 서비스별 Python 실행·한글 Swagger·원본별 날짜 검증·부분 계산/계산전용 계약을 현재 코드에 맞춰 갱신. interlife 추가 소스 프로필 전환 진행 중."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-026: 누락 원본·COM 내부 구현·판정 자료·상용 검증 사례 확보를 별도 차단 작업으로 연결한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-024/T-025: 확보 소스 전환과 원본 없는 전체 검증 완료, 실제 자료 부족은 T-026 blocked로 유지한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "백업복원으로원본판정자료확보를진행한다. 확인전서비스완료로표시하지않는다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-030/T-031: 복원자료선별적재·초기행품질·Python진단과미확정개인판정경계를명세에반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-031: 전체회귀/실제MySQL·API·AI미차감·wheel검증완료. 2027개인판정미완성원인과자료대기상태를반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T-032~T-035: 전체비회원un정의복원·검증조회연결·전체오류검증예정."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T032~T035 현재명세로정리:78표100929행복원/7표970행검증연결/64해석계약/631경로/V6원문근거·Python고정제목/306예시200/대표실AI2종과누락자료경계."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T035최종검증완료. 기능의기존외부원본/인증대기작업은그대로구분한다."
+    }
+  ]
+}

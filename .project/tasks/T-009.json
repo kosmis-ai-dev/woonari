@@ -1,0 +1,39 @@
+{
+  "id": "T-009",
+  "title": "Swagger 한글 운세별 요청 예시와 실행 가이드",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F04"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-002"
+  ],
+  "description": "Swagger에 운세별 한글명 고정 경로·상태·입력 예시·필드 설명·실행 안내를 제공한다. 기존 공통 API와 ASP 계산은 유지.",
+  "acceptance": [
+    "10종 한글명 개별테스트 경로와7종가능/3종진단전용구분",
+    "필드한국어설명·계산전용기본예시·AI옵션및필수추가입력안내",
+    "기존공통경로동작유지,문서예시실행검증,로컬서버반영"
+  ],
+  "tests": [
+    "python_api/tests/test_swagger_guide.py",
+    "python_api/tests/test_api.py"
+  ],
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-02",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-002",
+      "text": "사용자 요청에 따라 Swagger 운세별 한글 테스트 가이드 개선 착수. 계산규칙/AI동작은 유지."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-002",
+      "text": "Swagger 10종 한글 고정경로/기본예시/한국어 필드 설명/가이드 완료. 전체183테스트·ruff·compileall통과, 실제Swagger UI오늘운세200확인,localhost8000재가동."
+    }
+  ]
+}

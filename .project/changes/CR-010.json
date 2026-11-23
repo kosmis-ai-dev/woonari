@@ -1,0 +1,44 @@
+{
+  "id": "CR-010",
+  "title": "윤달 표시 오류 10행 교정과 음력 조회 복구",
+  "request": "음력 중복키 4개는 422 ambiguous_lunar_date로 거부하므로 해당 날짜는 양력으로 입력하거나 원본을 확인하세요. 이거는 무슨말인가? 해결할수 있는 방법이없나?\n수정해줘",
+  "summary": "2017·2020·2023·2025·2028년 평달/윤달 말일의 leafMon_YN 오류 10행을 별도 교정표로 반영한다. 원본과 해시는 보존하고 일반 달·윤달 양방향 변환 및 MySQL API를 검증한다.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F01",
+      "F08",
+      "F04"
+    ],
+    "verifyFeatures": [
+      "F02",
+      "F03",
+      "F07"
+    ],
+    "tasksAdded": [
+      "T-019"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [],
+    "tasksVerify": [
+      "T-020"
+    ],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "사용자가 검증된 윤달 표시 오류 수정에 동의했다. 원본 SQL/tb_manse/해시는 유지하고 버전 있는 10행 교정표를 사주 조회에 적용한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "CR-010 완료: MySQL9090 API에서10행양력↔음력결과동일·이전4중복평달입력정상·없는윤30일422·일일/월간un200을확인했다. 원격원본73414행해시유지/already_present, API355+도구169/40subtests·Ruff·wheel교정표포함통과."
+    }
+  ]
+}

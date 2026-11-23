@@ -1,0 +1,36 @@
+{
+  "id": "CR-002",
+  "title": "Swagger 운세별 한글 테스트 가이드",
+  "request": "스웨거에 각각의 운세를 테스트할수 있게 운세명을 한글로 볼수 있는 가이드를 좀 만들어줘",
+  "summary": "Swagger에 운세별 한글명 고정 경로·상태·입력 예시·필드 설명·실행 안내를 제공한다. 기존 공통 API와 ASP 계산은 유지.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F04"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-009"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-02",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-002",
+      "text": "사용자 요청에 따라 Swagger 운세별 한글 테스트 가이드 개선 착수. 계산규칙/AI동작은 유지."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-002",
+      "text": "Swagger 10종 한글 고정경로/기본예시/한국어 필드 설명/가이드 완료. 전체183테스트·ruff·compileall통과, 실제Swagger UI오늘운세200확인,localhost8000재가동."
+    }
+  ]
+}

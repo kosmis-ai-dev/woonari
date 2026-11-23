@@ -1,0 +1,237 @@
+{
+  "id": "F02",
+  "name": "운세 분석 엔진",
+  "status": "changing",
+  "summary": "오늘/주간 점수 규칙 이식, 월/연/평생/재물/직업/연애/궁합/바이오리듬 계산 근거 및 원본 목록.",
+  "dependsOn": [
+    "F01"
+  ],
+  "code": [
+    "python_api/app/fortunes.py",
+    "python_api/app/rules.py",
+    "python_api/tests/test_fortunes.py",
+    "python_api/docs/legacy_inventory.json",
+    "python_api/tools/inventory_legacy.py",
+    "python_api/tests/fixtures/legacy_ten_gods.json",
+    "python_api/tools/extract_rule_fixture.py",
+    "python_api/app/legacy_periods.py",
+    "python_api/app/legacy_life_wealth.py",
+    "python_api/app/legacy_relationships.py",
+    "python_api/app/legacy_inline.py",
+    "python_api/docs/source_manifest.json",
+    "python_api/tools/source_manifest.py",
+    "python_api/tests/test_legacy_t_005.py",
+    "python_api/tests/test_legacy_t_006.py",
+    "python_api/tests/test_legacy_t_007.py",
+    "python_api/tests/test_legacy_inline.py",
+    "python_api/tests/test_legacy_vb_literals.py",
+    "python_api/app/service_engine.py",
+    "python_api/app/service_models.py",
+    "python_api/tests/test_service_engine.py",
+    "python_api/app/ported_data_rules.py",
+    "python_api/app/ported_direct.py",
+    "python_api/app/ported_interlife.py",
+    "python_api/app/ported_interlife_chart.py",
+    "python_api/app/ported_interlife_dependencies.py",
+    "python_api/app/ported_interlife_display.py",
+    "python_api/app/ported_interlife_extra.py",
+    "python_api/app/ported_interlife_leaves.py",
+    "python_api/app/ported_loveunse.py",
+    "python_api/app/ported_remaining.py",
+    "python_api/app/ported_template.py",
+    "python_api/app/ported_ziwei.py",
+    "python_api/tests/test_ported_data_rules.py",
+    "python_api/tests/test_ported_direct.py",
+    "python_api/tests/test_ported_interlife.py",
+    "python_api/tests/test_ported_interlife_chart.py",
+    "python_api/tests/test_ported_interlife_dependencies.py",
+    "python_api/tests/test_ported_interlife_display.py",
+    "python_api/tests/test_ported_interlife_extra.py",
+    "python_api/tests/test_ported_interlife_leaves.py",
+    "python_api/tests/test_ported_loveunse.py",
+    "python_api/tests/test_ported_remaining.py",
+    "python_api/tests/test_ported_template.py",
+    "python_api/tests/test_ported_ziwei.py",
+    "python_api/tests/test_interlife_ast_audit.py",
+    "python_api/tests/test_interlife_rows.py",
+    "python_api/tools/freeze_interlife_rules.py",
+    "python_api/app/data/interlife_leaves_rules.json",
+    "python_api/app/data/ported_interlife_extra_rules.json",
+    "python_api/app/data/ported_remaining_rules.json",
+    "python_api/app/data/ported_ziwei_rules.json",
+    "python_api/tools/data/legacy_source_inventory.json",
+    "python_api/docs/interlife_active_outputs.json",
+    "python_api/docs/interlife_remaining_dependencies.json",
+    "python_api/docs/source-rules.md",
+    "python_api/app/data/interlife_dependency_tables.json",
+    "python_api/app/data/ported_interlife_chart.json",
+    "python_api/app/data/ported_interlife_display.json",
+    "python_api/app/restored_fortune.py",
+    "tools/mysql_restored_fortune.py",
+    "tools/mysql_fortune_archive.py",
+    "tools/test_mysql_fortune_archive.py",
+    "python_api/app/data/fortune_archive_registry.json",
+    "python_api/app/source_archive.py",
+    "python_api/app/source_catalog.py",
+    "python_api/tests/test_source_archive.py",
+    "python_api/tests/test_source_catalog.py",
+    "docs/un-data-restore.md"
+  ],
+  "tasks": [
+    "T-002",
+    "T-005",
+    "T-006",
+    "T-007",
+    "T-008",
+    "T-018",
+    "T-020",
+    "T-023",
+    "T-024",
+    "T-026",
+    "T-030",
+    "T-031",
+    "T-034",
+    "T-035"
+  ],
+  "changes": [
+    "CR-001",
+    "CR-009",
+    "CR-010",
+    "CR-012",
+    "CR-014",
+    "CR-015"
+  ],
+  "spec": "## 계산과 원본 호환\n기존10종은ASP의운세별계산·분기·점수·조회키·출력계약을보존한다. 기본사주는SQL원본tb_manse73414행/승인윤달10행교정/asp-manse-db-v4이며공식실행은MySQL을읽고실패시타달력으로대체하지않는다. 원본의00:30일주·프로필별23:30시주·절입경계를유지한다. 월간은원본홀수절기당일증분과표시끝일을유지하며manse.disp_day대체의동일성미검증을명시한다. 일일점수를상세un·기간전체로재사용하지않는다.\n## 복원 자료 연결\n비회원78표100929행을별도보관하고현재7표970행의원본조회키/열대응을검증했다. 평생사주일주·당사주·십격문구,전생연/음력월일,탄생화월일,양력탄생석월,탄생일주본문을실제자료로조회한다. 원본문구의출처/정규화해시와조회행을대조하며NULL은유지한다. 원본에없는분류/점수·키대응은추정하지않고미작성2027·궁합분류·직업COM등은차단/진단한다.\n\n공식MySQL연결기준Python실행경로176개(추가핸들러166+기존10):해석계약준비64/달력계산완료2/부분계산110. 이외원본·COM코드미확보105/묶음·보조17/과거판8로전체306항목이다. DB미연결시새꽃/보석2종은자료대기로돌아간다. 진단HTTP200을최종un완료로세지않는다.",
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "사용자 구현 요청에 따라 기획 확정 및 착수"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-002 착수"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-002 완료: 계산 관련 29개 테스트 통과. 운세10종 계산 근거 제공"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-004 통합 검증 완료: 전체61개 테스트 통과 및 현재 명세/문서 동기화."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "상용 ASP 기준으로 판정 보존, 문구 조회만 AI 교체. 사용자 진행 지시에 따라 착수."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "ASP기준 재작업 검증: 전체154테스트/린트/컴파일/실HTTP통과. 7종판정완료, 미확보판정3종은생성차단. T-008 의존성연결대기."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 제공 script.sql의 tb_manse 73,414행을 검증해 만세력 DB로 구축하고 사주 계산에 연결한다. 원격 inter 조회는 SCP 거부 상태이므로 로컬 DB를 먼저 구축하고 MySQL 적재 명령을 제공한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "CR-009 완료: MySQL woonari.tb_manse 73,414행 적재·재실행 already_present·전체 해시 일치. API9090의 MySQL 사주/입춘경계/중복음력422/일간un200 검증. Python API301건·도구169건과40subtests·Ruff 통과. 배포 wheel에 동일 SQLite 스냅샷 포함 확인. 원본 ASP 미변경."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "사용자가 검증된 윤달 표시 오류 수정에 동의했다. 원본 SQL/tb_manse/해시는 유지하고 버전 있는 10행 교정표를 사주 조회에 적용한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "T-019 코드·문서·정책 현재 상태 동기화. 원본 보존형10행윤달교정 적용, T-020 실 MySQL API 검증 진행."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "CR-010 완료: MySQL9090 API에서10행양력↔음력결과동일·이전4중복평달입력정상·없는윤30일422·일일/월간un200을확인했다. 원격원본73414행해시유지/already_present, API355+도구169/40subtests·Ruff·wheel교정표포함통과."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "사용자추가요청2건을큐에접수. CR-011 연결구현마무리후 미이식기능분류→Python전환→Python전용작업본순으로진행한다. AWS실생성외부대기T-022는별도추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "사용자추가요청2건을큐에접수. CR-011 연결구현마무리후 미이식기능분류→Python전환→Python전용작업본순으로진행한다. AWS실생성외부대기T-022는별도추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-024: 서비스별 Python 실행·한글 Swagger·원본별 날짜 검증·부분 계산/계산전용 계약을 현재 코드에 맞춰 갱신. interlife 추가 소스 프로필 전환 진행 중."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-026: 누락 원본·COM 내부 구현·판정 자료·상용 검증 사례 확보를 별도 차단 작업으로 연결한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-024/T-025: 확보 소스 전환과 원본 없는 전체 검증 완료, 실제 자료 부족은 T-026 blocked로 유지한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "백업복원으로원본판정자료확보를진행한다. 확인전서비스완료로표시하지않는다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-030/T-031: 복원자료선별적재·초기행품질·Python진단과미확정개인판정경계를명세에반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-031: 전체회귀/실제MySQL·API·AI미차감·wheel검증완료. 2027개인판정미완성원인과자료대기상태를반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T-032~T-035: 전체비회원un정의복원·검증조회연결·전체오류검증예정."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T032~T035 현재명세로정리:78표100929행복원/7표970행검증연결/64해석계약/631경로/V6원문근거·Python고정제목/306예시200/대표실AI2종과누락자료경계."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T035최종검증완료. 기능의기존외부원본/인증대기작업은그대로구분한다."
+    }
+  ]
+}

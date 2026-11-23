@@ -1,0 +1,255 @@
+{
+  "name": "Woonari · un API",
+  "summary": "상용 원본 계산을 Python으로 전환하고 검증된 판정 근거를 AI로 문장화하는 독립 un API",
+  "stack": "Python 3.11+ / FastAPI / MySQL tb_manse / SQLite snapshot / Bedrock Claude",
+  "commands": {
+    "test": "cd python_api && .venv/bin/python -m pytest",
+    "testOne": "cd python_api && .venv/bin/python -m pytest",
+    "build": "cd python_api && .venv/bin/ruff check . && .venv/bin/python -m compileall -q app"
+  },
+  "humanReview": false,
+  "stages": [
+    {
+      "id": "S1",
+      "name": "계산",
+      "goal": "독립 만세력과 운세"
+    },
+    {
+      "id": "S2",
+      "name": "AI",
+      "goal": "AI 해석 연동"
+    },
+    {
+      "id": "S3",
+      "name": "API",
+      "goal": "실행 및 검증"
+    },
+    {
+      "id": "SM",
+      "name": "상용 ASP 호환 수정",
+      "goal": "원본 판정 규칙 보존, DB문구만 AI 대체"
+    },
+    {
+      "id": "S4",
+      "name": "독립 실행·계정",
+      "goal": "Woonari 전용 런타임·보드·GitHub·신규 AWS 계정 분리"
+    }
+  ],
+  "updatedAt": "2026-11-23",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "사용자 구현 요청에 따라 기획 확정 및 착수"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "F01~F04 1차 구현 완료: 운세10종, 원본68개 중58개 미이식 명시. 테스트61개/린트/컴파일/실HTTP 통과. 실제 AI 생성은 키 없어 미실행. 현재 폴더는 Git 저장소가 아니므로 커밋 미생성."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "상용 ASP 기준으로 판정 보존, 문구 조회만 AI 교체. 사용자 진행 지시에 따라 착수."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "ASP기준 재작업 검증: 전체154테스트/린트/컴파일/실HTTP통과. 7종판정완료, 미확보판정3종은생성차단. T-008 의존성연결대기."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-002",
+      "text": "사용자 요청에 따라 Swagger 운세별 한글 테스트 가이드 개선 착수. 계산규칙/AI동작은 유지."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-002",
+      "text": "Swagger 10종 한글 고정경로/기본예시/한국어 필드 설명/가이드 완료. 전체183테스트·ruff·compileall통과, 실제Swagger UI오늘운세200확인,localhost8000재가동."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-003",
+      "text": "사용자 요청에 따라 Swagger 표시·안내의 '운세'를 'un'으로 변경 착수. 원본 계산/AI 계약은 유지."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-003",
+      "text": "Swagger·가이드·목록 표시명을 un으로 변경 완료. 원본 CATALOG/판정/AI계약/URL 유지. 183테스트·린트통과, 로컬실행 un API/오늘의 un 표시확인."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-004",
+      "text": "ASP 전체 서비스 이름·출처·상태·문제 원인·해결 안내를 Swagger에 추가하는 T-011 착수."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-004",
+      "text": "CR-004 완료: 전체306 ASP 진단 항목/90메뉴를 Swagger에 공개하고 현재기능명세·전체조사표 동기화. 기존계산7/자료대기3 유지.190테스트·린트·실HTTP/UI통과. 원본소스변경없음. Git저장소아니므로커밋미생성."
+    },
+    {
+      "date": "2026-11-03",
+      "by": "ai",
+      "change": "CR-005",
+      "text": "CR-005 기획 반영: 전체ASP/Python/자산을비밀값제거사본으로GitHub보관,대용량2개GitLFS·원본보존·운영서버배포와구분."
+    },
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "CR-006 기획 반영: Woonari 독립 프로젝트, 별도 보드/포트/설정/인증. 외부 계정은 지정 확인 후 연결."
+    },
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "독립 실행 적용: Swagger18100·이프로젝트전용보드18101,공용자격증명대체차단. T-013완료/T-014전용GitHub·신규AWS계정정보대기."
+    },
+    {
+      "date": "2026-11-05",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "사용자 신규 액세스 키 설정 완료 후 ./woonari aws sts get-caller-identity 실호출 성공. 프로젝트 전용 woonari 프로필·ap-northeast-2 리전 및 STS 계정 ID의 지정 신규 계정 일치 검증 완료. 비밀 키 값은 출력/기록하지 않았고 공용 AWS 설정은 사용하지 않음. AWS 리소스 생성/권한 변경 없음. 남은 T-014 조건은 전용 GitHub 로그인명·커밋 작성자 및 저장소 쓰기 권한 확인이므로 blocked 유지."
+    },
+    {
+      "date": "2026-11-13",
+      "by": "ai",
+      "change": "CR-007",
+      "text": "사용자가 MySQL 접속 준비와 Secrets Manager inter 사용을 요청. 전용 AWS 조회에서 Organizations SCP 명시적 거부를 확인하여 연결 도구 구현과 합성 검증을 진행한다."
+    },
+    {
+      "date": "2026-11-13",
+      "by": "ai",
+      "change": "CR-007",
+      "text": "MySQL 연결 함수와 ./woonari db check를 구현하고 PyMySQL 1.2.1 및 AWS 공식 RDS CA 번들을 프로젝트에 설치했다. Python API 190건과 도구 112건 검증 통과. 실제 명령은 현재 AWS Organizations SCP 명시적 거부로 inter의 AWSCURRENT 조회 단계에서 종료한다. 실제 로그인과 SELECT 1은 권한 복구 후 재검증한다."
+    },
+    {
+      "date": "2026-11-16",
+      "by": "ai",
+      "change": "CR-008",
+      "text": "Python API 포트 9090 고정 요청 접수. 전용 실행기, 기존 로컬 설정 및 포트 안내를 함께 갱신한다."
+    },
+    {
+      "date": "2026-11-16",
+      "by": "ai",
+      "change": "CR-008",
+      "text": "전용 Python API를 루프백 9090 포트에 고정하고 기존 포트의 기록을 소유 확인 후 처리한다. API /health와 /docs HTTP 200, 도구 테스트 116건 및 Ruff 통과. Git 작성자가 지정되지 않아 변경은 작업 파일과 배포 사본에 기록했다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 제공 script.sql의 tb_manse 73,414행을 검증해 만세력 DB로 구축하고 사주 계산에 연결한다. 원격 inter 조회는 SCP 거부 상태이므로 로컬 DB를 먼저 구축하고 MySQL 적재 명령을 제공한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "CR-009 완료: MySQL woonari.tb_manse 73,414행 적재·재실행 already_present·전체 해시 일치. API9090의 MySQL 사주/입춘경계/중복음력422/일간un200 검증. Python API301건·도구169건과40subtests·Ruff 통과. 배포 wheel에 동일 SQLite 스냅샷 포함 확인. 원본 ASP 미변경."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "사용자가 검증된 윤달 표시 오류 수정에 동의했다. 원본 SQL/tb_manse/해시는 유지하고 버전 있는 10행 교정표를 사주 조회에 적용한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실제 un 문장 요청을 대기열에 등록. 사용자 지시대로 CR-010 윤달 교정·검증 완료 후 착수하며 현재는 기능 구현하지 않는다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "CR-010 완료: MySQL9090 API에서10행양력↔음력결과동일·이전4중복평달입력정상·없는윤30일422·일일/월간un200을확인했다. 원격원본73414행해시유지/already_present, API355+도구169/40subtests·Ruff·wheel교정표포함통과."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "사용자선택을BedrockClaude로반영. 전용AWSCLI2.38.1·모델/추론프로필조회성공,Converse실호출은AWS계정검증진행으로거부됨. 본문표시·격리Converse연결구현은계속진행하고실생성성공과구분한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "사용자추가요청2건을큐에접수. CR-011 연결구현마무리후 미이식기능분류→Python전환→Python전용작업본순으로진행한다. AWS실생성외부대기T-022는별도추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "최종상태:실제Claude본문응답1회200이나초기자동구독후AnthropicFTU양식미제출로지속호출거부확인. GetUseCaseForModelAccess는조직SCP명시거부. 연결/본문코드는완료했고실호출반복검증T-022는권한있는관리자양식제출대기. 실제생성가능으로위장하지않고전용503bedrock_use_case_required반환."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "CR-012: 확보 소스의 Python 전환 T-024 완료, Python 전용 작업본 T-025 착수. 미확보 원본·COM·판정 자료는 T-026으로 추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "CR-012: T-024/T-025 완료. Python 실행176항목과자료진단구분,활성ASP0,1252테스트/40subtests,standalone wheel,MySQL306예시200. 외부자료T-026·AI폼T-022·전용GitHub인증은대기."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "CR-013 영향반영: T-027장기키·일일한도구현→T-028실제대표3건검증. 기존FTU대기는실응답으로갱신한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "CR-013/T-027/T-028 완료 및 CR-011/T-022 실제생성검증완료. 기존DB계정유지/AI별도계정사용/모델일100한도·테스트총6회·V5본문3건·1349전체회귀·최종54검증·배포199파일검증. 2027연간자료와GitHub전용인증대기는기존별도작업으로유지한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "CR-014 기획반영: 전용복원→판정표검증/선별이관→Python/2027연간 연결."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "비회원un전체자료복원·검증연결·오류검증4작업추가."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "Gitpush실행요청과Python전용새게시이력준비를등록했다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "CR016/T036 준비 완료: Python 전용 새 게시 브랜치225파일·기존 이력 보존·83테스트. 실제 commit/push는 전용 GitHub 정보와 인증 대기로 미실행."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "사용자의 토큰 저장 완료를 확인. 전용 토큰 파일 형식·소유자·권한600 검사 통과. login/name/email은 여전히 미지정으로 인증 API와 commit/push 미실행. 사용자에게 전용 사용자명·작성자 이름·이메일을 요청했으며 공용 계정은 사용하지 않았다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "CR016: 사용자 확인된 전용 GitHub 인증·작성자 연결 성공. T014 완료 후 T012 실제 push 착수."
+    }
+  ]
+}

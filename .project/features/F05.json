@@ -1,0 +1,236 @@
+{
+  "id": "F05",
+  "name": "Python 전용 소스 GitHub 배포",
+  "status": "changing",
+  "summary": "Python 전용 게시 사본·출처/비밀값 검증·기존 이력을 보존하는 별도 게시 브랜치와 원격 전송 관리.",
+  "dependsOn": [
+    "F04"
+  ],
+  "code": [
+    "README.md",
+    ".gitignore",
+    ".gitattributes",
+    "tools/prepare_github.py",
+    "tools/repository_secrets.py",
+    "tools/test_prepare_github.py",
+    "tools/test_repository_secrets.py",
+    "tools/isolated_git.py",
+    "tools/woonari_git_credential.py",
+    "docs/isolated-environment.md",
+    "tools/mysql_restored_fortune.py",
+    "tools/test_mysql_restored_fortune.py",
+    "docs/mssql-restore.md",
+    "tools/mysql_fortune_archive.py",
+    "tools/test_mysql_fortune_archive.py",
+    "python_api/app/data/fortune_archive_registry.json",
+    "python_api/app/source_archive.py",
+    "python_api/app/source_catalog.py",
+    "python_api/tests/test_source_archive.py",
+    "python_api/tests/test_source_catalog.py",
+    "docs/un-data-restore.md",
+    "tools/test_isolated_git.py"
+  ],
+  "tasks": [
+    "T-012",
+    "T-014",
+    "T-017",
+    "T-021",
+    "T-025",
+    "T-028",
+    "T-030",
+    "T-031",
+    "T-033",
+    "T-035",
+    "T-036"
+  ],
+  "changes": [
+    "CR-005",
+    "CR-006",
+    "CR-009",
+    "CR-011",
+    "CR-012",
+    "CR-013",
+    "CR-014",
+    "CR-015",
+    "CR-016"
+  ],
+  "spec": "승인 원격은 https://github.com/kosmis-ai-dev/woonari.git이며 ./woonari git/gh와 .publish/woonari 전용 작업 사본만 사용한다. 사용자가 지정한 전용 GitHub 로그인과 작성자 kosmis-ai-dev 및 확인된 이메일을 사용한다. 파일 토큰의 실제 계정 일치와 승인 저장소 push 권한을 검증했으며 최초 원격 게시를 진행 중이다. 공용 인증·SSH·Keychain으로 대체하지 않는다.\nPython API·정적 규칙·기본 만세력 스냅샷·출처 메타데이터·테스트·도구·보드·문서를 게시한다. ASP·과거 사이트 자산·백업·원본 DB행·회원자료·실제 설정·키·ledger·로그·가상환경·빌드·.local은 제외한다. 원본 SHA와 동결 출처 manifest를 보존하고 Python 실행 코드의 정제 바이트 변경을 거부한다. symlink·예상 밖 파일·추적 ignore 파일도 검증한다.\nCR015 공개 registry는 78표의 열·키·NULL·형식·해시·행수와 43개 제외표의 이유만 포함하며 실제 행값은 없다. 복원 재현 도구와 테스트를 포함한다.\nT036 / CR016의 prepare-python-branch publish/python-api-YYYYMMDD는 검증된 게시 파일만 부모 없는 새 브랜치에 스테이징한다. 기존 브랜치와 파일을 보존하고 HEAD/index를 전용 경로에 백업하며 실패 시 복구한다. 작성자·인증·네트워크 없이 준비할 수 있고 같은 미커밋 브랜치는 갱신할 수 있다. 스테이징 목록과 원시 바이트 해시를 대조하여 Git 필터 변조도 거부한다.\npush는 현재 작업 브랜치만 허용하며 모든 도달 가능한 조상 경로와 Git LFS 포인터/설정을 검사한다. ASP·사이트 자산·비공개 경로·백업이 과거 커밋에 남아 있으면 거부한다. main/master 직접 push·force·삭제·임의 ref 전송은 허용하지 않는다. 기존 이력은 새 게시 커밋의 조상으로 연결하지 않고 로컬 참조로 보존한다.\nCR016 검증: Git/게시/계정 경계 관련83테스트와 Ruff 통과. 게시 원본224파일+PUBLICATION.json을 합친225파일을 publish/python-api-20261123 미커밋 브랜치에 준비했다. ASP0·LFS0·정제변경0이며 이전 import 브랜치14c12715를 보존했다. 현재 실제 원격 업로드를 진행 중이다.\nCR016 현재 연결: 사용자 지정 전용 로그인·작성자·이메일을 설정하고 토큰으로 실제 계정 일치 및 승인 저장소 쓰기 권한을 검증했다. 실제 push 결과는 T012에서 추적한다.",
+  "createdAt": "2026-11-03",
+  "updatedAt": "2026-11-23",
+  "history": [
+    {
+      "date": "2026-11-03",
+      "by": "ai",
+      "change": "CR-005",
+      "text": "전체 소스 GitHub 배포 기능을 등록하고 T-012 착수."
+    },
+    {
+      "date": "2026-11-03",
+      "by": "ai",
+      "change": "CR-005",
+      "text": "배포사본35802파일/ASP1445개준비.103파일의자격증명리터럴만치환,바이너리자산동일·299manifest해시유지·대상외파일거부도구/14테스트구현. 원격업로드대기."
+    },
+    {
+      "date": "2026-11-03",
+      "by": "ai",
+      "change": "CR-005",
+      "text": "배포사본검증완료:190+19테스트·비밀값잔여0·원본/구조보존.이제원격인증/업로드를수행한다."
+    },
+    {
+      "date": "2026-11-03",
+      "by": "ai",
+      "change": "CR-005",
+      "text": "원격 업로드 미완료: GitHub403 및 제공 계정의 비밀번호 로그인 미지원 확인. 사용자 인증/쓰기 권한 확인 대기. 원본·배포 사본·검증된 로컬 커밋 보존."
+    },
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "반영 예정: 프로젝트 전용 실행·대시보드·Git/AWS 계정 경로로 전환."
+    },
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "T-013 구현 완료 및 현재 실행/계정 분리 명세 갱신. 실제계정연결은T-014대기."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "배포 사본에 비밀값 없이 새 만세력 DB 자산과 코드를 포함한다. Git 인증·작성자 대기는 기존 T-012/T-014 상태를 유지한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "사용자선택을BedrockClaude로반영. 전용AWSCLI2.38.1·모델/추론프로필조회성공,Converse실호출은AWS계정검증진행으로거부됨. 본문표시·격리Converse연결구현은계속진행하고실생성성공과구분한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "사용자추가요청2건을큐에접수. CR-011 연결구현마무리후 미이식기능분류→Python전환→Python전용작업본순으로진행한다. AWS실생성외부대기T-022는별도추적한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "BedrockClaude실API생성200확인후본문품질추가검증중. 제공자별readiness/IAM전용CLI/content우선응답/AI-firstSwagger와원본판정·교정유지를명세화한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "최종상태:실제Claude본문응답1회200이나초기자동구독후AnthropicFTU양식미제출로지속호출거부확인. GetUseCaseForModelAccess는조직SCP명시거부. 연결/본문코드는완료했고실호출반복검증T-022는권한있는관리자양식제출대기. 실제생성가능으로위장하지않고전용503bedrock_use_case_required반환."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "최신 사용자지시에 따라 활성/배포 작업본을 Python 전용으로 변경. 초기 ASP·영상 포함 범위는 비공개 원본보관으로 대체하며 원격업로드는 전용 로그인/작성자 확인 대기를 유지한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "대형 정적 규칙 출판 시 비밀값 검사 성능을 보강했고 정제/출판25테스트 통과. 실제 규칙의 자동수정 금지는 유지한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-012",
+      "text": "T-025 최초 Python 전용 미러 검증 완료. 원격 커밋·push는 전용 GitHub 로그인/작성자 대기로 유지한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "장기키와전용계정검증·일일100회상한·사용량조회·소량실테스트를반영한다. 미지원2027판정을AI로대체하지않는다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "T-028 완료: 별도AI장기키·영속100상한·V5실본문/기계계약·현재상태표시·199파일Python배포검증을반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "백업복원으로원본판정자료확보를진행한다. 확인전서비스완료로표시하지않는다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-030/T-031: 복원자료선별적재·초기행품질·Python진단과미확정개인판정경계를명세에반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-031: 전체회귀/실제MySQL·API·AI미차감·wheel검증완료. 2027개인판정미완성원인과자료대기상태를반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "209파일Python전용배포사본검증·원본본문/백업/비밀값제외·사본27테스트/16subtests통과."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T-032~T-035: 전체비회원un정의복원·검증조회연결·전체오류검증예정."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T032~T035 현재명세로정리:78표100929행복원/7표970행검증연결/64해석계약/631경로/V6원문근거·Python고정제목/306예시200/대표실AI2종과누락자료경계."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "222파일배포사본과125관련테스트검증. 비밀값/원본행/ASP제외,원격commit/push미실행."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T035최종검증완료. 기능의기존외부원본/인증대기작업은그대로구분한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "T036새Python게시이력/과거ASP이력push차단을추가하고전용작성자/인증확인후T012업로드를완료한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "새 게시 브랜치 준비·HEAD/index 복구·과거 ASP/LFS 전송 차단·전용 파일 토큰 검증을 현재 명세에 반영. 관련 83테스트와 Ruff 통과."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "T036 완료: 실제 새 게시 브랜치 준비와 기존 ref 보존 확인. 전용 로그인·작성자·토큰 미설정으로 T012/T014 원격 반영은 대기."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "사용자의 토큰 저장 완료를 확인. 전용 토큰 파일 형식·소유자·권한600 검사 통과. login/name/email은 여전히 미지정으로 인증 API와 commit/push 미실행. 사용자에게 전용 사용자명·작성자 이름·이메일을 요청했으며 공용 계정은 사용하지 않았다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "T014 전용 GitHub 연결 검증 완료. T012 Python 전용 커밋·push 진행 중."
+    }
+  ]
+}

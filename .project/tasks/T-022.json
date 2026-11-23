@@ -1,0 +1,61 @@
+{
+  "id": "T-022",
+  "title": "AWS 검증 해제 후 실제 Claude un 생성 검증",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F03",
+    "F04",
+    "F06"
+  ],
+  "dependsOn": [
+    "T-021"
+  ],
+  "changes": [
+    "CR-011",
+    "CR-013"
+  ],
+  "description": "사용자가승인한별도AI전용계정의장기키로실제Claude본문을생성하고원본출력계약·민감값비노출·계산불변을검증한다. 기존DB/CLI계정의SCP/FTU를변경하거나임의계정으로fallback하지않는다.",
+  "acceptance": [
+    "Bedrock 실제 호출 성공",
+    "/v1/fortunes/daily include_ai=true에서검증된content·interpretation 반환",
+    "판정/근거계약일치 및민감값비노출"
+  ],
+  "tests": [
+    "python_api/tests/test_bedrock.py"
+  ],
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실 Claude 호출은 AWS 신규 계정 검증 중으로 거부됨. 연결코드/본문표시 구현과 실제생성검증을 분리해 외부 대기를 명확히 기록한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실API BedrockClaude호출이200으로성공해AWS계정검증차단이해제된것을확인했다. 내부변수명표출·당일점수의어제내일재사용방지를추가하여최종실본문검증을진행한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "최종상태:실제Claude본문응답1회200이나초기자동구독후AnthropicFTU양식미제출로지속호출거부확인. GetUseCaseForModelAccess는조직SCP명시거부. 연결/본문코드는완료했고실호출반복검증T-022는권한있는관리자양식제출대기. 실제생성가능으로위장하지않고전용503bedrock_use_case_required반환."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "새로저장된Bedrock장기키와하루100회상한을연결한뒤T-028에서실제호출상태를재검증한다. 기존FTU외부차단은성공증거를확보할때까지유지한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "완료: 사용자승인별도AI계정장기키의실제6회호출및V5대표3건본문·출력계약·계산불변·사용량검증통과. 기존IAM계정FTU/SCP수정은없다."
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "id": "F01",
+  "name": "SQL 원본 기반 사주 계산",
+  "status": "done",
+  "summary": "제공 tb_manse DB에서 음양력·간지·절입을 조회하고 상용 ASP의 일주·시주 규칙을 적용한다.",
+  "dependsOn": [
+    "F08"
+  ],
+  "code": [
+    "python_api/app/calendar.py",
+    "python_api/app/rules.py",
+    "python_api/app/models.py",
+    "python_api/tests/test_calendar.py",
+    "python_api/app/manse_store.py",
+    "python_api/app/manse_mysql.py",
+    "python_api/tests/test_manse_calendar.py",
+    "python_api/app/manse_corrections.py",
+    "python_api/app/data/manse_corrections.json",
+    "python_api/tests/test_manse_corrections.py"
+  ],
+  "tasks": [
+    "T-001",
+    "T-018",
+    "T-019"
+  ],
+  "changes": [
+    "CR-001",
+    "CR-009",
+    "CR-010"
+  ],
+  "spec": "사용자 제공 script.sql의 dbo.tb_manse 73,414행을 날짜·음력키로 조회한다. 공식 ./woonari API는 ap-southeast-2의 프로젝트 전용 inter 시크릿으로 MySQL woonari DB를 조회한다. 독립 개발/테스트 기본 저장소는 동일 원본의 SQLite 스냅샷이며 선택된 MySQL 실패 시 자동 대체하지 않는다. 양력 공개 입력/변환 범위1900~2050, 전체 DB1900~2100. 원본 y/m/d_gan·ji를 ASP 60간지 순서로 대응, 홀수 div_name의 당일 div_hour/div_min 해당 분부터 월주 증가, 입춘1일 때 년주도 증가. raw day로 시주 먼저 계산 후00:00~00:29 일주전날보정. dotong은23:30다음날일간, today_inline은당일일간. /v1/saju 기본dotong, 일일·주간·월간today_inline. 정책 asp-manse-db-v4와data_backend를반환한다. 알려진4중복은10행윤달교정으로해소, 미확정추가중복만422 ambiguous_lunar_date, 없는윤달은422 invalid_lunar_date, DB사용불가는503 manse_unavailable. 1945-06-06 div8 및2053-01-19 24:00보존, 후자는절기창에서다음날정규화. 첫날1900-01-01이전절기는null로반환하며외부데이터로채우지않음. 오행8자단순개수/공통대운미생성 major_luck.available=false 유지. 고정UTC+09/DST·진태양시미지원 및 ASP실서비스실행동일성미검증.\nCR-010: 원본 SQL/tb_manse/metadata()/iter_records()/출처·데이터해시 보존. get_manse_store는원본store를CorrectedManseStore로감싸며양력결과와알려진음력9개ymd키의후보들에서승인한leafMon_YN10값만copy교정한다. 음력조회는leap필터없는후보조회→source/data해시·rowcount73414·idx·양력/음력·원flag검사→교정→요청leap필터순서. 일치하지않으면503 manse_unavailable,미확정추가중복422유지. 2017평/윤5월29뒤바뀜과2020/2023/2025/2028평30·윤29오류수정. 정책 asp-manse-db-v4, lunar_correction_version=lunar-leap-flags-v1. /health에동일버전과실backend제공. 원본간지·절입·ASP일시주·un판정·AI출력계약은유지한다. Swagger기존4건거절안내를교정상태로바꾸고2023윤2/29→2023-04-19와평2/29→03-20예시를제공. 전체355API+169도구/40subtests/Ruff통과.\nT-020 실제 MySQL 검증:10행왕복동일·4기존중복정상·불가능윤30일422·일일/월간un200. 원본데이터해시유지/already_present 확인. CR-010교정완료.",
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "사용자 구현 요청에 따라 기획 확정 및 착수"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-001 완료: 만세력 경계/윤달/기준 사례 11개 테스트 통과"
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "text": "T-004 통합 검증 완료: 전체61개 테스트 통과 및 현재 명세/문서 동기화."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "상용 ASP 기준으로 판정 보존, 문구 조회만 AI 교체. 사용자 진행 지시에 따라 착수."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-001",
+      "text": "ASP기준 재작업 검증: 전체154테스트/린트/컴파일/실HTTP통과. 7종판정완료, 미확보판정3종은생성차단. T-008 의존성연결대기."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 제공 script.sql의 tb_manse 73,414행을 검증해 만세력 DB로 구축하고 사주 계산에 연결한다. 원격 inter 조회는 SCP 거부 상태이므로 로컬 DB를 먼저 구축하고 MySQL 적재 명령을 제공한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "CR-009 완료: MySQL woonari.tb_manse 73,414행 적재·재실행 already_present·전체 해시 일치. API9090의 MySQL 사주/입춘경계/중복음력422/일간un200 검증. Python API301건·도구169건과40subtests·Ruff 통과. 배포 wheel에 동일 SQLite 스냅샷 포함 확인. 원본 ASP 미변경."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "사용자가 검증된 윤달 표시 오류 수정에 동의했다. 원본 SQL/tb_manse/해시는 유지하고 버전 있는 10행 교정표를 사주 조회에 적용한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "T-019 코드·문서·정책 현재 상태 동기화. 원본 보존형10행윤달교정 적용, T-020 실 MySQL API 검증 진행."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "CR-010 완료: MySQL9090 API에서10행양력↔음력결과동일·이전4중복평달입력정상·없는윤30일422·일일/월간un200을확인했다. 원격원본73414행해시유지/already_present, API355+도구169/40subtests·Ruff·wheel교정표포함통과."
+    }
+  ]
+}

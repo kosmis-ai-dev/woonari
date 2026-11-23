@@ -1,0 +1,48 @@
+{
+  "id": "CR-014",
+  "title": "MSSQL 백업 복원·판정 데이터 확보 및 Python 연결",
+  "request": "mssql 백업 파일을 찾았느넫 복구해서 찾아서 만들어줄수 있어?\n제공파일: kosmis.gabia.io_20251106110126.7z, dbkosmis_20251106110131.7z",
+  "summary": "제공7z원본과현재MySQL을보존하고백업을전용복원환경에서열어yearfortune등판정표를찾는다. 스키마·행·키·값의의미를검증한표만선별이관하고확보된사실을Python/AI계약에연결한다. 2027연간은해당간지자료와원본표시기간·행구성을확인한뒤활성화한다. 회원·결제·비밀값은이관/배포하지않는다.",
+  "status": "in-progress",
+  "impact": {
+    "features": [
+      "F11",
+      "F02",
+      "F03",
+      "F04",
+      "F05",
+      "F06",
+      "F09",
+      "F10"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-029",
+      "T-030",
+      "T-031"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [
+      "T-008",
+      "T-026"
+    ],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-19",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "사용자가백업복원·필요데이터탐색·구축을요청하고7z2개를제공했다. 사이트백업36664항목과단일MSSQL백업dbkosmis_20251106.bak를확인했다. 원본은읽기전용보존한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-029복원·T-030선별MySQL적재완료. 재적재already_present/기존만세력전체해시동일. T-031의읽기전용진단·Swagger·AI차단·1378+56회귀검증완료이나2027작성판정과새표키매핑이없어개인별생성은자료대기blocked다. 원본부족을AI로채우지않는다."
+    }
+  ]
+}

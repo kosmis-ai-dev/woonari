@@ -1,0 +1,7430 @@
+{
+  "format": "woonari.fortune-archive.v1",
+  "source_backup": "dbkosmis_20251106.bak",
+  "tables": [
+    {
+      "source_schema": "dbo",
+      "source_table": "dayfortune_test",
+      "target_table": "woonari_source_dayfortune_test",
+      "file": "woonari_source_dayfortune_test.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "memno",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sixty",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bonsin",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan6",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji6",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan12",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji12",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan12percent",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji12percent",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents01_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents01_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents01_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents02_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents02_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents02_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents03_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "D_gongmang",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Yangin",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Beein",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Kumye",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Amrok",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Chunul",
+          "sql_type": "varchar",
+          "max_length": 8,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Munchang",
+          "sql_type": "varchar",
+          "max_length": 6,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "commanman",
+          "sql_type": "varchar",
+          "max_length": 56,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "dayman",
+          "sql_type": "varchar",
+          "max_length": 56,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "daywoman",
+          "sql_type": "varchar",
+          "max_length": 56,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents03_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents03_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents04_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents04_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents04_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents05_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents05_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents05_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents06_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents06_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents06_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents07_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents07_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents07_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents08_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents08_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents08_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents09_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents09_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents09_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents10_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents10_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents10_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents11_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents11_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents11_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents12_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents12_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents12_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents13_01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents13_02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents13_03",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "contents01_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents01_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents02_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents02_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents03_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents03_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents04_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents04_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents05_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents05_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents06_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents06_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents07_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents07_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents08_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents08_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents09_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents09_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents10_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents10_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents11_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents11_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents12_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents12_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents13_01score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents13_02score",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_active",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_sum01",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_sum02",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "typeC",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_gp_character",
+      "target_table": "woonari_source_kjy_gp_character",
+      "file": "woonari_source_kjy_gp_character.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "male",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "female",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_gp_content",
+      "target_table": "woonari_source_kjy_gp_content",
+      "file": "woonari_source_kjy_gp_content.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "kind",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "knum",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "sql_type": "varchar",
+          "max_length": 20,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "content",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "chk",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "clinic",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "goodbad",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_gp_gan",
+      "target_table": "woonari_source_kjy_gp_gan",
+      "file": "woonari_source_kjy_gp_gan.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "gan",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sex",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_gp_yukgap",
+      "target_table": "woonari_source_kjy_gp_yukgap",
+      "file": "woonari_source_kjy_gp_yukgap.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "yukgap",
+          "sql_type": "nvarchar",
+          "max_length": 8,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sex",
+          "sql_type": "nvarchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "character",
+          "sql_type": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "health",
+          "sql_type": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_TB_Totalun",
+      "target_table": "woonari_source_kjy_tb_totalun",
+      "file": "woonari_source_kjy_tb_totalun.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "part",
+          "sql_type": "nvarchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "sql_type": "nvarchar",
+          "max_length": 8,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "content",
+          "sql_type": "ntext",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_tbSaju_dangsaju",
+      "target_table": "woonari_source_kjy_tbsaju_dangsaju",
+      "file": "woonari_source_kjy_tbsaju_dangsaju.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "dang_code",
+          "sql_type": "char",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc1",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc2",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc3",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_tbSaju_otherunse",
+      "target_table": "woonari_source_kjy_tbsaju_otherunse",
+      "file": "woonari_source_kjy_tbsaju_otherunse.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "unse",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sipkyuk_code",
+          "sql_type": "char",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sipkyuk",
+          "sql_type": "char",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc1",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc2",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc3",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc4",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc5",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc6",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "kjy_tbSaju_private",
+      "target_table": "woonari_source_kjy_tbsaju_private",
+      "file": "woonari_source_kjy_tbsaju_private.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "serial",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "kname",
+          "sql_type": "char",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "hname",
+          "sql_type": "varchar",
+          "max_length": 8,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc1",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc2",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc3",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_advice_2016",
+      "target_table": "woonari_source_tb_advice_2016",
+      "file": "woonari_source_tb_advice_2016.json",
+      "source_sha256": "2f2b78bb9875c2fb5bf8ac58fbcddd531cb306ce4dbb68f122d889f2e119befc",
+      "row_count": 600,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Male",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Female",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "beffde463f8bc4fd7137d2a96ee0c14b5d19be96a778519fdb1ad3c95f3089f6"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_birthDayLuck",
+      "target_table": "woonari_source_tb_birthdayluck",
+      "file": "woonari_source_tb_birthdayluck.json",
+      "source_sha256": "5cf537fc6f38d61ade51bfc5c26886a1773ce732394f80cd7bc3a5d23d10a069",
+      "row_count": 366,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "birthMon_ref",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "birthDay_ref",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "e702efe4e3ca3d1133d2717e8c33d32e8c985e25a69237fdf5764bcb206e6149"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_birthFlowerLuck",
+      "target_table": "woonari_source_tb_birthflowerluck",
+      "file": "woonari_source_tb_birthflowerluck.json",
+      "source_sha256": "5c982c70743302a694ac2d94d92cd08b5ced33e51f8c4fc9159fbdb4ae18327e",
+      "row_count": 366,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "birthMon_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "birthDay_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "flowerName_kor",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "flowerName_en",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "flowerLang",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "familia",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "nativeHabit",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "flowerStory",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "459ffc3f0d33f67f843e7753b46ac75eceee9159949b78aa6d75f19ac5bd031b"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_BirthLuck",
+      "target_table": "woonari_source_tb_birthluck",
+      "file": "woonari_source_tb_birthluck.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "fw_no",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "month",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "day",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story1",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story2",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story3",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story4",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story5",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story1_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story2_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story3_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story4_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story5_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person1",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person2",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person3",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person4",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person5",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person1_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person2_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person3_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person4_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "person5_pic",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "unse",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_birthSignLuck",
+      "target_table": "woonari_source_tb_birthsignluck",
+      "file": "woonari_source_tb_birthsignluck.json",
+      "source_sha256": "c5e8c8f272d414b745a1328841b37fcbe5f149eb8fa4a8fbf50d853e0e22b875",
+      "row_count": 672,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "birthSign_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bloodtype_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "99e4a0b1727a1d5b9ac1c938e52b51b8fb5318068a569b5d830e1feb4809f79c"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_birthStoneLuck",
+      "target_table": "woonari_source_tb_birthstoneluck",
+      "file": "woonari_source_tb_birthstoneluck.json",
+      "source_sha256": "bf722d5efb307ffd756639fbc9e47c0ccd3a4c1c509eb40d8e4032f627b6ed3a",
+      "row_count": 12,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "birthMon_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "stoneName_kor",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "stoneName_en",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "stoneLang",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "76ee8095d277190b5b62d1e3e2aab1ce9abda494dae522008591c3322fa50751"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_bloodTypeLuck",
+      "target_table": "woonari_source_tb_bloodtypeluck",
+      "file": "woonari_source_tb_bloodtypeluck.json",
+      "source_sha256": "3c3840861514500bdcd0dd784c27981e89bd22324ece9b304263d64a60b8094f",
+      "row_count": 48,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bloodtype_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "d7ca8cf4f4f6c4bf2e7dc7d7e072c48751b22382becfa69bc1a05b1e5cb51104"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_board_conText",
+      "target_table": "woonari_source_tb_board_context",
+      "file": "woonari_source_tb_board_context.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "conNo",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_board_conText_illust",
+      "target_table": "woonari_source_tb_board_context_illust",
+      "file": "woonari_source_tb_board_context_illust.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "conNo",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "imgNo",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "img",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_bujeok",
+      "target_table": "woonari_source_tb_bujeok",
+      "file": "woonari_source_tb_bujeok.json",
+      "source_sha256": "b69f452fedb9191c4af1dd6c61f1b7da3bd4f124c85d32c335c8cf24d1a89693",
+      "row_count": 98,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "product_img",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "categ",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "thumbNail",
+          "sql_type": "varchar",
+          "max_length": 4000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "cautionNote",
+          "sql_type": "varchar",
+          "max_length": 6000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "consist",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "productInfo",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "price",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "ef06692e146a2133f12df167cb2023eca583565553d5b529bff581282257f533"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_bujeokMap",
+      "target_table": "woonari_source_tb_bujeokmap",
+      "file": "woonari_source_tb_bujeokmap.json",
+      "source_sha256": "7fa2809721244b864eff9ccc813b8b6f6bd871c0ccac2ce39344932ab888c64e",
+      "row_count": 467,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_set",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_piece",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "cf9cfb69b79480879d6ca0c0d5f6e5cd97bf81da94fc64a1327755d24b29d288"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_bujeokPiece",
+      "target_table": "woonari_source_tb_bujeokpiece",
+      "file": "woonari_source_tb_bujeokpiece.json",
+      "source_sha256": "35f6b630f7a443f6e39f29bdd5179d099ac57e7420bb344a5011148c54b8e3c8",
+      "row_count": 370,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "price",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bujeok_img",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "userManual",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "spell",
+          "sql_type": "varchar",
+          "max_length": 4000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "valid_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "9137d92c964d1d953033164850f819188d9a771fcf84fd706298c04d1f7d92a2"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_CodeDetail del",
+      "target_table": "woonari_source_tb_codedetail_del",
+      "file": "woonari_source_tb_codedetail_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "IDX",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Detail_CD",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Detail_NM",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Main_CD",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Use_YN",
+          "sql_type": "char",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Input_DT",
+          "sql_type": "datetime",
+          "max_length": 8,
+          "precision": 23,
+          "scale": 3,
+          "nullable": true
+        },
+        {
+          "name": "Amount",
+          "sql_type": "numeric",
+          "max_length": 9,
+          "precision": 18,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "SubDetailCd",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_dayfortune_2010 del",
+      "target_table": "woonari_source_tb_dayfortune_2010_del",
+      "file": "woonari_source_tb_dayfortune_2010_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_old",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "smscontents1",
+          "sql_type": "char",
+          "max_length": 80,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "smscontents2",
+          "sql_type": "char",
+          "max_length": 80,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "smscontents3",
+          "sql_type": "char",
+          "max_length": 80,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "smscontents4",
+          "sql_type": "char",
+          "max_length": 80,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "smscontents5",
+          "sql_type": "char",
+          "max_length": 80,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "smscontents6",
+          "sql_type": "char",
+          "max_length": 80,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "commanman",
+          "sql_type": "varchar",
+          "max_length": 56,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "dayman",
+          "sql_type": "varchar",
+          "max_length": 56,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "daywoman",
+          "sql_type": "varchar",
+          "max_length": 56,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_dayLuck",
+      "target_table": "woonari_source_tb_dayluck",
+      "file": "woonari_source_tb_dayluck.json",
+      "source_sha256": "d939212468aa08bb48be7b7f7923c14335706be1b5b00eb6e9732b5efd5752d5",
+      "row_count": 20000,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "group_contents",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "257f7bf325bac2153dd9e7c03ae29d5aacc55257c1346c7e929dbd0108119354"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_dayLuck_backUp",
+      "target_table": "woonari_source_tb_dayluck_backup",
+      "file": "woonari_source_tb_dayluck_backup.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "group_contents",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_dayLuck_free",
+      "target_table": "woonari_source_tb_dayluck_free",
+      "file": "woonari_source_tb_dayluck_free.json",
+      "source_sha256": "ab53dfca09fcc5ee4b3c5ad26285a9f2d7827aebbdf5bcf289a0a3393e09370c",
+      "row_count": 600,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_old",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "197d265089c59fb74ddda8cab421f603191e6da7215b5c804c0c4db5d61f64f6"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_dayLuck_new del",
+      "target_table": "woonari_source_tb_dayluck_new_del",
+      "file": "woonari_source_tb_dayluck_new_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "group_contents",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_dayLuck_old del",
+      "target_table": "woonari_source_tb_dayluck_old_del",
+      "file": "woonari_source_tb_dayluck_old_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "group_contents",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_deathGodExplanation",
+      "target_table": "woonari_source_tb_deathgodexplanation",
+      "file": "woonari_source_tb_deathgodexplanation.json",
+      "source_sha256": "8e16b3e83f4b9170438a68c05973d4842c5e8bdd18f4511bbaa93c4174fb4544",
+      "row_count": 49,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "63dad156231c5c8388952bac58c67b4a0a6830c125c9157a0b7de03868b6e97a"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_FlowerLuck",
+      "target_table": "woonari_source_tb_flowerluck",
+      "file": "woonari_source_tb_flowerluck.json",
+      "source_sha256": "23cfcba8b205977384531e726d7a3bb920b378b1f9a4faf83753dfe43ddd3d55",
+      "row_count": 366,
+      "columns": [
+        {
+          "name": "fw_no",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "month",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "day",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "name_h",
+          "sql_type": "varchar",
+          "max_length": 20,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "name_e",
+          "sql_type": "varchar",
+          "max_length": 20,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "fw_word",
+          "sql_type": "varchar",
+          "max_length": 20,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "fw_column",
+          "sql_type": "varchar",
+          "max_length": 20,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "origin",
+          "sql_type": "varchar",
+          "max_length": 20,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "story",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "unse",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "c4c27f873a9c62ddd275975bbe1f9b1dcb561c6c6bd0b63b25e11039c398fc0c"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_Hanja",
+      "target_table": "woonari_source_tb_hanja",
+      "file": "woonari_source_tb_hanja.json",
+      "source_sha256": "5a4fbd3f9f8df222cf69d26c0170af76d20e16d802b1fac24fe94e9537f46ea5",
+      "row_count": 3338,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sound",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "mean",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "stroke",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "letter",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ele_sound",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "unusing_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "unusing_detail",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "goodness_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "letter_img",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "detail",
+          "sql_type": "varchar",
+          "max_length": 5000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "200eec4bf7712b5b42ff75d8dad6f5239d760d957648d900cdf724c07e94547e"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_manse",
+      "target_table": "woonari_source_tb_manse",
+      "file": "woonari_source_tb_manse.json",
+      "source_sha256": "cf0b9c511db1918277027d98f1dd25af8b87db53af77a08dcf5d95a9dde97842",
+      "row_count": 47846,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "s_year",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "s_mon",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "s_day",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "l_year",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "l_mon",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "l_day",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "leafMon_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "div_hour",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "div_min",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "div_name",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "y_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "y_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "m_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "m_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sDate",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "90dcca3c94909f24c6e589cda83303cff74a0ee4aaf4cd2ff71970c4f940cf55"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_maritalAdviceLuck",
+      "target_table": "woonari_source_tb_maritaladviceluck",
+      "file": "woonari_source_tb_maritaladviceluck.json",
+      "source_sha256": "1ad8e023d9683c1009aee5bc006a9ad4ea2b4d452455a7aab5f776f9f1efc35f",
+      "row_count": 600,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "49bfda360b52ff4b47394bbb444edbb63bd7d8795efc27fb1a9aa94dfd9de03e"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_maritalDeathGodLuck",
+      "target_table": "woonari_source_tb_maritaldeathgodluck",
+      "file": "woonari_source_tb_maritaldeathgodluck.json",
+      "source_sha256": "be36cf79890614d8d9da0246989f07fd7b58a63bc18b841129bd1a3c1931ecd5",
+      "row_count": 100,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_male",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_female",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "a50bf2eef0adfe3911d7b131b1dafea1021f6e49904a3ecc0dece472e922e2c1"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_maritalHarmonyLuck",
+      "target_table": "woonari_source_tb_maritalharmonyluck",
+      "file": "woonari_source_tb_maritalharmonyluck.json",
+      "source_sha256": "55cbea13a7d2098f9f2e901b9194b0a93eaa082751a2d0edb48064982705a923",
+      "row_count": 100,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_male",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_female",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "6e2b4d7952925124d8905aab2ffab455a0ac3afa6df20cfbfd54245209e59d3c"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_maritalPersonalLuck",
+      "target_table": "woonari_source_tb_maritalpersonalluck",
+      "file": "woonari_source_tb_maritalpersonalluck.json",
+      "source_sha256": "507ed3cd3932c08c2ad3af1a0e77d1a448676bc0cc7fb099e2ac7fd213b03ffa",
+      "row_count": 260,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "7566709b10a8e7fde4f2f7d55afcebe284800d9b6f5984f5817da67153d570a1"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_meetingLuck",
+      "target_table": "woonari_source_tb_meetingluck",
+      "file": "woonari_source_tb_meetingluck.json",
+      "source_sha256": "ed040daa04aeed9f360d04dc94c6a6100f269a0d2072875216ee890061df648d",
+      "row_count": 20,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code_SG",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "65ba5ad441378a4307127a034e2beb88a54e21cc1bc95aa1b4658ef0beeededc"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_MoneyLuck",
+      "target_table": "woonari_source_tb_moneyluck",
+      "file": "woonari_source_tb_moneyluck.json",
+      "source_sha256": "615ef16d27af7a532cad8d89de178ae7841f80ed4477870df0bc3d6f3c902d0d",
+      "row_count": 600,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "cf10f5b13226330f86de5ccb172abb2540331d43b145087e71f37859c18ef1ef"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_monLuck",
+      "target_table": "woonari_source_tb_monluck",
+      "file": "woonari_source_tb_monluck.json",
+      "source_sha256": "f5f21db77e0fc8f5cdcf84ff4a7a5e7dad129ea919eca880be65347a24b37222",
+      "row_count": 1200,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok1",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok2",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok3",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok4",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok5",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "0302d7111b9ae8befca2cfe52651095133fba33678416e13921544de44d933e5"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_monLuck del",
+      "target_table": "woonari_source_tb_monluck_del",
+      "file": "woonari_source_tb_monluck_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "con_text",
+          "sql_type": "varchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_MonthFor del",
+      "target_table": "woonari_source_tb_monthfor_del",
+      "file": "woonari_source_tb_monthfor_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "yukgap_no",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "yukgap",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sex",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "memno",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_nameAppraisal",
+      "target_table": "woonari_source_tb_nameappraisal",
+      "file": "woonari_source_tb_nameappraisal.json",
+      "source_sha256": "937b24c8533f9da1af511dca74579ba34d6110efdbffd7959da387cdc600188f",
+      "row_count": 481,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "title",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "df25f8c4c27b555164611557a499d565f4efb90bdc2f8e7261f111248160518e"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_NameSolve del",
+      "target_table": "woonari_source_tb_namesolve_del",
+      "file": "woonari_source_tb_namesolve_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "section",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "fortune",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "form",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "goodbad",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "solve",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "conv",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "isview",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "solve2",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_NameSolve_KJY del",
+      "target_table": "woonari_source_tb_namesolve_kjy_del",
+      "file": "woonari_source_tb_namesolve_kjy_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "section",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "fortune",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "form",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "goodbad",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "conv",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "isview",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "solve",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "solve2",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_personalCompLuck",
+      "target_table": "woonari_source_tb_personalcompluck",
+      "file": "woonari_source_tb_personalcompluck.json",
+      "source_sha256": "28a8a7c5d1bbc9583f91fcad28d3b5f31b51904cd0fe12453ecc76c5fcb160ff",
+      "row_count": 152,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "51899d48d7a2856152cb42f12b986df3ff647eb7499040f26e3e8877b4f864be"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_PreLife del",
+      "target_table": "woonari_source_tb_prelife_del",
+      "file": "woonari_source_tb_prelife_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "div_flag",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "debt",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "character",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "parent",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "child",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "homedir",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "samjae",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "lifespan",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "div_date",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "yukgap",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_PreLife2 del",
+      "target_table": "woonari_source_tb_prelife2_del",
+      "file": "woonari_source_tb_prelife2_del.json",
+      "source_sha256": "ac04155cbe6de0fada7e1ca0c099b1449830dcd7525e44ce130c19b68532a573",
+      "row_count": 212,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "cate",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "flag",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "38f82074a9ff2204aee9f709f14636831c2830fabad2649eaa1be34b9ee4abf5"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_preLifeLuck",
+      "target_table": "woonari_source_tb_prelifeluck",
+      "file": "woonari_source_tb_prelifeluck.json",
+      "source_sha256": "32ea5fe15096235c0e04bfd4c67eafc9284f7d0c653f4088011770667c98796b",
+      "row_count": 342,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "2e3485e6bdb2295461e45e4edbe6fff6e7c7411cf186b2ca5b984b111a97ab01"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_product",
+      "target_table": "woonari_source_tb_product",
+      "file": "woonari_source_tb_product.json",
+      "source_sha256": "529e1c523b104b8a519086d9b957ca149ea2f7bd5779010624043f5b2a0c74e1",
+      "row_count": 247,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "productTitle",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Categ",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "price",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "valid_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "type_applyInfo",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "33d3a4cbd3566a0278ea2cc180164fea0c4a44f9d832234671011be83cdb4532"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_Product_Detail del",
+      "target_table": "woonari_source_tb_product_detail_del",
+      "file": "woonari_source_tb_product_detail_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "IDX",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Detail_NO",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Detail_NM",
+          "sql_type": "varchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Detail_Desc",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Unit_AM",
+          "sql_type": "numeric",
+          "max_length": 9,
+          "precision": 18,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Input_DT",
+          "sql_type": "datetime",
+          "max_length": 8,
+          "precision": 23,
+          "scale": 3,
+          "nullable": true
+        },
+        {
+          "name": "Quantity",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Photo",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Warning",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "ServerPhoto",
+          "sql_type": "varchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Use_Desc",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Use_Yn",
+          "sql_type": "varchar",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Spell",
+          "sql_type": "varchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_Product_Map del",
+      "target_table": "woonari_source_tb_product_map_del",
+      "file": "woonari_source_tb_product_map_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "IDX",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Product_NO",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Detail_NO",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Input_DT",
+          "sql_type": "datetime",
+          "max_length": 8,
+          "precision": 23,
+          "scale": 3,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_Product2 del",
+      "target_table": "woonari_source_tb_product2_del",
+      "file": "woonari_source_tb_product2_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "IDX",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Product_NO",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Product_NM",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Product_DESC",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Send_Period",
+          "sql_type": "varchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Basic_NM",
+          "sql_type": "varchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Unit_AM",
+          "sql_type": "numeric",
+          "max_length": 9,
+          "precision": 18,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Product_Form",
+          "sql_type": "varchar",
+          "max_length": 500,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Product_Order",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Category",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Use_YN",
+          "sql_type": "char",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Gubun",
+          "sql_type": "varchar",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Input_DT",
+          "sql_type": "datetime",
+          "max_length": 8,
+          "precision": 23,
+          "scale": 3,
+          "nullable": true
+        },
+        {
+          "name": "Quantity",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Photo",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Warning",
+          "sql_type": "varchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "Goosung",
+          "sql_type": "varchar",
+          "max_length": 4000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "ServerPhoto",
+          "sql_type": "varchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "thumb_name",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Etc",
+          "sql_type": "varchar",
+          "max_length": 200,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_ProductList del",
+      "target_table": "woonari_source_tb_productlist_del",
+      "file": "woonari_source_tb_productlist_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "productTitle",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Categ",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "categ_detail",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "price",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "valid_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "remark_info",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_Saju_DangSaju",
+      "target_table": "woonari_source_tb_saju_dangsaju",
+      "file": "woonari_source_tb_saju_dangsaju.json",
+      "source_sha256": "73446f985e3d221fe2085a531219c5723d2102fa989353eb7ecbecba5cfb54e6",
+      "row_count": 12,
+      "columns": [
+        {
+          "name": "dang_code",
+          "sql_type": "char",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc1",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc2",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc3",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "f3675612d75a2a47029b8b77cdfc4e7724c6a4c18aa86a63aff8498845d139d0"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_Saju_OtherUnse",
+      "target_table": "woonari_source_tb_saju_otherunse",
+      "file": "woonari_source_tb_saju_otherunse.json",
+      "source_sha256": "db1cf40a6fe8c188de24954ecb878d4bc12c845d1e8e551833feb715149d3115",
+      "row_count": 40,
+      "columns": [
+        {
+          "name": "unse",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sipkyuk_code",
+          "sql_type": "char",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sipkyuk",
+          "sql_type": "char",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc1",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc2",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc3",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc4",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc5",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "desc6",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "791c217735d6b5be7b5d1e482caa61b0676084abad6a9c6816f42546283d08ed"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_Saju_Private",
+      "target_table": "woonari_source_tb_saju_private",
+      "file": "woonari_source_tb_saju_private.json",
+      "source_sha256": "a8108d90ac0a581118658c142c482da5cdba7e7c21bb71200e74a1bfa74a45bf",
+      "row_count": 60,
+      "columns": [
+        {
+          "name": "serial",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "kname",
+          "sql_type": "char",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "hname",
+          "sql_type": "varchar",
+          "max_length": 8,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc1",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc2",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "desc3",
+          "sql_type": "varchar",
+          "max_length": 1800,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "7b8bfc46e01714ae9aa163516c5638ea678bd6609d0893e3dcf8d874fa862366"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_sajuAdviceLuck",
+      "target_table": "woonari_source_tb_sajuadviceluck",
+      "file": "woonari_source_tb_sajuadviceluck.json",
+      "source_sha256": "44620e5a11d97d221704849ef72d5db3d4b0736e5c09448e67d09c8643f9c7c8",
+      "row_count": 1200,
+      "columns": [
+        {
+          "name": "gan_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok1",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok2",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok3",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok4",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok5",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "9c437f4ee5ec0a609f7db86b5c4c84ff676ea66c8d72c8da4dd4df7cd8d1dd84"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_sky_tarot del",
+      "target_table": "woonari_source_tb_sky_tarot_del",
+      "file": "woonari_source_tb_sky_tarot_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "business",
+          "sql_type": "ntext",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "friend",
+          "sql_type": "ntext",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "health",
+          "sql_type": "ntext",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "love",
+          "sql_type": "ntext",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "money",
+          "sql_type": "ntext",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "study",
+          "sql_type": "ntext",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_sky_tarotmind del",
+      "target_table": "woonari_source_tb_sky_tarotmind_del",
+      "file": "woonari_source_tb_sky_tarotmind_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "varchar",
+          "max_length": 10,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "business",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "friend",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "health",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "love",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "money",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "study",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_sms_dayLuck",
+      "target_table": "woonari_source_tb_sms_dayluck",
+      "file": "woonari_source_tb_sms_dayluck.json",
+      "source_sha256": "95c277db24cdf82333c8224660d83ef9ccff5308e47f297330e455c6a23b1cc9",
+      "row_count": 3600,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_Long",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_words_common",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_words_male",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents_words_female",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "9bc11eef70cc9c849aa45acefb4d09ba4cf92d529847607749fb41fa8a0b6948"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_sms_proverb",
+      "target_table": "woonari_source_tb_sms_proverb",
+      "file": "woonari_source_tb_sms_proverb.json",
+      "source_sha256": "f1c0d3465e119af86343d8d007ac0d26a7bbe4cbd3c6ddfed5b2e74e25b09788",
+      "row_count": 2308,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "varchar",
+          "max_length": 1000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "bcc3629a70d7cac9f1ad510d33ddd59d6a5a68c5b36c937ef560e065abe2c508"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_StarCoupleLuck",
+      "target_table": "woonari_source_tb_starcoupleluck",
+      "file": "woonari_source_tb_starcoupleluck.json",
+      "source_sha256": "c570d0eba23419a2a8b86ed8392cdec8721095ef10db029d133dbb6c7d1748f5",
+      "row_count": 24,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "birthSign_ref",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "56ac12caea4ee9e4532a86332488bdff23a75a74eb951aa2448b59ed7a88bb94"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_StarLuck del",
+      "target_table": "woonari_source_tb_starluck_del",
+      "file": "woonari_source_tb_starluck_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bloodtype",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "star",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "harmony",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "character",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "relation",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "working",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "money",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "love",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "marriage",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_sweetLuck",
+      "target_table": "woonari_source_tb_sweetluck",
+      "file": "woonari_source_tb_sweetluck.json",
+      "source_sha256": "5e7234c514e2adfff14d3e9c9138c5299e4437d6b1b40052cef9e04d1028e04d",
+      "row_count": 1200,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "bec14f11a8af79d5190fbb299256f90c3a70fc73c43d30c459c9e3e0315dbe94"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_SweetLuck2 del",
+      "target_table": "woonari_source_tb_sweetluck2_del",
+      "file": "woonari_source_tb_sweetluck2_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "int",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "d_gan_Ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Num",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Memno",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Yukgap",
+          "sql_type": "varchar",
+          "max_length": 4,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "Daygan",
+          "sql_type": "varchar",
+          "max_length": 2,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "loveMan",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "loveWoman",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "int"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_tarotLuck",
+      "target_table": "woonari_source_tb_tarotluck",
+      "file": "woonari_source_tb_tarotluck.json",
+      "source_sha256": "35a8c3e6e5eec6048869c41bbd0c11408b73c6491680522823ba33ce6dfabe96",
+      "row_count": 1056,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "genre",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "categ",
+          "sql_type": "varchar",
+          "max_length": 1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "side",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "cardNo",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4a3ba82fa021cf07d66a55ba2badc16f0402df1a861e28e5f0266bd09c1e616e"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_unseCon",
+      "target_table": "woonari_source_tb_unsecon",
+      "file": "woonari_source_tb_unsecon.json",
+      "source_sha256": "c4f196c9b4bb8097b588356da18e1dcfd397a59f6833def5617f5db23539d399",
+      "row_count": 127,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "product_illust",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "thumbNail",
+          "sql_type": "varchar",
+          "max_length": 8000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "description",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "productInfo",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sample_img",
+          "sql_type": "varchar",
+          "max_length": 2000,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "3d5138f1bc3d4d8c6be6b76ecff6563d4003e93161a8146f617a4c941103c436"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_wholeLifeLuck",
+      "target_table": "woonari_source_tb_wholelifeluck",
+      "file": "woonari_source_tb_wholelifeluck.json",
+      "source_sha256": "800e5e7e26928100b236a6b6d1d1dcdd0da0e09582493fa6897da150aa05fdbc",
+      "row_count": 276,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "code",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "2b32eab8a279cc19cdf4c82d988a3f10b567229f84dbfc2879850eb41b4030d4"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_yearLuck",
+      "target_table": "woonari_source_tb_yearluck",
+      "file": "woonari_source_tb_yearluck.json",
+      "source_sha256": "3a728098561115a05f4a57f002da05ebf6dcc20f7d731ff5c62135e916450346",
+      "row_count": 7000,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "year_act",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok1",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok2",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok3",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok4",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok5",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "starPoint",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score1",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score2",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score3",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score4",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score5",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score6",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score7",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score8",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score9",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score10",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score11",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "eb7e483e94c3a3932ae8d3be117388f22c16c0ba15abaf974d87f54e25a61549"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_yearluck del",
+      "target_table": "woonari_source_tb_yearluck_del",
+      "file": "woonari_source_tb_yearluck_del.json",
+      "source_sha256": "b942bfb24f3b1081fd4c4dec19d72e661638afccebcf2ed08f47e2f9210b3f2f",
+      "row_count": 3200,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "7a1cf23ce35a9d91622d37defc6ca0f2defdc66b5f9ece49300500f1a8dd86b3"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_yearLuck_mon",
+      "target_table": "woonari_source_tb_yearluck_mon",
+      "file": "woonari_source_tb_yearluck_mon.json",
+      "source_sha256": "eae54149de6e641e58fa5d27d8368dbb4bca63dfdd91fbf2656dd8da0dbc8a8c",
+      "row_count": 1200,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_ref",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend_ref",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gan_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "ji_act",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_write",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "date_edit",
+          "sql_type": "smalldatetime",
+          "max_length": 4,
+          "precision": 16,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok1",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok2",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok3",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok4",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "idx_bujeok5",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "starPoint",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score1",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score2",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score3",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score4",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score5",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score6",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score7",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score8",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score9",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score10",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "score11",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "e9f7c7b9862901d34bd16590c3dbcd36fdeaf42554ec5c15796c84a965f3ec86"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tb_yearLuck_mon del",
+      "target_table": "woonari_source_tb_yearluck_mon_del",
+      "file": "woonari_source_tb_yearluck_mon_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "idx"
+      ],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_yearluck3 del",
+      "target_table": "woonari_source_tb_yearluck3_del",
+      "file": "woonari_source_tb_yearluck3_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_yearluck4 del",
+      "target_table": "woonari_source_tb_yearluck4_del",
+      "file": "woonari_source_tb_yearluck4_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "TB_yearluck5 del",
+      "target_table": "woonari_source_tb_yearluck5_del",
+      "file": "woonari_source_tb_yearluck5_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "idx",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_gan",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sg_ji",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "gend",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "contents",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "chapter",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "sc_death_YN",
+          "sql_type": "bit",
+          "max_length": 1,
+          "precision": 1,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "tbPreLife",
+      "target_table": "woonari_source_tbprelife",
+      "file": "woonari_source_tbprelife.json",
+      "source_sha256": "f32f156856fe0e0ebbc2bbc2e2696aa89e95902a3c6d24f1dc48298273071641",
+      "row_count": 114,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "div_flag",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "div_date",
+          "sql_type": "tinyint",
+          "max_length": 1,
+          "precision": 3,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "debt",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "character",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "parent",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "child",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "homedir",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "samjae",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "lifespan",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "yukgap",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "685d77999ca1eb654885755b0c0e8e0c2ba3a18bf054d53e2d02f2150537f1df"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "totalun",
+      "target_table": "woonari_source_totalun",
+      "file": "woonari_source_totalun.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "part",
+          "sql_type": "nvarchar",
+          "max_length": 100,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "title",
+          "sql_type": "nvarchar",
+          "max_length": 8,
+          "precision": 0,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "content",
+          "sql_type": "nvarchar",
+          "max_length": -1,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "source_schema": "dbo",
+      "source_table": "yearfortune del",
+      "target_table": "woonari_source_yearfortune_del",
+      "file": "woonari_source_yearfortune_del.json",
+      "source_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "row_count": 0,
+      "columns": [
+        {
+          "name": "num",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "year_pillar",
+          "sql_type": "nvarchar",
+          "max_length": 510,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "typecode",
+          "sql_type": "smallint",
+          "max_length": 2,
+          "precision": 5,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "memno",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "section",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "sex",
+          "sql_type": "varchar",
+          "max_length": 50,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "content",
+          "sql_type": "text",
+          "max_length": 16,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "sol1",
+          "sql_type": "nvarchar",
+          "max_length": 510,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "sol2",
+          "sql_type": "nvarchar",
+          "max_length": 510,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "sol3",
+          "sql_type": "nvarchar",
+          "max_length": 510,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "sol4",
+          "sql_type": "nvarchar",
+          "max_length": 510,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "sol5",
+          "sql_type": "nvarchar",
+          "max_length": 510,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "star_cnt",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "solar",
+          "sql_type": "nvarchar",
+          "max_length": 510,
+          "precision": 0,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark1",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark2",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark3",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark4",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark5",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark6",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark7",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark8",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark9",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark10",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "mark11",
+          "sql_type": "float",
+          "max_length": 8,
+          "precision": 53,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "imsi_2009y",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": true
+        },
+        {
+          "name": "bujuk1",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bujuk2",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bujuk3",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bujuk4",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        },
+        {
+          "name": "bujuk5",
+          "sql_type": "int",
+          "max_length": 4,
+          "precision": 10,
+          "scale": 0,
+          "nullable": false
+        }
+      ],
+      "primary_key": [],
+      "data_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  ],
+  "excluded_tables": [
+    {
+      "name": "AspBoard",
+      "reason": "personal_board_records"
+    },
+    {
+      "name": "AspBoard_pds",
+      "reason": "personal_board_attachments"
+    },
+    {
+      "name": "member",
+      "reason": "member_records"
+    },
+    {
+      "name": "member_dif",
+      "reason": "member_records"
+    },
+    {
+      "name": "member_old_copy1",
+      "reason": "member_records"
+    },
+    {
+      "name": "sysdiagrams",
+      "reason": "system_diagrams_not_fortune"
+    },
+    {
+      "name": "TB_board_common",
+      "reason": "personal_board_records"
+    },
+    {
+      "name": "TB_board_counsel",
+      "reason": "personal_counsel_records"
+    },
+    {
+      "name": "TB_board_review",
+      "reason": "personal_review_records"
+    },
+    {
+      "name": "TB_board_videoLecture",
+      "reason": "personal_board_records"
+    },
+    {
+      "name": "TB_boardControl",
+      "reason": "board_permissions_not_fortune"
+    },
+    {
+      "name": "TB_boardControl_restrict",
+      "reason": "board_restrictions_not_fortune"
+    },
+    {
+      "name": "TB_comment",
+      "reason": "personal_comments"
+    },
+    {
+      "name": "tb_comment del",
+      "reason": "personal_comments"
+    },
+    {
+      "name": "TB_connectLog",
+      "reason": "connection_log"
+    },
+    {
+      "name": "TB_Counsel",
+      "reason": "personal_counsel_records"
+    },
+    {
+      "name": "TB_counsel_Prescription del",
+      "reason": "personal_counsel_records"
+    },
+    {
+      "name": "TB_counsel_temp",
+      "reason": "personal_counsel_records"
+    },
+    {
+      "name": "tb_freeboard",
+      "reason": "personal_board_records"
+    },
+    {
+      "name": "TB_member",
+      "reason": "member_records"
+    },
+    {
+      "name": "TB_member_test",
+      "reason": "member_records"
+    },
+    {
+      "name": "tb_monthluckLog",
+      "reason": "personal_execution_log"
+    },
+    {
+      "name": "TB_nameInfo",
+      "reason": "personal_name_application_records"
+    },
+    {
+      "name": "tb_past_moved_member",
+      "reason": "member_records"
+    },
+    {
+      "name": "TB_Payment",
+      "reason": "personal_payment_records"
+    },
+    {
+      "name": "TB_paymentLog",
+      "reason": "personal_payment_records"
+    },
+    {
+      "name": "TB_sajuInfo",
+      "reason": "personal_birth_application_records"
+    },
+    {
+      "name": "tb_session",
+      "reason": "personal_session_records"
+    },
+    {
+      "name": "TB_ShipInfo",
+      "reason": "personal_shipping_contact_records"
+    },
+    {
+      "name": "TB_SMS_HpNum",
+      "reason": "personal_contact_numbers"
+    },
+    {
+      "name": "TB_SMSUser",
+      "reason": "personal_subscription_contact_records"
+    },
+    {
+      "name": "TB_UnseConUser",
+      "reason": "personal_subscription_records"
+    },
+    {
+      "name": "TB_unseConUser_dayLuck",
+      "reason": "personal_subscription_state"
+    },
+    {
+      "name": "TB_unseConUser_log",
+      "reason": "personal_subscription_log"
+    },
+    {
+      "name": "TB_unseConUser_nameBasket",
+      "reason": "personal_name_selection_records"
+    },
+    {
+      "name": "tb_unseConUser_tarotLuck",
+      "reason": "personal_tarot_selection_records"
+    },
+    {
+      "name": "tb_withdraw",
+      "reason": "personal_withdrawal_reasons"
+    },
+    {
+      "name": "TEST_ACC",
+      "reason": "personal_test_payment_records"
+    },
+    {
+      "name": "TEST_apply",
+      "reason": "personal_test_application_records"
+    },
+    {
+      "name": "TEST_Name",
+      "reason": "personal_test_name_application_records"
+    },
+    {
+      "name": "TEST_nameluck",
+      "reason": "personal_test_name_records"
+    },
+    {
+      "name": "TEST_tarot",
+      "reason": "personal_test_tarot_records"
+    },
+    {
+      "name": "TESTKJY",
+      "reason": "test_payment_integration_records"
+    }
+  ]
+}

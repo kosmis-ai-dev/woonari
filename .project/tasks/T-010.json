@@ -1,0 +1,39 @@
+{
+  "id": "T-010",
+  "title": "Swagger·가이드 un 표시명 반영",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F04"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-003"
+  ],
+  "description": "Swagger 제목·태그·항목·필드 안내와 README 및 목록API 표시명을 un으로 정리. 원본 판단/AI용 CATALOG·계약은 유지.",
+  "acceptance": [
+    "Swagger 제목/안내/10종 표시명과목록명 일치",
+    "원본 판정/AI계약/기존URL유지",
+    "기존Swagger·API테스트 및 로컬반영확인"
+  ],
+  "tests": [
+    "python_api/tests/test_swagger_guide.py",
+    "python_api/tests/test_api.py"
+  ],
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-02",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-003",
+      "text": "사용자 요청에 따라 Swagger 표시·안내의 '운세'를 'un'으로 변경 착수. 원본 계산/AI 계약은 유지."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-003",
+      "text": "Swagger·가이드·목록 표시명을 un으로 변경 완료. 원본 CATALOG/판정/AI계약/URL 유지. 183테스트·린트통과, 로컬실행 un API/오늘의 un 표시확인."
+    }
+  ]
+}

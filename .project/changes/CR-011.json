@@ -1,0 +1,70 @@
+{
+  "id": "CR-011",
+  "title": "실제 un 해석 문장을 반환하는 API 사용 흐름 개선",
+  "request": "운세 api 를 가동하면 지금 결과가 이상한데 결과가 실제 운세나 내용이 나오게 할수 있나?\n내가 질문을 던지면 하던 작업은 다 마무리하고 그다음 작업을 하고 있는거지? 큐로 쌓여서 작업해야하는데\n추가선택: bedrock 의 claude 모델을 이용해 보려고 한다",
+  "summary": "검증된 AI해석을 content에 먼저 반환하고 준비7종Swagger를AI해석우선으로 바꾼다. 사용자가선택한 BedrockClaude를 전용AWSCLI/계정으로 연결하고 실제생성은외부계정검증여부와구분해검증한다.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F03",
+      "F04",
+      "F06",
+      "F05"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-021",
+      "T-022"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실제 un 문장 요청을 대기열에 등록. 사용자 지시대로 CR-010 윤달 교정·검증 완료 후 착수하며 현재는 기능 구현하지 않는다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "선행CR-010완료후착수. 실제AI본문/content표시와AI우선Swagger·전용설정안내를구현하고키설정후실호출한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "사용자선택을BedrockClaude로반영. 전용AWSCLI2.38.1·모델/추론프로필조회성공,Converse실호출은AWS계정검증진행으로거부됨. 본문표시·격리Converse연결구현은계속진행하고실생성성공과구분한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실 Claude 호출은 AWS 신규 계정 검증 중으로 거부됨. 연결코드/본문표시 구현과 실제생성검증을 분리해 외부 대기를 명확히 기록한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "실API BedrockClaude호출이200으로성공해AWS계정검증차단이해제된것을확인했다. 내부변수명표출·당일점수의어제내일재사용방지를추가하여최종실본문검증을진행한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-011",
+      "text": "최종상태:실제Claude본문응답1회200이나초기자동구독후AnthropicFTU양식미제출로지속호출거부확인. GetUseCaseForModelAccess는조직SCP명시거부. 연결/본문코드는완료했고실호출반복검증T-022는권한있는관리자양식제출대기. 실제생성가능으로위장하지않고전용503bedrock_use_case_required반환."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "T-022 실제생성검증완료로요청완료. 승인된AI별도계정의장기키로일일/산술/평생V5본문확인,이전IAM계정FTU/SCP기록은history로보존한다."
+    }
+  ]
+}

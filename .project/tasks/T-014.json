@@ -1,0 +1,79 @@
+{
+  "id": "T-014",
+  "title": "전용 GitHub와 신규 AWS 계정 연결 확인",
+  "stage": "S4",
+  "status": "done",
+  "features": [
+    "F05",
+    "F06"
+  ],
+  "dependsOn": [
+    "T-013"
+  ],
+  "changes": [
+    "CR-006",
+    "CR-016"
+  ],
+  "description": "GitHub 로그인 ID와 전용 커밋 이름/이메일을 사용자에게 확인하고 프로젝트 전용 인증을 완료한다. 신규 AWS 계정 ID 및 SSO/전용 인증을 지정하고 STS로 일치 여부를 확인한다. 기존 계정/리소스를 사용하지 않는다.",
+  "acceptance": [
+    "전용GitHub사용자와대상저장소쓰기권한확인",
+    "신규AWS계정ID와stsget-caller-identity계정일치확인",
+    "공용계정으로의대체사용없음, 다른프로젝트설정변경없음"
+  ],
+  "tests": [
+    "전용GitHub사용자·저장소권한실확인",
+    "전용AWSSTS계정실확인"
+  ],
+  "createdAt": "2026-11-04",
+  "updatedAt": "2026-11-23",
+  "history": [
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "등록: 전용 GitHub 로그인명·신규 AWS 계정 ID 및 인증이 필요하다."
+    },
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "사용자 정보 대기: 전용 GitHub 로그인명/커밋 작성자·신규 AWS 12자리 계정 ID 및 로그인 방식 미확인. 기존공용계정의자동사용금지. 로그인·STS실조회·리소스생성·신규원격업로드는수행하지않았으며 실제계정연결은완료되지않음."
+    },
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "사용자가GitHub대상 kosmis-ai-dev/woonari 저장소사용을재확인. AWS신규계정정보는추후전달예정이며CLI접속정보를확인중. GitHub전용로그인/커밋작성자및AWS계정ID·인증은여전히미확인으로T-014 blocked유지. 기존계정으로대체하지않음."
+    },
+    {
+      "date": "2026-11-05",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "사용자 신규 액세스 키 설정 완료 후 ./woonari aws sts get-caller-identity 실호출 성공. 프로젝트 전용 woonari 프로필·ap-northeast-2 리전 및 STS 계정 ID의 지정 신규 계정 일치 검증 완료. 비밀 키 값은 출력/기록하지 않았고 공용 AWS 설정은 사용하지 않음. AWS 리소스 생성/권한 변경 없음. 남은 T-014 조건은 전용 GitHub 로그인명·커밋 작성자 및 저장소 쓰기 권한 확인이므로 blocked 유지."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "2026-11-23 push재요청. 전용GitHublogin/작성자이름/이메일셋다미지정. 값을추정하거나공용계정으로대체하지않고게시·새이력준비를T036에서먼저진행한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "T036 준비 완료. 전용 login/name/email과 token/hosts.yml 모두 없음. 공용 계정을 사용하지 않았고 실제 commit/push는 대기. 사용자에게 필요한 비밀값 외 계정정보를 질문했으며 토큰은 전용 로컬 파일 설정이 필요하다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "사용자의 토큰 저장 완료를 확인. 전용 토큰 파일 형식·소유자·권한600 검사 통과. login/name/email은 여전히 미지정으로 인증 API와 commit/push 미실행. 사용자에게 전용 사용자명·작성자 이름·이메일을 요청했으며 공용 계정은 사용하지 않았다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "사용자 지정 login/작성자/email을 전용 설정에 반영. 전용 파일 토큰의 실제 GitHub 사용자 kosmis-ai-dev 일치 및 승인 저장소 push 권한 true 확인. 기존 전용 AWS STS 확인과 함께 연결 조건 충족. 공용 인증은 사용하지 않았다."
+    }
+  ]
+}

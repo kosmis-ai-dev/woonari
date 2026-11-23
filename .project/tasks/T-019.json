@@ -1,0 +1,47 @@
+{
+  "id": "T-019",
+  "title": "검증된 윤달 표시 교정표와 사주 조회 적용",
+  "stage": "S4",
+  "status": "done",
+  "features": [
+    "F01",
+    "F08",
+    "F04"
+  ],
+  "dependsOn": [
+    "T-018"
+  ],
+  "changes": [
+    "CR-010"
+  ],
+  "description": "검증된 윤달 표시 교정표와 사주 조회 적용",
+  "acceptance": [
+    "원본 SQL·tb_manse·iter_records·해시 불변",
+    "10행 교정에 원본 행·출처 일치 검사",
+    "평달/윤달 후보 조회 후 교정·필터링으로 올바른 변환",
+    "73,414행 교정 후 중복0·음력 날짜 연속성 이상0",
+    "Swagger·정책·문서에 교정 버전과 현 상태 표시"
+  ],
+  "tests": [
+    "python_api/tests/test_manse_corrections.py",
+    "python_api/tests/test_manse_store.py",
+    "python_api/tests/test_manse_mysql.py",
+    "python_api/tests/test_manse_calendar.py"
+  ],
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "사용자가 검증된 윤달 표시 오류 수정에 동의했다. 원본 SQL/tb_manse/해시는 유지하고 버전 있는 10행 교정표를 사주 조회에 적용한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "10행 교정표·원본 보호·두 저장소 후보 조회·교정 후 윤달 필터 적용 완료. API355·도구169테스트와40subtests·Ruff 통과. 전체73414행의 원본 해시 동일, 교정후중복0·연속성이상0."
+    }
+  ]
+}

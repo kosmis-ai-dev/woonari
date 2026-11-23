@@ -1,0 +1,52 @@
+{
+  "id": "T-017",
+  "title": "tb_manse SQL 파싱·만세력 DB 구축·MySQL 적재",
+  "stage": "S4",
+  "status": "done",
+  "features": [
+    "F08",
+    "F07",
+    "F05"
+  ],
+  "dependsOn": [
+    "T-013"
+  ],
+  "changes": [
+    "CR-009"
+  ],
+  "description": "제공 SQL을 엄격 파싱하여 SQLite 스냅샷과 MySQL woonari.tb_manse에 원본 73,414행·메타데이터를 적재하고 전체 해시로 검증한다.",
+  "acceptance": [
+    "원본 73,414행과 SHA256·범위·중복 진단 보존",
+    "파라미터 INSERT로 로컬 DB 생성 및 검증",
+    "반복 가능한 MySQL 적재 명령 제공",
+    "원격 DB 생성·적재 결과 또는 외부 차단 사유 확인"
+  ],
+  "tests": [
+    "python_api/tests/test_manse_store.py",
+    "python_api/tests/test_calendar.py",
+    "tools/test_manse_import.py",
+    "tools/test_mysql_manse.py"
+  ],
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 제공 script.sql의 tb_manse 73,414행을 검증해 만세력 DB로 구축하고 사주 계산에 연결한다. 원격 inter 조회는 SCP 거부 상태이므로 로컬 DB를 먼저 구축하고 MySQL 적재 명령을 제공한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "로컬 DB 생성 및 사용자 지정 ap-southeast-2 시크릿으로 MySQL woonari.tb_manse 73,414행 적재 완료. 전체 행·데이터 SHA256 일치, 기존 데이터 보존·재실행 도구 제공."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "배포 사본에 비밀값 없이 새 만세력 DB 자산과 코드를 포함한다. Git 인증·작성자 대기는 기존 T-012/T-014 상태를 유지한다."
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "T-027",
+  "title": "Bedrock 장기키 연결과 영속 일일100회 상한 구현",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F03",
+    "F04",
+    "F06"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-013"
+  ],
+  "description": "전용 .local/woonari/ai/bedrock.env의키를HTTPBearer로사용하고검증된추론프로필ARN의계정·리전·모델을대조한다. 기존IAM경로는명시적모드로보존한다. 모든API별칭과AI제공자가KST자정기준영속ledger의시도100회를공유하고실패도차감한다. 키·본문·사용자식별자는ledger/로그/argv에기록하지않는다.",
+  "acceptance": [
+    "공식런처가명시api_key모드를연결하고다른계정/인증으로fallback하지않음",
+    "100회초과429/상태불명503으로모델전송전차단",
+    "병렬/재시작/KST자정/삭제·손상ledger보호와privacy회귀검증",
+    "계산전용/입력오류/미완성판정은차감하지않고성공·실패시도는보존",
+    "인증보호GET /v1/ai-usage로한도·사용·잔여·다음초기화확인"
+  ],
+  "tests": [
+    "python_api/tests/test_ai_quota.py",
+    "tools/test_isolated_bedrock.py",
+    "tools/test_bedrock_key.py",
+    "python_api/tests/test_daily_ai_limit_api.py"
+  ],
+  "createdAt": "2026-11-19",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "접수 및 영향분석 완료. 사용자 진행 지시에 따라 구현→실제소량검증 순서로 진행한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "사용자가 현재 장기키 계정을 AI 전용으로 별도 사용하는 것을 명시 승인했다. 기존 Woonari AWS/DB 계정은 유지하고 AI의 실제 발급계정을 BEDROCK_ACCOUNT_ID로 별도 고정·검증한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-013",
+      "text": "장기키HTTP전송·AI계정고정·모델POST직전예약·KST100회공유상한·사용량API구현완료. quota37/전송59/통합4테스트와관련회귀통과. 실제AI키metadata preflight통과, 모델호출은T-028에서만진행한다."
+    }
+  ]
+}

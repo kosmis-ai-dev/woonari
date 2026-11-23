@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Board</title>
+<style>
+:root {
+  --bg: #f6f7f9; --panel: #ffffff; --panel-2: #f1f3f6; --line: #e3e6eb; --text: #1b1f27; --muted: #677083; --faint: #9aa2b1;
+  --accent: #2f5bea; --accent-soft: #e8eefe;
+  --s-todo: #8a93a3; --s-doing: #2f6fea; --s-review: #8250df; --s-done: #1f9d55; --s-rework: #e2711d; --s-verify: #c99400; --s-blocked: #d1242f; --s-dropped: #b4bac5;
+  --radius: 10px; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.05);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b; --line: #2a2f3a; --text: #e6e9ef; --muted: #9aa3b2; --faint: #6b7383;
+    --accent: #6b8cff; --accent-soft: #1d2645;
+    --s-todo: #7d8696; --s-doing: #5b8dff; --s-review: #a47cf0; --s-done: #3fbf74; --s-rework: #f08a3c; --s-verify: #e0b23a; --s-blocked: #f05a62; --s-dropped: #4f5664;
+    --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b; --line: #2a2f3a; --text: #e6e9ef; --muted: #9aa3b2; --faint: #6b7383;
+  --accent: #6b8cff; --accent-soft: #1d2645;
+  --s-todo: #7d8696; --s-doing: #5b8dff; --s-review: #a47cf0; --s-done: #3fbf74; --s-rework: #f08a3c; --s-verify: #e0b23a; --s-blocked: #f05a62; --s-dropped: #4f5664;
+  --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font: 14px/1.55 "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); text-decoration: none; }
+button { font: inherit; color: inherit; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .9em; background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+
+/* header */
+header { background: var(--panel); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+.head { max-width: 1280px; margin: 0 auto; padding: 16px 20px 0; }
+.title-row { display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.title-row h1 { font-size: 19px; margin: 0; letter-spacing: -.01em; }
+.title-row .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
+.title-row .right { margin-left: auto; display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12px; }
+.live { display: inline-flex; align-items: center; gap: 6px; }
+.live i { width: 7px; height: 7px; border-radius: 50%; background: var(--s-done); display: inline-block; }
+.live.static i { background: var(--faint); }
+.live.flash i { animation: pulse 1s ease-out; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--s-done); } 100% { box-shadow: 0 0 0 8px transparent; } }
+.progress { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; font-size: 12px; color: var(--muted); }
+.bar { flex: 1; height: 6px; background: var(--panel-2); border-radius: 99px; overflow: hidden; max-width: 420px; }
+.bar > span { display: block; height: 100%; background: var(--s-done); border-radius: 99px; }
+nav.tabs { display: flex; gap: 2px; margin-top: 10px; overflow-x: auto; }
+nav.tabs a { padding: 9px 14px; color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap; font-weight: 500; }
+nav.tabs a.on { color: var(--text); border-bottom-color: var(--accent); }
+nav.tabs a .n { font-size: 11px; background: var(--panel-2); border-radius: 99px; padding: 1px 7px; margin-left: 5px; color: var(--muted); }
+.icon-btn { background: none; border: 1px solid var(--line); border-radius: 7px; padding: 3px 8px; cursor: pointer; }
+
+main { max-width: 1280px; margin: 0 auto; padding: 20px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.panel > h3, .sec-title { font-size: 13px; font-weight: 600; margin: 0; padding: 14px 16px 10px; color: var(--muted); text-transform: none; }
+.grid { display: grid; gap: 16px; }
+.g-2 { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+@media (max-width: 900px) { .g-2 { grid-template-columns: 1fr; } }
+
+/* stats */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat { padding: 14px 16px; }
+.stat .k { color: var(--muted); font-size: 12px; }
+.stat .v { font-size: 24px; font-weight: 650; letter-spacing: -.02em; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.stat .v small { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+/* chips & status */
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; padding: 1px 7px; border-radius: 5px; background: var(--panel-2); color: var(--muted); border: 1px solid var(--line); cursor: pointer; white-space: nowrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip.f { color: var(--accent); background: var(--accent-soft); border-color: transparent; }
+.chip.cr { color: var(--s-rework); background: color-mix(in srgb, var(--s-rework) 12%, transparent); border-color: transparent; }
+.st { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.st::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--s-todo)); }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* lists */
+.rows { list-style: none; margin: 0; padding: 0 8px 8px; }
+.rows li { display: flex; align-items: center; gap: 10px; padding: 9px 8px; border-top: 1px solid var(--line); }
+.rows li:first-child { border-top: 0; }
+.rows .grow { flex: 1; min-width: 0; }
+.rows .t { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.muted { color: var(--muted); }
+.small { font-size: 12px; }
+.empty { color: var(--faint); padding: 16px; text-align: center; font-size: 13px; }
+
+/* stage progress */
+.stage { padding: 10px 16px; border-top: 1px solid var(--line); }
+.stage:first-of-type { border-top: 0; }
+.stage .top { display: flex; justify-content: space-between; gap: 8px; }
+.stage .goal { color: var(--muted); font-size: 12px; }
+.stage .bar { max-width: none; margin-top: 6px; }
+
+/* timeline */
+.timeline { list-style: none; margin: 0; padding: 4px 16px 12px; }
+.timeline li { position: relative; padding: 7px 0 7px 18px; border-left: 1px solid var(--line); margin-left: 4px; }
+.timeline li::before { content: ""; position: absolute; left: -4px; top: 13px; width: 7px; height: 7px; border-radius: 50%; background: var(--faint); }
+.timeline li.change::before { background: var(--s-rework); }
+.timeline li.feature::before { background: var(--accent); }
+.timeline li.task::before { background: var(--s-done); }
+.timeline .meta { font-size: 11.5px; color: var(--faint); display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+/* workflow board */
+.toolbar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
+.seg { border: 1px solid var(--line); background: var(--panel); padding: 5px 11px; border-radius: 99px; font-size: 12.5px; cursor: pointer; color: var(--muted); }
+.seg.on { background: var(--text); color: var(--panel); border-color: var(--text); }
+.board { display: grid; grid-template-columns: repeat(5, minmax(200px, 1fr)); gap: 12px; overflow-x: auto; padding-bottom: 6px; }
+@media (max-width: 900px) { .board { grid-template-columns: 1fr; } }
+.col { background: var(--panel-2); border-radius: var(--radius); padding: 8px; min-height: 120px; }
+.col h4 { margin: 2px 4px 8px; font-size: 12.5px; display: flex; justify-content: space-between; align-items: center; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer; box-shadow: var(--shadow); border-left: 3px solid var(--c, var(--line)); }
+.card:hover { border-color: var(--accent); border-left-color: var(--c, var(--accent)); }
+.card .id { font-family: ui-monospace, monospace; font-size: 11px; color: var(--faint); display: flex; justify-content: space-between; }
+.card .tt { margin: 3px 0 7px; font-weight: 550; line-height: 1.4; }
+.stage-list .stage-block { margin-bottom: 18px; }
+.stage-list h3 { font-size: 14px; margin: 0 0 8px; display: flex; gap: 10px; align-items: baseline; }
+
+/* split (features / changes) */
+.split { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; } }
+.side { position: sticky; top: 140px; max-height: calc(100vh - 160px); overflow: auto; }
+.side .item { display: block; padding: 10px 14px; border-top: 1px solid var(--line); cursor: pointer; color: var(--text); }
+.side .item:first-child { border-top: 0; }
+.side .item.on { background: var(--accent-soft); }
+.side .item .row1 { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+.side .item .nm { font-weight: 550; }
+.detail { padding: 20px 24px; }
+.detail h2 { margin: 0; font-size: 20px; letter-spacing: -.01em; }
+.detail .lead { color: var(--muted); margin: 4px 0 14px; }
+.kv { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px 12px; font-size: 13px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+.kv > div:nth-child(odd) { color: var(--muted); }
+.section { margin-top: 22px; }
+.section > h4 { font-size: 12px; color: var(--muted); font-weight: 600; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .04em; }
+.quote { border-left: 3px solid var(--line); padding: 8px 14px; background: var(--panel-2); border-radius: 0 8px 8px 0; white-space: pre-wrap; }
+.impact { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.impact > div { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.impact .k { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+
+/* markdown */
+.md h1 { font-size: 22px; margin: 4px 0 12px; }
+.md h2 { font-size: 16px; margin: 22px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.md h3 { font-size: 14px; margin: 16px 0 6px; }
+.md p { margin: 6px 0 10px; }
+.md ul, .md ol { padding-left: 22px; margin: 6px 0 10px; }
+.md li { margin: 2px 0; }
+.md pre { background: var(--panel-2); padding: 12px; border-radius: 8px; overflow: auto; }
+.md pre code { background: none; padding: 0; }
+.md table { border-collapse: collapse; width: 100%; margin: 8px 0 12px; font-size: 13px; display: block; overflow-x: auto; }
+.md th, .md td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; }
+.md th { background: var(--panel-2); }
+.md blockquote { margin: 8px 0; padding: 4px 14px; border-left: 3px solid var(--line); color: var(--muted); }
+
+/* drawer */
+.scrim { position: fixed; inset: 0; background: rgba(10,12,16,.35); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(560px, 100%); background: var(--panel); z-index: 21; overflow: auto; border-left: 1px solid var(--line); box-shadow: -8px 0 24px rgba(0,0,0,.12); }
+.drawer .detail { padding-top: 16px; }
+.drawer .close { float: right; }
+ul.check { list-style: none; padding: 0; margin: 0; }
+ul.check li { padding: 3px 0 3px 22px; position: relative; }
+ul.check li::before { content: "☐"; position: absolute; left: 0; color: var(--faint); }
+ul.check.done li::before { content: "☑"; color: var(--s-done); }
+
+.alert { border: 1px solid color-mix(in srgb, var(--s-blocked) 40%, var(--line)); background: color-mix(in srgb, var(--s-blocked) 8%, var(--panel)); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 16px; font-size: 13px; }
+.alert.warn { border-color: color-mix(in srgb, var(--s-verify) 45%, var(--line)); background: color-mix(in srgb, var(--s-verify) 8%, var(--panel)); }
+.alert summary { cursor: pointer; font-weight: 600; }
+.alert ul { margin: 6px 0 0; padding-left: 18px; }
+@media (max-width: 900px) { header { position: static; } .side { position: static; max-height: 320px; } }
+@media (max-width: 600px) { main { padding: 14px 16px; } .head { padding: 12px 16px 0; } .detail { padding: 16px; } .kv { grid-template-columns: 90px minmax(0,1fr); } }
+</style>
+</head>
+<body>
+<header><div class="head" id="head"></div></header>
+<main id="main"></main>
+<div id="overlay"></div>
+<script>
+let DATA = /*__DATA__*/null;
+const MODE = /*__MODE__*/"static";
+
+const STATUS = {
+  todo: ['대기', '--s-todo'], doing: ['진행 중', '--s-doing'], review: ['리뷰 대기', '--s-review'], done: ['완료', '--s-done'],
+  rework: ['재작업', '--s-rework'], verify: ['재검증', '--s-verify'], blocked: ['막힘', '--s-blocked'], dropped: ['취소', '--s-dropped'],
+  planned: ['기획됨', '--s-todo'], building: ['구현 중', '--s-doing'], changing: ['수정 반영 중', '--s-rework'],
+  received: ['접수', '--s-todo'], 'in-progress': ['진행 중', '--s-doing'], rejected: ['반려', '--s-dropped'],
+};
+const COLS = [['todo', '대기'], ['doing', '진행 중'], ['review', '리뷰 대기'], ['attention', '재작업 · 재검증 · 막힘'], ['done', '완료']];
+const ATTN = ['rework', 'verify', 'blocked'];
+const ui = { tab: 'overview', sel: null, stage: 'all', view: 'board', drawer: null };
+
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const st = (s) => { const [l, c] = STATUS[s] || [s || '-', '--s-todo']; return `<span class="st" style="--c:var(${c})">${esc(l)}</span>`; };
+const colorOf = (s) => `var(${(STATUS[s] || [0, '--s-todo'])[1]})`;
+const T = (id) => DATA.tasks.find((t) => t.id === id);
+const F = (id) => DATA.features.find((f) => f.id === id);
+const C = (id) => DATA.changes.find((c) => c.id === id);
+const chip = (id) => {
+  if (!id) return '';
+  if (/^F/.test(id)) { const f = F(id); return `<span class="chip f" data-go="features/${esc(id)}" title="${esc(f?.name)}">${esc(id)}${f ? ' ' + esc(f.name) : ''}</span>`; }
+  if (/^CR/.test(id)) { const c = C(id); return `<span class="chip cr" data-go="changes/${esc(id)}" title="${esc(c?.title)}">${esc(id)}</span>`; }
+  if (/^T/.test(id)) { const t = T(id); return `<span class="chip" data-task="${esc(id)}" title="${esc(t?.title)}">${esc(id)}</span>`; }
+  return `<span class="chip">${esc(id)}</span>`;
+};
+const chips = (ids, plain) => (ids && ids.length ? `<span class="chips">${ids.map((i) => (plain ? `<span class="chip">${esc(i)}</span>` : chip(i))).join('')}</span>` : '<span class="muted">-</span>');
+const linkIds = (text) => esc(text).replace(/\b(CR-\d+|T-\d+|F\d{2,})\b/g, (m) => chip(m));
+
+// ---- 간단한 Markdown 렌더러 ----
+function md(src) {
+  const lines = String(src || '').replace(/\r/g, '').split('\n');
+  let out = '', i = 0;
+  const inline = (s) => esc(s)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/\b(CR-\d+|T-\d+|F\d{2,})\b(?![^<]*<\/code>)/g, (m) => chip(m));
+  while (i < lines.length) {
+    const l = lines[i];
+    if (/^```/.test(l)) { let b = ''; i++; while (i < lines.length && !/^```/.test(lines[i])) b += lines[i++] + '\n'; i++; out += `<pre><code>${esc(b)}</code></pre>`; continue; }
+    const h = l.match(/^(#{1,4})\s+(.*)/); if (h) { out += `<h${h[1].length}>${inline(h[2])}</h${h[1].length}>`; i++; continue; }
+    if (/^\s*\|.*\|\s*$/.test(l) && /^\s*\|?\s*:?-{2,}/.test(lines[i + 1] || '')) {
+      const cells = (r) => r.trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+      out += '<table><thead><tr>' + cells(l).map((c) => `<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>';
+      i += 2; while (i < lines.length && /^\s*\|/.test(lines[i])) out += '<tr>' + cells(lines[i++]).map((c) => `<td>${inline(c)}</td>`).join('') + '</tr>';
+      out += '</tbody></table>'; continue;
+    }
+    if (/^\s*([-*]|\d+\.)\s+/.test(l)) {
+      const ordered = /^\s*\d+\./.test(l); out += ordered ? '<ol>' : '<ul>';
+      while (i < lines.length && /^\s*([-*]|\d+\.)\s+/.test(lines[i])) {
+        let item = lines[i].replace(/^\s*([-*]|\d+\.)\s+/, '');
+        item = item.replace(/^\[( |x)\]\s*/i, (m, x) => (x.trim() ? '☑ ' : '☐ '));
+        out += `<li>${inline(item)}</li>`; i++;
+      }
+      out += ordered ? '</ol>' : '</ul>'; continue;
+    }
+    if (/^>\s?/.test(l)) { let b = ''; while (i < lines.length && /^>\s?/.test(lines[i])) b += lines[i++].replace(/^>\s?/, '') + ' '; out += `<blockquote>${inline(b)}</blockquote>`; continue; }
+    if (!l.trim()) { i++; continue; }
+    let p = l; i++;
+    while (i < lines.length && lines[i].trim() && !/^(#{1,4}\s|```|\s*[-*]\s|\s*\d+\.\s|>|\s*\|)/.test(lines[i])) p += ' ' + lines[i++];
+    out += `<p>${inline(p)}</p>`;
+  }
+  return `<div class="md">${out}</div>`;
+}
+
+// ---- 헤더 ----
+function renderHead() {
+  const p = DATA.project, s = DATA.stats;
+  const pct = s.total ? Math.round((s.done / s.total) * 100) : 0;
+  const tabs = [['overview', '개요'], ['plan', '기획'], ['workflow', '워크플로', s.total], ['features', '기능 명세', s.features], ['changes', '수정 요청', DATA.changes.length]];
+  const when = new Date(DATA.generatedAt).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  document.title = `${p.name || 'Project'} · Board`;
+  document.getElementById('head').innerHTML = `
+    <div class="title-row">
+      <div><h1>${esc(p.name || '프로젝트')}</h1><div class="sub">${esc(p.summary || '')}${p.stack ? ` · ${esc(p.stack)}` : ''}</div></div>
+      <div class="right">
+        <span class="live ${MODE === 'live' ? '' : 'static'}" id="live"><i></i>${MODE === 'live' ? '실시간' : '스냅샷'} · ${esc(when)}</span>
+        <button class="icon-btn" id="theme" title="라이트/다크 전환">테마</button>
+      </div>
+    </div>
+    <div class="progress"><span>진행률</span><div class="bar"><span style="width:${pct}%"></span></div><strong style="color:var(--text)">${pct}%</strong><span>${s.done}/${s.total} 작업</span></div>
+    <nav class="tabs">${tabs.map(([k, l, n]) => `<a href="#${k}" class="${ui.tab === k ? 'on' : ''}">${l}${n != null ? `<span class="n">${n}</span>` : ''}</a>`).join('')}</nav>`;
+}
+
+// ---- 개요 ----
+function renderOverview() {
+  const s = DATA.stats;
+  const attention = DATA.tasks.filter((t) => ATTN.includes(t.status));
+  const openCr = DATA.changes.filter((c) => !['done', 'rejected'].includes(c.status));
+  const stat = (k, v, sub) => `<div class="panel stat"><div class="k">${k}</div><div class="v">${v}${sub ? ` <small>${sub}</small>` : ''}</div></div>`;
+  return `${checkAlert()}
+  <div class="stats">
+    ${stat('전체 작업', s.total)}${stat('완료', s.done, s.total ? Math.round(s.done / s.total * 100) + '%' : '')}
+    ${stat('진행 · 리뷰', s.doing + s.review)}${stat('재작업 · 재검증', s.rework + s.verify, s.blocked ? `막힘 ${s.blocked}` : '')}
+    ${stat('기능', s.features)}${stat('진행 중 수정요청', s.openChanges)}
+  </div>
+  <div class="grid g-2">
+    <div class="grid" style="align-content:start">
+      <div class="panel"><h3>단계별 진행</h3>${DATA.stages.length ? DATA.stages.map((g) => `
+        <div class="stage"><div class="top"><div><strong>${esc(g.id)}</strong> ${esc(g.name)}</div><span class="muted small">${g.done}/${g.total}</span></div>
+        <div class="goal">${esc(g.goal || '')}</div><div class="bar"><span style="width:${g.total ? g.done / g.total * 100 : 0}%"></span></div></div>`).join('') : '<div class="empty">아직 단계가 없습니다. 기획을 확정하면 생성됩니다.</div>'}</div>
+      <div class="panel"><h3>다음 작업</h3>${DATA.next.length ? `<ul class="rows">${DATA.next.map((id) => { const t = T(id); return `<li>${chip(id)}<div class="grow"><div class="t">${esc(t.title)}</div></div>${st(t.status)}</li>`; }).join('')}</ul>` : '<div class="empty">진행 가능한 작업이 없습니다</div>'}</div>
+      <div class="panel"><h3>확인 필요</h3>${attention.length || openCr.length ? `<ul class="rows">
+        ${attention.map((t) => `<li>${chip(t.id)}<div class="grow"><div class="t">${esc(t.title)}</div></div>${st(t.status)}</li>`).join('')}
+        ${openCr.map((c) => `<li>${chip(c.id)}<div class="grow"><div class="t">${esc(c.title)}</div></div>${st(c.status)}</li>`).join('')}
+      </ul>` : '<div class="empty">없음</div>'}</div>
+    </div>
+    <div class="panel"><h3>최근 변경</h3>${timeline(DATA.activity.slice(0, 25))}</div>
+  </div>`;
+}
+
+function timeline(items) {
+  if (!items.length) return '<div class="empty">기록이 없습니다</div>';
+  return `<ul class="timeline">${items.map((a) => `
+    <li class="${esc(a.type)}"><div>${linkIds(a.text)}</div>
+    <div class="meta">${esc(a.date)} ${a.type !== 'project' ? chip(a.id) : ''} ${a.change ? chip(a.change) : ''} ${a.by ? `· ${esc(a.by)}` : ''}</div></li>`).join('')}</ul>`;
+}
+
+function checkAlert() {
+  const { errors, warnings } = DATA.check;
+  let h = '';
+  if (errors.length) h += `<details class="alert" open><summary>데이터 오류 ${errors.length}건 — AI에게 "check 오류 수정해줘"라고 요청하세요</summary><ul>${errors.map((e) => `<li>${esc(e)}</li>`).join('')}</ul></details>`;
+  if (warnings.length) h += `<details class="alert warn"><summary>경고 ${warnings.length}건</summary><ul>${warnings.map((e) => `<li>${esc(e)}</li>`).join('')}</ul></details>`;
+  return h;
+}
+
+// ---- 기획 ----
+function renderPlan() {
+  const p = DATA.project;
+  const ph = (p.history || []).slice().reverse();
+  return `<div class="grid g-2">
+    <div class="panel detail">${md(DATA.plan) || '<div class="empty">기획서가 비어 있습니다</div>'}</div>
+    <div class="grid" style="align-content:start">
+      <div class="panel"><h3>단계</h3>${DATA.stages.map((g) => `<div class="stage"><div class="top"><div><strong>${esc(g.id)}</strong> ${esc(g.name)}</div><span class="muted small">${g.total}개 작업</span></div><div class="goal">${esc(g.goal || '')}</div></div>`).join('') || '<div class="empty">없음</div>'}</div>
+      <div class="panel"><h3>기획 변경 이력</h3>${timeline(ph.map((h) => ({ ...h, type: 'project' })))}</div>
+    </div></div>`;
+}
+
+// ---- 워크플로 ----
+function renderWorkflow() {
+  const tasks = DATA.tasks.filter((t) => t.status !== 'dropped' && (ui.stage === 'all' || t.stage === ui.stage));
+  const seg = (k, l, on, attr) => `<button class="seg ${on ? 'on' : ''}" ${attr}="${esc(k)}">${esc(l)}</button>`;
+  const toolbar = `<div class="toolbar">
+    ${seg('board', '상태 보드', ui.view === 'board', 'data-view')}${seg('stages', '단계별 목록', ui.view === 'stages', 'data-view')}
+    <span style="width:12px"></span>
+    ${seg('all', '전체 단계', ui.stage === 'all', 'data-stage')}${DATA.stages.map((g) => seg(g.id, `${g.id} ${g.name}`, ui.stage === g.id, 'data-stage')).join('')}
+  </div>`;
+  const card = (t) => `<div class="card" data-task="${esc(t.id)}" style="--c:${colorOf(t.status)}">
+    <div class="id"><span>${esc(t.id)} · ${esc(t.stage)}</span>${st(t.status)}</div>
+    <div class="tt">${esc(t.title)}</div>
+    <div class="chips">${(t.features || []).map(chip).join('')}${(t.changes || []).map(chip).join('')}</div></div>`;
+  if (ui.view === 'stages') {
+    return toolbar + `<div class="stage-list">${DATA.stages.filter((g) => ui.stage === 'all' || g.id === ui.stage).map((g) => {
+      const ts = tasks.filter((t) => t.stage === g.id);
+      return `<div class="stage-block panel"><h3 class="sec-title" style="color:var(--text)">${esc(g.id)} ${esc(g.name)} <span class="muted small">${esc(g.goal || '')}</span></h3>
+        <ul class="rows">${ts.map((t) => `<li data-task="${esc(t.id)}" style="cursor:pointer">${chip(t.id)}<div class="grow"><div class="t">${esc(t.title)}</div></div><span class="chips">${(t.features || []).map(chip).join('')}${(t.changes || []).map(chip).join('')}</span>${st(t.status)}</li>`).join('') || '<li class="muted">작업 없음</li>'}</ul></div>`;
+    }).join('')}</div>`;
+  }
+  return toolbar + `<div class="board">${COLS.map(([k, l]) => {
+    const ts = tasks.filter((t) => (k === 'attention' ? ATTN.includes(t.status) : t.status === k));
+    return `<div class="col"><h4>${l}<span class="muted small">${ts.length}</span></h4>${ts.map(card).join('') || '<div class="empty">-</div>'}</div>`;
+  }).join('')}</div>`;
+}
+
+function taskDetail(t) {
+  const deps = (t.dependsOn || []);
+  const dependents = DATA.tasks.filter((x) => (x.dependsOn || []).includes(t.id)).map((x) => x.id);
+  const stage = DATA.stages.find((g) => g.id === t.stage);
+  return `<div class="detail">
+    <button class="icon-btn close" data-close>닫기 ✕</button>
+    <div class="muted small" style="font-family:ui-monospace,monospace">${esc(t.id)}</div>
+    <h2>${esc(t.title)}</h2>
+    <p class="lead">${esc(t.description || '')}</p>
+    <div class="kv">
+      <div>상태</div><div>${st(t.status)}</div>
+      <div>단계</div><div>${esc(t.stage)} ${esc(stage?.name || '')}</div>
+      <div>기능</div><div>${chips(t.features)}</div>
+      <div>수정 요청</div><div>${chips(t.changes)}</div>
+      <div>선행 작업</div><div>${chips(deps)}</div>
+      <div>후속 작업</div><div>${chips(dependents)}</div>
+      <div>커밋</div><div>${chips(t.commits, true)}</div>
+      <div>수정일</div><div>${esc(t.updatedAt || '-')}</div>
+    </div>
+    ${(t.acceptance || []).length ? `<div class="section"><h4>완료 조건</h4><ul class="check ${t.status === 'done' ? 'done' : ''}">${t.acceptance.map((a) => `<li>${esc(a)}</li>`).join('')}</ul></div>` : ''}
+    ${(t.tests || []).length ? `<div class="section"><h4>테스트</h4>${t.tests.map((x) => `<div><code>${esc(x)}</code></div>`).join('')}</div>` : ''}
+    <div class="section"><h4>이력</h4>${timeline((t.history || []).slice().reverse().map((h) => ({ ...h, type: 'task', id: t.id })))}</div>
+  </div>`;
+}
+
+// ---- 기능 명세 ----
+function renderFeatures() {
+  if (!DATA.features.length) return '<div class="panel empty">아직 기능이 없습니다. 기획을 확정하면 생성됩니다.</div>';
+  const sel = F(ui.sel) || DATA.features[0];
+  ui.sel = sel.id;
+  const side = DATA.features.map((f) => {
+    const ts = (f.tasks || []).map(T).filter((t) => t && t.status !== 'dropped');
+    const done = ts.filter((t) => t.status === 'done').length;
+    return `<a class="item ${f.id === sel.id ? 'on' : ''}" href="#features/${esc(f.id)}">
+      <div class="row1"><span class="nm"><span class="muted" style="font-family:ui-monospace,monospace;font-size:12px">${esc(f.id)}</span> ${esc(f.name)}</span>${st(f.status)}</div>
+      <div class="muted small">작업 ${done}/${ts.length}${(f.changes || []).length ? ` · 수정 ${(f.changes || []).length}건` : ''} · ${esc(f.updatedAt || '')}</div></a>`;
+  }).join('');
+  const ts = (sel.tasks || []).map(T).filter(Boolean);
+  return `<div class="split"><div class="panel side">${side}</div>
+    <div class="panel detail">
+      <div class="muted small" style="font-family:ui-monospace,monospace">${esc(sel.id)}</div>
+      <h2>${esc(sel.name)}</h2><p class="lead">${esc(sel.summary || '')}</p>
+      <div class="kv">
+        <div>상태</div><div>${st(sel.status)}</div>
+        <div>사용하는 기능</div><div>${chips(sel.dependsOn)}</div>
+        <div>사용되는 곳</div><div>${chips(sel.usedBy)}</div>
+        <div>코드</div><div>${(sel.code || []).map((c) => `<code>${esc(c)}</code>`).join(' ') || '-'}</div>
+        <div>수정 요청</div><div>${chips(sel.changes)}</div>
+        <div>최종 수정</div><div>${esc(sel.updatedAt || '-')}</div>
+      </div>
+      <div class="section"><h4>현재 명세</h4>${md(sel.spec) }</div>
+      <div class="section"><h4>구현 작업</h4><ul class="rows" style="padding:0">${ts.map((t) => `<li data-task="${esc(t.id)}" style="cursor:pointer">${chip(t.id)}<div class="grow"><div class="t">${esc(t.title)}</div></div>${st(t.status)}</li>`).join('') || '<li class="muted">없음</li>'}</ul></div>
+      <div class="section"><h4>변경 이력</h4>${timeline((sel.history || []).slice().reverse().map((h) => ({ ...h, type: 'feature', id: sel.id })))}</div>
+    </div></div>`;
+}
+
+// ---- 수정 요청 ----
+function renderChanges() {
+  if (!DATA.changes.length) return '<div class="panel empty">수정 요청이 없습니다</div>';
+  const list = DATA.changes.slice().sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || '') || b.id.localeCompare(a.id));
+  const sel = C(ui.sel) || list[0];
+  ui.sel = sel.id;
+  const im = sel.impact || {};
+  const side = list.map((c) => `<a class="item ${c.id === sel.id ? 'on' : ''}" href="#changes/${esc(c.id)}">
+    <div class="row1"><span class="nm">${esc(c.title)}</span>${st(c.status)}</div>
+    <div class="muted small">${esc(c.id)} · ${esc(c.createdAt || '')}${c.requestedBy ? ` · ${esc(c.requestedBy)}` : ''}</div></a>`).join('');
+  const box = (k, ids) => {
+    const isTask = (ids || []).length && /^T/.test(ids[0]);
+    const body = isTask ? ids.map((id) => { const t = T(id); return `<div style="display:flex;gap:6px;align-items:center;margin:3px 0">${chip(id)}<span class="small" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t?.title || '')}</span>${t ? st(t.status) : ''}</div>`; }).join('') : chips(ids);
+    return `<div><div class="k">${k}</div>${body}</div>`;
+  };
+  return `<div class="split"><div class="panel side">${side}</div>
+    <div class="panel detail">
+      <div class="muted small" style="font-family:ui-monospace,monospace">${esc(sel.id)}</div>
+      <h2>${esc(sel.title)}</h2>
+      <div class="kv" style="margin-top:14px">
+        <div>상태</div><div>${st(sel.status)}</div>
+        <div>요청자</div><div>${esc(sel.requestedBy || '-')}</div>
+        <div>접수일</div><div>${esc(sel.createdAt || '-')}</div>
+        <div>최종 수정</div><div>${esc(sel.updatedAt || '-')}</div>
+      </div>
+      <div class="section"><h4>요청 원문</h4><div class="quote">${esc(sel.request || '')}</div></div>
+      <div class="section"><h4>정리된 수정 내용</h4>${md(sel.summary || '')}</div>
+      <div class="section"><h4>영향 범위</h4><div class="impact">
+        ${box('변경된 기능', im.features)}${box('재검증 기능', im.verifyFeatures)}
+        ${box('추가된 작업', im.tasksAdded)}${box('재작업 작업', im.tasksReworked)}${box('내용 변경된 대기 작업', im.tasksUpdated)}${box('재검증 작업', im.tasksVerify)}
+        <div><div class="k">기획 변경</div>${im.planChanged ? '<span class="st" style="--c:var(--s-rework)">기획서 수정됨</span>' : '<span class="muted">없음</span>'}</div>
+      </div></div>
+      <div class="section"><h4>처리 이력</h4>${timeline((sel.history || []).slice().reverse().map((h) => ({ ...h, type: 'change', id: sel.id })))}</div>
+    </div></div>`;
+}
+
+// ---- 렌더 & 이벤트 ----
+function render() {
+  if (!DATA) { document.getElementById('main').innerHTML = '<div class="panel empty">데이터가 없습니다. <code>project-dashboard.mjs serve</code> 또는 <code>build</code>로 여세요.</div>'; return; }
+  renderHead();
+  const views = { overview: renderOverview, plan: renderPlan, workflow: renderWorkflow, features: renderFeatures, changes: renderChanges };
+  document.getElementById('main').innerHTML = (views[ui.tab] || renderOverview)();
+  const t = ui.drawer && T(ui.drawer);
+  document.getElementById('overlay').innerHTML = t ? `<div class="scrim" data-close></div><aside class="drawer">${taskDetail(t)}</aside>` : '';
+}
+
+function route() {
+  const [tab, sel] = (location.hash.slice(1) || 'overview').split('/');
+  ui.tab = tab || 'overview'; ui.sel = sel ? decodeURIComponent(sel) : null; ui.drawer = null;
+  render(); window.scrollTo(0, 0);
+}
+
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-go],[data-task],[data-close],[data-stage],[data-view],#theme');
+  if (!el) return;
+  if (el.id === 'theme') {
+    const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.dataset.theme = cur === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('pb-theme', document.documentElement.dataset.theme); } catch (_) {}
+    return;
+  }
+  e.preventDefault(); e.stopPropagation();
+  if (el.dataset.go) { location.hash = el.dataset.go; return; }
+  if (el.dataset.task) { ui.drawer = el.dataset.task; render(); return; }
+  if ('close' in el.dataset) { ui.drawer = null; render(); return; }
+  if (el.dataset.stage) { ui.stage = el.dataset.stage; render(); return; }
+  if (el.dataset.view) { ui.view = el.dataset.view; render(); return; }
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && ui.drawer) { ui.drawer = null; render(); } });
+window.addEventListener('hashchange', route);
+try { const th = localStorage.getItem('pb-theme'); if (th) document.documentElement.dataset.theme = th; } catch (_) {}
+
+if (MODE === 'live') {
+  let ver = null;
+  const poll = async () => {
+    try {
+      const r = await fetch('/api/version', { cache: 'no-store' }); const { v } = await r.json();
+      if (ver && v !== ver) {
+        const d = await (await fetch('/api/data', { cache: 'no-store' })).json();
+        DATA = d; const y = scrollY; render(); scrollTo(0, y);
+        const lv = document.getElementById('live'); lv?.classList.add('flash');
+      }
+      ver = v;
+    } catch (_) {}
+    setTimeout(poll, 2000);
+  };
+  poll();
+}
+route();
+</script>
+</body>
+</html>

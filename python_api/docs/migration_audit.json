@@ -1,0 +1,4555 @@
+{
+  "change": "CR-012",
+  "task": "T-023",
+  "date": "2026-11-18",
+  "scope": "기존Python미이식271진단항목의계산실행기능별분류. 이파일은이식완료판정이아니며간접helper의판정DB사용여부는상세구현시추적한다.",
+  "counts": {
+    "array_profile_review": 6,
+    "noncalendar_rule_data": 8,
+    "source_logic_review": 57,
+    "opaque_com": 10,
+    "interlife_calendar_review": 21,
+    "interlife_rule_data": 74,
+    "source_missing": 95
+  },
+  "cautions": [
+    "메뉴선언74개포함,306진단항목이독립알고리즘306개를뜻하지않음",
+    "interlife21달력검토중일부에간접수치DB의존성이발견되어ready확정금지",
+    "원본COM바이너리없음,외부결과누락95를AI판정으로대체하지않음"
+  ],
+  "items": [
+    {
+      "id": "humanorganizationmanagement",
+      "name": "인맥 구축·조직 관리법",
+      "group": "array_profile_review",
+      "issues": [
+        "unverified_saju_array_profile"
+      ],
+      "required_materials": [
+        "SajuManseryuk 원본 계산 프로필과 대조 입력/출력 샘플"
+      ],
+      "source_paths": [
+        "old/unse/HumanOrganizationManagement/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "mastermanrelations",
+      "name": "상사와의 관계",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_planet_position_data"
+      ],
+      "required_materials": [
+        "tbSavianAstro_Planet_i 위치표 또는 원본과 동일성을 검증한 위치 계산 규칙"
+      ],
+      "source_paths": [
+        "old/unse/MasterManRelations/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "socialmyhonor",
+      "name": "사회 속의 나의 명예",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_planet_position_data"
+      ],
+      "required_materials": [
+        "tbSavianAstro_Planet_i 위치표 또는 원본과 동일성을 검증한 위치 계산 규칙"
+      ],
+      "source_paths": [
+        "old/unse/SocialMyHonor/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "adviceluck",
+      "name": "나의 un처방",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/adviceluck/main_end.asp",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "analysisluck",
+      "name": "연인 심리분석",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/analysisluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "animalluck",
+      "name": "동물점",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/animalluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "basicluck",
+      "name": "나의 원초적 본능",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/basicluck/main_end.asp",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "birthluck",
+      "name": "탄생일un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/birthluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "bloodluck",
+      "name": "혈액형un",
+      "group": "source_logic_review",
+      "issues": [
+        "additional_input_required",
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/bloodluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "businessluck",
+      "name": "비즈니스 성공운",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/businessluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "calendarluck",
+      "name": "월un 달력",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_rule_rows"
+      ],
+      "required_materials": [
+        "tbCalUnse의 change/chungan/jiji 판정 데이터 행"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/unse/calendarluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "carluck",
+      "name": "차량번호un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/carluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "coinluck",
+      "name": "주역점",
+      "group": "source_logic_review",
+      "issues": [
+        "additional_input_required",
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/coinluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "correctyouluck",
+      "name": "나와 맞는 이성 궁합",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/correctyouluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "counselluck",
+      "name": "상담용 오기",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_pair_saju_formulas"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/counselluck/main.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "ddiluck",
+      "name": "띠별궁합풀이",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_inline_zodiac"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_love.asp",
+        "old/unse/free_main.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "fivegiluck",
+      "name": "내 몸의 기",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_custom_calendar_semantics"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/fivegiluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "flowerluck",
+      "name": "탄생화un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/flowerluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "gyukgukluck",
+      "name": "격국풀이 — 내 삶의 나침반",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/unse/gyukgukluck/main.asp",
+        "old/unse/gyukgukluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "hanjaluck",
+      "name": "한자un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/hanjaluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "hpluck",
+      "name": "휴대폰un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/hpluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "idealluck",
+      "name": "이상형찾기",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/side_include/sub_love.asp",
+        "old/unse/idealluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "jewelryluck",
+      "name": "탄생석un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/jewelryluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "juminluck",
+      "name": "주민번호un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/juminluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "jusoluck",
+      "name": "주소지un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/jusoluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "lottoluck",
+      "name": "로또un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_rng_semantics"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveandluck",
+      "name": "사랑과 결혼",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/side_include/sub_love.asp",
+        "old/unse/loveandluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "loverluck",
+      "name": "웨딩예감",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loverluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "makingloveluck",
+      "name": "사랑만들기",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/side_include/sub_love.asp",
+        "old/unse/makingloveluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "marriageluck",
+      "name": "결혼택일",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_auspicious_day_rules"
+      ],
+      "required_materials": [
+        "chosenday/tbLuckDay의 원본 택일 판정 플래그·규칙·분류 행"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/marriageluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "meetluck",
+      "name": "미팅 연애un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_love.asp",
+        "old/unse/free_main.asp",
+        "old/unse/meetluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "mindluck",
+      "name": "심리테스트",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_questionnaire_graph"
+      ],
+      "required_materials": [
+        "mental_member의 문항/선택지/jump_position 및 mental_result의 start_point/end_point 구간"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/mindluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "moveluck",
+      "name": "이사택일",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_auspicious_day_rules",
+        "two_input_modes"
+      ],
+      "required_materials": [
+        "chosenday/tbLuckDay의 원본 택일 판정 플래그·규칙·분류 행",
+        "tbLocation의 나이·방위별 원본 판정 행"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/moveluck/main.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "originalwedluck",
+      "name": "정통궁합",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/unse/originalwedluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "ourgrowthluck",
+      "name": "서로를 성장시키는 비결",
+      "group": "array_profile_review",
+      "issues": [
+        "unverified_saju_array_profile"
+      ],
+      "required_materials": [
+        "SajuManseryuk 원본 계산 프로필과 대조 입력/출력 샘플"
+      ],
+      "source_paths": [
+        "old/unse/ourgrowthluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "perfumeluck",
+      "name": "향수점",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/perfumeluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "perluck",
+      "name": "명품 개인종합un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/perluck/main_end.asp",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "preluck",
+      "name": "도통 전생록",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/preluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "sinsalluck",
+      "name": "궁합신살처방",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_love.asp",
+        "old/unse/sinsalluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "sonluck",
+      "name": "자녀교육법",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse 구현 소스 또는 판정 명세, 대조 실행 가능한 Windows 환경/DLL"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/sonluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "starluck",
+      "name": "별자리un",
+      "group": "source_logic_review",
+      "issues": [
+        "additional_input_required",
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/starluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "studentluck",
+      "name": "학생un",
+      "group": "source_logic_review",
+      "issues": [
+        "legacy_age_behavior",
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_unse.asp",
+        "old/side_include/sub_unse_.asp",
+        "old/unse/studentluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "sweetluck",
+      "name": "명품 평생애정운",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_yet"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_love.asp",
+        "old/unse/sweetluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "wedupluck",
+      "name": "궁합 UP 가이드",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_planet_position_data"
+      ],
+      "required_materials": [
+        "tbSavianAstro_Planet_i 위치표 또는 원본과 동일성을 검증한 위치 계산 규칙"
+      ],
+      "source_paths": [
+        "old/unse/wedupluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "adultluck-affairorloveluck",
+      "name": "불륜일까? 사랑일까?",
+      "group": "array_profile_review",
+      "issues": [
+        "unverified_saju_array_profile"
+      ],
+      "required_materials": [
+        "SajuManseryuk 경계 시각·윤달·사주 배열의 대조 샘플"
+      ],
+      "source_paths": [
+        "old/unse/adultluck/affairorloveluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "adultluck-bedroommatchingluck",
+      "name": "부부의 침실 궁합",
+      "group": "noncalendar_rule_data",
+      "issues": [
+        "missing_planet_position_data"
+      ],
+      "required_materials": [
+        "tbSavianAstro_Planet_i의 날짜별 fdAstro 등 행성 위치·분류 데이터"
+      ],
+      "source_paths": [
+        "old/unse/adultluck/bedroommatchingluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "adultluck-lovertechniqueluck",
+      "name": "연인과의 최고 절정의 기술",
+      "group": "array_profile_review",
+      "issues": [
+        "unverified_saju_array_profile"
+      ],
+      "required_materials": [
+        "SajuManseryuk 경계 시각·윤달·사주 배열의 대조 샘플"
+      ],
+      "source_paths": [
+        "old/unse/adultluck/lovertechniqueluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "adultluck-loverwishluck",
+      "name": "연인의 음란한 소망",
+      "group": "array_profile_review",
+      "issues": [
+        "unverified_saju_array_profile"
+      ],
+      "required_materials": [
+        "SajuManseryuk 경계 시각·윤달·사주 배열의 대조 샘플"
+      ],
+      "source_paths": [
+        "old/unse/adultluck/loverwishluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "adultluck-prohibitionsexluck",
+      "name": "금단의 섹스 진단",
+      "group": "array_profile_review",
+      "issues": [
+        "unverified_saju_array_profile"
+      ],
+      "required_materials": [
+        "SajuManseryuk 경계 시각·윤달·사주 배열의 대조 샘플"
+      ],
+      "source_paths": [
+        "old/unse/adultluck/prohibitionsexluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "adultluck-sexluck",
+      "name": "은밀한 섹스스타일",
+      "group": "opaque_com",
+      "issues": [
+        "opaque_com_rule"
+      ],
+      "required_materials": [
+        "NHCP5.NHUnse DLL의 구현 소스·판정 명세 또는 대조 실행 환경"
+      ],
+      "source_paths": [
+        "old/unse/adultluck/sexluck/main_end.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "adultluck-starcoupleluck",
+      "name": "별자리 속궁합",
+      "group": "source_logic_review",
+      "issues": [
+        "code_rules_plus_narrative_lookup"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/side_include/sub_love.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "adultluck-timesexbioluck",
+      "name": "시간대별 섹스 바이오",
+      "group": "source_logic_review",
+      "issues": [
+        "code_rules_plus_narrative_lookup"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/adultluck/timesexbioluck/main_end.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-lotto",
+      "name": "이번주 로또un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic",
+        "server_clock_and_partial_date",
+        "source_calendar_variable_unassigned"
+      ],
+      "required_materials": [
+        "배포본 /common.asp와 include 변수 바인딩 또는 음력 입력 결과 샘플",
+        "원본 서비스 서버의 timezone/시각 기준"
+      ],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-eroticwoto",
+      "name": "오늘의 섹스un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-sexwoman",
+      "name": "오늘의 섹스감도",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-horse",
+      "name": "오늘의 경마un",
+      "group": "source_logic_review",
+      "issues": [
+        "horse_option_offset_uninitialized",
+        "not_ported_source_logic",
+        "server_clock_and_partial_date"
+      ],
+      "required_materials": [
+        "경마 option_name=sat/기타 입력의 원본 결과 샘플",
+        "원본 서비스 서버의 timezone/시각 기준"
+      ],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-birth-flower",
+      "name": "탄생화un",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-blood-blood",
+      "name": "혈액형 궁합",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-flower",
+      "name": "플라워un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic",
+        "source_calendar_variable_unassigned"
+      ],
+      "required_materials": [
+        "배포본 /common.asp와 include 변수 바인딩 또는 음력 입력 결과 샘플"
+      ],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-game",
+      "name": "오늘의 게임un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic",
+        "source_calendar_variable_unassigned"
+      ],
+      "required_materials": [
+        "배포본 /common.asp와 include 변수 바인딩 또는 음력 입력 결과 샘플"
+      ],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-jugan-unse",
+      "name": "주간un",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-prince-date",
+      "name": "왕자의 오늘 데이트",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-prince-love-today",
+      "name": "왕자의 오늘 사랑",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-prince-today",
+      "name": "왕자의 오늘un",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-princess-date",
+      "name": "공주의 오늘 데이트",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-princess-love-today",
+      "name": "공주의 오늘 사랑",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-princess-today",
+      "name": "공주의 오늘un",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-star-un",
+      "name": "별자리un",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-firstdate",
+      "name": "첫 데이트 궁합",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic",
+        "source_calendar_variable_unassigned",
+        "source_gender_zero_vs_request_one_two"
+      ],
+      "required_materials": [
+        "배포본 /common.asp와 include 변수 바인딩 또는 음력 입력 결과 샘플"
+      ],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-firstsex",
+      "name": "첫 섹스 만족도",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic",
+        "source_gender_zero_vs_request_one_two"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-gostop",
+      "name": "오늘의 고스톱un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-gunghap",
+      "name": "궁합",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic",
+        "source_gender_zero_vs_request_one_two"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-leisure",
+      "name": "오늘의 레저un",
+      "group": "source_logic_review",
+      "issues": [
+        "not_ported_source_logic"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "function/loveunse.asp",
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-life-all",
+      "name": "평생사주",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-sok-gonghap",
+      "name": "속궁합",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-star-blood",
+      "name": "별자리와 혈액형 심리",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-today-date-unse",
+      "name": "오늘의 데이트un",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "loveunse-yupgi-dosa",
+      "name": "오늘의 엽기un",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/loveunse/main_end.asp",
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-faceface",
+      "name": "관상보기 (마의상법)",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_1.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_10.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_11.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_12.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_13.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_2.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_3.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_5.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_7.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_8.asp",
+        "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_9.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-1",
+      "name": "오늘의 띠별un",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_1.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-11",
+      "name": "사주명식",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_11.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-12",
+      "name": "음양력변환",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_12.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-13",
+      "name": "꿈해몽",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_13.asp",
+        "old/unse/interlife/data/moneyDATA.dat"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-14",
+      "name": "태몽",
+      "group": "source_logic_review",
+      "issues": [],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_14.asp",
+        "old/unse/interlife/data/moneyDATA.dat"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-2",
+      "name": "별자리un",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_2.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-3",
+      "name": "혈액형un",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_3.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-4",
+      "name": "주민번호un",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_4.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-5",
+      "name": "행운번호un",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_5.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-6",
+      "name": "혈액형궁합",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_6.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-7",
+      "name": "웰빙주택운",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_7.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-free-8",
+      "name": "바이오리듬",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/free/free_8.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-gunghap-1",
+      "name": "정통궁합(속궁합,겉궁합)",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_1.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-10",
+      "name": "이성의 성격",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_yongsin_01의 title, yo1, he1, gi1, gu1, ha1 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_10.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-11",
+      "name": "인연수1",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_manse_sub의 umyear_h, umyear_e, umyear_ho, umyear_eo, no 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_yongsin_01의 title, yo1, he1, gi1, gu1, ha1 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_11.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-12",
+      "name": "인연수2",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_manse_sub의 umyear_h, umyear_e, umyear_ho, umyear_eo, no 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_yongsin_01의 title, yo1, he1, gi1, gu1, ha1 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_12.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-13",
+      "name": "속궁합",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_g016",
+        "interlife_original_numeric_score_y003",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "g016의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "y003의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_13.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-14",
+      "name": "겉궁합",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s061",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s061의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_14.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-15",
+      "name": "애정운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_15.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-16",
+      "name": "부부화합운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s053",
+        "interlife_original_numeric_score_s054",
+        "interlife_original_numeric_score_s056",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s053의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s054의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s056의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_16.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-17",
+      "name": "섹스운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s054",
+        "interlife_original_numeric_score_s061",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s054의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s061의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_17.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-18",
+      "name": "천생복덕운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s057",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s057의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_18.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-2",
+      "name": "사상체질궁합",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s056",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s056의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_2.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-3",
+      "name": "용신으로 보는 연인애정운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_manse_sub의 umyear_h, umyear_e, umyear_ho, umyear_eo, no 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_yongsin_01의 title, yo1, he1, gi1, gu1, ha1 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_3.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-4",
+      "name": "그이의 러브스타일 보기",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_g003",
+        "interlife_original_numeric_score_y003",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "required_materials": [
+        "g003의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "tojung_gabja의 gabja, tae, wol, il 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "y003의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_4.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-5",
+      "name": "섹스 토정비결",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s061",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s061의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_5.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-6",
+      "name": "침실 섹스궁합",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_g020",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "required_materials": [
+        "g020의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "tojung_gabja의 gabja, tae, wol, il 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_6.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-7",
+      "name": "결혼배필운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s061",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s061의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_7.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-8",
+      "name": "인연은 몇 명",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_g012",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "required_materials": [
+        "g012의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_yongsin_01의 title, yo1, he1, gi1, gu1, ha1 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_8.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-gunghap-9",
+      "name": "애인부부운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_yongsin_01의 title, yo1, he1, gi1, gu1, ha1 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_9.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-1",
+      "name": "자미두수",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_1.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-jum-10",
+      "name": "질병건강운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_10.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-11",
+      "name": "주거가택운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_11.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-12",
+      "name": "사업합작운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_n010",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n010의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "surioheng의 hangul, hanja, su, bal 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_12.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-13",
+      "name": "직장상사운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_n011",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n011의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "surioheng의 hangul, hanja, su, bal 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_13.asp",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-14",
+      "name": "직장부하운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "im18_selector_wiring_review",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_n012",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n012의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "surioheng의 hangul, hanja, su, bal 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_14.asp",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-15",
+      "name": "육임단시",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s016",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s016의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_15.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-16",
+      "name": "64괘 un분석",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_16.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-jum-2",
+      "name": "주역점",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_2.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-jum-3",
+      "name": "주역신수비결",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s027",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s027의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_3.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-4",
+      "name": "영험한 첨",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_4.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-5",
+      "name": "단시점",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_5.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-6",
+      "name": "육효",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_6.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-7",
+      "name": "자식운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_7.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-8",
+      "name": "형제운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_8.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-jum-9",
+      "name": "적성운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/jum/jum_9.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-lotto-1",
+      "name": "로또번호un",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/lotto/lotto_1.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-manse-1",
+      "name": "사주명식",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/manse/manse_1.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-manse-2",
+      "name": "음양력변환",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/manse/manse_2.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-name-1",
+      "name": "자동이름풀이 (성 1자·이름 1자)",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "required_materials": [
+        "n015의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "namedata의 hanjawin, hanjano, hangul, what, mokwha, mokwha11, newold, bulcomment 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/name/name_1.asp",
+        "old/unse/interlife/incs/info.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-name-2",
+      "name": "자동이름풀이 (성 1자·이름 2자)",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "required_materials": [
+        "n015의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "namedata의 hanjawin, hanjano, hangul, what, mokwha, mokwha11, newold, bulcomment 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/name/name_2.asp",
+        "old/unse/interlife/incs/info.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-name-3",
+      "name": "자동이름풀이 (성 1자·이름 3자)",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "required_materials": [
+        "n015의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "namedata의 hanjawin, hanjano, hangul, what, mokwha, mokwha11, newold, bulcomment 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/name/name_3.asp",
+        "old/unse/interlife/incs/info.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-name-4",
+      "name": "자동이름풀이 (성 2자·이름 1자)",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "required_materials": [
+        "n015의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "namedata의 hanjawin, hanjano, hangul, what, mokwha, mokwha11, newold, bulcomment 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/name/name_4.asp",
+        "old/unse/interlife/incs/info.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-name-5",
+      "name": "자동이름풀이 (성 2자·이름 2자)",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "required_materials": [
+        "n015의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "namedata의 hanjawin, hanjano, hangul, what, mokwha, mokwha11, newold, bulcomment 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/name/name_5.asp",
+        "old/unse/interlife/incs/info.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-name-6",
+      "name": "셀프용신작명",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_name_character_mapping_namedata"
+      ],
+      "required_materials": [
+        "namedata의 hanjawin, hanjano, hangul, what, mokwha, mokwha11, newold, bulcomment 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/solve/N/N001_1.asp",
+        "old/unse/interlife/UNSE_DATA/solve/N/N001_2.asp",
+        "old/unse/interlife/UNSE_DATA/solve/N/N001_3.asp",
+        "old/unse/interlife/UNSE_DATA/solve/N/N001_4.asp",
+        "old/unse/interlife/UNSE_DATA/unse/name/name_6-2.asp",
+        "old/unse/interlife/UNSE_DATA/unse/name/name_6-3.asp",
+        "old/unse/interlife/UNSE_DATA/unse/name/name_6-4.asp",
+        "old/unse/interlife/UNSE_DATA/unse/name/name_6.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-name-7",
+      "name": "성씨추명학",
+      "group": "interlife_rule_data",
+      "issues": [
+        "interlife_original_numeric_score_n008",
+        "interlife_original_numeric_score_n009",
+        "interlife_original_numeric_score_n010",
+        "interlife_original_numeric_score_n011",
+        "interlife_original_numeric_score_n012",
+        "interlife_original_numeric_score_n013",
+        "interlife_original_numeric_score_n014",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "required_materials": [
+        "n008의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n009의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n010의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n011의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n012의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n013의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "n014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "surioheng의 hangul, hanja, su, bal 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/name/name_7.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-1",
+      "name": "올해의토정비결",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "tojung_gabja의 gabja, tae, wol, il 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_1.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-10",
+      "name": "자평명리학 오늘의 un",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_10.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-11",
+      "name": "당사주 평생총운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_11.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-12",
+      "name": "사주로 보는 심리분석",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_t060",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "t060의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_12.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-13",
+      "name": "살풀이",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_13.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-14",
+      "name": "성격un",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_14.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-15",
+      "name": "초년운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s018",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s018의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_15.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-16",
+      "name": "중년운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s019",
+        "interlife_original_numeric_score_s051",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s019의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s051의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_16.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-17",
+      "name": "말년운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s020",
+        "interlife_original_numeric_score_s051",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s020의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s051의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_17.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-18",
+      "name": "직업운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_18.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-19",
+      "name": "재물운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s027",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s027의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_19.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-2",
+      "name": "새해신수",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "tojung_gabja의 gabja, tae, wol, il 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_2.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-20",
+      "name": "선천적기질운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_20.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-21",
+      "name": "태어난계절에따른운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_21.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-3",
+      "name": "자평명리학 평생총운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_original_numeric_score_s022",
+        "interlife_original_numeric_score_s027",
+        "interlife_original_numeric_score_s064",
+        "interlife_original_numeric_score_s067",
+        "interlife_original_numeric_score_s068",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s022의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s027의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s064의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s067의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s068의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_3.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-4",
+      "name": "인생풀이",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s045",
+        "interlife_original_numeric_score_s046",
+        "interlife_original_numeric_score_s047",
+        "interlife_original_numeric_score_s051",
+        "interlife_original_numeric_score_s053",
+        "interlife_original_numeric_score_s054",
+        "interlife_original_numeric_score_s055",
+        "interlife_original_numeric_score_s056",
+        "interlife_original_numeric_score_s057",
+        "interlife_original_numeric_score_s061",
+        "interlife_original_numeric_score_s063",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s045의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s046의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s047의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s051의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s053의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s054의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s055의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s056의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s057의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s061의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s063의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_4.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-5",
+      "name": "사주un",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_5.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-6",
+      "name": "십년대운풀이",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_6.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-7",
+      "name": "전생운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_7.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-8",
+      "name": "질병운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_8.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-saju-9",
+      "name": "나의 오행기un",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/saju/saju_9.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-selectDay-1",
+      "name": "결혼택일",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/selectDay/selectDay_1.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-selectDay-2",
+      "name": "이사택일",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/selectDay/selectDay_2.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-selectDay-3",
+      "name": "특정일un",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/selectDay/selectDay_3.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-1",
+      "name": "천생운",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_t023",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "t023의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_1.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-10",
+      "name": "현재 un풀이",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s013",
+        "interlife_original_numeric_score_t023",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s013의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "t023의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_10.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-11",
+      "name": "현재나의운 분석",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_11.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-12",
+      "name": "사업운총평",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_12.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-13",
+      "name": "재물 모으는 법",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_13.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-14",
+      "name": "재물손실 막는 법",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_14.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-15",
+      "name": "재테크비법",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_15.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-theme-2",
+      "name": "타로점성술",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_2.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-theme-3",
+      "name": "신통방통 동전점",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_3.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-theme-4",
+      "name": "탄생석점",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_4.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-theme-5",
+      "name": "나의길흉숫자",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_5.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-6",
+      "name": "방위점",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s013",
+        "interlife_six_lines_hexagram_mapping_juyek_6hyo",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "juyek_6hyo의 juyek, gung, jiji_01..06, boksin_01..06, sehyo, ychin_01..06 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "s013의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_6.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-7",
+      "name": "나의 수호천사와 타로점",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s014",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s014의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_7.asp",
+        "old/unse/interlife/incs/info.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-8",
+      "name": "나의별자리사랑",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_calendar_classification_mansedata",
+        "interlife_solar_term_boundary_manse_data",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "required_materials": [
+        "toc_manse_sub의 umyear_h, umyear_e, umyear_ho, umyear_eo, no 분류/수치 열과 원본 조회키 또는 동등한 판정 명세",
+        "toc_yongsin_01의 title, yo1, he1, gi1, gu1, ha1 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_8.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-theme-9",
+      "name": "피해야할상대",
+      "group": "interlife_rule_data",
+      "issues": [
+        "conditional_leap_file_path",
+        "interlife_calendar_classification_mansedata",
+        "interlife_original_numeric_score_s013",
+        "interlife_solar_term_boundary_manse_data"
+      ],
+      "required_materials": [
+        "s013의 DB_numerical 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/theme/theme_9.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-yukim-1",
+      "name": "육임정단",
+      "group": "interlife_calendar_review",
+      "issues": [
+        "interlife_calendar_classification_mansedata"
+      ],
+      "required_materials": [],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/yukim/yukim_1.asp"
+      ],
+      "status": "review_required"
+    },
+    {
+      "id": "interlife-yukim-2",
+      "name": "지두법(길흉속지법)",
+      "group": "interlife_rule_data",
+      "issues": [
+        "interlife_calendar_classification_mansedata",
+        "interlife_yukim_classification_yukim_720"
+      ],
+      "required_materials": [
+        "yukim_720의 ganji, guk, day_gui, night_gui, gongmang_01, gongmang_02, day_gui_t, night_gui_t, sun_yek_day, sun_yek_night 분류/수치 열과 원본 조회키 또는 동등한 판정 명세"
+      ],
+      "source_paths": [
+        "old/unse/interlife/UNSE_DATA/unse/yukim/yukim_2.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-free-9",
+      "name": "미니만세력",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "누락된 old/unse/interlife/UNSE_DATA/unse/free/free_9.asp와 연결 계산 자료"
+      ],
+      "source_paths": [
+        "old/unse/interlife/data/moneyDATA.dat"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "interlife-free-10",
+      "name": "일반만세력",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "누락된 old/unse/interlife/UNSE_DATA/unse/free/free_10.asp와 연결 계산 자료"
+      ],
+      "source_paths": [
+        "old/unse/interlife/data/moneyDATA.dat"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "missing-todayprovluck",
+      "name": "좋은글 알림SMS",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/todayprovluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "missing-monthbgluck",
+      "name": "월un 바탕화면",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/monthbgluck/main_end.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "missing-comforyou",
+      "name": "나의 인생스타일",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/comforyou/richsaju/default.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "missing-manseluck",
+      "name": "도통 만세력",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/manseluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "stockluck-m1",
+      "name": "주식투자에 좋은 사주는?",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/stockluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "stockluck-m2",
+      "name": "무료 대박주식un",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/stockluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "stockluck-m6",
+      "name": "사주추천종목알림이SMS",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/stockluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "stockluck-m3",
+      "name": "프리미엄 대박주식un",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/stockluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "stockluck-m4",
+      "name": "급등주 대박주식un",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/stockluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "stockluck-m5",
+      "name": "기운보강 + 주식부적",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/stockluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "external-video-b",
+      "name": "적중 2012 토정비결",
+      "group": "source_missing",
+      "issues": [
+        "external_implementation_missing"
+      ],
+      "required_materials": [
+        "제공사 소스/연동 명세 및 대조 결과"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "external-video-f",
+      "name": "적중 궁합",
+      "group": "source_missing",
+      "issues": [
+        "external_implementation_missing"
+      ],
+      "required_materials": [
+        "제공사 소스/연동 명세 및 대조 결과"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "external-video-c",
+      "name": "적중 취업운",
+      "group": "source_missing",
+      "issues": [
+        "external_implementation_missing"
+      ],
+      "required_materials": [
+        "제공사 소스/연동 명세 및 대조 결과"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "external-video-d",
+      "name": "나의 전생 얼굴보기",
+      "group": "source_missing",
+      "issues": [
+        "external_implementation_missing"
+      ],
+      "required_materials": [
+        "제공사 소스/연동 명세 및 대조 결과"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "external-video-e",
+      "name": "미래 내 배우자 얼굴",
+      "group": "source_missing",
+      "issues": [
+        "external_implementation_missing"
+      ],
+      "required_materials": [
+        "제공사 소스/연동 명세 및 대조 결과"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "external-video-a",
+      "name": "미래 내 아이 얼굴",
+      "group": "source_missing",
+      "issues": [
+        "external_implementation_missing"
+      ],
+      "required_materials": [
+        "제공사 소스/연동 명세 및 대조 결과"
+      ],
+      "source_paths": [
+        "old/side_include/sub_unse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "missing-richgung",
+      "name": "우리 애정스타일",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/unse/comforyou/richgung/default.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_love.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "missing-weddingluck",
+      "name": "궁합풀이",
+      "group": "source_missing",
+      "issues": [
+        "result_source_missing"
+      ],
+      "required_materials": [
+        "old/love/weddingluck/main.asp 및 연결된 계산 코드"
+      ],
+      "source_paths": [
+        "old/side_include/sub_love.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "loveunse-love-today",
+      "name": "오늘의 사랑운",
+      "group": "source_missing",
+      "issues": [
+        "result_branch_missing"
+      ],
+      "required_materials": [
+        "love_today 결과 분기 또는 원본 동작 명세"
+      ],
+      "source_paths": [
+        "old/unse/loveunse/top_loveunse.asp"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im15",
+      "name": "직장운 [IM15 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/jobluck/main_end.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im16",
+      "name": "대인관계운 [IM16 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im19",
+      "name": "캐리어우먼 성공진단 [IM19 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im20",
+      "name": "캐리어우먼으로서의 명예 [IM20 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im21",
+      "name": "캐리어우먼의 일과 가정 [IM21 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im22",
+      "name": "재물모으는 법 [IM22 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im23",
+      "name": "재물손실막는법 [IM23 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im24",
+      "name": "재테크비법 [IM24 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im25",
+      "name": "피해야 할 상대 [IM25 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im26",
+      "name": "비지니스 성공비결 [IM26 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im27",
+      "name": "비즈니스극복운 [IM27 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im28",
+      "name": "사업운총평 [IM28 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im29",
+      "name": "사업합작운 [IM29 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im30",
+      "name": "이상형찿기 [IM30 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im31",
+      "name": "나의연인은어떤사람 [IM31 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im32",
+      "name": "당신과관계된이성들 [IM32 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im33",
+      "name": "미팅연애un [IM33 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im34",
+      "name": "사랑만들기 [IM34 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im35",
+      "name": "나의매력 [IM35 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im36",
+      "name": "나는이성에게어떤사람 [IM36 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im37",
+      "name": "이성의성격 [IM37 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im38",
+      "name": "성격분석 [IM38 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im39",
+      "name": "현실도분석 [IM39 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im40",
+      "name": "결혼조건분석 [IM40 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im41",
+      "name": "오늘의 무료데이트un [IM41 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im42",
+      "name": "첫 데이트 궁합 [IM42 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im43",
+      "name": "러브어드바이스 [IM43 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im44",
+      "name": "왕자의 오늘 데이트 un [IM44 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im45",
+      "name": "공주의 오늘 데이트 un [IM45 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im46",
+      "name": "왕자의 오늘 un [IM46 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im47",
+      "name": "공주의 오늘 un [IM47 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im48",
+      "name": "왕자의 오늘 사랑 un [IM48 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im49",
+      "name": "공주의 오늘 사랑 un [IM49 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im50",
+      "name": "우리애정스타일 [IM50 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im51",
+      "name": "명품애정un [IM51 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im52",
+      "name": "화해하기위한상대파악 [IM52 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im53",
+      "name": "이별후연인의마음 [IM53 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im54",
+      "name": "무료궁합 [IM54 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im55",
+      "name": "띠별궁합풀이 [IM55 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im56",
+      "name": "나와맞는이성궁합 [IM56 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im57",
+      "name": "찰떡궁합 [IM57 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im58",
+      "name": "숙명의궁합 [IM58 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im59",
+      "name": "서로를 성장시키는비결 [IM59 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im60",
+      "name": "결혼택일 [IM60 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im61",
+      "name": "웨딩 타임머신 [IM61 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im62",
+      "name": "사랑과결혼 [IM62 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im63",
+      "name": "두사람의 숙명진단 [IM63 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im64",
+      "name": "별자리un [IM64 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im65",
+      "name": "별자리속궁합 [IM65 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im66",
+      "name": "혈액형un [IM66 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im67",
+      "name": "혈액형궁합 [IM67 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_target_missing"
+      ],
+      "required_materials": [
+        "old/unse/astrosaju/detail.asp 및 연결 include/판정 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im68",
+      "name": "꿈해몽 [IM68 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im69",
+      "name": "심리테스트 [IM69 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im70",
+      "name": "향수점 [IM70 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im71",
+      "name": "동물점 [IM71 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im72",
+      "name": "전생록 [IM72 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im73",
+      "name": "주역점 [IM73 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im74",
+      "name": "주민번호un [IM74 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im75",
+      "name": "휴대폰un [IM75 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im76",
+      "name": "주소지un [IM76 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im77",
+      "name": "차량번호un [IM77 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im78",
+      "name": "탄생일un [IM78 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im79",
+      "name": "탄생화un [IM79 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im80",
+      "name": "탄생석un [IM80 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im81",
+      "name": "경마un [IM81 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im82",
+      "name": "고스톱un [IM82 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im83",
+      "name": "게임un [IM83 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im84",
+      "name": "레저un [IM84 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im85",
+      "name": "엽기un [IM85 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im86",
+      "name": "적중궁합 [IM86 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im87",
+      "name": "적중취업운 [IM87 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im88",
+      "name": "적중궁합 [IM88 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im89",
+      "name": "미래내배우자얼굴 [IM89 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    },
+    {
+      "id": "menu-im90",
+      "name": "미래내아이얼굴 [IM90 메뉴]",
+      "group": "source_missing",
+      "issues": [
+        "menu_dispatch_missing"
+      ],
+      "required_materials": [
+        "실제 배포본 메뉴→실행 경로/입력폼/분기값 또는 해당 서비스 명세"
+      ],
+      "source_paths": [
+        "old/js/unseform.js",
+        "old/xmlpath/left.xml",
+        "old/xmlpath/unse.xml"
+      ],
+      "status": "source_required"
+    }
+  ]
+}

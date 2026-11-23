@@ -1,0 +1,1464 @@
+{
+  "schema_version": 1,
+  "change": "CR-012/T-024",
+  "scope": "실제 활성 leaf/helper를 추적한 interlife 나머지15종. 소스 본문·접속정보 없이 선택키·원인·필요자료와 줄 근거만 기록.",
+  "source_inventory_tree_sha256": "e2902d0cfd9ad7e7081a5d4e3c8f307997744ed7596764f9b1ce3b440a28bb33",
+  "policy": "원본 문구는 AI 교체 가능하나 수치·길흉분류·달력 의미·괘명 사실은 추정하지 않는다. 기본partial의 최종AI는 차단하며 typed 조사 입력은 원본 DB 인증을 대신하지 않는다.",
+  "items": [
+    {
+      "service_id": "interlife-free-11",
+      "name": "사주명식",
+      "implementation": {
+        "module": "app/ported_interlife_chart.py",
+        "helpers": [
+          "app/ported_interlife_display.py"
+        ],
+        "default_state": "partial_blocked",
+        "algorithm_complete": true,
+        "calculation_only": true,
+        "ready": false,
+        "computed": [
+          "f_Saju 활성 b_saju_Click의 -30분·보정년 입춘/보정전 월 경계·자시·10대운·OLE Date 성분 대운수와 find_yong 전체 3,150 경우를 Python으로 구현",
+          "saju_made의 24간지 배열·오행코드·용희기구한 이름 순서·공망·달력 분기를 원본 순서대로 구현",
+          "실제 div24 3,600행·suntolun 170행·YunDat 정상 3,207행과 원본 형식 이상 40행을 정적 자료로 분리하여 원본 달력 함수를 구현",
+          "sajujowha 전체 원본 행 선택·주야간지·지장간과 F029 전체 For 44개/ReDim 7개·십신·운성·대운·세운 82표시 필드를 동결 AST로 실행",
+          "원본 source_pillars·hidden_stems·major_pillars를 구조화하고 F029 이전 shared source globals를 별도로 제공; native와 행 기반 명식을 자동 대체하지 않음",
+          "b_saju_Click의 원시 날짜 토큰을 엄격 검증하고 YunDat의 padding/형식 이상/누락 불일치 시 원본 평달 gf_Lun2Sun fallback을 명시적 조사 모드로 재현; 요청 윤달과 다른 유효 실행은 AI 검증 경고로 보존"
+        ],
+        "source_scope_truth": "원본에 존재하는 활성 명식·대운·용신·표시 계산 분기는 모두 Python/정적 자료로 준비됨. HTML·이미지 출력만 제외. 현재 차단 사유는 미이식 코드가 아니라 실제 원본 행/외부 상태/원본 문법·서버 정책 및 수동 데이터 신뢰 조건이다.",
+        "default_parameters": {
+          "server_date": "optional YYYY-MM-DD; omitted fixed KST today"
+        },
+        "required_source_fields": [
+          "source_birth_rows.birth.{no,number,day_h,day_e,jeolip}",
+          "source_birth_rows.selected.{number,year_h,year_e,month_h,month_e}; 2월 절입 전 실제 number-1 선택 규칙 검증",
+          "source_current_record.{no,umyear_h,umyear_e}; no must match server_date",
+          "source_state.{my_age,daeun1_no..daeun10_no}; 원본 소스에 할당문이 없는 외부 입력 상태"
+        ],
+        "optional_native_comparison": [
+          "source_solunar + source_two_digit_year_max OR validated source_terms",
+          "독립 native 비교는 F029의 실제 my_* 원본 행을 대체하지 않음",
+          "source_native_request_date 정수/원시 숫자문자열과 source_leap_mismatch_policy; 기본 정수 인자/불일치 거절, original_regular_fallback 조사 재현은 AI 차단 유지"
+        ]
+      },
+      "blockers": [
+        {
+          "category": "actual_source_calendar_rows_required",
+          "fields": [
+            "source_birth_rows.birth.{no,number,day_h,day_e,jeolip}",
+            "source_birth_rows.selected.{number,year_h,year_e,month_h,month_e}; 2월 절입 전 실제 number-1 선택 규칙 검증",
+            "source_current_record.{no,umyear_h,umyear_e}; no must match server_date"
+          ],
+          "effect": "birth/selected의 실제 no·number 대응 및 A~J/01寅~12丑 코드 의미, 현재 umyear_h/e를 다른 달력 년주로 추정하지 않는다.",
+          "materials": [
+            "원본 출생일·선택 번호 행 및 현재 일자 행의 신뢰된 서버 어댑터",
+            "음력 연말/설 전후의 umyear_h/e 의미를 확인할 원본 레코드"
+          ]
+        },
+        {
+          "category": "original_source_unassigned_state",
+          "fields": [
+            "my_age",
+            "daeun1_no..daeun10_no"
+          ],
+          "effect": "F029의 원본 코드 자체에 할당이 없는 상태를 Empty로 보존하고 별도로 보고한다. DB 표가 없는 것으로 오분류하지 않는다.",
+          "materials": [
+            "실제 상용 배포가 이 값을 공급하는 외부 호출 계약 또는 승인된 명시 정책"
+          ]
+        },
+        {
+          "category": "original_source_syntax_anomaly",
+          "fields": [
+            "F029.asp:3919",
+            "F029.asp:4170"
+          ],
+          "effect": "VB 블록 안의 // 주석형 행은 non_vb_comment_syntax로 분리한다. 전체 계산 분기는 구현되어 있으나 배포 소스에서의 처리 상태가 검증되어야 한다.",
+          "materials": [
+            "상용 배포본에서 두 행을 처리한 방식 또는 승인된 소스 결함 교정 정책"
+          ]
+        },
+        {
+          "category": "conditional_native_server_policy",
+          "conditional": true,
+          "fields": [
+            "div24.dat two-digit CDate interpretation",
+            "saju_made.solunar binding",
+            "actual request_year/month/day token padding/type",
+            "YunDat unmatched Opt_Cal_Sun_Value=Empty -> ordinary gf_Lun2Sun fallback"
+          ],
+          "effect": "선택적인 native 비교를 요청하는 경우에만 실제 원본 solunar 바인딩과 두 자리 연도 해석 설정이 필요하다. prefix year로 날짜를 자동 교정하지 않으며 F029 계산을 위해 이 비교를 강제하지 않는다. 윤달 키 불일치는 원본에서 평달로 계산되는 확정 분기다. 기본 API는 이를 윤달 정답으로 승인하지 않으며 명시적 조사 모드에서는 그 수학 결과와 실제 effective calendar를 표시한다.",
+          "materials": [
+            "검증한 원본 TwoDigitYearMax 또는 4자리 절기 시각과 명시적 solunar 코드",
+            "실제 caller의 날짜 문자열 padding/ByRef 변환 계약; fallback을 상용 정답으로 승인할지에 대한 명시 정책"
+          ]
+        },
+        {
+          "category": "request_records_are_not_trusted_adapters",
+          "fields": [
+            "source_birth_rows",
+            "source_current_record",
+            "source_state"
+          ],
+          "effect": "typed 조사 입력으로 전체 계산을 검증할 수 있으나 요청값이 실제 원본 판정 자료임을 증명하지 않는다. 서버 어댑터 검증 전에는 기본 partial 상태를 유지한다.",
+          "materials": [
+            "신뢰된 원본 자료 연결/어댑터 검증"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/free/free_11.asp",
+          "lines": [
+            4,
+            5,
+            25
+          ],
+          "sha256": "9cd66a0818b150e2ea6f1d37e899c622b54a854054fe84c2d52a44f203f73ee6"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F029.asp",
+          "lines": [
+            12,
+            27,
+            29,
+            30
+          ],
+          "sha256": "a5f1f9aa84ca8864ee919d2c52397f6d681757d84235ed9646238a0654206222"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/f_Saju.asp",
+          "lines": [
+            52,
+            61,
+            63,
+            72,
+            77,
+            2932,
+            3096,
+            3105,
+            3117,
+            3132,
+            3161,
+            3203,
+            3255,
+            3395
+          ],
+          "sha256": "22177247bd0c0da360024a518b12b14761b5295639204cb8c935ac42492c68f1"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/data/div24.dat",
+          "lines": [
+            1,
+            3600
+          ],
+          "sha256": "6651dd1a3dd293af229bdc7571a044203de187919d61619454ed66695d2504e6"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/data/suntolun.dat",
+          "lines": [
+            1,
+            170
+          ],
+          "sha256": "7fff27822640fa30d571c742de774760bb55867cff9964e7020396f97d93cc9f"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/data/YunDat.dat",
+          "lines": [
+            1,
+            3247
+          ],
+          "sha256": "ce1f09cc211e321f07627c1888b5e3eef743feb6e908a63f9b0132f9e56dfcf5"
+        }
+      ],
+      "notes": "이 두 화면은 원본 자체가 명식 표시이므로 계산전용이며 AI 해석 문구가 없다. 원본 태양력 buf(3..5) 미할당은 별도 native source_state_errors로 보존하고 F029가 읽지 않는 값 때문에 표시 계산 전체를 중단하지 않는다."
+    },
+    {
+      "service_id": "interlife-free-4",
+      "name": "주민번호un",
+      "implementation": {
+        "module": "app/ported_interlife_dependencies.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "yy/mm 함수 로컬과 전역 dd 천간 배열 추적",
+          "실패한 배열 합산과 오류 후 Empty→10 후보를 분리 표시"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "source_runtime_defect",
+          "fields": [
+            "T046 mm/yy/dd/unmyung"
+          ],
+          "effect": "생일 합이나 주민번호 합으로 고치지 않는다. On Error Resume Next가 남기는 unmyung의 Empty/기존 상태를 실제 결과와 대조해야 한다.",
+          "materials": [
+            "원본 해당 경로의 오류 전후 변수 상태·상용 결과 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/free/free_4.asp",
+          "lines": [
+            77,
+            78,
+            80
+          ],
+          "sha256": "83774314183ee49500f8ca0d42f009c0666df871211ca874080199ca9112c263"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/T046.asp",
+          "lines": [
+            2,
+            6,
+            7,
+            10
+          ],
+          "sha256": "7075a582b39cf49d598c5e5b248646d310925f7adab947efd34b6152e594c62b"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/sajujowha.asp",
+          "lines": [
+            224,
+            230
+          ],
+          "sha256": "e1fafa0b31d38fe720c958418b714376fc50c41fe08f2c53bbfaabc7a217b77f"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/f_Saju.asp",
+          "lines": [
+            2873,
+            3439,
+            3441,
+            3442,
+            3443,
+            3532
+          ],
+          "sha256": "22177247bd0c0da360024a518b12b14761b5295639204cb8c935ac42492c68f1"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "service_id": "interlife-free-5",
+      "name": "행운번호un",
+      "implementation": {
+        "module": "app/ported_interlife.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "쿠키 우선",
+          "자리별0~8 추첨",
+          "인접합3·총합·인접합0행생략",
+          "입력 원문 숫자 비노출"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "missing_non_narrative_classification",
+          "fields": [
+            "F019.DB_express",
+            "F019.DB_express_1"
+          ],
+          "effect": "원본 吉/凶/半吉半凶 값이 실제 색상·기호를 결정하며 문구 AI 대체 범위가 아니다.",
+          "materials": [
+            "F019 DB_num별 남녀 길흉 분류"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F019.asp",
+          "lines": [
+            8,
+            17,
+            23,
+            40,
+            48,
+            54,
+            56,
+            65,
+            72,
+            74,
+            90,
+            92,
+            107,
+            109,
+            118
+          ],
+          "sha256": "6e3de77e73c11c0f8670c62ed7685da6b2e6fc2de97f28a3251a6a88cd9831d3"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "service_id": "interlife-free-7",
+      "name": "웰빙주택un",
+      "implementation": {
+        "module": "app/ported_interlife.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "실제 tb_manse raw 월지 사실과 원본 F012 선택키를 분리",
+          "미검증 원본 month_e=None 유지"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.year_e",
+            "mansedata.month_e",
+            "mansedata.jeolip",
+            "mansedata.number"
+          ],
+          "effect": "원본 2월 절입 전 number−1 분기와 원본 row의 년월주 의미를 tb_manse나 dotong과 동일하다고 추정하지 않는다.",
+          "materials": [
+            "절입일 전후 원본 mansedata row·number 순서·년월 코드 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F012.asp",
+          "lines": [
+            7,
+            9
+          ],
+          "sha256": "d3e1577626180ade46f213859f0477da969b389015fd03e443c04c88131dee78"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/sajujowha.asp",
+          "lines": [
+            7,
+            23,
+            24,
+            30,
+            35,
+            134,
+            145
+          ],
+          "sha256": "e1fafa0b31d38fe720c958418b714376fc50c41fe08f2c53bbfaabc7a217b77f"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "service_id": "interlife-free-8",
+      "name": "바이오리듬",
+      "implementation": {
+        "module": "app/ported_interlife_dependencies.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "typed 원본 num 차이",
+          "23/28/33 주기·음수 Mod",
+          "27분류 키",
+          "Int(sin*100) 어제/오늘/내일",
+          "원본 2월28일 표시 규칙"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "unverified_calendar_serial_semantics",
+          "fields": [
+            "LunarToSolar.num"
+          ],
+          "effect": "연속 일수 의미가 미확인이라 날짜 ordinal 또는 tb_manse.idx를 num 대체값으로 사용하지 않는다.",
+          "materials": [
+            "solar_date/num의 연속 구간·윤일·전환 경계 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F024.asp",
+          "lines": [
+            19,
+            25,
+            51,
+            55,
+            59,
+            70,
+            73,
+            87,
+            99,
+            111,
+            123,
+            125,
+            156,
+            168,
+            278
+          ],
+          "sha256": "446609a6293cd4eb2711d375be39487747dba1eb678bc761fff1f09ef197da2e"
+        }
+      ],
+      "notes": "typed day_numbers는 조사 입력이며 원본 DB 인증을 대신하지 않는다."
+    },
+    {
+      "service_id": "interlife-jum-1",
+      "name": "자미두수",
+      "implementation": {
+        "module": "app/ported_interlife_chart.py",
+        "helpers": [
+          "app/ported_ziwei.py"
+        ],
+        "default_state": "partial_blocked",
+        "algorithm_complete": true,
+        "calculation_only": false,
+        "ready": false,
+        "computed": [
+          "S_J017_J030_sol.asp 18,144행의 알려진 전체 순수 계산을 15,560 코드행/3,369 최상위 AST 문장으로 원본 순서대로 실행",
+          "12궁·명신궁·국·14주성·묘왕리함·사화·보조성·대한·유년·차성안궁과 최종24별/궁 필드 생성",
+          "J017..J030의 14개 원본 주성 압축키/궁 selector를 생성하고 J020/J021/J022 동일 chene 바인딩을 보존",
+          "source_mm 원문 선택 및 source_selected_year/실제 annual 행을 분리하고, 원본 혼합형 비교·미할당 current_daehan·음양 할당 순서를 보존",
+          "HTML·이미지 없이 12궁/최종별 및 원본 결함 요약만 공개하고 원시 생일·음력 연월일·VM 변수 전체는 AI facts에서 제외"
+        ],
+        "source_scope_truth": "전체 원본 자미 계산/후처리/최종 selector 분기는 구현됨. 긴 알고리즘이나 미검토를 자료 누락 사유로 사용하지 않는다. 실제 원본 연간지·음력 날짜·현재/선택 유년 행과 조건부 jamidata 제목 분류의 신뢰된 연결만 별도로 필요하다.",
+        "default_parameters": {
+          "server_date": "optional YYYY-MM-DD; omitted fixed KST today"
+        },
+        "required_source_fields": [
+          "source_ziwei_birth.{year_h,year_e,lunar_year,lunar_month,lunar_day} OR 실제 source_birth_rows의 연간지와 기본 음력 날짜",
+          "source_current_record.{no,umdate,umyear_h?,umyear_e}; current age/대운/유년 계산에 사용"
+        ],
+        "conditional_source_fields": [
+          "source_mm 또는 source_selected_year를 선택한 경우 source_annual_record.{umdate:YYYY1111,umyear_e}; 원본1929 clamp 보존",
+          "jamidata_02.gung 및 *_title: 실제 실행 경로가 이 분류 행을 읽을 때만 필요"
+        ]
+      },
+      "blockers": [
+        {
+          "category": "actual_source_natal_record_required",
+          "fields": [
+            "source_ziwei_birth.{year_h,year_e,lunar_year,lunar_month,lunar_day} OR 실제 source_birth_rows의 연간지와 기본 음력 날짜",
+            "source_current_record.{no,umdate,umyear_h?,umyear_e}; current age/대운/유년 계산에 사용"
+          ],
+          "effect": "원본 연간지/음력 날짜와 현재 행을 검증된 어댑터로 공급해야 한다. 같은 이름의 다른 사주 계산기 결과로 대체하지 않는다.",
+          "materials": [
+            "실제 원본 출생/현재 달력 행 또는 의미가 검증된 동등 어댑터"
+          ]
+        },
+        {
+          "category": "conditional_annual_record_required",
+          "conditional": true,
+          "fields": [
+            "source_annual_record.umdate",
+            "source_annual_record.umyear_e"
+          ],
+          "effect": "선택 유년/복합 mm가 읽는 실제 YYYY1111 원본 행이다. 요청하지 않은 유년의 행은 필요자료로 요구하지 않는다.",
+          "materials": [
+            "선택 유년의 원본 음력 날짜/연지 행"
+          ]
+        },
+        {
+          "category": "conditional_original_classification_lookup",
+          "conditional": true,
+          "fields": [
+            "jamidata_02.gung",
+            "jamidata_02.*_title"
+          ],
+          "effect": "실제 도달한 분기에서 제목과 마지막 주성을 비교해 설명 열을 고르는 분류 자료다. 설명 문장은 AI로 교체 가능하지만 열 선택 사실을 AI가 만들 수는 없다. 미할당 current_daehan 등으로 이 경로에 도달하지 않으면 전역 차단 사유로 추가하지 않는다.",
+          "materials": [
+            "도달 경로에 필요한 jamidata_02 gung별 제목→내용 열 대응"
+          ]
+        },
+        {
+          "category": "request_records_are_not_trusted_adapters",
+          "fields": [
+            "source_ziwei_birth",
+            "source_current_record",
+            "source_birth_rows",
+            "source_annual_record"
+          ],
+          "effect": "typed 조사 입력으로 모든 계산 및 14 selectors를 검증할 수 있지만 실제 원본 자료의 인증을 대신하지 않는다. 기본 AI는 source_required로 차단한다.",
+          "materials": [
+            "신뢰된 서버 원본 자료 연결과 검증"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_1.asp",
+          "lines": [
+            26,
+            570,
+            571,
+            635,
+            636,
+            648,
+            651
+          ],
+          "sha256": "519f40683e572ff471fc639f56499f54f6dda733cc932b0f21eed59697e6815c"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S_J017_J030_sol.asp",
+          "lines": [
+            34,
+            48,
+            52,
+            65,
+            9559,
+            9562,
+            9575,
+            9591,
+            9594
+          ],
+          "sha256": "3e5dcdd399fd9f5ade24c3f04d67f4e25ce462143d993858df9617ab0a2b0668"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J017.asp",
+          "lines": [
+            20
+          ],
+          "sha256": "907f06c2c3435fb540f52ca7bfd7aeca0d44347a6264f41ad118e6a70e6f1922"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J030.asp",
+          "lines": [
+            20
+          ],
+          "sha256": "fe9a31a97393481e57943800efd2786b8b0341085fe49c9b5234db67b1ba643d"
+        }
+      ],
+      "notes": "원본 Empty·문자열/숫자 Variant 비교·실패 대입 전 값 유지 등 실행 의미와 실제 소스 결함을 보존한다. 전체 알고리즘 포트 완료와 기본 자료 준비 상태를 별도로 표시한다."
+    },
+    {
+      "service_id": "interlife-jum-16",
+      "name": "64괘 un 분석",
+      "implementation": {
+        "module": "app/ported_interlife.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "J015 Form 문자열+연결 후 Mod65; 원본 day padding/윤달 ByRef 정수상태 명시 지원",
+          "독립 과거/현재/미래 6효키",
+          "0→2·강조효·4~8 독립추첨·표시순서"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "missing_factual_display_reference",
+          "fields": [
+            "J033.DB_title"
+          ],
+          "effect": "선택된 여섯 효의 실제 괘명·도식은 DB_title 출력이며 AI가 임의로 만들 수 없다.",
+          "materials": [
+            "J033 DB_express별 원본 괘명·도식"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_16.asp",
+          "lines": [
+            78,
+            82
+          ],
+          "sha256": "7d447966038dd6d301abc37487ebb2d48876476d5da26f4bb1f5bd610534895d"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J015.asp",
+          "lines": [
+            6,
+            9
+          ],
+          "sha256": "c13a2978449d215628a5f3440c1947d43297d7cfbbe4591a67db67e68e5a9cad"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J033.asp",
+          "lines": [
+            33,
+            35,
+            64,
+            107,
+            114,
+            117,
+            130,
+            134,
+            148,
+            152,
+            166,
+            193,
+            208,
+            223,
+            321,
+            344,
+            369
+          ],
+          "sha256": "9a1658621c86507f1e2390187d75b15cdf4e675fdb11267b469398587e1f70fc"
+        }
+      ],
+      "notes": "원본 그래프 점수는 사주나 DB 판정 점수가 아닌 난수다. 일반Form 문자열 경로와 Sun_Value3 ByRef 정수 변경을 구분한다. 기본은월일2자리 문자열이며 source_request_date 조사값으로원본상태를명시한다."
+    },
+    {
+      "service_id": "interlife-jum-2",
+      "name": "주역점",
+      "implementation": {
+        "module": "app/ported_interlife_dependencies.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "원본 서버시각·남성고정·birth무시",
+          "독립18효·0→2·4~8점수",
+          "F_towoonsung 특이값",
+          "S_dang11_12/F_woonday 선택키와 간접 수치 DB 조회"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "missing_factual_display_reference",
+          "fields": [
+            "J033.DB_title"
+          ],
+          "effect": "선택된 여섯 효의 실제 괘명·도식은 DB_title 출력이며 AI가 임의로 만들 수 없다.",
+          "materials": [
+            "J033 DB_express별 원본 괘명·도식"
+          ]
+        },
+        {
+          "category": "missing_non_narrative_numeric_data",
+          "fields": [
+            "S002.DB_numerical",
+            "S005.DB_numerical",
+            "S006.DB_numerical",
+            "S007.DB_numerical",
+            "S008.DB_numerical"
+          ],
+          "effect": "helper가 실제 현재 운·재물·연애·길흉·색상 결과 수치를 읽는다.",
+          "materials": [
+            "각 원본 선택키별 DB_numerical"
+          ]
+        },
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.year_e",
+            "mansedata.month_e",
+            "mansedata.jeolip",
+            "mansedata.number"
+          ],
+          "effect": "원본 2월 절입 전 number−1 분기와 원본 row의 년월주 의미를 tb_manse나 dotong과 동일하다고 추정하지 않는다.",
+          "materials": [
+            "절입일 전후 원본 mansedata row·number 순서·년월 코드 fixture"
+          ]
+        },
+        {
+          "category": "missing_factual_display_reference",
+          "fields": [
+            "S008.DB_data"
+          ],
+          "effect": "실제 행운색상 원본 값을 AI가 임의로 붙이지 않는다.",
+          "materials": [
+            "S008 DB_num별 실제 색상"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_2.asp",
+          "lines": [
+            6,
+            10,
+            13,
+            17,
+            111,
+            121,
+            124,
+            130,
+            136,
+            142
+          ],
+          "sha256": "2101ad890061ab063cb612fa5d8dd7926656af6d70c1bda3ed29fb57c4ba4928"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S007.asp",
+          "lines": [
+            6,
+            10,
+            13
+          ],
+          "sha256": "104f2c8aa75451ed6c2446b7c930a4700842e9c06940e57b864b7d8b60b5e199"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/common/function.asp",
+          "lines": [
+            121,
+            135,
+            138,
+            160,
+            309,
+            312,
+            411,
+            421,
+            425
+          ],
+          "sha256": "7f01ba8fd2570878eac6449908bcca4b6a15a96f1200fb567695b2ee4a7a99b3"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J033.asp",
+          "lines": [
+            114,
+            117,
+            130,
+            148,
+            166
+          ],
+          "sha256": "9a1658621c86507f1e2390187d75b15cdf4e675fdb11267b469398587e1f70fc"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "service_id": "interlife-lotto-1",
+      "name": "로또번호un",
+      "implementation": {
+        "module": "app/ported_interlife_extra.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "원본60행표8개·중복대체표·12번호 수식",
+          "원본 달력·절입·현재분 분기",
+          "combine 모드7~10번호→6개조합·29필터·빈행 계산전용 지원"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.year_e",
+            "mansedata.month_e",
+            "mansedata.jeolip",
+            "mansedata.number"
+          ],
+          "effect": "원본 2월 절입 전 number−1 분기와 원본 row의 년월주 의미를 tb_manse나 dotong과 동일하다고 추정하지 않는다.",
+          "materials": [
+            "절입일 전후 원본 mansedata row·number 순서·년월 코드 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/lotto/lotto_1.asp",
+          "lines": [
+            52,
+            70,
+            262,
+            439,
+            613
+          ],
+          "sha256": "94db4e80f988ca0ac6c7c653149fc000380d16e86f8c65a7eebce357245d311c"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S042.asp",
+          "lines": [
+            20,
+            23,
+            33,
+            35,
+            49
+          ],
+          "sha256": "eadde90dc2f32fcc0a577663a8c90580f37f51b52a52fa82c9574016297804b7"
+        }
+      ],
+      "notes": "별도 수치 DB 누락은 아니다. 생성 기본 경로는 partial이며 완결된 combine subset과 분리한다."
+    },
+    {
+      "service_id": "interlife-manse-1",
+      "name": "사주명식",
+      "implementation": {
+        "module": "app/ported_interlife_chart.py",
+        "helpers": [
+          "app/ported_interlife_display.py"
+        ],
+        "default_state": "partial_blocked",
+        "algorithm_complete": true,
+        "calculation_only": true,
+        "ready": false,
+        "computed": [
+          "f_Saju 활성 b_saju_Click의 -30분·보정년 입춘/보정전 월 경계·자시·10대운·OLE Date 성분 대운수와 find_yong 전체 3,150 경우를 Python으로 구현",
+          "saju_made의 24간지 배열·오행코드·용희기구한 이름 순서·공망·달력 분기를 원본 순서대로 구현",
+          "실제 div24 3,600행·suntolun 170행·YunDat 정상 3,207행과 원본 형식 이상 40행을 정적 자료로 분리하여 원본 달력 함수를 구현",
+          "sajujowha 전체 원본 행 선택·주야간지·지장간과 F029 전체 For 44개/ReDim 7개·십신·운성·대운·세운 82표시 필드를 동결 AST로 실행",
+          "원본 source_pillars·hidden_stems·major_pillars를 구조화하고 F029 이전 shared source globals를 별도로 제공; native와 행 기반 명식을 자동 대체하지 않음",
+          "b_saju_Click의 원시 날짜 토큰을 엄격 검증하고 YunDat의 padding/형식 이상/누락 불일치 시 원본 평달 gf_Lun2Sun fallback을 명시적 조사 모드로 재현; 요청 윤달과 다른 유효 실행은 AI 검증 경고로 보존"
+        ],
+        "source_scope_truth": "원본에 존재하는 활성 명식·대운·용신·표시 계산 분기는 모두 Python/정적 자료로 준비됨. HTML·이미지 출력만 제외. 현재 차단 사유는 미이식 코드가 아니라 실제 원본 행/외부 상태/원본 문법·서버 정책 및 수동 데이터 신뢰 조건이다.",
+        "default_parameters": {
+          "server_date": "optional YYYY-MM-DD; omitted fixed KST today"
+        },
+        "required_source_fields": [
+          "source_birth_rows.birth.{no,number,day_h,day_e,jeolip}",
+          "source_birth_rows.selected.{number,year_h,year_e,month_h,month_e}; 2월 절입 전 실제 number-1 선택 규칙 검증",
+          "source_current_record.{no,umyear_h,umyear_e}; no must match server_date",
+          "source_state.{my_age,daeun1_no..daeun10_no}; 원본 소스에 할당문이 없는 외부 입력 상태"
+        ],
+        "optional_native_comparison": [
+          "source_solunar + source_two_digit_year_max OR validated source_terms",
+          "독립 native 비교는 F029의 실제 my_* 원본 행을 대체하지 않음",
+          "source_native_request_date 정수/원시 숫자문자열과 source_leap_mismatch_policy; 기본 정수 인자/불일치 거절, original_regular_fallback 조사 재현은 AI 차단 유지"
+        ]
+      },
+      "blockers": [
+        {
+          "category": "actual_source_calendar_rows_required",
+          "fields": [
+            "source_birth_rows.birth.{no,number,day_h,day_e,jeolip}",
+            "source_birth_rows.selected.{number,year_h,year_e,month_h,month_e}; 2월 절입 전 실제 number-1 선택 규칙 검증",
+            "source_current_record.{no,umyear_h,umyear_e}; no must match server_date"
+          ],
+          "effect": "birth/selected의 실제 no·number 대응 및 A~J/01寅~12丑 코드 의미, 현재 umyear_h/e를 다른 달력 년주로 추정하지 않는다.",
+          "materials": [
+            "원본 출생일·선택 번호 행 및 현재 일자 행의 신뢰된 서버 어댑터",
+            "음력 연말/설 전후의 umyear_h/e 의미를 확인할 원본 레코드"
+          ]
+        },
+        {
+          "category": "original_source_unassigned_state",
+          "fields": [
+            "my_age",
+            "daeun1_no..daeun10_no"
+          ],
+          "effect": "F029의 원본 코드 자체에 할당이 없는 상태를 Empty로 보존하고 별도로 보고한다. DB 표가 없는 것으로 오분류하지 않는다.",
+          "materials": [
+            "실제 상용 배포가 이 값을 공급하는 외부 호출 계약 또는 승인된 명시 정책"
+          ]
+        },
+        {
+          "category": "original_source_syntax_anomaly",
+          "fields": [
+            "F029.asp:3919",
+            "F029.asp:4170"
+          ],
+          "effect": "VB 블록 안의 // 주석형 행은 non_vb_comment_syntax로 분리한다. 전체 계산 분기는 구현되어 있으나 배포 소스에서의 처리 상태가 검증되어야 한다.",
+          "materials": [
+            "상용 배포본에서 두 행을 처리한 방식 또는 승인된 소스 결함 교정 정책"
+          ]
+        },
+        {
+          "category": "conditional_native_server_policy",
+          "conditional": true,
+          "fields": [
+            "div24.dat two-digit CDate interpretation",
+            "saju_made.solunar binding",
+            "actual request_year/month/day token padding/type",
+            "YunDat unmatched Opt_Cal_Sun_Value=Empty -> ordinary gf_Lun2Sun fallback"
+          ],
+          "effect": "선택적인 native 비교를 요청하는 경우에만 실제 원본 solunar 바인딩과 두 자리 연도 해석 설정이 필요하다. prefix year로 날짜를 자동 교정하지 않으며 F029 계산을 위해 이 비교를 강제하지 않는다. 윤달 키 불일치는 원본에서 평달로 계산되는 확정 분기다. 기본 API는 이를 윤달 정답으로 승인하지 않으며 명시적 조사 모드에서는 그 수학 결과와 실제 effective calendar를 표시한다.",
+          "materials": [
+            "검증한 원본 TwoDigitYearMax 또는 4자리 절기 시각과 명시적 solunar 코드",
+            "실제 caller의 날짜 문자열 padding/ByRef 변환 계약; fallback을 상용 정답으로 승인할지에 대한 명시 정책"
+          ]
+        },
+        {
+          "category": "request_records_are_not_trusted_adapters",
+          "fields": [
+            "source_birth_rows",
+            "source_current_record",
+            "source_state"
+          ],
+          "effect": "typed 조사 입력으로 전체 계산을 검증할 수 있으나 요청값이 실제 원본 판정 자료임을 증명하지 않는다. 서버 어댑터 검증 전에는 기본 partial 상태를 유지한다.",
+          "materials": [
+            "신뢰된 원본 자료 연결/어댑터 검증"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/manse/manse_1.asp",
+          "lines": [
+            4,
+            5,
+            20
+          ],
+          "sha256": "d968f164771bed5c119d8c76f79dbb311ba12848d71c2db152bec7a484a1ffb4"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F029.asp",
+          "lines": [
+            12,
+            27,
+            29,
+            30
+          ],
+          "sha256": "a5f1f9aa84ca8864ee919d2c52397f6d681757d84235ed9646238a0654206222"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/f_Saju.asp",
+          "lines": [
+            52,
+            61,
+            63,
+            72,
+            77,
+            2932,
+            3096,
+            3105,
+            3117,
+            3132,
+            3161,
+            3203,
+            3255,
+            3395
+          ],
+          "sha256": "22177247bd0c0da360024a518b12b14761b5295639204cb8c935ac42492c68f1"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/data/div24.dat",
+          "lines": [
+            1,
+            3600
+          ],
+          "sha256": "6651dd1a3dd293af229bdc7571a044203de187919d61619454ed66695d2504e6"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/data/suntolun.dat",
+          "lines": [
+            1,
+            170
+          ],
+          "sha256": "7fff27822640fa30d571c742de774760bb55867cff9964e7020396f97d93cc9f"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/data/YunDat.dat",
+          "lines": [
+            1,
+            3247
+          ],
+          "sha256": "ce1f09cc211e321f07627c1888b5e3eef743feb6e908a63f9b0132f9e56dfcf5"
+        }
+      ],
+      "notes": "이 두 화면은 원본 자체가 명식 표시이므로 계산전용이며 AI 해석 문구가 없다. 원본 태양력 buf(3..5) 미할당은 별도 native source_state_errors로 보존하고 F029가 읽지 않는 값 때문에 표시 계산 전체를 중단하지 않는다."
+    },
+    {
+      "service_id": "interlife-theme-15",
+      "name": "재테크비법",
+      "implementation": {
+        "module": "app/ported_interlife_extra.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "두60갑자 배열 인덱스곱",
+          "Mod180 및135/45/90오프셋",
+          "180리터럴 선택표",
+          "S118/S082/S090/S091/S058 키"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.year_e",
+            "mansedata.month_e",
+            "mansedata.jeolip",
+            "mansedata.number"
+          ],
+          "effect": "원본 2월 절입 전 number−1 분기와 원본 row의 년월주 의미를 tb_manse나 dotong과 동일하다고 추정하지 않는다.",
+          "materials": [
+            "절입일 전후 원본 mansedata row·number 순서·년월 코드 fixture"
+          ]
+        },
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.day_h",
+            "mansedata.day_e",
+            "my_day_h",
+            "my_day_e"
+          ],
+          "effect": "출생·현재 명식의 코드와 일자/0시 경계 fixture를 검증해야 한다.",
+          "materials": [
+            "출생/현재 원본 달력 코드와 상용 결과 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_15.asp",
+          "lines": [
+            67,
+            101,
+            104,
+            107,
+            110,
+            118,
+            120,
+            123,
+            125,
+            165
+          ],
+          "sha256": "daf89b2bbec66b6eca038919128b8d6696260cf6ed24405977a44d473e8869fd"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S118.asp",
+          "lines": [
+            7
+          ],
+          "sha256": "0024ae41b97c3ed4feb1910bcf02d3578e01d5df09f5a607efe989c872b3a598"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S082.asp",
+          "lines": [
+            12,
+            15
+          ],
+          "sha256": "f7dd9cbabe40b53f6a860b850442dfbbd023a34e070e16b612c36aef58d5d7b3"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S090.asp",
+          "lines": [
+            7
+          ],
+          "sha256": "3668eb17c057a70e60c1dd6bc9a87d4e34cc81162a13dea3ac73e2c679004c40"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S091.asp",
+          "lines": [
+            7
+          ],
+          "sha256": "78a74afcae2fbfba8ce434e8778dd745e5a438486ed93e2f1133635a76212a1a"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S058.asp",
+          "lines": [
+            109,
+            112
+          ],
+          "sha256": "cf300884b60e3c8e70adf10317a3236d2b2994a90f7aa9d30784b59b265e377c"
+        }
+      ],
+      "notes": "해당 키 수식에는 별도 수치 DB가 없다. 소스에 있는 계산의 이식·검증 과제로 분류한다."
+    },
+    {
+      "service_id": "interlife-theme-2",
+      "name": "타로점성술",
+      "implementation": {
+        "module": "app/ported_interlife_dependencies.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "원본 서버Now·남성고정·birth무시",
+          "T043 1~21/쿠키",
+          "T028 연월일시분합Mod5",
+          "J009 상하괘1~8",
+          "T039 별자리키와빈점수7~8추첨",
+          "S058 정적720조합",
+          "F019 합산"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "missing_non_narrative_classification",
+          "fields": [
+            "F019.DB_express",
+            "F019.DB_express_1"
+          ],
+          "effect": "원본 吉/凶/半吉半凶 값이 실제 색상·기호를 결정하며 문구 AI 대체 범위가 아니다.",
+          "materials": [
+            "F019 DB_num별 남녀 길흉 분류"
+          ]
+        },
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.year_e",
+            "mansedata.month_e",
+            "mansedata.jeolip",
+            "mansedata.number"
+          ],
+          "effect": "원본 2월 절입 전 number−1 분기와 원본 row의 년월주 의미를 tb_manse나 dotong과 동일하다고 추정하지 않는다.",
+          "materials": [
+            "절입일 전후 원본 mansedata row·number 순서·년월 코드 fixture"
+          ]
+        },
+        {
+          "category": "unverified_source_code_bindings",
+          "fields": [
+            "yong_code",
+            "todaygan",
+            "Xyeargi"
+          ],
+          "effect": "S009/S010의 원본 용신·오늘 일간·사주 코드 바인딩 검증이 필요하다.",
+          "materials": [
+            "원본 코드 및 상용 결과 fixture"
+          ]
+        },
+        {
+          "category": "missing_factual_display_reference",
+          "fields": [
+            "T043.DB_title",
+            "S009.DB_data"
+          ],
+          "effect": "실제 타로 카드명·성씨는 문장 생성으로 확정할 수 없다.",
+          "materials": [
+            "원본 카드 번호별 실제 카드명",
+            "원본 S009 선택키별 실제 성씨"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_2.asp",
+          "lines": [
+            6,
+            10,
+            13,
+            17,
+            112,
+            122,
+            127,
+            132,
+            137,
+            142,
+            145,
+            148,
+            153
+          ],
+          "sha256": "84c0f83d7aaa0a89c3b796ffa12aa56baabe24c0b87c9c1a0c7f441c1ac4423e"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/T043.asp",
+          "lines": [
+            6,
+            11,
+            19
+          ],
+          "sha256": "7fa326647615a12a48d37dfc336e1ef59e81949ddfc06a20c39b912429087cba"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/T028.asp",
+          "lines": [
+            6,
+            7,
+            9
+          ],
+          "sha256": "fc2fbbb7ae58e43d1c97968cb53a48d26a62d6ff3b20fb77c20da58424705000"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J009.asp",
+          "lines": [
+            8,
+            9,
+            11
+          ],
+          "sha256": "6bf2530f29ee6d75b13fa303fc5dc292ce657911394c1d025f8d9165674e00dc"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/T039.asp",
+          "lines": [
+            7
+          ],
+          "sha256": "d3f11bb6848c25fdc8924f9641bccf88d2118b5069df73fb309813863cbca7ee"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S058.asp",
+          "lines": [
+            12,
+            109,
+            112
+          ],
+          "sha256": "cf300884b60e3c8e70adf10317a3236d2b2994a90f7aa9d30784b59b265e377c"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/common/function.asp",
+          "lines": [
+            421,
+            425,
+            886,
+            890
+          ],
+          "sha256": "7f01ba8fd2570878eac6449908bcca4b6a15a96f1200fb567695b2ee4a7a99b3"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F019.asp",
+          "lines": [
+            56,
+            65,
+            74,
+            92,
+            109
+          ],
+          "sha256": "6e3de77e73c11c0f8670c62ed7685da6b2e6fc2de97f28a3251a6a88cd9831d3"
+        }
+      ],
+      "notes": "T039_numerical은 원본에서 미할당이며 S_graph 난수 fallback이다. 이를 없는 DB 점수라고 설명하지 않는다."
+    },
+    {
+      "service_id": "interlife-theme-3",
+      "name": "신통방통 동전점",
+      "implementation": {
+        "module": "app/ported_interlife_dependencies.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "원본 서버Now·남성고정",
+          "새4동전 우선/쿠키/1~2추첨",
+          "J047/J048 독립1~8",
+          "F019 합산"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "missing_non_narrative_classification",
+          "fields": [
+            "F019.DB_express",
+            "F019.DB_express_1"
+          ],
+          "effect": "원본 吉/凶/半吉半凶 값이 실제 색상·기호를 결정하며 문구 AI 대체 범위가 아니다.",
+          "materials": [
+            "F019 DB_num별 남녀 길흉 분류"
+          ]
+        },
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.year_e",
+            "mansedata.month_e",
+            "mansedata.jeolip",
+            "mansedata.number"
+          ],
+          "effect": "원본 2월 절입 전 number−1 분기와 원본 row의 년월주 의미를 tb_manse나 dotong과 동일하다고 추정하지 않는다.",
+          "materials": [
+            "절입일 전후 원본 mansedata row·number 순서·년월 코드 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_3.asp",
+          "lines": [
+            6,
+            10,
+            13,
+            17,
+            112,
+            117,
+            123,
+            128,
+            133
+          ],
+          "sha256": "26da377f9ff6be7f72aac4a5e72a89695f8af69a8133429507b9b7deb519c633"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/T048.asp",
+          "lines": [
+            6,
+            9,
+            14,
+            23,
+            33,
+            44
+          ],
+          "sha256": "c9dc93cea9cfd90286c202382840342a2af6669109addcceaeaf2003cf9d14dc"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J047.asp",
+          "lines": [
+            8,
+            11
+          ],
+          "sha256": "09cf2f8c56384a8bd3c14a2c0173a66c4abacaa2bdc1d25a95092b56db552542"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J048.asp",
+          "lines": [
+            8,
+            11
+          ],
+          "sha256": "4ba85e3640c34a62e90c4f8d538032b2b06678a830b397c0019be80a8913aed2"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/S/S040.asp",
+          "lines": [
+            6,
+            22
+          ],
+          "sha256": "9086680ef532c9062ef932d1f49d853896505c2a1834063c6d062abcfa582e31"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F019.asp",
+          "lines": [
+            56,
+            65,
+            74,
+            92,
+            109
+          ],
+          "sha256": "6e3de77e73c11c0f8670c62ed7685da6b2e6fc2de97f28a3251a6a88cd9831d3"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "service_id": "interlife-theme-4",
+      "name": "탄생석점",
+      "implementation": {
+        "module": "app/ported_interlife_dependencies.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "T052 raw request_month",
+          "Janimal 태양력 연도·행열·0열Empty·60동물표",
+          "T013 동물키워드LIKE",
+          "F019 성별합산"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "missing_non_narrative_classification",
+          "fields": [
+            "F019.DB_express",
+            "F019.DB_express_1"
+          ],
+          "effect": "원본 吉/凶/半吉半凶 값이 실제 색상·기호를 결정하며 문구 AI 대체 범위가 아니다.",
+          "materials": [
+            "F019 DB_num별 남녀 길흉 분류"
+          ]
+        },
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.year_e",
+            "mansedata.month_e",
+            "mansedata.jeolip",
+            "mansedata.number"
+          ],
+          "effect": "원본 2월 절입 전 number−1 분기와 원본 row의 년월주 의미를 tb_manse나 dotong과 동일하다고 추정하지 않는다.",
+          "materials": [
+            "절입일 전후 원본 mansedata row·number 순서·년월 코드 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_4.asp",
+          "lines": [
+            25,
+            78,
+            83,
+            88,
+            93
+          ],
+          "sha256": "ce9db256200be2034305467658a26de34be1bf30f7845096348656346a6838ef"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/Janimal.asp",
+          "lines": [
+            3,
+            14,
+            18,
+            24,
+            25,
+            26,
+            28,
+            29,
+            30,
+            32,
+            36
+          ],
+          "sha256": "f5c3e92456177d14a8743d0966ba8d896868b0164f4f947526016a765d77923f"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/T052.asp",
+          "lines": [
+            7
+          ],
+          "sha256": "7e7201186813bb4c2a9100cf1a13c1141559ea45d6d56aa3543dbdb1526e3488"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/T/T013.asp",
+          "lines": [
+            8,
+            11,
+            12
+          ],
+          "sha256": "925fb26713efe412250cfc70e212afde1ee770fa7a6c39d674c2b481c67626ea"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/F/F019.asp",
+          "lines": [
+            56,
+            65,
+            109
+          ],
+          "sha256": "6e3de77e73c11c0f8670c62ed7685da6b2e6fc2de97f28a3251a6a88cd9831d3"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "service_id": "interlife-yukim-1",
+      "name": "육임정단",
+      "implementation": {
+        "module": "app/ported_interlife_dependencies.py",
+        "default_state": "partial_blocked",
+        "computed": [
+          "what01~16 열선택",
+          "무패딩 Hour&Minute 문자열 구간",
+          "Int(238722*Rnd) Mod12 편향",
+          "12×12 점시표 및 월장회전→chenban_05"
+        ],
+        "available_output_arithmetic_ported": true,
+        "source_scope_truth": "명시된 실제 출력 선택키·수치 소비에 필요한 소스 수식은 Python으로 이식했으며, 미확보 외부 자료와 원본 바인딩/입력 오류를 별도 진단한다. 수동 조사 입력은 상용 DB 검증을 대신하지 않는다."
+      },
+      "blockers": [
+        {
+          "category": "missing_non_narrative_calendar_classification",
+          "fields": [
+            "mansedata.woljang"
+          ],
+          "effect": "월장이 천반 배치를 결정하며 원본에 해당 날짜별 월장 생성 규칙이 없다.",
+          "materials": [
+            "날짜별 원본 woljang 또는 검증된 생성 규칙"
+          ]
+        },
+        {
+          "category": "unverified_calendar_field_semantics",
+          "fields": [
+            "mansedata.day_h"
+          ],
+          "effect": "질문별 결과의 일간 선택키다.",
+          "materials": [
+            "원본 현재 일간 fixture"
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/J/J045.asp",
+          "lines": [
+            37,
+            48,
+            149,
+            311,
+            325,
+            327,
+            339,
+            347,
+            349,
+            527,
+            530,
+            536,
+            717,
+            900,
+            916,
+            920
+          ],
+          "sha256": "f476f15e8d3a522beb44485876a216a976d213eadf12319d7284e963e6287997"
+        }
+      ],
+      "notes": "jeol 표시와 woljang 판정을 구분한다. 일반 통상 월장식이나 AI로 미확보 값을 추정하지 않는다."
+    }
+  ]
+}

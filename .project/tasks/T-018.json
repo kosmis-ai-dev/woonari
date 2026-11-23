@@ -1,0 +1,60 @@
+{
+  "id": "T-018",
+  "title": "만세력 DB 기준 사주 계산과 API 연동",
+  "stage": "S4",
+  "status": "done",
+  "features": [
+    "F01",
+    "F02",
+    "F04",
+    "F08",
+    "F07",
+    "F06",
+    "F03"
+  ],
+  "dependsOn": [
+    "T-017"
+  ],
+  "changes": [
+    "CR-009"
+  ],
+  "description": "사주 및 월간 달력 조회를 tb_manse로 전환하고 공식 9090 API를 같은 시크릿의 MySQL woonari DB에 연결한다. ASP 시간 경계와 데이터 특이값을 보존한다.",
+  "acceptance": [
+    "음양력·간지·절입 조회가 제공 DB 기준으로 동작",
+    "ASP의 일주/시주/절입 경계 적용",
+    "중복 음력키는 모호함을 명시하고 임의 선택하지 않음",
+    "9090 API 생년월일 계산과 기존 테스트 검증"
+  ],
+  "tests": [
+    "python_api/tests/test_calendar.py",
+    "python_api/tests/test_manse_calendar.py",
+    "python_api/tests/test_manse_store.py",
+    "python_api/tests/test_manse_mysql.py",
+    "python_api/tests/test_legacy_t_005.py",
+    "tools/test_manse_import.py",
+    "tools/test_mysql_manse.py",
+    "tools/test_isolated_db.py"
+  ],
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-18",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 제공 script.sql의 tb_manse 73,414행을 검증해 만세력 DB로 구축하고 사주 계산에 연결한다. 원격 inter 조회는 SCP 거부 상태이므로 로컬 DB를 먼저 구축하고 MySQL 적재 명령을 제공한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사주 DB 조회 및 MySQL provider 구현, 공식 실행기 MySQL 선택 반영. 실제 9090 HTTP 검증 진행 중."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "CR-009 완료: MySQL woonari.tb_manse 73,414행 적재·재실행 already_present·전체 해시 일치. API9090의 MySQL 사주/입춘경계/중복음력422/일간un200 검증. Python API301건·도구169건과40subtests·Ruff 통과. 배포 wheel에 동일 SQLite 스냅샷 포함 확인. 원본 ASP 미변경."
+    }
+  ]
+}

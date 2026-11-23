@@ -1,0 +1,84 @@
+{
+  "id": "F11",
+  "name": "MSSQL 백업 기반 원본 판정 자료 복원",
+  "status": "changing",
+  "summary": "전용 복원 환경에서 원본 판정표를 확보하고 신뢰 가능한 데이터만 연결한다.",
+  "dependsOn": [
+    "F06"
+  ],
+  "code": [
+    "tools/mysql_restored_fortune.py",
+    "tools/test_mysql_restored_fortune.py",
+    "python_api/app/restored_fortune.py",
+    "python_api/tests/test_restored_fortune.py",
+    "docs/mssql-restore.md",
+    "tools/mysql_fortune_archive.py",
+    "tools/test_mysql_fortune_archive.py",
+    "python_api/app/data/fortune_archive_registry.json",
+    "python_api/app/source_archive.py",
+    "python_api/app/source_catalog.py",
+    "python_api/tests/test_source_archive.py",
+    "python_api/tests/test_source_catalog.py",
+    "docs/un-data-restore.md"
+  ],
+  "tasks": [
+    "T-029",
+    "T-030",
+    "T-031",
+    "T-032",
+    "T-033",
+    "T-034",
+    "T-035"
+  ],
+  "changes": [
+    "CR-014",
+    "CR-015"
+  ],
+  "spec": "## 백업과 복원\n제공7z원본의SHA/파일목록/추출해시를보존했다. 전용networknone/포트미공개SQL2022에WoonariLegacyRestore로복원했고VERIFYONLY/PHYSICAL_ONLY CHECKDB통과,READ_ONLY/TRUSTWORTHYfalse/DB_CHAININGfalse다. 원본백업/기존DB/다른컨테이너는변경하지않고저장프로시저를실행하지않는다. SQL2019백업이Apple로컬x86에뮬레이션에서열렸으며운영SQL환경이아니다.\n## 전체 비회원 자료\n121표를전수분류해un정의·판정·사전78표778열100929행을선별추출/타입·키·NULL·원본/데이터해시검증후MySQL별도woonari_source_*와메타원장에복원했다. 42비어있지않은표와36빈스키마를구분한다. 회원/상담/결제/연락처/로그/개인신청43표는행을읽거나이관/배포하지않는다. 허용열778개및표준행전수민감패턴0검사를수행했다. 재실행78모두동일하고기본만세력73414행전체해시동일이다. 공개registry에는스키마/키/해시/행수/제외이유만있고실제행은없다.\n## Python 연결\n7검증표970행은캐시원문전체해시와조회행을대조한다. 평생사주3표/전생/꽃/보석/탄생일의명시적키와열별칭만사용하며단순비슷한이름을자동대입하지않는다. NULL유지/HTML제거/명시ASCII문장부호출력변환프로필을적용하되원본과해시는보존한다. 원문의민감한확정예언과없는문구는일반조언으로제한한다. GET /v1/source-data는실제전체복원상태를,서비스목록source_archive는자료와매핑스냅샷을구분한다.\n## 아직 없는 자료\n구yearfortune del은0행이며새연간2001~2020만본문이있고2021~2050각140행은빈본문/별1/점수11개0/부적5개0이다. 2027실제판정은없고간코드/성별bit/chapter/점수축/월간경계도추가원본근거가필요하다. tbAisyo/주요일부별도판정표와COM내부코드는백업에없다. T031/T026의개인판정활성화·상용대조자료대기는유지하며빈표를완성판정으로취급하지않는다.",
+  "createdAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "백업복원으로원본판정자료확보를진행한다. 확인전서비스완료로표시하지않는다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-029: 백업복원·무결성검사·전용환경 완료 사실과 새연간표 조사상태 반영."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-030/T-031: 복원자료선별적재·초기행품질·Python진단과미확정개인판정경계를명세에반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "T-031: 전체회귀/실제MySQL·API·AI미차감·wheel검증완료. 2027개인판정미완성원인과자료대기상태를반영했다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T-032~T-035: 전체비회원un정의복원·검증조회연결·전체오류검증예정."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T032~T035 현재명세로정리:78표100929행복원/7표970행검증연결/64해석계약/631경로/V6원문근거·Python고정제목/306예시200/대표실AI2종과누락자료경계."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T035최종검증완료. 기능의기존외부원본/인증대기작업은그대로구분한다."
+    }
+  ],
+  "updatedAt": "2026-11-19"
+}

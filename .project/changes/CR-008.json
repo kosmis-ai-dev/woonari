@@ -1,0 +1,37 @@
+{
+  "id": "CR-008",
+  "title": "Python API 포트 9090 고정",
+  "request": "현재 프로젝트의 python api 는  포트를 9090 으로 고정해줘 ",
+  "summary": "Woonari 전용 실행기가 Python API를 루프백 9090 포트에 고정하고 기존 포트 설정과 프로세스 기록을 처리한다.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F04",
+      "F06"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-016"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-16",
+  "updatedAt": "2026-11-16",
+  "history": [
+    {
+      "date": "2026-11-16",
+      "by": "ai",
+      "change": "CR-008",
+      "text": "Python API 포트 9090 고정 요청 접수. 전용 실행기, 기존 로컬 설정 및 포트 안내를 함께 갱신한다."
+    },
+    {
+      "date": "2026-11-16",
+      "by": "ai",
+      "change": "CR-008",
+      "text": "전용 Python API를 루프백 9090 포트에 고정하고 기존 포트의 기록을 소유 확인 후 처리한다. API /health와 /docs HTTP 200, 도구 테스트 116건 및 Ruff 통과. Git 작성자가 지정되지 않아 변경은 작업 파일과 배포 사본에 기록했다."
+    }
+  ]
+}

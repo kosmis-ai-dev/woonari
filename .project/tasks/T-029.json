@@ -1,0 +1,37 @@
+{
+  "id": "T-029",
+  "title": "백업 무결성 확인·전용 SQL Server 복원",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F11",
+    "F06"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-014"
+  ],
+  "description": "제공7z원본과현재MySQL을보존하고백업을전용복원환경에서열어yearfortune등판정표를찾는다. 스키마·행·키·값의의미를검증한표만선별이관하고확보된사실을Python/AI계약에연결한다. 2027연간은해당간지자료와원본표시기간·행구성을확인한뒤활성화한다. 회원·결제·비밀값은이관/배포하지않는다.",
+  "acceptance": [
+    "7z원본SHA·목록·추출파일해시기록",
+    "별도이름/저장소/네트워크로복원하고기존DB·컨테이너보존",
+    "백업버전/파일목록/암호화·복원가능성확인"
+  ],
+  "tests": [],
+  "createdAt": "2026-11-19",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "요청접수. 복원→자료검증/선별이관→Python연결순서로진행한다."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-014",
+      "text": "전용 network=none/포트미공개 SQL Server에 새 DB WoonariLegacyRestore 복원 완료. 원본해시·VERIFYONLY·PHYSICAL_ONLY CHECKDB 통과, READ_ONLY/외부연결차단. 사용자테이블121개, TB_yearLuck7000행(2001~2050/2027년140행)을 확인했다. 기존 MySQL/만세력 보존."
+    }
+  ]
+}

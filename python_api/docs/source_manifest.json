@@ -1,0 +1,75 @@
+{
+  "change": "CR-001",
+  "baseline": "2026-11-02",
+  "scope": "Provided source snapshot, not independently verified deployed server version",
+  "sources": [
+    {
+      "path": "old/unse/todayluck/main_end.asp",
+      "sha256": "0090a075b57bf5ab38419e60b75a3f3b9eb19d8bdbe6489481992e8b982eca12"
+    },
+    {
+      "path": "old/unse/weekluck/main_end.asp",
+      "sha256": "f63853f1475e303b3474ce078c4501267f90be500212cc55c32383562fdc9603"
+    },
+    {
+      "path": "old/unse/monthluck/main_end.asp",
+      "sha256": "8a738d2b03fea5aee39a95e68c3c9bb27f9bf021be1673a166418705fb1584f6"
+    },
+    {
+      "path": "old/unse/2014yearluck/main_end.asp",
+      "sha256": "8609e043f604536d8033af0d066d24fab0c1e0c6fddeea6a2773f224b9b63d56"
+    },
+    {
+      "path": "old/unse/lifeluck/main_end.asp",
+      "sha256": "516c0b0a7ea2e9241aa642158c0d910a4c397b4141c19194b87325e6d5f5ef40"
+    },
+    {
+      "path": "old/unse/moneyluck/main_end.asp",
+      "sha256": "d2ccdb3e69d9a383d78e9d77af35b1588ef5ef394f2679a603b0fde3dc4ab109"
+    },
+    {
+      "path": "old/unse/carrerluck/main_end.asp",
+      "sha256": "a0b6af9bb4ea9ebd7ad13d8364f3b3971b0ee8b46ce8e52ffd51b72dd1a37da1"
+    },
+    {
+      "path": "old/unse/loveluck/main_end.asp",
+      "sha256": "329032546f9f06292fb53748d9119186b088774387f33066a4af4ef53b6db6c7"
+    },
+    {
+      "path": "old/unse/fatewedluck/main_end.asp",
+      "sha256": "e7c129e9d04310939019c61f782426d0516ecefb1394152f9ad9e392739146ef"
+    },
+    {
+      "path": "old/unse/bioluck/main_end.asp",
+      "sha256": "be0f638fb3b3f6e6de5a766e2692a76bee36227c964a4e059e9fe6ccf9605ff3"
+    },
+    {
+      "path": "function/function.asp",
+      "sha256": "10bb3071a1cd264acd15222c42f81c2e942d1e375a481665ed08f298fb9fa449"
+    },
+    {
+      "path": "function/valueDef.asp",
+      "sha256": "2331b68f8ba8250a08b93b3dce28d51af976993b081cec929c46992337845f41"
+    },
+    {
+      "path": "function/dokebi.asp",
+      "sha256": "34007a1a8abee5536673cbbf292459bb4db980111a282a608a0ce8bf838873b3"
+    },
+    {
+      "path": "function/dotong_function.asp",
+      "sha256": "616145dcc4e1287058bf2d95d116fa545a1dcc7ba4f9e3343d9cfa7e5fdd6ec0"
+    },
+    {
+      "path": "function/b_include/_SajuManseryuk.asp",
+      "sha256": "15d1b8f94e571f54133593a3176e92c330ec732931d197a4f053bd8e55346088"
+    },
+    {
+      "path": "function/b_include/lib_sajumaster.asp",
+      "sha256": "849fcf73585f63141ae1e2fb5bc6e47db2f840fb9883e6d0b1eabd1a911f618a"
+    },
+    {
+      "path": "function/b_include/_detail_lib.asp",
+      "sha256": "0f01f4c40fe58d655f9f336f34f5f9950aa138147e98c56f64c438cb445c3c81"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "id": "CR-016",
+  "title": "최신 Python 전용 코드 Git push",
+  "request": "git push",
+  "summary": "최신Python전용작업본을승인된GitHub저장소의별도게시브랜치로업로드한다. 기존로컬ASP/LFS커밋은보존하되새게시이력의부모에포함하지않고기본계정·SSH·Keychain인증을재사용하지않는다. 현재전용로그인/작성자/인증이없으므로게시사본·이력·검증을먼저준비하고사용자지정값및전용로그인후커밋/push한다.",
+  "status": "in-progress",
+  "impact": {
+    "features": [
+      "F05",
+      "F06",
+      "F10"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-036"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [
+      "T-012",
+      "T-014"
+    ],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-23",
+  "updatedAt": "2026-11-23",
+  "history": [
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "전용login/name/email모두빈값이며전용GitHub인증도미확인. 사용자에게한번에필요정보를질문했고병행가능한게시준비를진행한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "T036 게시 준비 완료 및83테스트 통과. 실제 새 브랜치225파일/이전 ref 보존을 확인했고 T012/T014는 전용 GitHub 계정·작성자·토큰 설정 대기로 유지한다. 원격 push는 아직 미완료."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "사용자의 토큰 저장 완료를 확인. 전용 토큰 파일 형식·소유자·권한600 검사 통과. login/name/email은 여전히 미지정으로 인증 API와 commit/push 미실행. 사용자에게 전용 사용자명·작성자 이름·이메일을 요청했으며 공용 계정은 사용하지 않았다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "전용 계정·작성자 확인 및 GitHub 계정/저장소 쓰기 권한 검증 성공. T014 완료/T012 실제 원격 업로드 진행."
+    }
+  ]
+}

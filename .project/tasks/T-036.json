@@ -1,0 +1,43 @@
+{
+  "id": "T-036",
+  "title": "Python 전용 게시 이력·push 안전성 준비",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F05",
+    "F06",
+    "F10"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-016"
+  ],
+  "description": "최신 Python 전용 게시 사본과 부모 없는 새 게시 브랜치를 준비한다. 기존 ASP/LFS 이력·파일은 보존하고 검증된 게시 파일만 스테이징하며 실패 시 HEAD/index를 복구한다. 전용 로그인·작성자·인증 지정 이후의 실제 commit/push는 기존 T-012/T-014에서 계속 추적한다.",
+  "acceptance": [
+    "기존ASP/LFS커밋과작업파일보존",
+    "부모없는새Python게시브랜치/검증사본만스테이징",
+    "기존ASP/개인/비밀/사이트자산이도달가능한이력push차단",
+    "실패시HEAD/index보존·계정추정/네트워크없이준비가능",
+    "테스트·보드·현재기능명세·배포사본검증"
+  ],
+  "tests": [
+    "tools/test_isolated_git.py",
+    "tools/test_prepare_github.py"
+  ],
+  "createdAt": "2026-11-23",
+  "updatedAt": "2026-11-23",
+  "history": [
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "사용자gitpush요청에따라착수. 이전초기커밋의ASP1445/LFS2개를그대로push하지않도록새게시이력을준비한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-016",
+      "text": "83테스트·Ruff·보드 검사 통과. 실제 publish/python-api-20261123 미커밋 브랜치에 검증 사본225파일을 스테이징했고 ASP0·기존 import 브랜치14c12715 보존을 확인했다. 작성자/인증은 미지정이며 commit/push는 실행하지 않았다."
+    }
+  ]
+}

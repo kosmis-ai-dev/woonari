@@ -1,0 +1,4174 @@
+{
+  "change": "CR-012/T-024",
+  "schema_version": 1,
+  "baseline_source_logic57_all_have_handlers": true,
+  "explicit_other_db8_all_have_handlers_or_completed_modules": true,
+  "additional_interlife_candidate_count": 23,
+  "audit_scope_excludes": [
+    "95 actually missing source/dispatch records",
+    "10 opaque NHCP5 implementations"
+  ],
+  "items": [
+    {
+      "service_id": "adviceluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "major_luck_display_boundary_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 152,
+          "detail": "나의 운세처방"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 156,
+          "detail": "나의 운세처방"
+        },
+        {
+          "path": "old/xmlpath/unse.xml",
+          "line": 33,
+          "detail": "unsekind txt"
+        },
+        {
+          "path": "old/js/unseform.js",
+          "line": 27,
+          "detail": "CID actionurl dispatch"
+        },
+        {
+          "path": "old/unse/adviceluck/main_end.asp",
+          "line": 154,
+          "detail": " Dim sql_main,rs_manse,vyp,mpi,vmp,div_name,disp_day sql_main = \"Select lyear,year_pillar,month_pillar,div_name,disp_day from manse where syear = \" & vyear & \" and smonth = \" & vmonth & \" and sday = \" & vday  If QueryCheck(sql_main) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/adviceluck/main_end.asp",
+          "line": 220,
+          "detail": " Dim sql, rs, todaycontent sql = \"select male,female from fortune_basic where yukgap='\" & vmp & \"' and daygan = '\" & ilgan & \"' \" 'esponse.write sql  If QueryCheck(sql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\""
+        }
+      ]
+    },
+    {
+      "service_id": "analysisluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/analysisluck/main_end.asp",
+          "line": 18,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/analysisluck/main_end.asp",
+          "line": 1358,
+          "detail": "Dim lmyYear, lmyMonth, lmyDay, lSQL, lRs lSQL = \"SELECT syear, smonth, sday \" lSQL = lSQL & \"FROM manse \" lSQL = lSQL & \"WHERE lyear = \" & myYear & \" and lmonth = \" & myMonth & \" and lday = \" & myDay If myLunmonth = \"윤\" Then lSQL = lSQL & \" AND lunmonth = 1\" Else"
+        }
+      ]
+    },
+    {
+      "service_id": "birthluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "historical_birth_reference_data_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 96,
+          "detail": "탄생일운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 100,
+          "detail": "탄생일운세"
+        },
+        {
+          "path": "old/unse/birthluck/main_end.asp",
+          "line": 119,
+          "detail": "Dim lmyYear, lmyMonth, lmyDay, lSQL, lRs lSQL = \"SELECT syear, smonth, sday \" lSQL = lSQL & \"FROM manse \" lSQL = lSQL & \"WHERE lyear = \" & myYear & \" and lmonth = \" & myMonth & \" and lday = \" & myDay If myLunmonth = \"윤\" Then lSQL = lSQL & \" AND lunmonth = 1\" Else"
+        },
+        {
+          "path": "old/unse/birthluck/main_end.asp",
+          "line": 134,
+          "detail": "Else lSQL = \"SELECT lyear, lmonth, lday \" lSQL = lSQL & \"FROM manse \" lSQL = lSQL & \"WHERE syear = \" & myYear & \" and smonth = \" & myMonth & \" and sday = \" & myDay Set lRs = Dbcon.Execute(lSQL) lmyYear = lRs(\"lyear\") lmyMonth = lRs(\"lmonth\")"
+        },
+        {
+          "path": "old/unse/birthluck/main_end.asp",
+          "line": 159,
+          "detail": " SQL = \"SELECT unse \" SQL = SQL & \"FROM birthluck WHERE month = \" & realMonth & \" AND day = \" & realDay Set Rs = Dbcon.Execute(SQL)  If Rs.EOF Or Rs.BOF Then Response.Redirect \"/ScriptError.asp?ErrorNum=2\""
+        }
+      ]
+    },
+    {
+      "service_id": "bloodluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 94,
+          "detail": "혈액형운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 98,
+          "detail": "혈액형운세"
+        },
+        {
+          "path": "old/unse/bloodluck/main_end.asp",
+          "line": 56,
+          "detail": "  sSql = \"select data1,data2,data3,data4,data5,data6,data7 from blood \" sSql = sSql & \"where gender='\" & gender & \"' and blood='\" & blood & \"'\"  If QueryCheck(ssql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\""
+        },
+        {
+          "path": "old/unse/bloodluck/main_end.asp",
+          "line": 56,
+          "detail": "blood WHERE gender,blood; data1..7"
+        }
+      ]
+    },
+    {
+      "service_id": "businessluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 70,
+          "detail": "비즈니스 성공운"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 73,
+          "detail": "비즈니스 성공운"
+        },
+        {
+          "path": "old/unse/businessluck/main_end.asp",
+          "line": 31,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/businessluck/main_end.asp",
+          "line": 1388,
+          "detail": "Dim lmyYear, lmyMonth, lmyDay, lSQL, lRs lSQL = \"SELECT syear, smonth, sday \" lSQL = lSQL & \"FROM manse \" lSQL = lSQL & \"WHERE lyear = \" & myYear & \" and lmonth = \" & myMonth & \" and lday = \" & myDay If myLunmonth = \"윤\" Then lSQL = lSQL & \" AND lunmonth = 1\" Else"
+        }
+      ]
+    },
+    {
+      "service_id": "carluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 113,
+          "detail": "차량번호운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 117,
+          "detail": "차량번호운세"
+        },
+        {
+          "path": "old/unse/carluck/main_end.asp",
+          "line": 126,
+          "detail": "Dim desc1,desc2,desc3,number_unse  sSql = \"select desc1,desc2,desc3 from tbSaju_otherunse where unse='carnum' and sipkyuk_code='\" & sipkyuk_code & \"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        }
+      ]
+    },
+    {
+      "service_id": "coinluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "hexagram_name_mapping_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 92,
+          "detail": "주역점"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 96,
+          "detail": "주역점"
+        },
+        {
+          "path": "old/unse/coinluck/main_end.asp",
+          "line": 45,
+          "detail": " Dim sql, RS, title, total, content, code sql = \"select code,code_name,total,\" & bt & \" from tbsaju_juyuk where code = '\" & yut & \"'\"   If QueryCheck(sql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\""
+        },
+        {
+          "path": "old/unse/coinluck/main_end.asp",
+          "line": 17,
+          "detail": "yut0..5 concatenation"
+        },
+        {
+          "path": "old/unse/coinluck/main_end.asp",
+          "line": 45,
+          "detail": "query code,code_name,total,dynamic bt"
+        }
+      ]
+    },
+    {
+      "service_id": "correctyouluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/correctyouluck/main_end.asp",
+          "line": 15,
+          "detail": "원본 출력 소항목"
+        },
+        {
+          "path": "old/unse/correctyouluck/main_end.asp",
+          "line": 33,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/correctyouluck/main_end.asp",
+          "line": 14,
+          "detail": "L_item_code_Text = \"cabala_harmony\""
+        },
+        {
+          "path": "old/unse/correctyouluck/main_end.asp",
+          "line": 224,
+          "detail": "Dim MyAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(Birthday_Sun,12) & \"') ORDER BY fdDate DESC\" '\t\t\t\tadoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/correctyouluck/main_end.asp",
+          "line": 243,
+          "detail": "Dim OtherAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(OtherBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" '\t\t\t\tadoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/correctyouluck/main_end.asp",
+          "line": 262,
+          "detail": "Dim ThirdAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(ThirdBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" adoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        }
+      ]
+    },
+    {
+      "service_id": "counselluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "major_luck_num_disp_day_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/counselluck/main.asp",
+          "line": 79,
+          "detail": "태어난 사주로 분석한 상담용 오기"
+        },
+        {
+          "path": "old/unse/counselluck/main_end.asp",
+          "line": 77,
+          "detail": "male CalcSaju"
+        },
+        {
+          "path": "old/unse/counselluck/main_end.asp",
+          "line": 340,
+          "detail": "female CalcSaju"
+        },
+        {
+          "path": "old/unse/counselluck/main_end.asp",
+          "line": 189,
+          "detail": "male ki-kind branches"
+        }
+      ]
+    },
+    {
+      "service_id": "ddiluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_love.asp",
+          "line": 41,
+          "detail": "띠별궁합풀이"
+        },
+        {
+          "path": "old/unse/free_main.asp",
+          "line": 115,
+          "detail": ""
+        },
+        {
+          "path": "old/unse/ddiluck/main_end.asp",
+          "line": 82,
+          "detail": "CalcSaju YearJi"
+        },
+        {
+          "path": "old/unse/ddiluck/main_end.asp",
+          "line": 89,
+          "detail": "Di1..12/Di1a..12a source strings"
+        },
+        {
+          "path": "old/unse/ddiluck/main_end.asp",
+          "line": 160,
+          "detail": "Select Case YearJi dispatch"
+        }
+      ]
+    },
+    {
+      "service_id": "fivegiluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "major_luck_num_disp_day_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 154,
+          "detail": "내 몸의 기"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 158,
+          "detail": "내 몸의 기"
+        },
+        {
+          "path": "old/unse/fivegiluck/main_end.asp",
+          "line": 270,
+          "detail": "Dim dateDef,LargeFlow,Direction  sSql = \"select num, month_pillar, disp_day from manse \" if myLunsol=\"음\" then sSql = sSql & \" where syear = \" &  iyear &  \" and smonth = \" & imonth & \" and sday = \" & iday else sSql = sSql & \" where syear = \" &  myYear &  \" and smonth = \" & myMonth & \" and sday = \" & myDay"
+        },
+        {
+          "path": "old/unse/fivegiluck/main_end.asp",
+          "line": 293,
+          "detail": "Rs.close  sSql = \"select num from manse \" sSql = sSql & \" where syear = \" & left(disp_day,4) sSql = sSql & \" and smonth = \" & mid(disp_day,5,2) sSql = sSql & \" and sday = \" & mid(disp_day,7,2) "
+        },
+        {
+          "path": "old/unse/fivegiluck/main_end.asp",
+          "line": 327,
+          "detail": "Rs.close  sSql = \"select num from manse \" sSql = sSql & \" where syear = \" & left(disp_day,4) sSql = sSql & \" and smonth = \" & mid(disp_day,5,2) sSql = sSql & \" and sday = \" & mid(disp_day,7,2) "
+        },
+        {
+          "path": "old/unse/fivegiluck/main_end.asp",
+          "line": 270,
+          "detail": "num,month_pillar,disp_day"
+        },
+        {
+          "path": "old/unse/fivegiluck/main_end.asp",
+          "line": 293,
+          "detail": "term-boundary num lookup"
+        }
+      ]
+    },
+    {
+      "service_id": "flowerluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "birth_flower_identity_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 97,
+          "detail": "탄생화운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 101,
+          "detail": "탄생화운세"
+        },
+        {
+          "path": "old/unse/flowerluck/main_end.asp",
+          "line": 94,
+          "detail": "Dim lmyYear, lmyMonth, lmyDay, lSQL, lRs lSQL = \"SELECT syear, smonth, sday \" lSQL = lSQL & \"FROM manse \" lSQL = lSQL & \"WHERE lyear = \" & myYear & \" and lmonth = \" & myMonth & \" and lday = \" & myDay If myLunmonth = \"윤\" Then lSQL = lSQL & \" AND lunmonth = 1\" Else"
+        },
+        {
+          "path": "old/unse/flowerluck/main_end.asp",
+          "line": 124,
+          "detail": " SQL = \"SELECT name_h, name_e, fw_word, fw_column, origin, story, unse \" SQL = SQL & \"FROM flowerluck WHERE month = \" & realMonth & \" AND day = \" & realDay Set Rs = Dbcon.Execute(SQL)  If Rs.EOF Or Rs.BOF Then Response.Redirect \"/ScriptError.asp?ErrorNum=2\""
+        }
+      ]
+    },
+    {
+      "service_id": "hanjaluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "source_hanja_key_and_keyword_unverified"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 41,
+          "detail": "한자운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 43,
+          "detail": "한자운세"
+        },
+        {
+          "path": "old/unse/hanjaluck/main_end.asp",
+          "line": 180,
+          "detail": "Dim SqlQuery If  MEM_SEX = \"남\" Then SqlQuery = \"select keyword, content from hanja_luck where code = 'M_01\"&kwai&\"'\" else SqlQuery = \"select keyword, content from hanja_luck where code = 'F_01\"&kwai&\"'\" End If '\tresponse.write SqlQuery"
+        },
+        {
+          "path": "old/unse/hanjaluck/main_end.asp",
+          "line": 182,
+          "detail": "SqlQuery = \"select keyword, content from hanja_luck where code = 'M_01\"&kwai&\"'\" else SqlQuery = \"select keyword, content from hanja_luck where code = 'F_01\"&kwai&\"'\" End If '\tresponse.write SqlQuery set SqlRs = DbCon.execute(SqlQuery) "
+        }
+      ]
+    },
+    {
+      "service_id": "hpluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 111,
+          "detail": "휴대폰운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 115,
+          "detail": "휴대폰운세"
+        },
+        {
+          "path": "old/unse/hpluck/main_end.asp",
+          "line": 142,
+          "detail": "Dim desc1,desc2,desc3,desc4,desc5,desc6,number_unse  sSql = \"select desc1,desc2,desc3,desc4,desc5,desc6 from tbSaju_otherunse where unse='Hp' and sipkyuk_code='\" & sipkyuk_code & \"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        }
+      ]
+    },
+    {
+      "service_id": "jewelryluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "birth_stone_identity_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 98,
+          "detail": "탄생석운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 102,
+          "detail": "탄생석운세"
+        },
+        {
+          "path": "old/unse/jewelryluck/main_end.asp",
+          "line": 64,
+          "detail": " SQL = \"SELECT stname_h, stname_e, symbol, unse \" SQL = SQL & \"FROM stoneluck WHERE month = \" & realMonth Set Rs = Dbcon.Execute(SQL)  If Rs.EOF Or Rs.BOF Then Response.Redirect \"/ScriptError.asp?ErrorNum=2\""
+        }
+      ]
+    },
+    {
+      "service_id": "juminluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 110,
+          "detail": "주민번호 운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 114,
+          "detail": "주민번호 운세"
+        },
+        {
+          "path": "old/unse/juminluck/main_end.asp",
+          "line": 115,
+          "detail": " Dim jumin_unse sSql=\"select code,desc1 from tbSaju_jumin where code='\"& sumJumin &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        }
+      ]
+    },
+    {
+      "service_id": "jusoluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 112,
+          "detail": "주소지운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 116,
+          "detail": "주소지운세"
+        },
+        {
+          "path": "old/unse/jusoluck/main_end.asp",
+          "line": 162,
+          "detail": "Dim desc1,desc2,desc3,desc4,desc5,desc6, number_unse  sSql = \"select desc1,desc2,desc3,desc4,desc5,desc6 from tbSaju_otherunse where unse='juso' and sipkyuk_code='\" & sipkyuk_code & \"'\"  If QueryCheck(ssql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        }
+      ]
+    },
+    {
+      "service_id": "lottoluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 109,
+          "detail": "로또운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 113,
+          "detail": "로또운세"
+        },
+        {
+          "path": "old/unse/lottoluck/main_end.asp",
+          "line": 611,
+          "detail": "Randomize; Int(45*Rnd+1)"
+        },
+        {
+          "path": "old/unse/lottoluck/main_end.asp",
+          "line": 632,
+          "detail": "lastnum=37 hardcoded extraction count"
+        }
+      ]
+    },
+    {
+      "service_id": "loverluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loverluck/main_end.asp",
+          "line": 18,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/loverluck/main_end.asp",
+          "line": 1346,
+          "detail": "Dim lmyYear, lmyMonth, lmyDay, lSQL, lRs lSQL = \"SELECT syear, smonth, sday \" lSQL = lSQL & \"FROM manse \" lSQL = lSQL & \"WHERE lyear = \" & myYear & \" and lmonth = \" & myMonth & \" and lday = \" & myDay If myLunmonth = \"윤\" Then lSQL = lSQL & \" AND lunmonth = 1\" Else"
+        }
+      ]
+    },
+    {
+      "service_id": "meetluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_love.asp",
+          "line": 43,
+          "detail": "미팅 연애운세"
+        },
+        {
+          "path": "old/unse/free_main.asp",
+          "line": 114,
+          "detail": ""
+        },
+        {
+          "path": "old/unse/meetluck/main_end.asp",
+          "line": 133,
+          "detail": " Dim sql , RS, content1, content2 sql = \"select content1,content2 from Meeting_Unse where Name = '\" & Name & \"' and Gender = '\" & Sex & \"'\"  If QueryCheck(sql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        }
+      ]
+    },
+    {
+      "service_id": "perluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 68,
+          "detail": "名品 개인종합운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 71,
+          "detail": "名品 개인종합운세"
+        },
+        {
+          "path": "old/xmlpath/unse.xml",
+          "line": 50,
+          "detail": "unsekind txt"
+        },
+        {
+          "path": "old/js/unseform.js",
+          "line": 37,
+          "detail": "CID actionurl dispatch"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 187,
+          "detail": " if myLunsol = \"양\" then sSql = \"Select lyear,lmonth,lday,lunmonth from manse where syear= '\" & myYear &\"' and smonth= '\" & myMonth &\"' and sday= '\" & myDay &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 233,
+          "detail": "Dim Result1,Temp1,Temp2,Temp3  sSql = \"select content from totalun where title= '\" & YearJi &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 259,
+          "detail": "  sSql = \"select content from totalun where title= '\" & Temp1 &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 284,
+          "detail": "Temp2 = threedb(int(Temp2))  sSql = \"select content from totalun where title= '\" & Temp2 &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 309,
+          "detail": "Temp3 = fourdb(int(Temp3))  sSql = \"select content from totalun where title= '\" & Temp3 &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 380,
+          "detail": "End Select  sSql = \"select content from totalun where title= '\" & know &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 399,
+          "detail": "REM ########################################################################### 장애운 시작 Dim Result6 sSql = \"select content from totalun where title= '\" & KnowTemp &\"'\"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/perluck/main_end.asp",
+          "line": 540,
+          "detail": "End Select  sSql = \"select content from totalun where\" & sQuery  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        }
+      ]
+    },
+    {
+      "service_id": "preluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 77,
+          "detail": "도통 전생록"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 80,
+          "detail": "도통 전생록"
+        },
+        {
+          "path": "old/unse/preluck/main_end.asp",
+          "line": 91,
+          "detail": "'### 양력생일일 경우 음력생일 찾기 Dim sSql, Rs, rs_pillar, rs_bmonth, rs_bday sSql = \"select year_pillar,lmonth,lday from manse \" sSql = sSql & \" where \" & rs_lunsol & \"year=\" & myYear sSql = sSql & \" and \" & rs_lunsol & \"month=\" & myMonth sSql = sSql & \" and \" & rs_lunsol & \"day=\" & myDay "
+        },
+        {
+          "path": "old/unse/preluck/main_end.asp",
+          "line": 112,
+          "detail": "'### 전생자료찾기 sSql = \"select div_flag,content,character,parent,child \" sSql = sSql& \" from tbPreLife \" sSql = sSql& \" where (div_flag=1 and div_date=\" & (rs_pillar+1) & \")\" sSql = sSql& \" or (div_flag=2 and div_date=\" & rs_bmonth & \")\" sSql = sSql& \" or (div_flag=3 and div_date=\" & rs_bday  & \")\" "
+        }
+      ]
+    },
+    {
+      "service_id": "sinsalluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "source_gpcheck_state_required"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_love.asp",
+          "line": 78,
+          "detail": "궁합신살처방"
+        },
+        {
+          "path": "old/unse/sinsalluck/main_end.asp",
+          "line": 132,
+          "detail": "Dim Rs, scharacter Dim sumso, posbreak, partso, sSql sSql = \"select content from gp_character where male = '\" & M_DayGan & \"' and female = '\" & F_DayGan & \"' \"  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/sinsalluck/main_end.asp",
+          "line": 408,
+          "detail": "Dim i, sql, num, title, content for i = 1 to gp_func_count sql = \"Select num,title,content from gp_content where num = \" & gpcheck_arr(i)  If QueryCheck(sql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        }
+      ]
+    },
+    {
+      "service_id": "starluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "star_blood_harmony_classification_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 93,
+          "detail": "별자리운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 97,
+          "detail": "별자리운세"
+        },
+        {
+          "path": "old/unse/starluck/main_end.asp",
+          "line": 51,
+          "detail": " Dim Rs, strSQL strSQL =\" Select * From tbStarLuck where bloodtype = '\"& bloodtype &\"' and gender = '\"& gender&\"' and startdate = '\"& startdate &\"'\" '\t  response.write strSQL  If QueryCheck(strSQL) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\""
+        },
+        {
+          "path": "old/unse/starluck/main_end.asp",
+          "line": 18,
+          "detail": "input fields"
+        },
+        {
+          "path": "old/unse/starluck/main_end.asp",
+          "line": 51,
+          "detail": "tbStarLuck WHERE bloodtype,gender,startdate"
+        }
+      ]
+    },
+    {
+      "service_id": "studentluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 76,
+          "detail": "학생운세"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 79,
+          "detail": "학생운세"
+        },
+        {
+          "path": "old/unse/studentluck/main_end.asp",
+          "line": 84,
+          "detail": "if age > 60 then"
+        },
+        {
+          "path": "old/unse/studentluck/main_end.asp",
+          "line": 103,
+          "detail": "Dim content1_Gender,content2_Gender,content1_School,content2_School  sql = \"select content1,content2,content3 from Exam_Unse where ilgan = '\" & ilgan & \"' and sex = '\" & sex & \"'\"  If QueryCheck(sql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/studentluck/main_end.asp",
+          "line": 118,
+          "detail": "Set RS = nothing  sql = \"select content1,content2 from Gender_Unse where ilgan = '\" & ilgan & \"' and sex = '\" & sex & \"'\"  If QueryCheck(sql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/studentluck/main_end.asp",
+          "line": 133,
+          "detail": "  sql = \"select content1,content2 from School_Unse where ilgan = '\" & ilgan & \"' and sex = '\" & sex & \"'\"  If QueryCheck(sql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/studentluck/main_end.asp",
+          "line": 81,
+          "detail": "age=year(now)-myYear; if age>60 warning"
+        },
+        {
+          "path": "old/unse/studentluck/main_end.asp",
+          "line": 93,
+          "detail": "after warning CalcSaju still called"
+        }
+      ]
+    },
+    {
+      "service_id": "sweetluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_love.asp",
+          "line": 34,
+          "detail": "名品 평생애정운"
+        },
+        {
+          "path": "old/unse/sweetluck/main_end.asp",
+          "line": 34,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/sweetluck/main_end.asp",
+          "line": 1377,
+          "detail": " '### 초년 ### sSql = \"select \" & viewField & \" from sweetluck where yukgap = '\" &  ypillar & \"' and daygan = '\" & DayGan & \"'\" Set Rs = Dbcon.execute(sSql)  '''myCho = replace(Rs(0),chr(10),\"<br>\") "
+        },
+        {
+          "path": "old/unse/sweetluck/main_end.asp",
+          "line": 1386,
+          "detail": " '### 장년 ### sSql = \"select \" & viewField & \" from sweetluck where yukgap = '\" &  mpillar & \"' and daygan = '\" & DayGan & \"'\" Set Rs = Dbcon.execute(sSql)  ''myJang = replace(Rs(0),chr(10),\"<br>\") "
+        },
+        {
+          "path": "old/unse/sweetluck/main_end.asp",
+          "line": 1395,
+          "detail": " '### 중년 ### sSql = \"select \" & viewField & \" from sweetluck where yukgap = '\" &  dpillar & \"' and daygan = '\" & DayGan & \"'\" Set Rs = Dbcon.execute(sSql)  '''myJung = replace(Rs(0),chr(10),\"<br>\") "
+        },
+        {
+          "path": "old/unse/sweetluck/main_end.asp",
+          "line": 1404,
+          "detail": " '### 말년 ### sSql = \"select \" & viewField & \" from sweetluck where yukgap = '\" &  tpillar & \"' and daygan = '\" & DayGan & \"'\" Set Rs = Dbcon.execute(sSql)  '''myMal = replace(Rs(0),chr(10),\"<br>\") "
+        }
+      ]
+    },
+    {
+      "service_id": "adultluck-starcoupleluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_direct",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_love.asp",
+          "line": 64,
+          "detail": "별자리 속궁합 메뉴"
+        },
+        {
+          "path": "old/unse/adultluck/starcoupleluck/main_end.asp",
+          "line": 3,
+          "detail": "dbcon_test include"
+        },
+        {
+          "path": "old/unse/adultluck/starcoupleluck/main_end.asp",
+          "line": 52,
+          "detail": "StarsexLuck WHERE gender/day"
+        }
+      ]
+    },
+    {
+      "service_id": "adultluck-timesexbioluck",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_remaining",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/adultluck/timesexbioluck/main_end.asp",
+          "line": 15,
+          "detail": "원본 결과 항목"
+        },
+        {
+          "path": "old/unse/adultluck/timesexbioluck/main_end.asp",
+          "line": 34,
+          "detail": "원본 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/adultluck/timesexbioluck/main_end.asp",
+          "line": 14,
+          "detail": "single item"
+        },
+        {
+          "path": "function/b_include/lib_sajumaster.asp",
+          "line": 730,
+          "detail": "28-day sinusoid and 12 time slots"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-lotto",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 65,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 77,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 77,
+          "detail": "lotto 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 78,
+          "detail": "number = lotto_unse(user_year,user_month,user_day,user_hour,user_sol,user_sex,target_year,target_month)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 299,
+          "detail": "lotto_unse 함수 본문, 산술/내장 달력만 호출"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 23,
+          "detail": "user_calendar=fn_RA('myLunsol')"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 30,
+          "detail": "user1_calendar 할당"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 37,
+          "detail": "user2_calendar 할당"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 310,
+          "detail": "Date() 및 월요일 역산"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 325,
+          "detail": "요청 조회년/월과 server 월요일 day를 혼합"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-eroticwoto",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 72,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 86,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 86,
+          "detail": "eroticwoto 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 87,
+          "detail": "number=game_unse(user_year,user_month,user_day,user_hour,user_calendar,user_sex,target_year,target_month,target_day)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 386,
+          "detail": "game_unse 함수 본문, 산술/내장 달력만 호출"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-sexwoman",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 78,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 106,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 106,
+          "detail": "sexwoman 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 107,
+          "detail": "number = game_unse(user_year,user_month,user_day,user_hour,user_calendar,user_sex,target_year,target_month,target_day)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 386,
+          "detail": "game_unse 함수 본문, 산술/내장 달력만 호출"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-horse",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 84,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 122,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 122,
+          "detail": "horse 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 123,
+          "detail": "number = horse_unse(user_year,user_month,user_day,user_hour,user_calendar,user_sex,target_year,target_month,target_day,day_oo)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 343,
+          "detail": "horse_unse 함수 본문, 산술/내장 달력만 호출"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 354,
+          "detail": "Date() 및 월요일 역산"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 369,
+          "detail": "요청 조회년/월과 server 월요일 day를 혼합"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 71,
+          "detail": "day_oo 초기화의 분기 조건"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 123,
+          "detail": "horse_unse에 day_oo 전달"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 369,
+          "detail": "lll 가산"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-birth-flower",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 90,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 130,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-blood-blood",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 95,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 138,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-flower",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 101,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 149,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 149,
+          "detail": "flower 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 150,
+          "detail": "number  = flower(user_year,user_month,user_day,user_hour,user_sol,user_sex,target_year,target_month,target_day)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 484,
+          "detail": "flower 함수 본문, 산술/내장 달력만 호출"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 23,
+          "detail": "user_calendar=fn_RA('myLunsol')"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 30,
+          "detail": "user1_calendar 할당"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 37,
+          "detail": "user2_calendar 할당"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-game",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 107,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 157,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 157,
+          "detail": "game 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 158,
+          "detail": "number  = game_unse(user_year,user_month,user_day,user_hour,user_sol,user_sex,target_year,target_month,target_day)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 386,
+          "detail": "game_unse 함수 본문, 산술/내장 달력만 호출"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 23,
+          "detail": "user_calendar=fn_RA('myLunsol')"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 30,
+          "detail": "user1_calendar 할당"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 37,
+          "detail": "user2_calendar 할당"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-jugan-unse",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 113,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 165,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-prince-date",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 118,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 172,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-prince-love-today",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 125,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 180,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-prince-today",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 131,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 190,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-princess-date",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 137,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 199,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-princess-love-today",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 149,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 207,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-princess-today",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 155,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 217,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-star-un",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 161,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 227,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-firstdate",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 167,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 237,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 237,
+          "detail": "firstdate 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 238,
+          "detail": "number = gunghab(user_year,user_month,user_day,user_hour,user_sol,user_sex,user2_year,user2_month,user2_day,user2_hour,user2_sol,user2_sex)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 166,
+          "detail": "gunghab 함수 본문, 산술/내장 달력만 호출"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 23,
+          "detail": "user_calendar=fn_RA('myLunsol')"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 30,
+          "detail": "user1_calendar 할당"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 37,
+          "detail": "user2_calendar 할당"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 24,
+          "detail": "요청 성별 남1/여2"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 184,
+          "detail": "함수 성별=0 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-firstsex",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 173,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 248,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 248,
+          "detail": "firstsex 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 249,
+          "detail": "number = deepsex(user_year,user_month,user_day,user_hour,user_calendar,user_sex,user2_year,user2_month,user2_day,user2_hour,user2_calendar,user2_sex)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 415,
+          "detail": "deepsex 함수 본문, 산술/내장 달력만 호출"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 24,
+          "detail": "요청 성별 남1/여2"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 433,
+          "detail": "함수 성별=0 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-gostop",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 179,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 258,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 258,
+          "detail": "gostop 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 259,
+          "detail": "number = game_unse(user_year,user_month,user_day,user_hour,user_calendar,user_sex,target_year,target_month,target_day)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 386,
+          "detail": "game_unse 함수 본문, 산술/내장 달력만 호출"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-gunghap",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 185,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 266,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 266,
+          "detail": "gunghap 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 267,
+          "detail": "number=gunghab(user_year,user_month,user_day,user_hour,user_calendar,user_sex,user2_year,user2_month,user2_day,user2_hour,user2_calendar,user2_sex)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 166,
+          "detail": "gunghab 함수 본문, 산술/내장 달력만 호출"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 24,
+          "detail": "요청 성별 남1/여2"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 184,
+          "detail": "함수 성별=0 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-leisure",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 192,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 272,
+          "detail": "원본 실제 결과 계산 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 272,
+          "detail": "leisure 분기"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 273,
+          "detail": "number  = yupgi1_unse(user_year,user_month,user_day,user_hour,user_calendar,user_sex,target_year,target_month,target_day)"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 383,
+          "detail": "동적 hm_* SELECT"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 418,
+          "detail": "Replace(Rs(i),'##','') 문구 출력"
+        },
+        {
+          "path": "function/loveunse.asp",
+          "line": 87,
+          "detail": "yupgi1_unse 함수 본문, 산술/내장 달력만 호출"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-life-all",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 198,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 281,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-sok-gonghap",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 203,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 292,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-star-blood",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 209,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 301,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-today-date-unse",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 217,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 310,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "loveunse-yupgi-dosa",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_loveunse",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/loveunse/top_loveunse.asp",
+          "line": 223,
+          "detail": "원본 요청값별 서비스 소개"
+        },
+        {
+          "path": "old/unse/loveunse/main_end.asp",
+          "line": 318,
+          "detail": "원본 실제 결과 계산 분기"
+        }
+      ]
+    },
+    {
+      "service_id": "interlife-faceface",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_interlife",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_1.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_1.asp",
+          "line": 35,
+          "detail": "alert('얼굴 형태를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_10.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_10.asp",
+          "line": 36,
+          "detail": "alert('입술의 크기를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_10.asp",
+          "line": 52,
+          "detail": "alert('윗입술의 두께를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_10.asp",
+          "line": 68,
+          "detail": "alert('입술의 형태를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_10.asp",
+          "line": 84,
+          "detail": "alert('입술 끝의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_10.asp",
+          "line": 101,
+          "detail": "alert('아랫입술의 주름을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_11.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_11.asp",
+          "line": 36,
+          "detail": "alert('턱의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_12.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_12.asp",
+          "line": 26,
+          "detail": "face_style 입력 요약 및 faceface_13.asp로 전송하는 확인 화면"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_13.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_13.asp",
+          "line": 24,
+          "detail": "선택형 face_style 값으로 T063 분류를 조회하는 최종 결과 화면"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_2.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_2.asp",
+          "line": 36,
+          "detail": "alert('이마의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_2.asp",
+          "line": 52,
+          "detail": "alert('이마의 폭을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_2.asp",
+          "line": 68,
+          "detail": "alert('이마의 주름살을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_3.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_3.asp",
+          "line": 36,
+          "detail": "alert('눈썹의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_3.asp",
+          "line": 52,
+          "detail": "alert('눈썹의 길이를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_3.asp",
+          "line": 68,
+          "detail": "alert('눈썹 털의 상태를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_3.asp",
+          "line": 84,
+          "detail": "alert('눈썹 사이의 넓이를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_3.asp",
+          "line": 100,
+          "detail": "alert('눈썹 사이의 주름살을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+          "line": 36,
+          "detail": "alert('눈의 크기를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+          "line": 52,
+          "detail": "alert('눈의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+          "line": 68,
+          "detail": "alert('눈동자의 위치를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+          "line": 84,
+          "detail": "alert('눈꼬리 주변의 주름을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+          "line": 100,
+          "detail": "alert('눈꼬리의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_4.asp",
+          "line": 116,
+          "detail": "alert('눈꺼풀의 두께를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_5.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_5.asp",
+          "line": 39,
+          "detail": "alert('귀의 출발점 위치를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_5.asp",
+          "line": 55,
+          "detail": "alert('귀바퀴의 크기를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_5.asp",
+          "line": 71,
+          "detail": "alert('귓볼의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_5.asp",
+          "line": 87,
+          "detail": "alert('귀의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+          "line": 36,
+          "detail": "alert('코의 길이를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+          "line": 52,
+          "detail": "alert('콧대의 높이를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+          "line": 68,
+          "detail": "alert('콧등의 형태를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+          "line": 84,
+          "detail": "alert('콧망울의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+          "line": 100,
+          "detail": "alert('콧구멍의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_6.asp",
+          "line": 116,
+          "detail": "alert('준두부위의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_7.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_7.asp",
+          "line": 36,
+          "detail": "alert('광대뼈의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_8.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_8.asp",
+          "line": 36,
+          "detail": "alert('법령의 모양을 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_9.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"관상보기\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_9.asp",
+          "line": 36,
+          "detail": "alert('인중의 넓이를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_9.asp",
+          "line": 52,
+          "detail": "alert('인중의 길이를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_9.asp",
+          "line": 68,
+          "detail": "alert('인중의 형태를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_9.asp",
+          "line": 84,
+          "detail": "alert('코와 입 사이의 넓이를 선택하세요!');"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/faceface/faceface_9.asp",
+          "line": 100,
+          "detail": "alert('인중의 모습을 선택하세요!');"
+        }
+      ]
+    },
+    {
+      "service_id": "interlife-free-13",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_interlife",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "dream_search_index_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/free/free_13.asp",
+          "line": 4,
+          "detail": "UNSE_TITLE = \"꿈해몽 / 태몽\""
+        },
+        {
+          "path": "old/unse/interlife/data/moneyDATA.dat",
+          "line": 22,
+          "detail": "무료 운세 항목13=꿈해몽, 항목14=태몽; UNSE_TITLE은 둘 모두 꿈해몽 / 태몽"
+        }
+      ]
+    },
+    {
+      "service_id": "interlife-free-14",
+      "baseline_group": "source_logic_or_remaining_review",
+      "python_module": "app.ported_interlife",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "dream_search_index_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/free/free_14.asp",
+          "line": 4,
+          "detail": "UNSE_TITLE = \"꿈해몽 / 태몽\""
+        },
+        {
+          "path": "old/unse/interlife/data/moneyDATA.dat",
+          "line": 22,
+          "detail": "무료 운세 항목13=꿈해몽, 항목14=태몽; UNSE_TITLE은 둘 모두 꿈해몽 / 태몽"
+        }
+      ]
+    },
+    {
+      "service_id": "mastermanrelations",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_template",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "planet_fdastro_classification_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/MasterManRelations/main_end.asp",
+          "line": 15,
+          "detail": "원본 출력 소항목"
+        },
+        {
+          "path": "old/unse/MasterManRelations/main_end.asp",
+          "line": 33,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/MasterManRelations/main_end.asp",
+          "line": 14,
+          "detail": "L_item_code_Text = \"saju_bizmanpower_1|saju_bizmanpower_2|saju_bizmanpower_3|astro_business_1|astro_business_2|astro_business_3\""
+        },
+        {
+          "path": "old/unse/MasterManRelations/main_end.asp",
+          "line": 251,
+          "detail": "Dim MyAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(Birthday_Sun,12) & \"') ORDER BY fdDate DESC\" '\t\t\t\tadoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/MasterManRelations/main_end.asp",
+          "line": 270,
+          "detail": "Dim OtherAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(OtherBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" adoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/MasterManRelations/main_end.asp",
+          "line": 289,
+          "detail": "Dim ThirdAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(ThirdBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" adoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/MasterManRelations/main_end.asp",
+          "line": 251,
+          "detail": "active astro item code path queries planet series"
+        },
+        {
+          "path": "function/b_include/lib_astrology.asp",
+          "line": 180,
+          "detail": "planet position query used to compose content key"
+        }
+      ]
+    },
+    {
+      "service_id": "socialmyhonor",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_template",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "planet_fdastro_classification_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/SocialMyHonor/main_end.asp",
+          "line": 14,
+          "detail": "원본 출력 소항목"
+        },
+        {
+          "path": "old/unse/SocialMyHonor/main_end.asp",
+          "line": 33,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/SocialMyHonor/main_end.asp",
+          "line": 13,
+          "detail": "L_item_code_Text = \"astro_aspect_society_4|astro_aspect_society_3|astro_aspect_society_2|astro_aspect_society_1\""
+        },
+        {
+          "path": "old/unse/SocialMyHonor/main_end.asp",
+          "line": 240,
+          "detail": "Dim MyAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(Birthday_Sun,12) & \"') ORDER BY fdDate DESC\" '\t\t\t\tadoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/SocialMyHonor/main_end.asp",
+          "line": 259,
+          "detail": "Dim OtherAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(OtherBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" adoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/SocialMyHonor/main_end.asp",
+          "line": 278,
+          "detail": "Dim ThirdAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(ThirdBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" adoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/SocialMyHonor/main_end.asp",
+          "line": 240,
+          "detail": "active astro item code path queries planet series"
+        },
+        {
+          "path": "function/b_include/lib_astrology.asp",
+          "line": 180,
+          "detail": "planet position query used to compose content key"
+        }
+      ]
+    },
+    {
+      "service_id": "calendarluck",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_data_rules",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "missing_rule_rows"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 39,
+          "detail": "\" else response.write \" \" end if %>월운세 달력"
+        },
+        {
+          "path": "old/unse/calendarluck/main_end.asp",
+          "line": 138,
+          "detail": "'### 해당월의 각일주 ### Dim i, fixGanji(31), fixLmonth(31), fixLday(31) sSql = \"select day_pillar,lmonth,lday from manse where syear = \" & dyear & \" and smonth = \" & dmonth  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\" Response.End"
+        },
+        {
+          "path": "old/unse/calendarluck/main_end.asp",
+          "line": 157,
+          "detail": "'### 항목의 일진 비교 ### Dim unsetype(11), change(11), goodgan(11),  jiji(11) sSql = \"select unsetype,change, chungan, jiji from tbCalUnse \" sSql = sSql & \" where do_num = \" & Left(id,1) sSql = sSql & \" and sex = '\" & gender & \"'\" sSql = sSql & \" order by unsecode\" "
+        },
+        {
+          "path": "old/unse/calendarluck/main_end.asp",
+          "line": 157,
+          "detail": "select unsetype,change,chungan,jiji; per-row arrays"
+        },
+        {
+          "path": "old/unse/calendarluck/main_end.asp",
+          "line": 138,
+          "detail": "month day_pillar,lmonth,lday"
+        }
+      ]
+    },
+    {
+      "service_id": "marriageluck",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_data_rules",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "missing_auspicious_day_rules"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 139,
+          "detail": "결혼 택일"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 143,
+          "detail": "결혼 택일"
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 72,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 209,
+          "detail": "newDay =0 if dMonth=2 then sSql = \" select sday from chosenday \" sSql = sSql & \" where div_name=1 \" sSql = sSql & \" and syear=\" & dyear sSql = sSql & \" and smonth=\" & dmonth "
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 246,
+          "detail": "end if  sSql = \"select lyear,syear,smonth,sday from manse \" sSql = sSql& \" where (syear = \" & myYear_m & \" and smonth = \" & myMonth_m & \" and sday = \" & myDay_m & \") \" sSql = sSql& \" or (syear = \" & myYear_f & \" and smonth = \" & myMonth_f & \" and sday = \" & myDay_f & \") \"  If QueryCheck(sSql) = False Then"
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 280,
+          "detail": " sSql = \"select male,female,luckDesc, luckDay,luckDayNo \" sSql = sSql& \" from tbLuckDay \" sSql = sSql& \" where luck='대길'\" sSql = sSql& \" and ( male=\" & restAge_m & \" or female=\" & restAge_f & \")\"  If QueryCheck(sSql) = False Then"
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 315,
+          "detail": " sSql = \"select male,female,luckDesc, luckDay,luckDayNo \" sSql = sSql& \" from tbLuckDay \" sSql = sSql& \" where luck='대길'\" sSql = sSql& \" and ( male=\" & restAge_m & \" or female=\" & restAge_f & \")\"  If QueryCheck(sSql) = False Then"
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 819,
+          "detail": "sSql = sSql& \", hap_chunduk, hap_wolduk, sipak_il, sipak_daepae \" sSql = sSql& \", weekday, year_pillar, month_pillar \" sSql = sSql& \" from chosenday \" sSql = sSql& \" where syear = \" & dyear & \" and smonth = \" & dmonth  If QueryCheck(sSql) = False Then Response.Redirect \"/ScriptError.asp?ErrorNum=5\""
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 814,
+          "detail": "chosenday flags selected for day scoring"
+        },
+        {
+          "path": "old/unse/marriageluck/main_end.asp",
+          "line": 279,
+          "detail": "tbLuckDay sex/age-specific flags"
+        }
+      ]
+    },
+    {
+      "service_id": "mindluck",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_data_rules",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "missing_questionnaire_graph"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 99,
+          "detail": "심리테스트"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 103,
+          "detail": "심리테스트"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 56,
+          "detail": "imgsrc= \"sub_01.gif\"  sql = \"SELECT count(mental_id) As cnt FROM mental_main WHERE type='사랑'\" Set Rs = DbCon.Execute(sql) If (Rs.BOF Or Rs.EOF) = False Then love_cnt = Rs(\"cnt\") Else"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 66,
+          "detail": "Set Rs = Nothing  sql = \"SELECT mental_id, title FROM mental_main \" sql = sql & \"WHERE type='사랑' ORDER BY mental_id DESC \" Set Rs = DbCon.Execute(sql)  If (Rs.BOF Or Rs.EOF) = False Then"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 89,
+          "detail": "imgsrc= \"sub_02.gif\"  sql = \"SELECT count(mental_id) As cnt FROM mental_main WHERE type='우정'\" Set Rs = DbCon.Execute(sql) If (Rs.BOF Or Rs.EOF) = False Then friend_cnt = Rs(\"cnt\") Else"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 99,
+          "detail": "Set Rs = Nothing  sql = \"SELECT mental_id, title FROM mental_main \" sql = sql & \"WHERE type='우정' ORDER BY mental_id DESC \" Set Rs = DbCon.Execute(sql)  If (Rs.BOF Or Rs.EOF) = False Then"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 122,
+          "detail": "imgsrc= \"sub_03.gif\"  sql = \"SELECT count(mental_id) As cnt FROM mental_main WHERE type='성격'\" Set Rs = DbCon.Execute(sql) If (Rs.BOF Or Rs.EOF) = False Then character_cnt = Rs(\"cnt\") Else"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 132,
+          "detail": "Set Rs = Nothing  sql = \"SELECT mental_id, title FROM mental_main \" sql = sql & \"WHERE type='성격' ORDER BY mental_id DESC \" Set Rs = DbCon.Execute(sql)  If (Rs.BOF Or Rs.EOF) = False Then"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 155,
+          "detail": "imgsrc= \"sub_04.gif\"  sql = \"SELECT count(mental_id) As cnt FROM mental_main WHERE type='기타'\" Set Rs = DbCon.Execute(sql) If (Rs.BOF Or Rs.EOF) = False Then etc_cnt = Rs(\"cnt\") Else"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 165,
+          "detail": "Set Rs = Nothing  sql = \"SELECT mental_id, title FROM mental_main \" sql = sql & \"WHERE type='기타' ORDER BY mental_id DESC \" Set Rs = DbCon.Execute(sql)  If (Rs.BOF Or Rs.EOF) = False Then"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 200,
+          "detail": "mental_member jump_position"
+        },
+        {
+          "path": "old/unse/mindluck/main_end.asp",
+          "line": 222,
+          "detail": "mental_result start_point/end_point"
+        }
+      ]
+    },
+    {
+      "service_id": "moveluck",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_data_rules",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "missing_auspicious_day_rules"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/side_include/sub_unse.asp",
+          "line": 140,
+          "detail": "이사 택일"
+        },
+        {
+          "path": "old/side_include/sub_unse_.asp",
+          "line": 144,
+          "detail": "이사 택일"
+        },
+        {
+          "path": "old/unse/moveluck/main.asp",
+          "line": 61,
+          "detail": "입력 myOption에 따른 두 결과 경로"
+        },
+        {
+          "path": "old/unse/moveluck/main_end1.asp",
+          "line": 608,
+          "detail": "chosenday flags selected for day scoring"
+        },
+        {
+          "path": "old/unse/moveluck/main_end1.asp",
+          "line": 199,
+          "detail": "tbLuckDay sex/age-specific flags"
+        },
+        {
+          "path": "old/unse/moveluck/main.asp",
+          "line": 61,
+          "detail": "two form action branches"
+        },
+        {
+          "path": "old/unse/moveluck/main_end2.asp",
+          "line": 218,
+          "detail": "male/female age_n directions"
+        }
+      ]
+    },
+    {
+      "service_id": "wedupluck",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_template",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "planet_fdastro_classification_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/wedupluck/main_end.asp",
+          "line": 15,
+          "detail": "원본 출력 소항목"
+        },
+        {
+          "path": "old/unse/wedupluck/main_end.asp",
+          "line": 32,
+          "detail": "원본 결제 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/wedupluck/main_end.asp",
+          "line": 14,
+          "detail": "L_item_code_Text = \"astro_harmony_1|astro_harmony_2|astro_harmony_3|astro_harmony_4\""
+        },
+        {
+          "path": "old/unse/wedupluck/main_end.asp",
+          "line": 227,
+          "detail": "Dim MyAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(Birthday_Sun,12) & \"') ORDER BY fdDate DESC\" '\t\t\t\tadoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/wedupluck/main_end.asp",
+          "line": 246,
+          "detail": "Dim OtherAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(OtherBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" adoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/wedupluck/main_end.asp",
+          "line": 265,
+          "detail": "Dim ThirdAstroSign(9) For i = 1 to 10 strSQL = \"SELECT TOP 1 fdAstro FROM tbSavianAstro_Planet_\" & i & \" WHERE (fdDate < '\" & LEFT(ThirdBirthday_Sun,12) & \"') ORDER BY fdDate DESC\" adoCmd.CommandType = adCmdText adoCmd.CommandText = strSQL adoCmd.Execute "
+        },
+        {
+          "path": "old/unse/wedupluck/main_end.asp",
+          "line": 227,
+          "detail": "active astro item code path queries planet series"
+        },
+        {
+          "path": "function/b_include/lib_astrology.asp",
+          "line": 180,
+          "detail": "planet position query used to compose content key"
+        }
+      ]
+    },
+    {
+      "service_id": "adultluck-bedroommatchingluck",
+      "baseline_group": "explicit_other_DB_rules",
+      "python_module": "app.ported_template",
+      "disposition": "implemented_partial_or_ready",
+      "body_specific_issue_codes": [
+        "planet_fdastro_classification_missing"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "기존 source_logic57은 모두 handler가 있음. 실제 수치/분류 누락이어도 원본 post-row 수식 이식 과제와 별도이다.",
+      "sources": [
+        {
+          "path": "old/unse/adultluck/bedroommatchingluck/main_end.asp",
+          "line": 15,
+          "detail": "원본 결과 항목"
+        },
+        {
+          "path": "old/unse/adultluck/bedroommatchingluck/main_end.asp",
+          "line": 34,
+          "detail": "원본 서비스명 pkind"
+        },
+        {
+          "path": "old/unse/adultluck/bedroommatchingluck/main_end.asp",
+          "line": 14,
+          "detail": "four mixed women/astro itemcodes"
+        },
+        {
+          "path": "function/b_include/lib_women.asp",
+          "line": 15,
+          "detail": "loveharmony formulas"
+        },
+        {
+          "path": "function/b_include/lib_women.asp",
+          "line": 50,
+          "detail": "AstroType from MyAstroSign"
+        },
+        {
+          "path": "function/b_include/lib_women.asp",
+          "line": 67,
+          "detail": "planet pair angle classes"
+        }
+      ]
+    },
+    {
+      "service_id": "interlife-gunghap-1",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_1.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"정통궁합(속궁합,겉궁합)\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-10",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_10.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"이성의 성격\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-11",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_11.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"인연수1\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-12",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_12.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"인연수2\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-13",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_g016",
+        "interlife_original_numeric_score_y003"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_13.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"속궁합\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-14",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s061"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_14.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"겉궁합\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-15",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_15.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"애정운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-16",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s053",
+        "interlife_original_numeric_score_s054",
+        "interlife_original_numeric_score_s056"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_16.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"부부화합운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-17",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s054",
+        "interlife_original_numeric_score_s061"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_17.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"섹스운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-18",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s057"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_18.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"천생복덕운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-2",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s056"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_2.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"사상체질궁합\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-3",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_3.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"용신으로 보는 연인애정운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-4",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_g003",
+        "interlife_original_numeric_score_y003",
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_4.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"그이의 러브스타일 보기\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-5",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s061"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_5.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"섹스 토정비결\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-6",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_g020",
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_6.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"침실 섹스궁합\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-7",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s061"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_7.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"결혼배필운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-8",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_g012",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_8.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"인연은 몇 명\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-gunghap-9",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/gunghap/gunghap_9.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"애인부부운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-10",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_10.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"질병건강운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-11",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_11.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"주거가택운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-12",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_n010",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_12.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"사업합작운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-13",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_n011",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_13.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"직장상사운\""
+        },
+        {
+          "path": "old/xmlpath/unse.xml",
+          "line": 132,
+          "detail": "unsekind txt"
+        },
+        {
+          "path": "old/js/unseform.js",
+          "line": 87,
+          "detail": "CID actionurl dispatch"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-14",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "im18_selector_wiring_review",
+        "interlife_original_numeric_score_n012",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_14.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"직장부하운\""
+        },
+        {
+          "path": "old/xmlpath/unse.xml",
+          "line": 142,
+          "detail": "unsekind txt"
+        },
+        {
+          "path": "old/js/unseform.js",
+          "line": 92,
+          "detail": "CID actionurl dispatch"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-15",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s016"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_15.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"육임단시\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-3",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s027"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_3.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"주역신수비결\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-4",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_4.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"영험한 첨\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-5",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_5.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"단시점\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-6",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_6.asp",
+          "line": 64,
+          "detail": "UNSE_TITLE = \"육효\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-7",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_7.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"자식운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-8",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_8.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"형제운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-jum-9",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/jum/jum_9.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"적성운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-name-1",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/incs/info.asp",
+          "line": 38,
+          "detail": "menuNAME의 자동이름풀이 성/이름 글자수별 다섯 항목"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_1.asp",
+          "line": 1,
+          "detail": "<!-- #include virtual = \"/unse/interlife/UNSE_DATA/unse/name/name_puri.asp\" -->"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-name-2",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/incs/info.asp",
+          "line": 38,
+          "detail": "menuNAME의 자동이름풀이 성/이름 글자수별 다섯 항목"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_2.asp",
+          "line": 1,
+          "detail": "<!-- #include virtual = \"/unse/interlife/UNSE_DATA/unse/name/name_puri.asp\" -->"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-name-3",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/incs/info.asp",
+          "line": 38,
+          "detail": "menuNAME의 자동이름풀이 성/이름 글자수별 다섯 항목"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_3.asp",
+          "line": 1,
+          "detail": "<!-- #include virtual = \"/unse/interlife/UNSE_DATA/unse/name/name_puri.asp\" -->"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-name-4",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/incs/info.asp",
+          "line": 38,
+          "detail": "menuNAME의 자동이름풀이 성/이름 글자수별 다섯 항목"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_4.asp",
+          "line": 1,
+          "detail": "<!-- #include virtual = \"/unse/interlife/UNSE_DATA/unse/name/name_puri.asp\" -->"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-name-5",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_name_character_mapping_namedata",
+        "interlife_original_numeric_score_n015"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/incs/info.asp",
+          "line": 38,
+          "detail": "menuNAME의 자동이름풀이 성/이름 글자수별 다섯 항목"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_5.asp",
+          "line": 1,
+          "detail": "<!-- #include virtual = \"/unse/interlife/UNSE_DATA/unse/name/name_puri.asp\" -->"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-name-6",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_name_character_mapping_namedata"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_6-2.asp",
+          "line": 8,
+          "detail": "UNSE_TITLE = \"셀프용신작명\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/N/N001_2.asp",
+          "line": 111,
+          "detail": "[ 용신셀프작명 총 4 단계에서 3 단계 진행중입니다. ]"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_6-3.asp",
+          "line": 9,
+          "detail": "UNSE_TITLE = \"셀프용신작명\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/N/N001_3.asp",
+          "line": 123,
+          "detail": "[ 용신셀프작명 총 4 단계에서 4 단계 진행중입니다. ]"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_6-4.asp",
+          "line": 9,
+          "detail": "UNSE_TITLE = \"셀프용신작명\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/N/N001_4.asp",
+          "line": 90,
+          "detail": "[ 용신셀프작명 결과 ]"
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_6.asp",
+          "line": 9,
+          "detail": "UNSE_TITLE = \"셀프용신작명\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/solve/N/N001_1.asp",
+          "line": 137,
+          "detail": "[ 용신셀프작명 총 4 단계에서 2 단계 진행중입니다. ]"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-name-7",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_n008",
+        "interlife_original_numeric_score_n009",
+        "interlife_original_numeric_score_n010",
+        "interlife_original_numeric_score_n011",
+        "interlife_original_numeric_score_n012",
+        "interlife_original_numeric_score_n013",
+        "interlife_original_numeric_score_n014",
+        "interlife_surname_five_elements_surioheng"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_7.asp",
+          "line": 4,
+          "detail": "UNSE_TITLE = \"성씨추명학\""
+        },
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/name/name_7.asp",
+          "line": 15,
+          "detail": "UNSE_TITLE = \"성씨추명학\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-1",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014",
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_1.asp",
+          "line": 31,
+          "detail": "UNSE_TITLE = \"올해의토정비결\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-10",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_10.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"자평명리학 오늘의 운세\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-11",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_11.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"당사주 평생총운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-12",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_t060"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_12.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"사주로 보는 심리분석\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-13",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_13.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"살풀이\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-14",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_14.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"성격운세\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-15",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s018"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_15.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"초년운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-16",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s019",
+        "interlife_original_numeric_score_s051"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_16.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"중년운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-17",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s020",
+        "interlife_original_numeric_score_s051"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_17.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"말년운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-18",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_18.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"직업운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-19",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s027"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_19.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"재물운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-2",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_tojung_numeric_mapping_tojung_gabja"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_2.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"새해신수\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-20",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_20.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"선천적기질운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-21",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_21.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"태어난계절에따른운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-3",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014",
+        "interlife_original_numeric_score_s022",
+        "interlife_original_numeric_score_s027",
+        "interlife_original_numeric_score_s064",
+        "interlife_original_numeric_score_s067",
+        "interlife_original_numeric_score_s068"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_3.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"자평명리학 평생총운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-4",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s045",
+        "interlife_original_numeric_score_s046",
+        "interlife_original_numeric_score_s047",
+        "interlife_original_numeric_score_s051",
+        "interlife_original_numeric_score_s053",
+        "interlife_original_numeric_score_s054",
+        "interlife_original_numeric_score_s055",
+        "interlife_original_numeric_score_s056",
+        "interlife_original_numeric_score_s057",
+        "interlife_original_numeric_score_s061",
+        "interlife_original_numeric_score_s063"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_4.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"인생풀이\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-5",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_5.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"사주운세\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-6",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_6.asp",
+          "line": 11,
+          "detail": "UNSE_TITLE = \"십년대운풀이\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-7",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_7.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"전생운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-8",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_8.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"질병운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-saju-9",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/saju/saju_9.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"나의 오행기운세\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-selectDay-1",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/selectDay/selectDay_1.asp",
+          "line": 14,
+          "detail": "UNSE_TITLE = \"결혼택일\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-selectDay-2",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/selectDay/selectDay_2.asp",
+          "line": 10,
+          "detail": "UNSE_TITLE = \"이사택일\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-selectDay-3",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/selectDay/selectDay_3.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"특정일운세\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-1",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_t023"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_1.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"천생운\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-10",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s013",
+        "interlife_original_numeric_score_t023"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_10.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"현재 운세풀이\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-11",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_11.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"현재나의운 분석\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-12",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_12.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"사업운총평\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-13",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_13.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"재물 모으는 법\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-14",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_14.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"재물손실 막는 법\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-5",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [],
+      "common_header_only_in_previous_catalog": true,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_5.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"나의길흉숫자\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-6",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s013"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_6.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"방위점\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-7",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s014"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_7.asp",
+          "line": 64,
+          "detail": "UNSE_TITLE = \"나의수호타로점\""
+        },
+        {
+          "path": "old/unse/interlife/incs/info.asp",
+          "line": 105,
+          "detail": "theme menuNAME: 나의수호천사와타로점"
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-8",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_birth_year_matching_toc_manse_sub",
+        "interlife_yongsin_classification_toc_yongsin_01"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_8.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"나의별자리사랑\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-theme-9",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_original_numeric_score_s013"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/theme/theme_9.asp",
+          "line": 30,
+          "detail": "UNSE_TITLE = \"피해야할상대\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    },
+    {
+      "service_id": "interlife-yukim-2",
+      "baseline_group": "interlife_noncalendar_DB_rules",
+      "python_module": "app.ported_interlife_leaves",
+      "disposition": "source_math_and_post_row_ast_ported",
+      "body_specific_issue_codes": [
+        "interlife_yukim_classification_yukim_720"
+      ],
+      "common_header_only_in_previous_catalog": false,
+      "note": "원본 공통 include와 실제 leaf의 수식·전역 상태·DB행 후속 분기를 정적 AST로 이식. 실제 필요한 판정 필드는 body projection/SQL/조건까지 도달한 TABLE.COLUMN+원본행으로 진단하며 수동 행은 인증하지 않음.",
+      "sources": [
+        {
+          "path": "old/unse/interlife/UNSE_DATA/unse/yukim/yukim_2.asp",
+          "line": 5,
+          "detail": "UNSE_TITLE = \"지두법(길흉속지법)\""
+        }
+      ],
+      "baseline_issue_codes_are_historical": true
+    }
+  ],
+  "source_inventory_tree_sha256": "e2902d0cfd9ad7e7081a5d4e3c8f307997744ed7596764f9b1ce3b440a28bb33",
+  "all_available_interlife74_have_source_execution": true,
+  "generic_source_execution": {
+    "module": "app.ported_interlife_leaves",
+    "services": 74,
+    "routes": 77,
+    "source_files": 297,
+    "active_procedures": 28,
+    "source_statement_coverage": {
+      "compiled": 50793,
+      "structural_or_procedure_boundary": 5835,
+      "unused_procedure": 148,
+      "native_f_saju_delegate": 2770,
+      "cookie_transport": 8
+    },
+    "frozen_data_sha256": "5e74d1570a5a8759f6eaa8995f9935b145db5982e55a8a1ea77ff2060b94ecf6",
+    "privacy": "raw Form/date/row/SQL values remain private; public selectors whitelist derived classification keys; no DB connection bodies",
+    "runtime": "Python trusted AST only; no SQL/ASP/COM I/O; one shared request-local environment; fresh request resets all state"
+  }
+}

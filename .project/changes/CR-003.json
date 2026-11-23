@@ -1,0 +1,36 @@
+{
+  "id": "CR-003",
+  "title": "Swagger 표시 문구를 un으로 변경",
+  "request": "운세 라는 문구를 un 이라고 해줘 ㅎ",
+  "summary": "Swagger 제목·태그·항목·필드 안내와 README 및 목록API 표시명을 un으로 정리. 원본 판단/AI용 CATALOG·계약은 유지.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F04"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-010"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-02",
+  "updatedAt": "2026-11-02",
+  "history": [
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-003",
+      "text": "사용자 요청에 따라 Swagger 표시·안내의 '운세'를 'un'으로 변경 착수. 원본 계산/AI 계약은 유지."
+    },
+    {
+      "date": "2026-11-02",
+      "by": "ai",
+      "change": "CR-003",
+      "text": "Swagger·가이드·목록 표시명을 un으로 변경 완료. 원본 CATALOG/판정/AI계약/URL 유지. 183테스트·린트통과, 로컬실행 un API/오늘의 un 표시확인."
+    }
+  ]
+}

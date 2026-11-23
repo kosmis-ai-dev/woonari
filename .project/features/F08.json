@@ -1,0 +1,99 @@
+{
+  "id": "F08",
+  "name": "SQL 원본 기반 만세력 데이터베이스",
+  "status": "done",
+  "summary": "제공 SQL의 73,414행을 검증해 MySQL woonari와 오프라인 SQLite에 보존하고 사주·절기 조회를 제공한다.",
+  "dependsOn": [
+    "F07"
+  ],
+  "code": [
+    "python_api/app/manse_store.py",
+    "python_api/app/manse_mysql.py",
+    "python_api/app/data/manse.sqlite3",
+    "tools/import_manse.py",
+    "tools/mysql_manse.py",
+    "tools/test_manse_import.py",
+    "tools/test_mysql_manse.py",
+    "python_api/tests/test_manse_store.py",
+    "python_api/tests/test_manse_mysql.py",
+    "python_api/docs/manse_database.md",
+    "woonari",
+    "python_api/app/manse_corrections.py",
+    "python_api/app/data/manse_corrections.json",
+    "python_api/tests/test_manse_corrections.py",
+    "tools/mysql_fortune_archive.py",
+    "tools/test_mysql_fortune_archive.py",
+    "python_api/app/data/fortune_archive_registry.json",
+    "python_api/app/source_archive.py",
+    "python_api/app/source_catalog.py",
+    "python_api/tests/test_source_archive.py",
+    "python_api/tests/test_source_catalog.py",
+    "docs/un-data-restore.md"
+  ],
+  "tasks": [
+    "T-017",
+    "T-018",
+    "T-019",
+    "T-032",
+    "T-033",
+    "T-035"
+  ],
+  "changes": [
+    "CR-009",
+    "CR-010",
+    "CR-015"
+  ],
+  "spec": "기본만세력은script.sql tb_manse73414행을검증해로컬SQLite와MySQLtb_manse/woonari_manse_metadata에보존한다. 원본idx/행/데이터해시를변경하지않고lunar-leap-flags-v1교정은조회projection의10행만적용한다. 원본/행수/유일키/트리거/InnoDB와해시를검증하고불일치기존자료를덮어쓰지않는다.\nCR014연간7000/월별1200표준자료와출처메타를별도보관한뒤CR015전체비회원78표/778열/100929행을woonari_source_*와woonari_source_metadata로추가복원했다. 42데이터표/36빈원본스키마를보존하고43개인표는읽거나이관하지않았다. 백업만세력47846행은아카이브에만저장한다.\n고정허용78원본/공개registry해시/개별원본·데이터해시/전체형식·NULL·PK를인증읽기전에검증한다. 문자/날짜/비트/정수/실수/정밀수치를정해진정규형으로보존하며DDL뒤단일SERIALIZABLE트랜잭션·advisorylock·전체readback/해시검증으로커밋한다. 출처원장에원본PK와보관순서를기록하고이를ASP정렬로가정하지않는다. 실제재실행78모두already_present,기본만세력전체해시동일이다.",
+  "createdAt": "2026-11-18",
+  "updatedAt": "2026-11-19",
+  "history": [
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "사용자 제공 script.sql의 tb_manse 73,414행을 검증해 만세력 DB로 구축하고 사주 계산에 연결한다. 원격 inter 조회는 SCP 거부 상태이므로 로컬 DB를 먼저 구축하고 MySQL 적재 명령을 제공한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-009",
+      "text": "CR-009 완료: MySQL woonari.tb_manse 73,414행 적재·재실행 already_present·전체 해시 일치. API9090의 MySQL 사주/입춘경계/중복음력422/일간un200 검증. Python API301건·도구169건과40subtests·Ruff 통과. 배포 wheel에 동일 SQLite 스냅샷 포함 확인. 원본 ASP 미변경."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "사용자가 검증된 윤달 표시 오류 수정에 동의했다. 원본 SQL/tb_manse/해시는 유지하고 버전 있는 10행 교정표를 사주 조회에 적용한다."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "T-019 코드·문서·정책 현재 상태 동기화. 원본 보존형10행윤달교정 적용, T-020 실 MySQL API 검증 진행."
+    },
+    {
+      "date": "2026-11-18",
+      "by": "ai",
+      "change": "CR-010",
+      "text": "CR-010 완료: MySQL9090 API에서10행양력↔음력결과동일·이전4중복평달입력정상·없는윤30일422·일일/월간un200을확인했다. 원격원본73414행해시유지/already_present, API355+도구169/40subtests·Ruff·wheel교정표포함통과."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T-032~T-035: 전체비회원un정의복원·검증조회연결·전체오류검증예정."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T032~T035 현재명세로정리:78표100929행복원/7표970행검증연결/64해석계약/631경로/V6원문근거·Python고정제목/306예시200/대표실AI2종과누락자료경계."
+    },
+    {
+      "date": "2026-11-19",
+      "by": "ai",
+      "change": "CR-015",
+      "text": "T035최종검증완료. 기능의기존외부원본/인증대기작업은그대로구분한다."
+    }
+  ]
+}

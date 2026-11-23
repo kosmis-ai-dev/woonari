@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "version": "lunar-leap-flags-v1",
+  "change": "CR-010",
+  "approved_date": "2026-11-18",
+  "field": "leafMon_YN",
+  "source_sha256": "ab2ff0e3d305c0e58165f8b21c53a97d8a8ab31ac60c72ff0985fb28c1408205",
+  "data_sha256": "ca09c072c91db082cdebb9050328352c8df665d91e1d89d9f2fa93da707f73ba",
+  "row_count": 73414,
+  "scope": "원본 SQL·tb_manse·메타데이터·데이터 해시는 유지하고 사주 조회에서만 검증된 10개 윤달 표시를 교정함. 년월일 간지 및 절입 시각은 변경하지 않음.",
+  "corrections": [
+    {
+      "solar_date": "2017-06-23",
+      "original_idx": 42908,
+      "lunar_date": [
+        2017,
+        5,
+        29
+      ],
+      "original_leap": 1,
+      "corrected_leap": 0,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/life/pageView/1",
+          "title": "한국천문연구원 월력요항",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2017-07-22",
+      "original_idx": 42937,
+      "lunar_date": [
+        2017,
+        5,
+        29
+      ],
+      "original_leap": 0,
+      "corrected_leap": 1,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/life/pageView/1",
+          "title": "한국천문연구원 월력요항",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2020-05-22",
+      "original_idx": 43972,
+      "lunar_date": [
+        2020,
+        4,
+        30
+      ],
+      "original_leap": 1,
+      "corrected_leap": 0,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/file/astro_almanac_pdf/20200624134708539.pdf",
+          "title": "한국천문연구원 2020 역서",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2020-06-20",
+      "original_idx": 44001,
+      "lunar_date": [
+        2020,
+        4,
+        29
+      ],
+      "original_leap": 0,
+      "corrected_leap": 1,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/file/astro_almanac_pdf/20200624134708539.pdf",
+          "title": "한국천문연구원 2020 역서",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2023-03-21",
+      "original_idx": 45005,
+      "lunar_date": [
+        2023,
+        2,
+        30
+      ],
+      "original_leap": 1,
+      "corrected_leap": 0,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/file/astro_almanac_pdf/20221209095149975.pdf",
+          "title": "한국천문연구원 2023 역서",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2023-04-19",
+      "original_idx": 45034,
+      "lunar_date": [
+        2023,
+        2,
+        29
+      ],
+      "original_leap": 0,
+      "corrected_leap": 1,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/file/astro_almanac_pdf/20221209095149975.pdf",
+          "title": "한국천문연구원 2023 역서",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2025-07-24",
+      "original_idx": 45861,
+      "lunar_date": [
+        2025,
+        6,
+        30
+      ],
+      "original_leap": 1,
+      "corrected_leap": 0,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/life/post/calendardata",
+          "title": "한국천문연구원 2025 달력자료",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2025-08-22",
+      "original_idx": 45890,
+      "lunar_date": [
+        2025,
+        6,
+        29
+      ],
+      "original_leap": 0,
+      "corrected_leap": 1,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/life/post/calendardata",
+          "title": "한국천문연구원 2025 달력자료",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2028-06-22",
+      "original_idx": 46925,
+      "lunar_date": [
+        2028,
+        5,
+        30
+      ],
+      "original_leap": 1,
+      "corrected_leap": 0,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/kor/life/post/calendarData?search_year=2028",
+          "title": "한국천문연구원 2028 달력자료 (공식 발표 전 예측 자료)",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    },
+    {
+      "solar_date": "2028-07-21",
+      "original_idx": 46954,
+      "lunar_date": [
+        2028,
+        5,
+        29
+      ],
+      "original_leap": 0,
+      "corrected_leap": 1,
+      "evidence": [
+        {
+          "url": "https://astro.kasi.re.kr/kor/life/post/calendarData?search_year=2028",
+          "title": "한국천문연구원 2028 달력자료 (공식 발표 전 예측 자료)",
+          "derivation": "해당 음력월 초하루의 양력 날짜 및 대(30일)/소(29일) 월 길이로 말일을 계산하고 원본의 앞뒤 날짜 연속성과 대조함."
+        }
+      ]
+    }
+  ]
+}

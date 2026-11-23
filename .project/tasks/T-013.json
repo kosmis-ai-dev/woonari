@@ -1,0 +1,45 @@
+{
+  "id": "T-013",
+  "title": "전용 실행기·로컬 보드·Git/AWS 인증 경로 분리",
+  "stage": "S4",
+  "status": "done",
+  "features": [
+    "F04",
+    "F06"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-006"
+  ],
+  "description": "전용 .local/woonari 상태·설정·계정 폴더 및 ./woonari 실행기를 구현한다. 공용 계정/환경 상속과 포트·프로세스 혼선을 막고 전용 Git/AWS 검증 경로를 제공한다.",
+  "acceptance": [
+    "API18100/보드18101은 loopback 전용이며 타프로젝트프로세스를 종료하지 않는다",
+    "터미널의 AI/Git/AWS 자격증명과 공용설정을 상속하지 않는다",
+    "계정이 지정되지 않으면 외부명령 차단, GitHub사용자/원격 및 AWS계정ID 불일치 차단",
+    "사설설정·토큰·캐시·로그는 배포복사본과Git에서제외",
+    "격리/오인종료/계정불일치테스트 및 실제 로컬실행확인"
+  ],
+  "tests": [
+    "tools/test_project_context.py",
+    "tools/test_isolated_runtime.py",
+    "tools/test_isolated_git.py",
+    "tools/test_isolated_aws.py",
+    "tools/test_prepare_github.py"
+  ],
+  "createdAt": "2026-11-04",
+  "updatedAt": "2026-11-04",
+  "history": [
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "착수: 분리 요청 구현. 실제 외부 계정 정보는 확인 대기."
+    },
+    {
+      "date": "2026-11-04",
+      "by": "ai",
+      "change": "CR-006",
+      "text": "완료: 전용 실행/종료/상태와18100/18101 loopback, AI환경·Git/AWS인증/캐시분리·계정불일치차단 구현. 190 API 테스트 및 최종92 도구테스트·ruff 통과. 실제 시작/종료/재시작과daily200확인, 기존un8001/4803만종료·다른프로젝트8000/4800보존. 계정/커밋작성자미지정으로신규Git커밋·원격업로드는T-014대기."
+    }
+  ]
+}
