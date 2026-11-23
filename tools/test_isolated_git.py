@@ -150,10 +150,10 @@ def test_git_escape_routes_are_rejected(project, monkeypatch, args):
         subject.main(["git", *args])
 
 
-def test_main_branch_push_is_blocked(project):
+def test_master_branch_push_is_blocked(project):
     _, repo, _ = project
-    subprocess.run(["git", "-C", str(repo), "symbolic-ref", "HEAD", "refs/heads/main"], env=subject.isolated_env(), check=True)
-    with pytest.raises(RuntimeError, match="main/master"):
+    subprocess.run(["git", "-C", str(repo), "symbolic-ref", "HEAD", "refs/heads/master"], env=subject.isolated_env(), check=True)
+    with pytest.raises(RuntimeError, match="master"):
         subject.main(["git", "push"])
 
 
@@ -521,3 +521,80 @@ def test_auth_status_verifies_only_saved_project_token(project, monkeypatch):
     monkeypatch.setattr(subject, "_github", github)
     assert subject.main(["gh", "auth", "status"]) == 0
     assert calls == [["api", "--hostname", "github.com", "user"]]
+
+
+@pytest.mark.parametrize("branch", ["main", "work/isolation"])
+def test_authorized_main_push_keeps_exact_ref_and_account_guards(project, monkeypatch, branch):
+    events = []
+    monkeypatch.setattr(subject, "configure_repository", lambda *a: None)
+    monkeypatch.setattr(subject, "_current_branch", lambda env: branch)
+    monkeypatch.setattr(subject, "assert_python_history", lambda env: events.append("history"))
+    monkeypatch.setattr(subject, "verify_account", lambda c, e, **k: events.append(k))
+    monkeypatch.setattr(subject, "_git", lambda args, env, **k: events.append(args) or fake_result())
+    assert subject.main(["git", "push"]) == 0
+    assert events == ["history", {"require_write": True}, ["push", "--set-upstream", "origin", branch]]
+
+
+def test_promote_main_preserves_tip_and_removes_old_local_name(project):
+    subject.configure_repository(project[0])
+    repo = project[1]
+    (repo / "README.md").write_text("Python only\n")
+    local_git(project, "add", "--all")
+    local_git(project, "commit", "-m", "synthetic Python")
+    local_git(project, "branch", "-m", subject.RETIRED_BRANCH)
+    head = local_git(project, "rev-parse", "HEAD").stdout
+    assert subject.main(["git", "promote-main"]) == 0
+    assert local_git(project, "branch", "--show-current").stdout.strip() == "main"
+    assert local_git(project, "rev-parse", "HEAD").stdout == head
+    assert local_git(project, "show-ref", "--verify", "--quiet", "refs/heads/" + subject.RETIRED_BRANCH, check=False).returncode == 1
+
+
+@pytest.mark.parametrize("mismatch", ["unpublished", "wrong_default", "unpreserved"])
+def test_delete_retired_branch_requires_published_main_default_and_preserved_commits(project, monkeypatch, mismatch):
+    monkeypatch.setattr(subject, "verify_account", lambda *a, **k: None)
+    monkeypatch.setattr(subject, "assert_python_history", lambda env: None)
+    monkeypatch.setattr(subject, "_current_branch", lambda env: "main")
+    monkeypatch.setattr(subject, "_github", lambda *a, **k: fake_result(json.dumps({"default_branch": "other" if mismatch == "wrong_default" else "main"})))
+    calls = []
+    def git(args, env, **kwargs):
+        calls.append(args)
+        if args[0] == "rev-parse": return fake_result("a" * 40 + "\n")
+        if args[:2] == ["ls-remote", "--heads"]:
+            ref = args[-1]
+            sha = "b" * 40 if mismatch == "unpublished" or ref.endswith(subject.RETIRED_BRANCH) else "a" * 40
+            return fake_result(sha + "\t" + ref + "\n")
+        if args[0] == "merge-base": return fake_result(code=1)
+        pytest.fail("must not push before preservation checks")
+    monkeypatch.setattr(subject, "_git", git)
+    with pytest.raises(RuntimeError):
+        subject.delete_published_branch(project[0], subject.isolated_env())
+    assert not any(args[0] == "push" for args in calls)
+
+
+def test_retired_delete_only_sends_explicit_approved_ref(project, monkeypatch):
+    calls = []
+    monkeypatch.setattr(subject, "verify_account", lambda *a, **k: None)
+    monkeypatch.setattr(subject, "assert_python_history", lambda env: None)
+    monkeypatch.setattr(subject, "_published_main", lambda env: "a" * 40)
+    monkeypatch.setattr(subject, "_github", lambda *a, **k: fake_result('{"default_branch":"main"}'))
+    def git(args, env, **kwargs):
+        calls.append(args)
+        if args[0] == "ls-remote":
+            return fake_result("a" * 40 + "\trefs/heads/" + subject.RETIRED_BRANCH + "\n")
+        return fake_result()
+    monkeypatch.setattr(subject, "_git", git)
+    assert subject.delete_published_branch(project[0], subject.isolated_env()) == 0
+    assert calls[-1] == ["push", "origin", "--delete", subject.RETIRED_BRANCH]
+
+
+def test_default_main_change_is_fixed_and_hides_failed_provider_response(project, monkeypatch):
+    calls = []
+    monkeypatch.setattr(subject, "configure_repository", lambda *a: None)
+    monkeypatch.setattr(subject, "verify_account", lambda *a, **k: None)
+    monkeypatch.setattr(subject, "assert_python_history", lambda env: None)
+    monkeypatch.setattr(subject, "_published_main", lambda env: "a" * 40)
+    monkeypatch.setattr(subject, "_github", lambda args, env, **k: calls.append(args) or fake_result("sensitive", 1))
+    with pytest.raises(RuntimeError, match="Administration") as err:
+        subject.main(["gh", "set-default-main"])
+    assert "sensitive" not in str(err.value)
+    assert calls == [["api", "--hostname", "github.com", "--method", "PATCH", subject.API_REPOSITORY, "-f", "default_branch=main"]]

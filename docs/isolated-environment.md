@@ -62,7 +62,7 @@ API_KEY=
 
 `./woonari gh auth login`은 이 전용 파일을 사용해 실제 로그인 계정을 검증하는 명령입니다. GitHub CLI의 웹 로그인은 `--insecure-storage`를 사용해도 OS Keychain에 접근할 수 있어 실행하지 않습니다. 다른 프로젝트의 Keychain 항목이나 글로벌 Git 설정을 변경하지 않으며, 전용 폴더·파일의 소유자 권한과 심볼릭 링크 여부를 검사합니다. 저장소 쓰기 권한은 push 전에 별도로 확인합니다.
 
-작업 사본은 `.publish/woonari`입니다. 네트워크 명령은 로그인 사용자와 HTTPS origin을 확인하고, push는 저장소 쓰기 권한도 확인합니다. 현재의 별도 브랜치만 push하며 main 직접 push·force push·merge는 허용하지 않습니다. 원격 업로드 완료 여부는 T-012에서 별도 기록합니다.
+작업 사본은 `.publish/woonari`입니다. 네트워크 명령은 로그인 사용자와 HTTPS origin을 확인하고, push는 저장소 쓰기 권한도 확인합니다. CR-017 사용자 지시에 따라 현재 main 브랜치에 검증된 변경을 계속 push합니다. force push·임의 ref 전송·merge는 허용하지 않습니다. 원격 업로드 완료 여부는 T-012에서 별도 기록합니다.
 
 Python 전용 최초 게시 브랜치는 `./woonari git prepare-python-branch publish/python-api-YYYYMMDD`로 준비합니다. 이전 ASP·대용량 자산 커밋은 로컬에 보존하고 새 게시 커밋의 조상에 포함하지 않습니다. 이 준비는 계정·작성자가 미설정이어도 가능하지만 커밋과 push는 전용 작성자·인증을 지정한 후에만 가능합니다. 자세한 검증·보존 범위는 [Python 전용 작업 안내](python-only.md)를 따릅니다.
 
@@ -116,3 +116,6 @@ CR-013 / T-027: `AI_PROVIDER=bedrock`은 명시한 `BEDROCK_AUTH_MODE`만 사용
 `AI_DAILY_CALL_LIMIT=100`은 1~100 범위입니다. 공식 실행기와 모든 API 별칭·제공자는 `.local/woonari/ai/usage.sqlite3`를 공유합니다. 한국시간 매일00:00을 기준으로 실제 모델 전송 직전 영속 예약합니다. 전송 후 실패·시간 초과·출력계약 오류도 환불하지 않습니다. 계산·미완성 판정·입력 오류·전송 전 키 검증 실패는 차감하지 않습니다. 101번째 시도는429, 기록 삭제·손상·권한 이상·시계 역행은503으로 차단합니다. 기록을 삭제하거나 자동 초기화하지 않습니다. GET `/v1/ai-usage`에서 `limit`, `used`, `remaining`, `date`, `timezone`, `reset_at`을 확인합니다. 이 한도는 Woonari의 모델 호출에 적용되며 AWS 콘솔이나 다른 앱의 호출까지 제한하지 않습니다.
 
 기존 CLI 계정에서 확인한 Anthropic 사용 목적 양식·SCP 거부 이력은 CR-011에 보존합니다. 현재 선택한 AI 전용 계정의 실제 모델 권한은 개별 생성 테스트로 확인합니다.
+
+## main 전환 · CR-017
+`./woonari git promote-main`으로 기존 게시 커밋을 유지하며 main으로 이름을 바꾸고 `./woonari git push`로 게시합니다. `./woonari gh set-default-main`은 로컬과 원격 main 커밋 일치를 확인한 뒤 기본 브랜치를 main으로 설정합니다. 이 명령은 토큰의 저장소 Administration 쓰기 권한이 필요할 수 있습니다. `./woonari git delete-published-branch`는 원격 main 일치·기본 브랜치 main·기존 게시 커밋의 조상 보존을 확인한 경우에만 승인된 이전 게시 브랜치를 삭제합니다. 이후 변경은 관련 검증·보드 갱신·배포 사본 검증 후 main에 커밋/push합니다.

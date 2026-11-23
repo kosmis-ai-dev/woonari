@@ -33,6 +33,7 @@ def publication_repository(root: Path) -> Path:
 REPOSITORY = publication_repository(ROOT)
 REMOTE = "https://github.com/kosmis-ai-dev/woonari.git"
 API_REPOSITORY = "repos/kosmis-ai-dev/woonari"
+RETIRED_BRANCH = "publish/python-api-20261123"
 READ_COMMANDS = {"status", "diff", "log", "show", "ls-files", "rev-parse"}
 PYTHON_DIRECTORIES = {".project", "docs", "python_api", "tools"}
 PYTHON_ROOT_FILES = {".gitattributes", ".gitignore", "AGENTS.md", "README.md", "PUBLICATION.json", "woonari"}
@@ -244,9 +245,65 @@ def _current_branch(env: dict[str, str]) -> str:
     branch = result.stdout.strip()
     if result.returncode or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._/-]*", branch):
         fail("현재 Git 작업 브랜치를 확인할 수 없습니다.")
-    if branch.casefold() in {"main", "master"}:
-        fail("이 명령은 main/master 직접 push를 허용하지 않습니다. 작업 브랜치를 사용하세요.")
+    if branch.casefold() == "master":
+        fail("master 대신 사용자 지정 main 브랜치를 사용하세요.")
     return branch
+
+
+def promote_main(env: dict[str, str]) -> int:
+    """T-037 / CR-017: preserve the approved publication tip under main."""
+    branch = _current_branch(env)
+    if branch == "main":
+        return 0
+    if branch != RETIRED_BRANCH:
+        fail("승인된 게시 브랜치에서만 main으로 전환할 수 있습니다.")
+    clean = _git(["status", "--porcelain"], env, capture=True)
+    if clean.returncode or clean.stdout.strip():
+        fail("main 전환 전에 작업 사본을 커밋해야 합니다.")
+    exists = _git(["show-ref", "--verify", "--quiet", "refs/heads/main"], env, capture=True)
+    if exists.returncode != 1:
+        fail("기존 로컬 main을 덮어쓰지 않습니다.")
+    assert_python_history(env)
+    return _git(["branch", "-m", "main"], env).returncode
+
+
+def _published_main(env: dict[str, str]) -> str:
+    if _current_branch(env) != "main":
+        fail("현재 브랜치가 main이어야 합니다.")
+    head = _git(["rev-parse", "HEAD"], env, capture=True)
+    remote = _git(["ls-remote", "--heads", "origin", "refs/heads/main"], env, capture=True)
+    fields = remote.stdout.split()
+    if (head.returncode or remote.returncode or len(fields) != 2
+            or fields != [head.stdout.strip(), "refs/heads/main"]):
+        fail("로컬 HEAD와 원격 main 일치 확인이 필요합니다.")
+    return head.stdout.strip()
+
+
+def delete_published_branch(config: dict, env: dict[str, str]) -> int:
+    """Delete only the explicitly retired ref after preservation on main."""
+    verify_account(config, env, require_write=True)
+    assert_python_history(env)
+    _published_main(env)
+    repo = _github(["api", "--hostname", "github.com", API_REPOSITORY], env, capture=True)
+    try:
+        ready = not repo.returncode and json.loads(repo.stdout)["default_branch"] == "main"
+    except (ValueError, KeyError, TypeError):
+        ready = False
+    if not ready:
+        fail("GitHub 기본 브랜치를 main으로 변경한 뒤 삭제하세요.")
+    old = _git(["ls-remote", "--heads", "origin", f"refs/heads/{RETIRED_BRANCH}"], env, capture=True)
+    if old.returncode:
+        fail("기존 원격 게시 브랜치를 확인할 수 없습니다.")
+    if not old.stdout.strip():
+        return 0
+    fields = old.stdout.split()
+    if (len(fields) != 2 or fields[1] != f"refs/heads/{RETIRED_BRANCH}"
+            or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", fields[0])):
+        fail("기존 원격 브랜치 응답을 확인할 수 없습니다.")
+    preserved = _git(["merge-base", "--is-ancestor", fields[0], "HEAD"], env, capture=True)
+    if preserved.returncode:
+        fail("기존 게시 브랜치의 커밋이 main에 보존되지 않아 삭제하지 않습니다.")
+    return _git(["push", "origin", "--delete", RETIRED_BRANCH], env).returncode
 
 
 def _python_path(relative: str) -> bool:
@@ -421,6 +478,10 @@ def _git_command(args: list[str], config: dict, env: dict[str, str]) -> int:
     configure_repository(config, env)
     if command == "prepare-python-branch" and len(options) == 1:
         return prepare_python_branch(options[0], env)
+    if command == "promote-main" and not options:
+        return promote_main(env)
+    if command == "delete-published-branch" and not options:
+        return delete_published_branch(config, env)
     if command in READ_COMMANDS or command == "branch" and options in ([], ["--list"], ["--show-current"]):
         pass
     elif command == "add":
@@ -450,13 +511,30 @@ def _git_command(args: list[str], config: dict, env: dict[str, str]) -> int:
         verify_account(config, env, require_write=True)
         args = ["push", "--set-upstream", "origin", branch]
     else:
-        fail("지원하지 않는 Git 명령입니다. status/diff/log/show/ls-files/branch/add/commit/fetch/push를 사용하세요.")
+        fail("지원하지 않는 Git 명령입니다. status/diff/log/show/ls-files/branch/add/commit/fetch/push/promote-main/delete-published-branch를 사용하세요.")
     return _git(args, env).returncode
 
 
 def _gh_command(args: list[str], config: dict, env: dict[str, str]) -> int:
+    if args == ["set-default-main"]:
+        configure_repository(config, env)
+        verify_account(config, env, require_write=True)
+        assert_python_history(env)
+        _published_main(env)
+        result = _github(["api", "--hostname", "github.com", "--method", "PATCH",
+                          API_REPOSITORY, "-f", "default_branch=main"], env, capture=True)
+        if result.returncode:
+            fail("기본 브랜치 변경 실패: 전용 토큰의 저장소 Administration 쓰기 권한을 확인하세요.")
+        try:
+            valid = json.loads(result.stdout)["default_branch"] == "main"
+        except (ValueError, KeyError, TypeError):
+            valid = False
+        if not valid:
+            fail("GitHub 기본 브랜치 변경 응답을 확인할 수 없습니다.")
+        print("GitHub 기본 브랜치 main 확인 완료.")
+        return 0
     if args in ([], ["--help"], ["help"]):
-        print("woonari gh auth login | auth status | api user | api repos/kosmis-ai-dev/woonari")
+        print("woonari gh auth login | auth status | api user | api repos/kosmis-ai-dev/woonari | set-default-main")
         return 0
     if args in (["auth", "login"], ["auth", "login", "--web"]):
         if not _git_settings(config).get("login", "").strip():

@@ -1,0 +1,45 @@
+{
+  "id": "T-037",
+  "title": "main 전환·기존 게시 브랜치 정리·push 정책 변경",
+  "stage": "SM",
+  "status": "doing",
+  "features": [
+    "F05",
+    "F06",
+    "F10"
+  ],
+  "dependsOn": [
+    "T-036"
+  ],
+  "changes": [
+    "CR-017"
+  ],
+  "description": "Python 전용 게시 이력을 main으로 보존하고 원격 기본 브랜치를 main으로 전환한 후 기존 publish/python-api-20261123을 삭제한다. 이후 검증한 작업을 전용 계정으로 main에 계속 push하도록 지침과 실행 도구를 변경한다. force와 merge는 허용하지 않는다.",
+  "acceptance": [
+    "게시 커밋을 보존하며 main 생성·push·기본 브랜치 확인",
+    "동일 원격 main과 조상 보존 검증 후 승인된 기존 게시 브랜치만 삭제",
+    "향후 main push를 지침·CLI·명세에 반영하고 계정/비밀값/이력 검증 유지",
+    "의미 있는 전환·삭제 보호 테스트와 게시/보드 검사 통과"
+  ],
+  "tests": [
+    "tools/test_isolated_git.py",
+    "tools/test_prepare_github.py",
+    "tools/test_project_context.py"
+  ],
+  "createdAt": "2026-11-23",
+  "updatedAt": "2026-11-23",
+  "history": [
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-017",
+      "text": "사용자의 main 전환·기존 게시 브랜치 삭제·향후 main push 지시에 따라 착수. 기존 커밋 보존과 원격 확인 후 삭제를 구현한다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-017",
+      "text": "91테스트·Ruff 통과. main 로컬 전환·원격 생성/push 완료. 기본 브랜치 변경 요청 거부로 Administration 토큰 권한 추가를 요청했고, 기존 기본 게시 브랜치 삭제는 보류했다."
+    }
+  ]
+}
