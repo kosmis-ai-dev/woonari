@@ -2,7 +2,7 @@
   "id": "T-037",
   "title": "main 전환·기존 게시 브랜치 정리·push 정책 변경",
   "stage": "SM",
-  "status": "doing",
+  "status": "blocked",
   "features": [
     "F05",
     "F06",
@@ -40,6 +40,12 @@
       "by": "ai",
       "change": "CR-017",
       "text": "91테스트·Ruff 통과. main 로컬 전환·원격 생성/push 완료. 기본 브랜치 변경 요청 거부로 Administration 토큰 권한 추가를 요청했고, 기존 기본 게시 브랜치 삭제는 보류했다."
+    },
+    {
+      "date": "2026-11-23",
+      "by": "ai",
+      "change": "CR-017",
+      "text": "main 지속 push 지침·CLI·91테스트를 포함한 코드/보드 게시 완료. 기본 브랜치 API 변경은 거부됐고 현재 기본 publish 브랜치 보존 중. Administration 쓰기 권한 추가가 필요해 사용자에게 요청했으므로 남은 기본 전환/기존 브랜치 삭제를 대기한다."
     }
   ]
 }
