@@ -129,7 +129,8 @@ def _existing(item: dict, request: ServiceRequest) -> ServiceAnalysis:
         raise DomainError("invalid_service_parameters", "추가 입력의 형식·허용 범위를 확인하세요.") from None
     result = analyze(FortuneKind(item["api_kind"]), legacy)
     return ServiceAnalysis(
-        **result.model_dump(), service_id=item["id"], title=item["original_name"],
+        **result.model_dump(), service_id=item["id"],
+        title="연간 un · 사주 기반 AI 해석" if item.get("api_kind") == "yearly" else item["original_name"],
     )
 
 

@@ -132,7 +132,7 @@ class FortuneRequest(Model):
     include_ai: bool = Field(
         default=True,
         title="AI 해석 포함 여부",
-        description="true는 실제 AI un 본문을 생성합니다. Bedrock은 전용 AWS 프로필과 BEDROCK_MODEL_ID·BEDROCK_REGION, OpenAI는 전용 키·모델 설정이 필요합니다. 준비된 7종의 첫 예시는 true입니다. false는 계산 근거만 확인합니다.",
+        description="true는 실제 AI un 본문을 생성합니다. 연간 un은 사주·연도 근거를 AI가 해석하며 별점/점수 없이 2027년도 지원합니다. 전용 AI 인증·모델 설정이 필요하며 false는 계산 근거만 확인합니다.",
     )
     career_category: Literal["A", "B", "C", "D", "E", "F"] | None = Field(
         default=None,

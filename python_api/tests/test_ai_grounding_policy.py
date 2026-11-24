@@ -46,7 +46,7 @@ def test_opaque_arithmetic_keys_allow_general_advice_not_personality_judgement(a
     assert analysis.saju is None and not analysis.scores and analysis.ready_for_ai
     payload = interpretation_payload(analysis)
     policy = payload["writing_policy"]
-    assert payload["prompt_version"] == "fortune-ko-v6-source-definitions"
+    assert payload["prompt_version"] == "fortune-ko-v7-annual-saju"
     assert policy["overall_mode"] == "general_advice_only"
     assert policy["targets"] == {
         target.id: "general_advice_only" for target in analysis.narrative_contract

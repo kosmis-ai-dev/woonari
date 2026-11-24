@@ -116,7 +116,7 @@ def test_catalog_reports_current_ports_without_claiming_every_entry_can_calculat
     registered = handlers()
     assert len(registered) == 166
     assert Counter(item["status"] for item in items) == {
-        "ready": 62, "calculation_only": 2, "source_required": 217,
+        "ready": 63, "calculation_only": 2, "source_required": 216,
         "reference": 17, "archived": 8
     }
     existing = {item["api_kind"]: item["test_path"] for item in items if item["api_kind"]}

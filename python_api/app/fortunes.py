@@ -41,20 +41,20 @@ SOURCE_SERVICE_NAMES = {
 def catalog():
     result = []
     for kind, (name, source) in CATALOG.items():
-        dependent = kind in {FortuneKind.yearly, FortuneKind.career, FortuneKind.compatibility}
+        dependent = kind in {FortuneKind.career, FortuneKind.compatibility}
         result.append(
             {
                 "id": kind.value,
-                "name": SOURCE_SERVICE_NAMES[kind].replace("운세", "un"),
+                "name": "연간 un · 사주 기반 AI 해석" if kind == FortuneKind.yearly else SOURCE_SERVICE_NAMES[kind].replace("운세", "un"),
                 "original_name": SOURCE_SERVICE_NAMES[kind],
                 "category_name": name.replace("운세", "un"),
-                "method": "asp-commercial",
+                "method": "asp-saju-ai-yearly-v1" if kind == FortuneKind.yearly else "asp-commercial",
                 "legacy_reference": source,
                 "requires_partner": kind == FortuneKind.compatibility,
                 "readiness": "requires-original-dependency" if dependent else "ported",
                 "narrative_only_ai": True,
                 "required_inputs": ["career_category"] if kind == FortuneKind.career else [],
-                "supported_target_years": list(range(2001, 2015))
+                "supported_target_years": list(range(1900, 2051))
                 if kind == FortuneKind.yearly
                 else None,
             }
@@ -275,7 +275,11 @@ def analyze(kind: FortuneKind, request: FortuneRequest) -> Analysis:
             )
         ]
         notes.append("원본 tempChk 주간 누적 동작과 별점 비교식을 그대로 보존합니다.")
-    elif kind in {FortuneKind.monthly, FortuneKind.yearly}:
+    elif kind == FortuneKind.yearly:
+        from app.annual_ai import analyze_yearly
+
+        return analyze_yearly(request, saju, evidence)
+    elif kind == FortuneKind.monthly:
         from app.legacy_periods import decide_period
 
         decision = decide_period(kind.value, request, saju)

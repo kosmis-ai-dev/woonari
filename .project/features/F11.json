@@ -19,7 +19,16 @@
     "python_api/app/source_catalog.py",
     "python_api/tests/test_source_archive.py",
     "python_api/tests/test_source_catalog.py",
-    "docs/un-data-restore.md"
+    "docs/un-data-restore.md",
+    "python_api/app/annual_ai.py",
+    "python_api/app/fortunes.py",
+    "python_api/app/ai.py",
+    "python_api/app/legacy_catalog.py",
+    "python_api/app/service_engine.py",
+    "python_api/app/main.py",
+    "python_api/app/swagger_guide.py",
+    "python_api/tests/test_yearly_ai.py",
+    "python_api/docs/annual-ai.md"
   ],
   "tasks": [
     "T-029",
@@ -28,13 +37,15 @@
     "T-032",
     "T-033",
     "T-034",
-    "T-035"
+    "T-035",
+    "T-038"
   ],
   "changes": [
     "CR-014",
-    "CR-015"
+    "CR-015",
+    "CR-018"
   ],
-  "spec": "## 백업과 복원\n제공7z원본의SHA/파일목록/추출해시를보존했다. 전용networknone/포트미공개SQL2022에WoonariLegacyRestore로복원했고VERIFYONLY/PHYSICAL_ONLY CHECKDB통과,READ_ONLY/TRUSTWORTHYfalse/DB_CHAININGfalse다. 원본백업/기존DB/다른컨테이너는변경하지않고저장프로시저를실행하지않는다. SQL2019백업이Apple로컬x86에뮬레이션에서열렸으며운영SQL환경이아니다.\n## 전체 비회원 자료\n121표를전수분류해un정의·판정·사전78표778열100929행을선별추출/타입·키·NULL·원본/데이터해시검증후MySQL별도woonari_source_*와메타원장에복원했다. 42비어있지않은표와36빈스키마를구분한다. 회원/상담/결제/연락처/로그/개인신청43표는행을읽거나이관/배포하지않는다. 허용열778개및표준행전수민감패턴0검사를수행했다. 재실행78모두동일하고기본만세력73414행전체해시동일이다. 공개registry에는스키마/키/해시/행수/제외이유만있고실제행은없다.\n## Python 연결\n7검증표970행은캐시원문전체해시와조회행을대조한다. 평생사주3표/전생/꽃/보석/탄생일의명시적키와열별칭만사용하며단순비슷한이름을자동대입하지않는다. NULL유지/HTML제거/명시ASCII문장부호출력변환프로필을적용하되원본과해시는보존한다. 원문의민감한확정예언과없는문구는일반조언으로제한한다. GET /v1/source-data는실제전체복원상태를,서비스목록source_archive는자료와매핑스냅샷을구분한다.\n## 아직 없는 자료\n구yearfortune del은0행이며새연간2001~2020만본문이있고2021~2050각140행은빈본문/별1/점수11개0/부적5개0이다. 2027실제판정은없고간코드/성별bit/chapter/점수축/월간경계도추가원본근거가필요하다. tbAisyo/주요일부별도판정표와COM내부코드는백업에없다. T031/T026의개인판정활성화·상용대조자료대기는유지하며빈표를완성판정으로취급하지않는다.",
+  "spec": "## 백업과 복원\n제공7z원본의SHA/파일목록/추출해시를보존했다. 전용networknone/포트미공개SQL2022에WoonariLegacyRestore로복원했고VERIFYONLY/PHYSICAL_ONLY CHECKDB통과,READ_ONLY/TRUSTWORTHYfalse/DB_CHAININGfalse다. 원본백업/기존DB/다른컨테이너는변경하지않고저장프로시저를실행하지않는다. SQL2019백업이Apple로컬x86에뮬레이션에서열렸으며운영SQL환경이아니다.\n## 전체 비회원 자료\n121표를전수분류해un정의·판정·사전78표778열100929행을선별추출/타입·키·NULL·원본/데이터해시검증후MySQL별도woonari_source_*와메타원장에복원했다. 42비어있지않은표와36빈스키마를구분한다. 회원/상담/결제/연락처/로그/개인신청43표는행을읽거나이관/배포하지않는다. 허용열778개및표준행전수민감패턴0검사를수행했다. 재실행78모두동일하고기본만세력73414행전체해시동일이다. 공개registry에는스키마/키/해시/행수/제외이유만있고실제행은없다.\n## Python 연결\n7검증표970행은캐시원문전체해시와조회행을대조한다. 평생사주3표/전생/꽃/보석/탄생일의명시적키와열별칭만사용하며단순비슷한이름을자동대입하지않는다. NULL유지/HTML제거/명시ASCII문장부호출력변환프로필을적용하되원본과해시는보존한다. 원문의민감한확정예언과없는문구는일반조언으로제한한다. GET /v1/source-data는실제전체복원상태를,서비스목록source_archive는자료와매핑스냅샷을구분한다.\n## 아직 없는 자료\n구yearfortune del은0행이며새연간2001~2020만본문이있고2021~2050각140행은빈본문/별1/점수11개0/부적5개0이다. 2027실제판정은없고간코드/성별bit/chapter/점수축/월간경계도추가원본근거가필요하다. tbAisyo/주요일부별도판정표와COM내부코드는백업에없다. T031/T026의개인판정활성화·상용대조자료대기는유지하며빈표를완성판정으로취급하지않는다.\n복원된 과거2027 판정 미작성·코드 매핑 미검증은 원본 재현의 사실로 보존한다. CR018 사주 기반 AI 본문은 이 자료와 무관하게 실행하며 T031을 원본 재현 완료로 처리하지 않는다.\nCR018 / T038: 연간 un은 asp-saju-ai-yearly-v1 모드로 기존 ASP dotong 사주와 만세력 대상 연도 근거를 AI가 해석한다. 운세 DB 조회·별점·점수·부적은 사용하지 않는다. 양력 연도 전체를 안내하며 대표 연도 간지는 해당 연도 입춘 이후7월1일12시KST의 기존 절입 계산으로 확정한다. 일간 기준 간지/오행/십성/십이운성과 원국 각 천간 대비 연도 천간의 십성 관계를 전달한다. 7개 고정 본문 항목과 natal+annual-context 근거를 모두 검증하고 수치 평점/별 표시는502 ai_unrequested_rating으로 거부한다. 기존 ASP 연간 DB 동일 결과 재현과 구분하며 다른 미확보 COM/판정 차단은 유지한다.\n검증: API 전체1195개를 검사했고 준비 수량 기대값2개 수정 후 관련29개 재검증 통과. 게시/비밀값 도구25개·Ruff·compileall 통과. 독립 wheel49런타임 파일의 소스 바이트 동일성과 ASP 없는 연간 실행을 확인했다. 공식 MySQL9090에서 2027계산·별칭·AI미차감·Swagger8종을 확인하고 Claude1회 실제 생성200/7항목/1855자/analysis불변/별점·점수없음을 확인했다. 이번 실제 전송1회 차감, 테스트 종료 시점2026-11-24 사용2/100(잔여98)이며 원장 초기화나 추가 호출 없음.",
   "createdAt": "2026-11-19",
   "history": [
     {
@@ -78,7 +89,19 @@
       "by": "ai",
       "change": "CR-015",
       "text": "T035최종검증완료. 기능의기존외부원본/인증대기작업은그대로구분한다."
+    },
+    {
+      "date": "2026-11-24",
+      "by": "ai",
+      "change": "CR-018",
+      "text": "사용자 승인: 2027년 연간 본문을 운세 DB와 무관하게 AI로 생성하고 별점/점수는 미제공. 기존 만세력/사주 계산 유지와 근거 전달·검증·Swagger·실제 Claude 소량 테스트·main push를 진행한다."
+    },
+    {
+      "date": "2026-11-24",
+      "by": "ai",
+      "change": "CR-018",
+      "text": "T038 구현·실제 연간 Claude 생성·회귀·패키지 검증 완료 및 현재 연간 AI 해석 명세 반영."
     }
   ],
-  "updatedAt": "2026-11-19"
+  "updatedAt": "2026-11-24"
 }

@@ -1,0 +1,49 @@
+{
+  "id": "T-038",
+  "title": "사주 기반 연간 AI 해석·2027 실행·Swagger·배포 검증",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F09",
+    "F10",
+    "F11"
+  ],
+  "dependsOn": [],
+  "changes": [
+    "CR-018"
+  ],
+  "description": "연간 운세 문구·별점·점수 테이블 의존성을 제거하고 기존 만세력/사주 계산과 대상 연도 간지·관계를 근거로 AI 본문을 생성한다. 점수/별점/부적은 생성하지 않으며 새 해석 모드와 기존 ASP 재현을 구분한다. 기존 연간 DB 원본 진단은 보존한다.",
+  "acceptance": [
+    "2027 연간/별칭 경로에서 운세 DB 조회 없이 AI 본문 생성",
+    "기존 사주 계산과 대상 연도 근거를 전달하고 점수·별점·부적 생성 금지",
+    "include_ai=false 무차감/실제 모델 한도100 유지/기간·근거·오류 계약 검증",
+    "Swagger 2027 예시·서비스 상태·복원 진단 명세 일치",
+    "회귀·실제 Claude 소량·독립 서버·게시 사본 검증 및 main push"
+  ],
+  "tests": [
+    "python_api/tests/test_yearly_ai.py",
+    "python_api/tests/test_swagger_guide.py",
+    "python_api/tests/test_daily_ai_limit_api.py",
+    "python_api/tests/"
+  ],
+  "createdAt": "2026-11-24",
+  "updatedAt": "2026-11-24",
+  "history": [
+    {
+      "date": "2026-11-24",
+      "by": "ai",
+      "change": "CR-018",
+      "text": "사용자 승인: 2027년 연간 본문을 운세 DB와 무관하게 AI로 생성하고 별점/점수는 미제공. 기존 만세력/사주 계산 유지와 근거 전달·검증·Swagger·실제 Claude 소량 테스트·main push를 진행한다."
+    },
+    {
+      "date": "2026-11-24",
+      "by": "ai",
+      "change": "CR-018",
+      "text": "검증: API 전체1195개를 검사했고 준비 수량 기대값2개 수정 후 관련29개 재검증 통과. 게시/비밀값 도구25개·Ruff·compileall 통과. 독립 wheel49런타임 파일의 소스 바이트 동일성과 ASP 없는 연간 실행을 확인했다. 공식 MySQL9090에서 2027계산·별칭·AI미차감·Swagger8종을 확인하고 Claude1회 실제 생성200/7항목/1855자/analysis불변/별점·점수없음을 확인했다. 이번 실제 전송1회 차감, 테스트 종료 시점2026-11-24 사용2/100(잔여98)이며 원장 초기화나 추가 호출 없음. 코드·명세 게시 검증 후 main으로 반영한다."
+    }
+  ]
+}

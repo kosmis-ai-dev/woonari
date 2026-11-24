@@ -83,14 +83,12 @@ def test_month_and_year_use_original_keys_not_new_samples():
     assert set(month.selectors[0]["where"]) == {"memno", "yukgap_no", "sex"}
     assert not any(e.id.startswith("period-") for e in month.evidence)
     assert not month.scores
-    year = analyze(FortuneKind.yearly, request(target_date="2014-11-02"))
-    assert year.selectors[0]["table"] == "yearfortune"
-    assert year.method == "asp-commercial"
-    assert not year.ready_for_ai
-    assert not year.narrative_contract  # Never let AI fill source numeric judgments.
-    with pytest.raises(DomainError) as error:
-        analyze(FortuneKind.yearly, request())
-    assert error.value.code == "legacy_year_unsupported"
+    year = analyze(FortuneKind.yearly, request(target_date="2027-01-01"))
+    assert year.selectors == []
+    assert year.method == "asp-saju-ai-yearly-v1"
+    assert year.ready_for_ai
+    assert len(year.narrative_contract) == 7
+    assert year.scores == []
 
 
 def test_compatibility_requires_partner_and_other_types_reject_it():

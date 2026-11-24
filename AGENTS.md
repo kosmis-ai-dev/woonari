@@ -22,7 +22,7 @@
 - 활성 실행·개발 코드는 `python_api/`다. ASP·IIS·COM과 원본 ASP 파일 읽기에 의존하지 않는다.
 - 원본은 `.local/woonari/archive/`에 비공개 보관하며 Git·배포 사본에 복사하지 않는다. 문서의 ASP 경로·줄 번호는 출처 기록이다.
 - 서비스별 Python 모듈은 `GET /v1/un-services`의 `python_module`로 확인한다. 정적 규칙은 `python_api/app/data/`에 포함한다.
-- 미확보 판정 DB·COM 내부 알고리즘·누락 원본을 AI나 일반 운세 라이브러리로 대체하지 않는다. 부분 계산·자료 진단과 해석 준비 상태를 구분한다.
+- CR-018 사용자 승인(2026-11-24)에 따라 연간 un 본문은 만세력/기존 사주와 대상 연도 근거를 AI가 해석한다. 연간 운세 DB·별점·점수·부적은 사용하지 않으며 기존 ASP 연간 결과 재현과 구분한다. 다른 미확보 판정 DB·COM 내부 알고리즘·누락 원본을 AI나 일반 운세 라이브러리로 대체하지 않는다. 부분 계산·자료 진단과 해석 준비 상태를 구분한다.
 - 개발·검증·출처 관리 절차는 `docs/python-only.md`와 `python_api/docs/source-rules.md`를 따른다.
 
 <!-- proj-kit:start -->

@@ -15,7 +15,7 @@ FORTUNES = {
     "daily": "오늘의 un",
     "weekly": "이번주 un",
     "monthly": "이달의 un",
-    "yearly": "2014 도통비결",
+    "yearly": "연간 un",
     "lifetime": "평생un",
     "wealth": "명품 평생재물운",
     "career": "나에게 맞는 직업",
@@ -23,7 +23,7 @@ FORTUNES = {
     "compatibility": "숙명의 궁합",
     "biorhythm": "바이오리듬",
 }
-DEPENDENT = {"yearly", "career", "compatibility"}
+DEPENDENT = {"career", "compatibility"}
 
 
 def korean(value):
@@ -99,7 +99,7 @@ def test_calculation_swagger_example_is_executable_without_ai(client, app, schem
     body = sample["value"]
     assert body["include_ai"] is False
     if kind == "yearly":
-        assert body["target_date"].startswith("2014-")
+        assert body["target_date"].startswith("2027-")
     elif kind == "career":
         assert body["career_category"] == "A"
     elif kind == "compatibility":
@@ -156,7 +156,7 @@ def test_ready_and_diagnostic_operations_are_visibly_separate(schema):
 
 def test_dependency_limits_are_explained_where_people_test(schema):
     annual = operation(schema, "yearly")["description"]
-    assert "2001" in annual and "2014" in annual
+    assert "2027" in annual and "별점" in annual and "AI" in annual
     assert "DLL" in operation(schema, "career")["description"]
     compatibility = operation(schema, "compatibility")["description"]
     assert "원본" in compatibility

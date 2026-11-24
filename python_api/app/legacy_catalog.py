@@ -97,6 +97,12 @@ def _catalog_data() -> dict:
     for item in data["items"]:
         if item.get("api_kind") == "yearly":
             item.setdefault("review_notes", []).append(BACKUP_FINDING)
+            item["review_notes"].append("CR018: 현재 연간 본문은 기존 사주/연도 근거를 AI가 해석하며 운세 DB·별점·점수·부적은 사용하지 않습니다. 과거 연간 DB 재현 진단은 /v1/restored-data에 보존합니다.")
+            item.update(
+                name="연간 un · 사주 기반 AI 해석", status="ready",
+                status_label="사주 기반 연간 AI 해석 가능 · 별점/점수 미제공",
+                test_path="/v1/fortunes/yearly", issues=[], dependencies=[]
+            )
     # Validate checked-in data on startup/OpenAPI generation, not only in tests.
     data["items"] = [LegacyService.model_validate(item).model_dump() for item in data["items"]]
     return data

@@ -37,11 +37,10 @@ def test_exact_verified_lookup_and_unverified_annual_candidates(tmp_path, monkey
                                "lookup_mapping": "verified"}]
     assert not past["actual_connection_checked"]
     annual = catalog.service_archive_status({"api_kind": "yearly"})
-    table = annual["tables"][0]
-    assert table["status"] == "not_found_exact"
-    assert table["lookup_mapping"] == "not_verified"
-    assert table["candidates"] == [{"source_table": "yearfortune del", "row_count": 0},
-                                   {"source_table": "TB_yearLuck", "row_count": 7000}]
+    assert annual["tables"] == []
+    assert annual["required_for_execution"] is False
+    assert annual["basis"] == "annual_saju_ai"
+    assert annual["status_path"] == "/v1/restored-data"
 
 
 def test_missing_registry_has_no_false_restored_claim(tmp_path, monkeypatch):

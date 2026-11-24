@@ -105,11 +105,11 @@ def test_calculation_invalid_and_unready_requests_do_not_consume_allowance(tmp_p
         assert client.post("/v1/fortunes/daily", json=request(include_ai=False)).status_code == 200
         invalid = client.post("/v1/fortunes/daily", json={**request(), "target_date": "not-a-date"})
         assert invalid.status_code == 422
-        unsupported_year = client.post(
-            "/v1/fortunes/yearly", json={**request(), "target_date": "2027-01-01"},
+        annual_calculation = client.post(
+            "/v1/fortunes/yearly", json={**request(), "target_date": "2027-01-01", "include_ai": False},
         )
-        assert unsupported_year.status_code == 422
-        assert unsupported_year.json()["error"]["code"] == "legacy_year_unsupported"
+        assert annual_calculation.status_code == 200
+        assert annual_calculation.json()["analysis"]["ready_for_ai"] is True
         unavailable = client.post("/v1/un/animalluck", json={"target_date": DAY, "include_ai": True})
         assert unavailable.status_code == 503
         assert unavailable.json()["error"]["code"] == "legacy_dependency_unavailable"
@@ -151,3 +151,19 @@ def test_usage_endpoint_requires_api_auth_and_never_consumes_a_call(tmp_path):
         assert response.json()["remaining"] == 2
         assert api_key not in response.text
     assert transport.calls == 0
+
+
+def test_yearly_aliases_share_persistent_daily_limit(tmp_path):
+    transport = SimulatedConverse()
+    quota = quota_at(tmp_path)
+    with TestClient(application(quota, transport)) as client:
+        body = {**request(), "target_date": "2027-01-01"}
+        first = client.post("/v1/fortunes/yearly", json=body)
+        assert first.status_code == 200, first.text
+        second = client.post("/v1/un/2014yearluck", json={**body, "parameters": {}})
+        assert second.status_code == 200, second.text
+        third = client.post("/v1/fortunes/yearly", json=body)
+        assert third.status_code == 429
+        assert third.json()["error"]["code"] == "ai_daily_limit_reached"
+        assert client.get("/v1/ai-usage").json()["used"] == 2
+    assert transport.calls == 2

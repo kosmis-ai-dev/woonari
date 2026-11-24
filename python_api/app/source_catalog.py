@@ -45,6 +45,13 @@ def registry_snapshot() -> dict:
 
 
 def service_archive_status(item: dict) -> dict:
+    if item.get("api_kind") == "yearly":
+        return {
+            "basis": "annual_saju_ai", "actual_connection_checked": False,
+            "tables": [], "required_for_execution": False,
+            "status_path": "/v1/restored-data",
+            "note": "현재 연간 AI 본문은 운세 DB를 사용하지 않습니다. 만세력은 사주/연도 계산에 계속 필요하며 과거 연간 DB 재현 진단은 별도로 보존합니다."
+        }
     registry = registry_snapshot()
     tables = {t["source_table"].casefold(): t for t in registry["tables"]}
     aliases = {a.casefold(): b for a, b in VERIFIED_TABLE_ALIASES.items()}

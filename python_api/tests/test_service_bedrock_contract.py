@@ -55,7 +55,8 @@ def test_all_ready_services_serialize_and_validate_bedrock_tool_contracts():
             analysis = analyze_service(item["id"], ServiceRequest(**body))
             response = await backend.interpret(analysis)
             assert len(response.sections) == len(analysis.narrative_contract), item["id"]
-        assert len(seen) == 62
+        assert len(seen) == 63
+        assert "yearly" in seen
         await backend.close()
 
     asyncio.run(check())

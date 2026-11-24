@@ -8,9 +8,9 @@ from app.legacy_relationships import CAREER_TITLES
 from app.models import FortuneKind
 from app.restored_fortune import BACKUP_FINDING
 
-READY_TAG = "un 테스트 · AI 해석 가능 7종"
-WAITING_TAG = "un 테스트 · 원본 자료 대기 3종"
-WAITING_KINDS = {FortuneKind.yearly, FortuneKind.career, FortuneKind.compatibility}
+READY_TAG = "un 테스트 · AI 해석 가능 8종"
+WAITING_TAG = "un 테스트 · 원본 자료 대기 2종"
+WAITING_KINDS = {FortuneKind.career, FortuneKind.compatibility}
 MANSE_GUIDE = (
     "사주·음양력·절입은 제공된 script.sql의 tb_manse 73,414행을 기준으로 조회합니다. "
     "공식 ./woonari 실행은 적재된 MySQL woonari.tb_manse를 사용하며 조회 실패 시 다른 달력으로 자동 대체하지 않습니다. "
@@ -55,7 +55,7 @@ GUIDES = {
     FortuneKind.wealth: "년·월·일·시주에 따른 **초년·장년·중년·말년 재물운 4개 항목**을 계산합니다. 당일 재물 점수를 재활용하는 방식이 아닙니다.",
     FortuneKind.love: "**인연의 시기·성격·직업·만날 장소·사랑 스타일**의 5개 원본 출력 항목을 선택합니다. 생년월일시와 성별을 바꾸어 비교할 수 있습니다.",
     FortuneKind.biorhythm: "출생일부터 조회 날짜까지의 일수로 **신체 23일·감성 28일·지성 33일 주기**와 원본 27가지 멘트 분류를 계산합니다. 실제 건강 상태나 사고 확률을 측정하는 값은 아닙니다.",
-    FortuneKind.yearly: "**진단 전용입니다.** 원본 연간 un의 분기는 **2001~2014년**만 정의되어 있습니다. 기본 예시는 `target_date=2014-11-02`로 조회키를 확인합니다. **2026년 올해 un 요청은 422 `legacy_year_unsupported`**입니다. 허용 연도에서도 별점·기간·점수 등 원본 DB 판정 값이 없어 `ready_for_ai=false`이며, AI 해석 요청은 503으로 차단됩니다.",
+    FortuneKind.yearly: "**사주 기반 AI 연간 해석입니다.** 기존 만세력·ASP 사주 계산과 대상 연도 간지·십성 관계를 근거로 AI가 본문을 작성합니다. 기본 예시는 `target_date=2027-01-01`이며 1900~2050년을 지원합니다. **운세 DB 본문·별점·점수·부적은 사용하지 않습니다.** `analysis.scores`는 빈 배열이고 연간 근거의 별점·점수는 null입니다. 양력 연도 전체 안내이며 대표 간지는 입춘 이후 7월 1일의 만세력 계산값입니다. 기존 연간 DB 결과 재현이나 월별 확정 예측을 뜻하지 않습니다.",
     FortuneKind.career: "**진단 전용입니다.** `career_category`로 원본 직업운 주제를 선택합니다. A~E는 각 3항목, F는 전체 15항목입니다. DLL 내부 판정이 없어 조회·호출 경로만 확인할 수 있고, AI 해석 요청은 503으로 차단됩니다.",
     FortuneKind.compatibility: "**진단 전용입니다.** 본인 `birth`와 상대방 `partner`의 생년월일시를 모두 입력합니다. tb_manse의 음양력·간지와 별개인 tbAisyo의 원본 27숙 분류 데이터가 없어 최종 궁합은 생성하지 않습니다. 기본 예시는 필요한 분류 조회키와 `unresolved_dependencies`를 확인하는 용도이며, AI 해석 요청은 503으로 차단됩니다.",
 }
@@ -75,12 +75,12 @@ BASE_BIRTH = {
 def fortune_examples(kind: FortuneKind) -> dict:
     body = {"birth": deepcopy(BASE_BIRTH), "target_date": "2026-11-02", "include_ai": False}
     if kind == FortuneKind.yearly:
-        body["target_date"] = "2014-11-02"
+        body["target_date"] = "2027-01-01"
     if kind == FortuneKind.career:
         body["career_category"] = "A"
     if kind == FortuneKind.compatibility:
         body["partner"] = {**BASE_BIRTH, "year": 1992, "gender": "female"}
-    name = SOURCE_SERVICE_NAMES[kind].replace("운세", "un")
+    name = "연간 un · 사주 기반 AI 해석" if kind == FortuneKind.yearly else SOURCE_SERVICE_NAMES[kind].replace("운세", "un")
     waiting = kind in WAITING_KINDS
     calculation = {
         "calculation_only": {
@@ -116,7 +116,7 @@ def fortune_description(kind: FortuneKind) -> str:
     if kind == FortuneKind.lifetime:
         guide += "\n\n원본 `loveunse`의 메뉴명 '평생사주'와 구분합니다. 현재 API는 `lifeluck`의 평생 un 로직입니다."
     if kind == FortuneKind.yearly:
-        guide += "\n\n**백업 복원 조사 결과:** " + BACKUP_FINDING
+        guide += "\n\n**과거 ASP 결과 재현 자료의 별도 진단:** " + BACKUP_FINDING + " 현재 사주 기반 연간 AI 해석은 이 자료 대기와 무관하게 실행합니다."
     if kind == FortuneKind.career:
         guide += "\n\n| 코드 | 원본 직업운 주제 |\n|---|---|\n"
         guide += "\n".join(
@@ -164,7 +164,7 @@ def generic_examples() -> dict:
         kind.value: {
             **fortune_examples(kind)["calculation_only"],
             "description": f"위 kind 경로 매개변수에서 {kind.value}를 직접 선택하세요. "
-            "이 공통 경로의 예시는 include_ai=false 계산·진단 전용입니다. 실제 AI 본문은 준비된 7종에서 include_ai=true로 요청하거나 위의 개별 un 예시를 사용하세요. Examples 선택만으로 kind 값이 자동 변경되지는 않습니다.",
+            "이 공통 경로의 예시는 include_ai=false 계산·진단 전용입니다. 실제 AI 본문은 준비된 8종에서 include_ai=true로 요청하거나 위의 개별 un 예시를 사용하세요. Examples 선택만으로 kind 값이 자동 변경되지는 않습니다.",
         }
         for kind in FortuneKind
     }
@@ -317,7 +317,7 @@ Bedrock Claude는 전용 IAM 또는 명시한 AI 전용 계정의 장기 키로 
 
 ## 기존 10종에서 실제 un 내용 받기
 
-**un 테스트 · AI 해석 가능 7종**에서 원하는 한글 un 이름을 펼치세요.
+**un 테스트 · AI 해석 가능 8종**에서 원하는 한글 un 이름을 펼치세요.
 1. 전용 `.local/woonari/api.env`에 선택한 AI 제공자의 설정을 입력하고 `./woonari stop` / `./woonari start`로 재시작합니다. 현재 연결 대상은 **Amazon Bedrock의 Claude**입니다. `AI_PROVIDER=bedrock`, `BEDROCK_MODEL_ID`, `BEDROCK_REGION`과 `BEDROCK_AUTH_MODE`를 사용합니다. 장기 키 모드는 `BEDROCK_ACCOUNT_ID`와 전용 키 파일을 확인합니다.
 2. **서버 상태 → GET /health**에서 `ai_configured: true`를 확인합니다. `ai_missing_settings`에는 누락된 설정 이름만 표시합니다.
 3. **Try it out → Examples → 첫 번째 실제 AI un 내용 받기 → Execute**로 실행합니다. `include_ai: true`입니다.

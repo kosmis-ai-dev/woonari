@@ -242,7 +242,7 @@ def create_app(
         calculation_only = bool(metadata.get("calculation_only"))
         ready = calculation_ready and not calculation_only
         sample = {
-            "target_date": "2014-11-18" if item.get("api_kind") == "yearly" else "2026-11-18",
+            "target_date": "2027-01-01" if item.get("api_kind") == "yearly" else "2026-11-18",
             "parameters": metadata.get("example_parameters", {}), "include_ai": ready,
         }
         if metadata.get("requires_birth") or item.get("api_kind"):

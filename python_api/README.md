@@ -43,7 +43,7 @@ ASP는 활성 작업 폴더에서 분리해 비공개 보관합니다. Python AP
 
 ## Swagger에서 실제 un 내용 받기
 
-[Swagger 문서](http://127.0.0.1:9090/docs)의 **un 테스트 · AI 해석 가능 7종**에서 오늘의 un·이번주 un·이달의 un·평생un·명품 평생재물운·러브 어드바이스·바이오리듬 중 원하는 항목을 펼치세요.
+[Swagger 문서](http://127.0.0.1:9090/docs)의 **un 테스트 · AI 해석 가능 8종**에서 오늘의 un·이번주 un·이달의 un·연간 un·평생un·명품 평생재물운·러브 어드바이스·바이오리듬 중 원하는 항목을 펼치세요.
 
 1. 아래 **AI 연결과 출력 계약** 절차로 `.local/woonari/api.env`의 제공자·모델·인증 설정을 완료하고 `./woonari stop` / `./woonari start`로 재시작합니다. 현재 연결 대상은 Amazon Bedrock의 Claude입니다.
 2. **서버 상태 → GET /health**에서 `ai_configured: true`를 확인합니다. `ai_missing_settings`에는 필요한 설정 이름만 표시합니다. 모델 호출 권한과 실제 생성 성공은 다음 POST로 확인합니다.
@@ -53,9 +53,9 @@ ASP는 활성 작업 폴더에서 분리해 비공개 보관합니다. Python AP
 
 선택한 제공자의 설정이 없으면 `503 ai_not_configured`입니다. 계산 근거만 검증하려면 두 번째 **계산 전용 · 근거 확인** 예시를 선택하세요. `include_ai: false`이면 AI를 호출하지 않으며 `content`와 `interpretation`이 null입니다.
 
-각 un는 `/v1/fortunes/daily`처럼 고정 경로로 표시됩니다. 기존 공통 `/v1/fortunes/{kind}`의 Examples는 계산·진단 전용입니다. 실제 AI 본문을 받으려면 준비된 7종에서 `include_ai: true`로 변경하거나 개별 un 예시를 사용하세요. 공통 경로에서는 Examples를 바꿔도 `kind`가 자동으로 바뀌지 않으므로 해당 코드도 직접 선택해야 합니다.
+각 un는 `/v1/fortunes/daily`처럼 고정 경로로 표시됩니다. 기존 공통 `/v1/fortunes/{kind}`의 Examples는 계산·진단 전용입니다. 실제 AI 본문을 받으려면 준비된 8종에서 `include_ai: true`로 변경하거나 개별 un 예시를 사용하세요. 공통 경로에서는 Examples를 바꿔도 `kind`가 자동으로 바뀌지 않으므로 해당 코드도 직접 선택해야 합니다.
 
-**un 테스트 · 원본 자료 대기 3종**은 연간·직업·궁합의 조회키 진단용입니다. 첫 예시는 `include_ai: false`이며 최종 un 생성은 아직 불가합니다. 연간은 2014년 예시를 사용하고 직업운은 `career_category`, 궁합은 `partner`가 포함됩니다. 2026년 올해 un는 지원하지 않습니다.
+**un 테스트 · 원본 자료 대기 2종**은 직업·궁합의 조회키 진단용입니다. 연간 un은 별도 사주 기반 AI 해석으로 2027년을 포함해 실행합니다. 별점·점수·부적은 생성하지 않습니다.
 
 ## ASP 전체 이름·문제 확인
 
@@ -97,7 +97,7 @@ curl -s http://127.0.0.1:9090/v1/fortunes/daily \
 
 `birth`의 년월일·시간·성별은 필수이며 분은 기본 0입니다. `calendar`는 `solar`/`lunar`, `gender`는 `male`/`female`입니다. 시간을 모르면 임의 시각으로 자동 보정하지 않습니다.
 
-음력은 `calendar: "lunar"`, 윤달이면 `leap_month: true`를 지정합니다. 존재하지 않는 날짜·윤달은 거절합니다. 공개 API의 입력 및 변환된 양력 범위는 1900-01-01~2050-12-31입니다. DB에는 1900~2100년 원본 73,414행을 보존합니다. 검증된 윤달 표시 오류 10행은 `lunar-leap-flags-v1` 교정표로 처리합니다. 교정 후 남는 음력키 중복만 `422 ambiguous_lunar_date`로 거절합니다. `target_date`는 출생일 이후여야 합니다. **연간 un만 원본 연도 분기 때문에 2001~2014년으로 제한**됩니다.
+음력은 `calendar: "lunar"`, 윤달이면 `leap_month: true`를 지정합니다. 존재하지 않는 날짜·윤달은 거절합니다. 공개 API의 입력 및 변환된 양력 범위는 1900-01-01~2050-12-31입니다. DB에는 1900~2100년 원본 73,414행을 보존합니다. 검증된 윤달 표시 오류 10행은 `lunar-leap-flags-v1` 교정표로 처리합니다. 교정 후 남는 음력키 중복만 `422 ambiguous_lunar_date`로 거절합니다. `target_date`는 출생일 이후여야 합니다. **연간 un도 1900~2050년을 지원**하며 별도의 운세 DB 없이 사주·연도 근거로 AI가 해석합니다.
 
 사주만 필요하면 `/v1/saju`에 다음처럼 요청합니다.
 
@@ -129,15 +129,14 @@ curl -s http://127.0.0.1:9090/v1/fortunes/daily \
 | love | 도깨비번호 앞 3자리·성별로 `tbLoveLuck`의 원본 5항목 선택 |
 | biorhythm | 원본 23/28/33일 주기·상태·27가지 멘트 분류 |
 
-아래 3종은 원본의 조회·호출 분기를 보존했지만 판정 의존성이 미확보되어 `ready_for_ai: false`입니다.
+아래 2종은 원본의 조회·호출 분기를 보존했지만 판정 의존성이 미확보되어 `ready_for_ai: false`입니다.
 
 | kind | 보존한 부분 | 현재 필요한 원본 판정 의존성 |
 |---|---|---|
-| yearly | 원본 `code=2001~2014`의 명시적 간지 매핑과 `yearfortune` 조회키·출력 조건 | DB의 `section`, `star_cnt`, `solar`, `mark1~mark11` 및 행 구성·부적 선택. 이는 본문 문구와 별개의 판정 데이터입니다. |
 | career | A~E 각 3항목, F 전체 15항목의 원본 순서와 `getNHResult('002',...)` 호출 분기 | `NHCP5.NHUnse` 내부 계산. 카테고리를 입력해도 DLL 의존성은 남습니다. |
 | compatibility | 원본 4개 출력항목, 방향성 있는 `AisyoTbl` 전체 표와 후속 문구 선택 공식 | 두 양력 출생일 → `tbAisyo.aisyo` 분류코드. 단순 육합·충으로 대체하지 않습니다. |
 
-위 3종도 `include_ai: false`이면 확인 가능한 선택키·미확보 항목을 볼 수 있습니다. `include_ai: true`이면 `503 legacy_dependency_unavailable`로 중단합니다. 연간 2001~2014 밖 요청은 먼저 `422 legacy_year_unsupported`로 거절합니다. 원본의 빈 `code` 기본값 2013을 현재 연도로 바꾸거나, 간지를 순환시켜 미래 연도로 임의 확장하지 않습니다.
+위 2종도 `include_ai: false`이면 확인 가능한 선택키·미확보 항목을 볼 수 있습니다. `include_ai: true`이면 `503 legacy_dependency_unavailable`로 중단합니다.
 
 상세 근거: [월간·연간](docs/legacy_periods.md), [평생·재물](docs/legacy_life_wealth.md), [연애·직업·궁합](docs/legacy_relationships.md). 기존 [legacy_inventory.json](docs/legacy_inventory.json)은 68개 폴더의 정규식 기반 기초 조사입니다. 실제 서비스 이름·하위 항목·메뉴의 누락된 연결·구체적 해결 자료는 새 [전체 조사표](docs/legacy_services.md)를 기준으로 확인하세요.
 
@@ -177,9 +176,9 @@ API_KEY=
 
 `AI_DAILY_CALL_LIMIT=100`은 한국시간 자정 기준 Woonari의 모델 전송 시도를 최대100회로 제한합니다. 모든 경로와 제공자가 영속 기록을 공유하므로 서버 재시작·동시 요청·조회 날짜 변경으로 초기화되지 않습니다. `GET /v1/ai-usage`로 사용·잔여·다음 초기화 시각을 확인합니다. 전송 후 오류도 차감하며, 초과는429입니다. 계산만 하는 요청·입력 오류·자료 부족·전송 전 키 검증 실패는 차감하지 않습니다. 상태 기록을 삭제하지 마세요.
 
-AI는 Python의 사주·점수·선택키·출력항목을 입력받아 **요약, 항목별 해석, 실천 조언**을 작성합니다. 원본 DB 문구의 복원이나 미확보 판정 생성은 하지 않습니다. 사주 원국은 출생 기준이며 2027년 운세는 별도 연간 판정이 필요합니다. 현재 2027년 연간 요청은422로 거부하고 AI 한도를 사용하지 않습니다.
+AI는 Python의 사주·점수·선택키·출력항목을 입력받아 **요약, 항목별 해석, 실천 조언**을 작성합니다. 원본 DB 문구의 복원이나 미확보 판정 생성은 하지 않습니다. 연간 un은 별도의 승인된 AI 해석 모드이며 사주 원국과 대상 연도 관계를 전달합니다. 2027년 요청도 실제 본문 생성이 가능하고 실제 전송마다 같은 일일 한도를 사용합니다. 계산 전용 요청은 차감하지 않습니다.
 
-설정 후 `./woonari stop` / `./woonari start`로 재시작하고 `/health`의 `ai_configured`, `ai_missing_settings`를 확인하세요. 준비된 7종의 첫 **실제 AI un 내용 받기** 예시로 POST를 실행하면 `content`에 실제 생성 문장이 반환됩니다. 설정 상태와 모델 호출 권한은 구분하며 실제 호출 성공은 POST 결과로 확인합니다. 키·모델 등 선택한 제공자의 설정이 없으면 `503 ai_not_configured`, 원본 판정 의존성이 없으면 먼저 `503 legacy_dependency_unavailable`입니다.
+설정 후 `./woonari stop` / `./woonari start`로 재시작하고 `/health`의 `ai_configured`, `ai_missing_settings`를 확인하세요. 준비된 8종의 첫 **실제 AI un 내용 받기** 예시로 POST를 실행하면 `content`에 실제 생성 문장이 반환됩니다. 설정 상태와 모델 호출 권한은 구분하며 실제 호출 성공은 POST 결과로 확인합니다. 키·모델 등 선택한 제공자의 설정이 없으면 `503 ai_not_configured`, 원본 판정 의존성이 없으면 먼저 `503 legacy_dependency_unavailable`입니다.
 
 OpenAI 연결도 선택할 수 있습니다. 이 경우 `AI_PROVIDER=openai`와 전용 `OPENAI_API_KEY`, `OPENAI_MODEL`을 설정합니다. 모델은 Responses API와 structured outputs를 지원하는 모델 ID를 사용합니다. 실제 호출 여부는 선택한 제공자의 전용 설정과 POST 응답으로 확인하며 모의 전송 테스트를 외부 서비스 호출 검증으로 간주하지 않습니다.
 
@@ -229,4 +228,6 @@ AI 생성이 성공하면 응답 첫 항목 `content`에서 자연어 un 본문�
 
 미설정은 `bedrock_not_configured`, 양식 미제출은 `bedrock_use_case_required`, 계정 검증 진행은 `bedrock_account_verification`으로 구분합니다. 원본 계산만 확인하려면 `include_ai=false`를 선택합니다.
 
-AI 실제 테스트(2026-11-19): 일일·연인 심리분석·평생의 V5 결과를 확인했습니다. 원본 계산은 변하지 않았고 해석3/4/13항목이 반환됐습니다. 초기 문장 품질 보완을 포함해 모델 전송은 총6회였으며 테스트 시점 잔여94회입니다. 근거가 없는 선택키·당사주 문자만으로 성격이나 시기별 길흉을 단정하지 않고 일반 조언·확인 질문으로 제한합니다. 2027년 연간 판정은 아직 미지원이며 AI로 임의 생성하지 않습니다.
+AI 실제 테스트(2026-11-19): 일일·연인 심리분석·평생의 V5 결과를 확인했습니다. 원본 계산은 변하지 않았고 해석3/4/13항목이 반환됐습니다. 초기 문장 품질 보완을 포함해 모델 전송은 총6회였으며 테스트 시점 잔여94회입니다. 근거가 없는 선택키·당사주 문자만으로 성격이나 시기별 길흉을 단정하지 않고 일반 조언·확인 질문으로 제한합니다. 이 테스트 이후 CR-018에서 연간 사주 기반 AI 해석 모드를 추가했습니다. 기존 DB 점수 재현은 제공하지 않습니다.
+
+연간 실행 예시·해석 범위·미제공 항목은 [연간 AI 안내](docs/annual-ai.md)를 따릅니다.
