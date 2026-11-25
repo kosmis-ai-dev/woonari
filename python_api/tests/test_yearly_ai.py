@@ -102,6 +102,6 @@ def test_all_annual_aliases_generate_ai_from_identical_context(path):
         assert generated.status_code == 200, generated.text
         value = generated.json()
         assert value["content"] and len(value["interpretation"]["sections"]) == 7
-        assert value["analysis"] == calculation.json()["analysis"]
-        assert value["analysis"]["scores"] == []
+        assert value["result"] == calculation.json()["result"]
+        assert value["result"]["scores"] == []
         fake.interpret.assert_awaited_once()

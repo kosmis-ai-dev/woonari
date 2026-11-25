@@ -136,15 +136,13 @@ def test_swagger_diagnostic_is_authorized_and_never_calls_ai(tmp_path, monkeypat
         interpreter_factory=lambda _: interpreter, ai_quota=quota,
     )
     with TestClient(application) as client:
-        assert client.get("/v1/restored-data").status_code == 401
+        assert client.get("/v1/restored-data").status_code == 404
         headers = {"X-API-Key": "synthetic-test-api"}
         response = client.get("/v1/restored-data?year=2027", headers=headers)
-        assert response.status_code == 200
-        assert not response.json()["ready_for_ai"]
-        assert client.get("/v1/restored-data?year=2051", headers=headers).status_code == 422
+        assert response.status_code == 404
+        assert client.get("/v1/restored-data?year=2051", headers=headers).status_code == 404
         assert client.get("/v1/ai-usage", headers=headers).json()["used"] == 0
-        description = client.get("/openapi.json").json()["paths"]["/v1/restored-data"]["get"]
-        assert "초기 행" in description["description"]
+        assert "/v1/restored-data" not in client.get("/openapi.json").json()["paths"]
     interpreter.interpret.assert_not_called()
 
 

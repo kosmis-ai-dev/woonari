@@ -77,7 +77,7 @@ class Birth(Model):
         description="음력 윤달 생일만 true입니다. 양력 생일은 반드시 false로 둡니다.",
     )
     gender: Literal["male", "female"] = Field(
-        title="성별", description="원본 un 규칙의 성별 입력입니다. male=남성, female=여성입니다."
+        title="성별", description="male=남성, female=여성입니다."
     )
 
     @model_validator(mode="after")
@@ -96,8 +96,8 @@ class SajuRequest(Model):
     )
     calculation_profile: Literal["today_inline", "dotong"] = Field(
         default="dotong",
-        title="원본 사주 계산 기준",
-        description="기본값 dotong을 사용하세요. today_inline은 오늘·주간·월간의 원본 기준입니다. 23:30 이후 시주 계산 방식이 다릅니다.",
+        title="사주 계산 기준",
+        description="기본값 dotong을 사용하세요. today_inline은 오늘·주간·월간 un의 계산 기준입니다. 23:30 이후 시주 계산 방식이 다릅니다.",
     )
 
 

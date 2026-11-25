@@ -13,7 +13,7 @@ from app import legacy_relationships
 from app.ai_quota import DailyAIQuota
 from app.config import Settings
 from app.fortunes import catalog
-from app.legacy_catalog import services
+from app.legacy_catalog import full_catalog, services
 from app.main import create_app
 from app.models import FortuneKind, FortuneRequest
 from app.service_engine import service_catalog
@@ -62,14 +62,15 @@ def test_dll_removal_does_not_erase_the_frozen_source_audit():
 
 def test_removed_services_are_absent_from_all_lists_and_menu_edges(api):
     client, _, _ = api
-    data = client.get("/v1/asp-services").json()
+    data = full_catalog(ai_key_configured=False, ai_model_configured=False)
     runtime = client.get("/v1/un-services").json()
-    assert runtime["count"] == len(runtime["items"]) == 291
+    assert runtime["count"] == len(runtime["items"])
+    assert not REMOVED & {item["id"] for item in runtime["items"]}
     assert data["summary"]["records"] == len(data["items"]) == 291
     assert {item["id"] for item in services()} == {item["id"] for item in service_catalog()}
     assert len(data["menu_map"]) == 84
     assert not REMOVED_MENU_CODES & {item["content_code"] for item in data["menu_map"]}
-    for item in data["items"] + runtime["items"]:
+    for item in data["items"]:
         assert item["id"] not in REMOVED
         assert item["parent_id"] not in REMOVED
         assert not REMOVED & set(item["children"])
@@ -93,8 +94,8 @@ def test_parent_and_other_fortunes_are_preserved(api):
         "birth": BIRTH, "target_date": "2027-01-01", "include_ai": False
     })
     assert value.status_code == 200, value.text
-    assert value.json()["analysis"]["ready_for_ai"] is True
-    assert value.json()["analysis"]["method"] == "asp-saju-ai-yearly-v1"
+    assert value.json()["result"]["kind"] == "yearly"
+    assert "method" not in value.json()["result"]
 
 
 def test_core_kind_schema_and_swagger_no_longer_offer_career(api):
@@ -110,7 +111,7 @@ def test_core_kind_schema_and_swagger_no_longer_offer_career(api):
     for service_id in REMOVED:
         assert f"/v1/un/{service_id}" not in schema["paths"]
         assert original[service_id]["diagnostic_path"] not in schema["paths"]
-    assert len(schema["paths"]) == 600
+    assert not any("asp" in path.lower() for path in schema["paths"])
     assert not hasattr(legacy_relationships, "CAREER_TITLES")
     assert not hasattr(legacy_relationships, "career_dispatch")
     assert not hasattr(legacy_relationships, "_career")

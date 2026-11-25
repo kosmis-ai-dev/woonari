@@ -13,9 +13,9 @@ class ServiceRequest(Model):
     target_date: date = Field(description="조회 기준 양력 날짜입니다. 별도 server_date 입력이 있는 서비스는 개별 설명을 따릅니다.")
     parameters: dict[str, JsonValue] = Field(
         default_factory=dict,
-        description="각 서비스의 한글 설명·예시에 있는 추가 입력만 사용합니다. 원본 판정 코드가 아닌 임의 지시를 넣지 마세요.",
+        description="각 서비스의 한글 설명·예시에 있는 추가 입력만 사용합니다.",
     )
-    include_ai: bool = Field(default=True, description="true는 실제 AI 본문, false는 계산·필요자료 진단만 반환합니다.")
+    include_ai: bool = Field(default=True, description="true는 AI 본문과 계산 결과, false는 계산 결과만 반환합니다.")
 
     @model_validator(mode="after")
     def validate_period(self):

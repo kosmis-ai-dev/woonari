@@ -1,6 +1,10 @@
-# Python 전용 작업 안내 · CR-012 / T-025
+# Python 전용 작업 안내
 
 활성 작업 폴더는 `/Users/kosmis/work/kosmis/un`이며 API 코드는 `python_api/app`에 있습니다. 이 폴더에서 Python 계산·API·테스트를 수정하면 됩니다. IIS·Classic ASP·COM 설치는 필요하지 않습니다.
+
+공개 API는 운세 본문 `content`, 구조화된 해석 `interpretation`, 계산 결과 `result`만 제공합니다. `interpretation.sections`는 `topic`·`text`를 포함합니다. `include_ai=false`이면 `result`만 반환합니다. 사주 계산 응답에는 음양력 날짜·사주팔자·일간·오행·절기 기간을 제공합니다. 출처·이식 상태·개발용 조회 조건·내부 검증 계약은 공개 응답에서 제외합니다.
+
+목록과 Swagger에는 현재 결과를 제공하는 항목만 표시합니다. 미지원 항목은 `503 result_unavailable`로 응답하며, 개발 진단을 성공한 운세 결과로 반환하지 않습니다. API 사용법은 [API 안내](../python_api/README.md)를 따릅니다.
 
 ## 로컬 실행
 
@@ -14,15 +18,15 @@ Swagger는 http://127.0.0.1:9090/docs, 전용 작업 보드는 http://127.0.0.1:
 
 ## 서비스 수정·테스트
 
-기본 9종은 `app/fortunes.py`와 `app/legacy_*.py`, 추가 전환 서비스는 `app/ported_direct.py`, `ported_loveunse.py`, `ported_remaining.py`, `ported_interlife.py`, `ported_template.py` 및 `ported_interlife_*.py`에 있습니다. 공통 실행은 `service_engine.py`, 입력·출력은 `service_models.py`, API는 `main.py`입니다. 필요한 정적 규칙은 `app/data/*.json`에 포함합니다.
+기본 계산은 `app/fortunes.py`와 `app/legacy_*.py`, 추가 전환 서비스는 `app/ported_direct.py`, `ported_loveunse.py`, `ported_remaining.py`, `ported_interlife.py`, `ported_template.py` 및 `ported_interlife_*.py`에 있습니다. 공통 실행은 `service_engine.py`, 내부 입력·계산 모델은 `models.py`·`service_models.py`, API는 `main.py`입니다. 공개 응답은 `public_models.py`, `public_results.py`, `public_catalog.py`, `public_errors.py`에서 관리합니다. 필요한 정적 규칙은 `app/data/*.json`에 포함합니다.
 
-`GET /v1/un-services`에서 한글 이름과 `id`를 찾고 `python_module`에 표시된 Python 모듈을 수정합니다. 값이 `null`이면 실행 알고리즘이 확보되지 않은 진단 항목입니다. 큰 조건표는 해당 모듈이 읽는 JSON 규칙도 함께 확인합니다.
+`GET /v1/un-services`는 공개 운세 이름·호출 경로·입력만 제공합니다. 개발용 모듈 매핑과 미완성 항목은 Python의 `app.service_engine.service_catalog()`에서 확인합니다. 내부 목록의 `python_module`에 표시된 모듈을 수정하고, 값이 `null`이면 실행 알고리즘이 확보되지 않은 항목으로 취급합니다. 큰 조건표는 해당 모듈이 읽는 JSON 규칙도 함께 확인합니다. 내부 자료를 공개 목록 응답에 다시 포함하지 않습니다.
 
-Swagger 최상단 **서비스 운세 · AI 본문 제공**에서 선별 운세를 실행합니다. 별칭·일반 조언형은 **기타 콘텐츠 · AI 해석**, 달력 도구는 **계산 도구 · 본문 없음**, 미완성 항목은 **개발 진단 · 본문 없음**으로 분리합니다. 기본 예시로 AI 해석을 요청하거나 `include_ai=false`로 계산만 확인합니다. 달력 전용 2개는 AI 요청 없이 실행합니다. **자료 진단** 항목에서는 `analysis.unresolved_dependencies`와 전체 목록의 `issues[].required_materials`를 확인합니다.
+Swagger 최상단 **서비스 운세 · AI 본문 제공**에서 선별 운세를 실행합니다. 별칭·일반 조언형은 **기타 콘텐츠 · AI 해석**, 달력 도구는 **계산 도구 · 본문 없음**으로 분리합니다. 기본 예시로 AI 해석을 요청하거나 `include_ai=false`로 계산만 확인합니다. 달력 전용 2개는 AI 요청 없이 실행합니다. 미완성 항목은 Swagger에서 제외합니다. 필요한 판정 자료·검증 상태는 내부 `service_catalog()`와 `legacy_catalog.full_catalog()`에서 조사하며 해당 메타데이터를 공개 API로 제공하지 않습니다.
 
-현재 공식 MySQL 실행 기준 해석 준비 **65개**, 달력 계산 전용 **2개**, 부분 계산 **108개**로 Python 실행 경로는 **175개**입니다. 활성 목록 **291개**는 준비65·계산전용2·자료필요199·묶음/보조17·과거판8로 구성됩니다. DLL 의존11종과 실행없는 관련 메뉴 진단4개를 제거했습니다. 추가 Python 핸들러166개와 기본9종을 구분하며, 원본/자료가 필요한 미구현91개를 완료된 운세로 세지 않습니다.
+내부 조사 목록은 공개 카탈로그와 다릅니다. 공식 MySQL 실행 기준 내부 목록 **291개**는 해석 준비65·계산전용2·자료필요199·묶음/보조17·과거판8로 구성됩니다. 부분 계산108개를 포함한 내부 실행 경로175개 중 공개 API는 해석 준비와 계산전용 항목만 제공합니다. DLL 의존11종과 실행없는 관련 메뉴 진단4개는 활성 서비스에서 제거했습니다. 준비되지 않은 항목을 완료된 운세로 세지 않습니다.
 
-원본 자체의 달력·분기·배열·변수 덮어쓰기 등은 확인된 규칙을 따릅니다. `source_limits`에 설명한 제약과 입력별 오류를 확인하세요. 서로 다른 ASP 엔진의 달력을 공통 라이브러리 값으로 일괄 대체하지 않습니다. 상용 서버의 실제 결과와 전체 동일성은 아직 검증되지 않았습니다.
+원본 자체의 달력·분기·배열·변수 덮어쓰기 등은 확인된 규칙을 따릅니다. 내부 카탈로그의 `source_limits`에 설명한 제약과 입력별 오류를 확인하세요. 서로 다른 ASP 엔진의 달력을 공통 라이브러리 값으로 일괄 대체하지 않습니다. 상용 서버의 실제 결과와 전체 동일성은 아직 검증되지 않았습니다. 이러한 출처 정보는 개발 문서·내부 계산에 보존하고 공개 결과에서 제외합니다.
 
 ```sh
 python_api/.venv/bin/python -m pytest -q python_api/tests tools
@@ -38,7 +42,7 @@ node .project/_tools/project-dashboard.mjs check
 
 `python_api/tools/data/legacy_source_inventory.json`은 원문이 없는 파일 해시·줄 수·메뉴 조사 자료입니다. 두 `docs/*source_manifest.json`의 해시는 보관 원본에 대한 출처 기록입니다. 파일 경로·줄 번호는 과거 원본을 가리킵니다. 테스트는 고정된 이식 결과와 출처 메타데이터를 검증하므로 원본 파일 없이 실행됩니다. 원본이 없는 조사 도구는 고정 자료를 사용했다고 명시하며 새로 소스를 읽었다고 표시하지 않습니다.
 
-미확보 항목을 해결하려면 전체 목록의 필요 자료를 확보한 뒤 Python 모듈·판정표·입력 검증·회귀 사례를 추가합니다. 특히 `yearfortune` 판정 데이터, `tbAisyo`, NHCP5 내부 계산, 행성 분류표, interlife 판정 값과 누락된 결과 소스는 본 만세력 DB에 없습니다. 원문 문구를 AI로 교체하는 작업과 이러한 판정을 복구하는 작업을 구분합니다.
+미확보 항목을 해결하려면 내부 목록의 필요 자료를 확보한 뒤 Python 모듈·판정표·입력 검증·회귀 사례를 추가합니다. `tbAisyo`, 행성 분류표, interlife 판정 값과 누락된 결과 소스는 본 만세력 DB에 없습니다. 원문 문구를 AI로 교체하는 작업과 이러한 판정을 복구하는 작업을 구분합니다. 연간 본문은 별도 AI 해석으로 제공하며 `yearfortune` 점수는 사용하지 않습니다. DLL 의존 서비스는 복원 대기 대상에서 제외합니다.
 
 ## DB·AI·Git
 

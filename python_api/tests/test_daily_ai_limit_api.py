@@ -29,7 +29,7 @@ class SimulatedConverse:
             raise RuntimeError("private-simulated-upstream-detail")
         payload = json.loads(request["messages"][0]["content"][0]["text"])
         interpretation = {
-            "summary": "원본 계산을 따르는 모의 해석입니다.",
+            "summary": "계산 결과를 따르는 모의 해석입니다.",
             "sections": [{
                 "target_id": target["id"], "topic": target["topic"],
                 "text": "확정한 근거를 살펴 차분하게 계획을 세워 보세요.",
@@ -109,10 +109,10 @@ def test_calculation_invalid_and_unready_requests_do_not_consume_allowance(tmp_p
             "/v1/fortunes/yearly", json={**request(), "target_date": "2027-01-01", "include_ai": False},
         )
         assert annual_calculation.status_code == 200
-        assert annual_calculation.json()["analysis"]["ready_for_ai"] is True
+        assert annual_calculation.json()["result"]["kind"] == "yearly"
         unavailable = client.post("/v1/un/menu-im90", json={"target_date": DAY, "include_ai": True})
         assert unavailable.status_code == 503
-        assert unavailable.json()["error"]["code"] == "legacy_dependency_unavailable"
+        assert unavailable.json()["error"]["code"] == "result_unavailable"
         calculation = client.post("/v1/un/interlife-free-12", json={**request(), "parameters": {}})
         assert calculation.status_code == 422
         assert calculation.json()["error"]["code"] == "ai_not_applicable"

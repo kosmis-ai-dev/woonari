@@ -149,8 +149,9 @@ def test_combination_public_route_marks_calculation_only_and_never_calls_ai():
     with TestClient(application) as client:
         response = client.post("/v1/un/interlife-lotto-1", json=payload)
         assert response.status_code == 200
-        assert response.json()["analysis"]["calculation_only"] is True
-        assert response.json()["analysis"]["unresolved_dependencies"] == []
+        assert response.json()["result"]["service_id"] == "interlife-lotto-1"
+        assert response.json()["result"]["calculations"]
+        assert "analysis" not in response.json()
         blocked = client.post("/v1/un/interlife-lotto-1", json={**payload, "include_ai": True})
         assert blocked.status_code == 422
         assert blocked.json()["error"]["code"] == "ai_not_applicable"

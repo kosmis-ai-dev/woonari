@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path as FilePath
 from typing import Annotated
 
-from fastapi import APIRouter, Body, Depends, FastAPI, Header, Path, Query, Request
+from fastapi import APIRouter, Body, Depends, FastAPI, Header, Path, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -17,25 +17,25 @@ from app.calendar import calculate_saju
 from app.config import Settings, get_settings
 from app.errors import DomainError
 from app.fortunes import analyze, catalog
-from app.legacy_catalog import (
-    CATALOG_TAGS,
-    LegacyCatalog,
-    LegacyService,
-    diagnostic_description,
-    full_catalog,
-    services,
-)
+from app.legacy_catalog import services
 from app.manse_store import get_manse_store
-from app.models import FortuneKind, FortuneRequest, FortuneResponse, SajuRequest, SajuResult
-from app.restored_fortune import restored_data_status
+from app.models import FortuneKind, FortuneRequest, SajuRequest
+from app.public_catalog import (
+    PublicServiceCatalog,
+    available_services,
+    calculation_request,
+    public_service,
+)
+from app.public_errors import public_error
+from app.public_models import PublicFortuneResponse, PublicSajuResult
+from app.public_results import fortune_response, saju_result, service_response
 from app.service_engine import analyze_service, service_catalog, service_metadata
-from app.service_models import ServiceRequest, ServiceResponse
+from app.service_models import ServiceRequest
 from app.service_offerings import (
     SERVICE_TAG,
     service_offering_description,
     service_operation_tag,
 )
-from app.source_archive import archive_status
 from app.swagger_guide import (
     DESCRIPTION,
     ERROR_RESPONSES,
@@ -117,9 +117,8 @@ def create_app(
 
     @application.exception_handler(DomainError)
     async def domain_error(request: Request, exc: DomainError):
-        return JSONResponse(
-            status_code=exc.status, content={"error": {"code": exc.code, "message": exc.message}}
-        )
+        status, content = public_error(exc)
+        return JSONResponse(status_code=status, content=content)
 
     @application.exception_handler(RequestValidationError)
     async def validation_error(request: Request, exc: RequestValidationError):
@@ -161,8 +160,7 @@ def create_app(
             if not configuration.openai_model.strip():
                 missing_settings.append("OPENAI_MODEL")
         return {
-            "status": "ok", "calendar_policy": "asp-manse-db-v4",
-            "lunar_correction_version": "lunar-leap-flags-v1",
+            "status": "ok",
             "calendar_backend": get_manse_store().backend,
             "ai_provider": configuration.ai_provider,
             "bedrock_auth_mode": configuration.bedrock_auth_mode if configuration.ai_provider == "bedrock" else None,
@@ -175,58 +173,37 @@ def create_app(
 
     @router.get(
         "/ai-usage", tags=["시작 안내"], summary="AI 일일 사용량 · 한국시간 최대 100회",
-        description="Woonari의 AI 호출 시도 사용량입니다. 한국시간 매일 00:00 기준이며 실제 전송 이후 오류도 차감합니다. 계산·자료 진단은 차감하지 않습니다.",
+        description="Woonari의 AI 호출 시도 사용량입니다. 한국시간 매일 00:00 기준이며 실제 전송 이후 오류도 차감합니다. 계산 요청은 차감하지 않습니다.",
     )
     def ai_usage():
         return application.state.ai_quota.status()
 
     @router.get(
-        "/restored-data", tags=["시작 안내"], summary="복원 DB · 연간 un 자료와 남은 문제 확인",
-        description="백업에서 선별한 연간 7,000행·월별 1,200행의 MySQL 적재 상태를 조회합니다. "
-        "2021~2050년은 빈 본문·기본 점수인 초기 행입니다. 2027년 140행의 존재는 완성된 판정을 뜻하지 않습니다. "
-        "원본 키·성별·항목 매핑도 확인이 필요합니다. AI 호출 없이 문제를 확인하며 회원·결제·본문은 반환하지 않습니다.",
-    )
-    def restored_data(year: Annotated[int, Query(ge=2001, le=2050)] = 2027):
-        return restored_data_status(year)
-
-    @router.get(
-        "/source-data", tags=["시작 안내"], summary="회원 제외 · un 전체 복원 자료와 연결 상태",
-        description="비회원 un 정의·판정·사전 자료의 원본 출처와 실제 MySQL 행 수를 확인합니다. "
-        "복원됨·빈 원본·조회 규칙 미확정을 구분하며, 표가 있다는 이유로 모든 un이 완성됐다고 판정하지 않습니다. "
-        "회원·상담·결제·연락처·로그 및 원문은 반환하지 않고 AI도 호출하지 않습니다.",
-    )
-    def source_data():
-        return archive_status()
-
-    @router.get(
-        "/fortunes", tags=["시작 안내"], summary="현재 Python 9종 · un 한글 목록과 테스트 상태",
-        description="현재 계산/조회키 경로가 구현된 9종입니다. **ASP 전체 항목은 GET /v1/asp-services**와 아래 ASP 전체 태그에서 확인하세요.",
+        "/fortunes", response_model=PublicServiceCatalog, tags=["시작 안내"],
+        summary="un 종류와 호출 경로", description="현재 제공하는 기본 un의 이름과 입력 정보를 확인합니다.",
     )
     def fortunes():
-        return {"items": catalog()}
+        items = [public_service(item, core=True) for item in available_services(service_catalog()) if item.get("api_kind")]
+        return PublicServiceCatalog(count=len(items), items=items)
 
-    @router.get("/un-services", tags=["시작 안내"], summary="Python 전체 서비스 · 실행 경로와 추가 입력")
+    @router.get(
+        "/un-services", response_model=PublicServiceCatalog, tags=["시작 안내"],
+        summary="전체 콘텐츠와 입력 안내", description="현재 결과를 제공하는 콘텐츠의 호출 경로와 추가 입력입니다.",
+    )
     def python_services():
-        items = service_catalog()
-        return {"count": len(items), "items": items}
+        items = [public_service(item) for item in available_services(service_catalog())]
+        return PublicServiceCatalog(count=len(items), items=items)
 
     async def run_service(service_id: str, body: ServiceRequest, interpreter: Interpreter):
-        result = await run_in_threadpool(analyze_service, service_id, body)
+        result = await run_in_threadpool(analyze_service, service_id, calculation_request(body))
+        if result.unresolved_dependencies or not (result.ready_for_ai or result.calculation_only):
+            raise DomainError("result_unavailable", "현재 이 요청의 결과를 제공할 수 없습니다.", 503)
         if not body.include_ai:
-            return ServiceResponse(analysis=result)
+            return service_response(result)
         if result.calculation_only:
             raise DomainError("ai_not_applicable", "이 서비스는 계산 전용입니다. include_ai=false로 실행하세요.")
-        if not result.ready_for_ai:
-            raise DomainError(
-                "legacy_dependency_unavailable",
-                "원본 판정 자료 또는 출력 계약이 필요합니다. include_ai=false로 unresolved_dependencies를 확인하세요.",
-                503,
-            )
         interpretation = validate_interpretation(await interpreter.interpret(result), result)
-        return ServiceResponse(
-            content=interpretation.render_text(), analysis=result, interpretation=interpretation,
-            ai_provider=interpreter.name, ai_model=interpreter.model,
-        )
+        return service_response(result, interpretation)
 
     def make_service_endpoint(service_id: str, samples: dict):
         async def endpoint(
@@ -243,9 +220,10 @@ def create_app(
         calculation_ready = item["status"] in {"ready", "calculation_only"} and item["python_implemented"]
         calculation_only = bool(metadata.get("calculation_only"))
         ready = calculation_ready and not calculation_only
+        public_item = public_service(item)
         sample = {
             "target_date": "2027-01-01" if item.get("api_kind") == "yearly" else "2026-11-18",
-            "parameters": metadata.get("example_parameters", {}), "include_ai": ready,
+            "parameters": public_item.parameter_examples, "include_ai": ready,
         }
         if metadata.get("requires_birth") or item.get("api_kind"):
             sample["birth"] = {
@@ -266,24 +244,18 @@ def create_app(
                 "summary": "계산만 확인 · AI 호출 없음", "value": {**sample, "include_ai": False},
             }
         descriptions = [
-            f"**{item['name']}** · {item['status_label']}",
-            "Try it out → Examples → Execute로 실행합니다. content는 실제 AI 본문, analysis는 계산 근거입니다.",
-            "비회원 자료의 전체 복원 상태는 GET /v1/source-data, 이 항목의 표별 상태는 GET /v1/un-services 응답의 source_archive에서 확인합니다.",
+            f"**{item['name']}**",
+            "Try it out → Examples → Execute로 실행합니다. content는 운세 본문, result는 계산 결과입니다."
         ]
-        parameter_help = metadata.get("parameter_help", {})
+        parameter_help = public_item.parameter_help
         if isinstance(parameter_help, dict):
             descriptions.extend(
                 f"- `parameters.{key}`: {description}" for key, description in parameter_help.items()
             )
         elif isinstance(parameter_help, str):
             descriptions.append(parameter_help)
-        limits = metadata.get("source_limits", [])
-        limits = [limits] if isinstance(limits, str) else limits
-        descriptions.extend(f"- 원본 제약: {value}" for value in limits)
         if calculation_only:
-            descriptions.append("원본이 날짜·그래프 등 계산 결과만 출력하는 서비스이므로 AI 해석을 요청하지 않습니다.")
-        if item["status"] == "source_required":
-            descriptions.append("원본에 없는 계산을 AI로 대체하지 않습니다. unresolved_dependencies를 확인하세요.")
+            descriptions.append("계산 결과만 제공합니다. include_ai=false로 실행하세요.")
         path = f"/v1/un/{item['id']}"
         tag = service_operation_tag(
             path, ready=ready, calculation_only=calculation_only and calculation_ready,
@@ -292,14 +264,14 @@ def create_app(
             descriptions.insert(0, service_offering_description(path))
         router.add_api_route(
             f"/un/{item['id']}", make_service_endpoint(item["id"], samples), methods=["POST"],
-            response_model=ServiceResponse, summary=f"{item['name']} · {'AI 본문 생성' if tag == SERVICE_TAG else '계산·해석' if ready else '계산 전용' if calculation_only and calculation_ready else '원본 자료 진단'}",
+            response_model=PublicFortuneResponse, include_in_schema=calculation_ready, summary=f"{item['name']} · {'AI 본문 생성' if tag == SERVICE_TAG else '계산·해석' if ready else '계산 전용' if calculation_only and calculation_ready else '현재 미지원'}",
             description="\n\n".join(descriptions),
             tags=[tag],
             operation_id=f"run_python_un_{item['id'].replace('-', '_')}", responses=ERROR_RESPONSES,
         )
 
     @router.post(
-        "/un/{service_id}", response_model=ServiceResponse, include_in_schema=False,
+        "/un/{service_id}", response_model=PublicFortuneResponse, include_in_schema=False,
     )
     async def python_un(
         service_id: str, body: ServiceRequest,
@@ -307,68 +279,16 @@ def create_app(
     ):
         return await run_service(service_id, body, interpreter)
 
-    @router.get(
-        "/asp-services",
-        response_model=LegacyCatalog,
-        tags=["시작 안내"],
-        summary="ASP 전체 목록 · 실제 이름·문제 원인·해결 자료",
-        description="보관 원본에서 조사한 전체 목록입니다. **Try it out → Execute**로 조회합니다. `issues`의 `reason`, `resolution`, `required_materials`, `sources`에서 원인과 해결 자료를 확인하세요. **GET 200은 목록 조회 성공입니다.** Python 실행 경로와 추가 입력은 GET /v1/un-services 및 POST /v1/un/{id}에서 확인합니다.",
-        responses={401: ERROR_RESPONSES[401]},
-    )
-    def asp_services():
-        configuration = application.state.settings
-        if configuration.ai_provider == "bedrock":
-            return full_catalog(
-                ai_key_configured=None,
-                ai_model_configured=bool(configuration.bedrock_model_id.strip()),
-                ai_region_configured=bool(configuration.bedrock_region.strip()),
-                ai_provider="bedrock",
-                ai_auth_mode=configuration.bedrock_auth_mode,
-                ai_account_configured=bool(configuration.bedrock_account_id),
-            )
-        return full_catalog(
-            ai_key_configured=bool(
-                configuration.openai_api_key
-                and configuration.openai_api_key.get_secret_value().strip()
-            ),
-            ai_model_configured=bool(configuration.openai_model.strip()),
-        )
-
-    def make_diagnostic_endpoint(item: dict):
-        def endpoint():
-            return item
-
-        return endpoint
-
-    for item in services():
-        router.add_api_route(
-            item["diagnostic_path"].removeprefix("/v1"),
-            make_diagnostic_endpoint(item),
-            methods=["GET"],
-            response_model=LegacyService,
-            summary=f"{item['name']} · {item['status_label'].split(' · ')[0]}",
-            description=diagnostic_description(item),
-            tags=[CATALOG_TAGS[item["status"]]],
-            operation_id=f"inspect_asp_{item['id'].replace('-', '_')}",
-            responses={
-                200: {
-                    "description": "상태·문제 조회 성공. 계산 실행 결과가 아닙니다.",
-                    "content": {"application/json": {"example": item}},
-                },
-                401: ERROR_RESPONSES[401],
-            },
-        )
-
     @router.post(
         "/saju",
-        response_model=SajuResult,
+        response_model=PublicSajuResult,
         tags=["사주 계산"],
         summary="사주팔자 계산 · 양력/음력 변환",
         responses={code: ERROR_RESPONSES[code] for code in (401, 422, 503)},
         description="un 생성 전에 사주팔자를 확인합니다. **Try it out → Examples → Execute**로 실행하세요. AI 키가 필요하지 않습니다. 결과의 `pillars`에서 `hangul`을 보면 한글 간지를 확인할 수 있습니다.",
     )
     def saju(body: Annotated[SajuRequest, Body(openapi_examples=SAJU_EXAMPLES)]):
-        return calculate_saju(body.birth, profile=body.calculation_profile)
+        return saju_result(calculate_saju(body.birth, profile=body.calculation_profile))
 
     async def run_fortune(
         kind: FortuneKind,
@@ -376,22 +296,12 @@ def create_app(
         interpreter: Annotated[Interpreter, Depends(get_interpreter)],
     ):
         result = await run_in_threadpool(analyze, kind, body)
-        if not body.include_ai:
-            return FortuneResponse(analysis=result)
         if not result.ready_for_ai:
-            raise DomainError(
-                "legacy_dependency_unavailable",
-                "원본 판정 의존성이 필요합니다. include_ai=false로 선택키와 unresolved_dependencies를 확인하세요.",
-                503,
-            )
+            raise DomainError("result_unavailable", "현재 이 요청의 결과를 제공할 수 없습니다.", 503)
+        if not body.include_ai:
+            return fortune_response(result)
         interpretation = validate_interpretation(await interpreter.interpret(result), result)
-        return FortuneResponse(
-            content=interpretation.render_text(),
-            analysis=result,
-            interpretation=interpretation,
-            ai_provider=interpreter.name,
-            ai_model=interpreter.model,
-        )
+        return fortune_response(result, interpretation)
 
     def make_fortune_endpoint(kind: FortuneKind):
         async def endpoint(
@@ -409,8 +319,8 @@ def create_app(
         router.add_api_route(
             f"/fortunes/{kind.value}",
             make_fortune_endpoint(kind),
-            methods=["POST"],
-            response_model=FortuneResponse,
+            methods=["POST"], include_in_schema=not waiting,
+            response_model=PublicFortuneResponse,
             summary=f"{item['name']} · {'조회키 진단 전용' if waiting else 'AI 본문 생성'}",
             description=fortune_description(kind),
             tags=[WAITING_TAG if waiting else READY_TAG],
@@ -420,12 +330,12 @@ def create_app(
 
     @router.post(
         "/fortunes/{kind}",
-        response_model=FortuneResponse,
+        response_model=PublicFortuneResponse,
         tags=["공통 호출"],
         summary="공통 un 호출 · kind로 un 선택",
         responses=ERROR_RESPONSES,
         description="기존 통합 경로입니다. 처음에는 위의 한글 un별 테스트 항목을 사용하세요. Examples를 바꾼 후 **kind도 해당 코드로 직접 선택**해야 합니다.\n\n"
-        + " / ".join(f"{x['id']}={x['name']}" for x in catalog()),
+        + " / ".join(f"{x['id']}={x['name']}" for x in catalog() if FortuneKind(x["id"]) not in WAITING_KINDS),
     )
     async def fortune(
         kind: Annotated[

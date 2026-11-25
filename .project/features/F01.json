@@ -16,21 +16,28 @@
     "python_api/tests/test_manse_calendar.py",
     "python_api/app/manse_corrections.py",
     "python_api/app/data/manse_corrections.json",
-    "python_api/tests/test_manse_corrections.py"
+    "python_api/tests/test_manse_corrections.py",
+    "python_api/app/public_models.py",
+    "python_api/app/public_results.py",
+    "python_api/app/public_catalog.py",
+    "python_api/app/public_errors.py",
+    "python_api/tests/test_public_api.py"
   ],
   "tasks": [
     "T-001",
     "T-018",
-    "T-019"
+    "T-019",
+    "T-041"
   ],
   "changes": [
     "CR-001",
     "CR-009",
-    "CR-010"
+    "CR-010",
+    "CR-021"
   ],
-  "spec": "사용자 제공 script.sql의 dbo.tb_manse 73,414행을 날짜·음력키로 조회한다. 공식 ./woonari API는 ap-southeast-2의 프로젝트 전용 inter 시크릿으로 MySQL woonari DB를 조회한다. 독립 개발/테스트 기본 저장소는 동일 원본의 SQLite 스냅샷이며 선택된 MySQL 실패 시 자동 대체하지 않는다. 양력 공개 입력/변환 범위1900~2050, 전체 DB1900~2100. 원본 y/m/d_gan·ji를 ASP 60간지 순서로 대응, 홀수 div_name의 당일 div_hour/div_min 해당 분부터 월주 증가, 입춘1일 때 년주도 증가. raw day로 시주 먼저 계산 후00:00~00:29 일주전날보정. dotong은23:30다음날일간, today_inline은당일일간. /v1/saju 기본dotong, 일일·주간·월간today_inline. 정책 asp-manse-db-v4와data_backend를반환한다. 알려진4중복은10행윤달교정으로해소, 미확정추가중복만422 ambiguous_lunar_date, 없는윤달은422 invalid_lunar_date, DB사용불가는503 manse_unavailable. 1945-06-06 div8 및2053-01-19 24:00보존, 후자는절기창에서다음날정규화. 첫날1900-01-01이전절기는null로반환하며외부데이터로채우지않음. 오행8자단순개수/공통대운미생성 major_luck.available=false 유지. 고정UTC+09/DST·진태양시미지원 및 ASP실서비스실행동일성미검증.\nCR-010: 원본 SQL/tb_manse/metadata()/iter_records()/출처·데이터해시 보존. get_manse_store는원본store를CorrectedManseStore로감싸며양력결과와알려진음력9개ymd키의후보들에서승인한leafMon_YN10값만copy교정한다. 음력조회는leap필터없는후보조회→source/data해시·rowcount73414·idx·양력/음력·원flag검사→교정→요청leap필터순서. 일치하지않으면503 manse_unavailable,미확정추가중복422유지. 2017평/윤5월29뒤바뀜과2020/2023/2025/2028평30·윤29오류수정. 정책 asp-manse-db-v4, lunar_correction_version=lunar-leap-flags-v1. /health에동일버전과실backend제공. 원본간지·절입·ASP일시주·un판정·AI출력계약은유지한다. Swagger기존4건거절안내를교정상태로바꾸고2023윤2/29→2023-04-19와평2/29→03-20예시를제공. 전체355API+169도구/40subtests/Ruff통과.\nT-020 실제 MySQL 검증:10행왕복동일·4기존중복정상·불가능윤30일422·일일/월간un200. 원본데이터해시유지/already_present 확인. CR-010교정완료.",
+  "spec": "## 사주 계산\n사용자 제공 script.sql의 tb_manse 73,414행을 날짜·음력키로 조회한다. 공식 실행은 전용 MySQL woonari, 독립 테스트는 동일 데이터 SQLite 스냅샷을 사용한다. 선택된 MySQL 실패 시 자동 대체하지 않는다. 전체 데이터1900~2100년/공개 입력1900~2050년, 고정UTC+09:00이며 DST·출생지 진태양시 보정은 지원하지 않는다.\n간지·절입·일시주 계산 규칙과 dotong/today_inline 프로필을 보존한다. 절입 분부터 월주/입춘 년주를 적용하며00:30이전 일주전날보정, dotong23:30다음날일간, today_inline당일일간을 적용한다. /v1/saju 기본dotong, 일일/주간/월간today_inline이다. 외부 음력 패키지에 의존하지 않는다.\n윤달 표시 교정10행은 frozen 해시·개수·날짜 검증 후 copy에 적용한다. 알려진4중복은 해결됐으며 추가미확정중복422 ambiguous_lunar_date, 없는음력날짜422 invalid_lunar_date, DB불가503 manse_unavailable이다. 월간첫해1900-01-01~01-05 경계없음은422 calendar_boundary_unavailable이다. 24:00절기는 다음날로 정규화하며 첫날 이전절기는null이다.\n## CR-021 공개 응답\nPublicSajuResult는 solar_birth/lunar_birth/pillars/day_master/elements/solar_term_window만 제공한다. legacy_memno·CalendarPolicy·major_luck의 내부 출처/미구현 설명은 공개하지 않는다. 내부 SajuResult와 계산값은 그대로 보존해 판정·AI 근거에 사용한다. /health에서도 과거출처정책버전을 제거한다.\n\n## CR-021 검증\n전체 Python API1244개·게시/비밀값25개·Ruff·compileall 통과. 공식MySQL81경로/공개목록67/선정17, 실제75계산POST200·사주200·삭제진단GET4건404·미준비503·AI사용량차이0 확인. 첫 전체DB점검은30초클라이언트대기를초과했으나90초제한의경로별재검증은75개모두성공했다. 54런타임파일wheel소스바이트동일/독립추출2027연간200·79경로검증. 실제모델호출없음.",
   "createdAt": "2026-11-02",
-  "updatedAt": "2026-11-18",
+  "updatedAt": "2026-11-25",
   "history": [
     {
       "date": "2026-11-02",
@@ -88,6 +95,24 @@
       "by": "ai",
       "change": "CR-010",
       "text": "CR-010 완료: MySQL9090 API에서10행양력↔음력결과동일·이전4중복평달입력정상·없는윤30일422·일일/월간un200을확인했다. 원격원본73414행해시유지/already_present, API355+도구169/40subtests·Ruff·wheel교정표포함통과."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-021",
+      "text": "사용자 구현 지시로 접수·영향 분석 완료. 공개 API 설명·응답 projection·실행가능 목록·개발진단 경로 정리와 회귀 검증 착수."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-021",
+      "text": "T-041: 공개 결과계약/Swagger·목록·오류와 내부계산/AI계약의 분리를 현재 코드로 명세화했다. 검증 진행 중."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-021",
+      "text": "T041 완료: 공개 결과계약과 내부 계산/출처 분리·전체회귀 및 실제DB검증을 마쳤다."
     }
   ]
 }

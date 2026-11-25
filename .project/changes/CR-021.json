@@ -1,0 +1,42 @@
+{
+  "id": "CR-021",
+  "title": "공개 API의 ASP 연관 설명·응답 메타데이터 제거",
+  "request": "python api 에서 asp와의 연관성 문구들은 이제 필요없다. 모두 제거해주고 response 항목에도 asp와 연관성관련 결과는 필요없다.  결과값에 운세나 결과데이터만 나올수 있게 수정해줘",
+  "summary": "공개 Python API/Swagger를 운세 결과 중심 계약으로 정리한다. ASP·출처·이식/검증 상태와 개발 진단 응답을 제거하고 계산과 AI 내부 판정은 유지한다. 공개 결과는 content·interpretation·result 및 실제 계산값만 제공하며 미준비 서비스는 중립적인 사용불가 오류로 차단한다.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F01",
+      "F04",
+      "F05",
+      "F09",
+      "F10",
+      "F02",
+      "F03"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-041"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-25",
+  "updatedAt": "2026-11-25",
+  "history": [
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-021",
+      "text": "사용자 구현 지시로 접수·영향 분석 완료. 공개 API 설명·응답 projection·실행가능 목록·개발진단 경로 정리와 회귀 검증 착수."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-021",
+      "text": "T041 완료: 공개 응답 content/interpretation/result·사주 결과만 제공, Swagger ASP/출처/이식 설명과 개발진단 경로 제거. 전체 Python API1244개·게시/비밀값25개·Ruff·compileall 통과. 공식MySQL81경로/공개목록67/선정17, 실제75계산POST200·사주200·삭제진단GET4건404·미준비503·AI사용량차이0 확인. 첫 전체DB점검은30초클라이언트대기를초과했으나90초제한의경로별재검증은75개모두성공했다. 54런타임파일wheel소스바이트동일/독립추출2027연간200·79경로검증. 실제모델호출없음."
+    }
+  ]
+}

@@ -35,5 +35,5 @@ def test_health_requires_pinned_ai_account_and_never_returns_its_value():
             assert ("BEDROCK_ACCOUNT_ID" in health["ai_missing_settings"]) == (not account)
             assert "111122223333" not in response.text
             catalog = client.get("/v1/asp-services")
-            assert catalog.json()["ai_configuration"]["authentication"] == "bedrock_api_key"
+            assert catalog.status_code == 404
             assert "111122223333" not in catalog.text

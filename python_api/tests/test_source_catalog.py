@@ -69,11 +69,11 @@ def test_source_status_endpoint_authorization_and_no_model_call(tmp_path, monkey
         ai_quota=DailyAIQuota(tmp_path / "usage.sqlite3", private_root=tmp_path),
     )
     with TestClient(application) as client:
-        assert client.get("/v1/source-data").status_code == 401
+        assert client.get("/v1/source-data").status_code == 404
         headers = {"X-API-Key": "synthetic-api"}
         response = client.get("/v1/source-data", headers=headers)
-        assert response.status_code == 200
-        assert response.json()["status"] == "not_connected"
+        assert response.status_code == 404
+        assert "/v1/source-data" not in application.openapi()["paths"]
         assert client.get("/v1/ai-usage", headers=headers).json()["used"] == 0
     interpreter.interpret.assert_not_called()
 

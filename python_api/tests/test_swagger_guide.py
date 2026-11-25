@@ -19,10 +19,9 @@ FORTUNES = {
     "lifetime": "평생un",
     "wealth": "명품 평생재물운",
     "love": "러브 어드바이스",
-    "compatibility": "숙명의 궁합",
     "biorhythm": "바이오리듬",
 }
-DEPENDENT = {"compatibility"}
+DEPENDENT = set()
 
 
 def korean(value):
@@ -104,8 +103,8 @@ def test_calculation_swagger_example_is_executable_without_ai(client, app, schem
     response = client.post(f"/v1/fortunes/{kind}", json=body)
     assert response.status_code == 200, response.text
     result = response.json()
-    assert result["analysis"]["kind"] == kind
-    assert result["analysis"]["ready_for_ai"] is (kind not in DEPENDENT)
+    assert result["result"]["kind"] == kind
+    assert result["result"]["kind"] == kind
     assert result["content"] is None
     assert result["interpretation"] is None
     app.state.guide_test_interpreter.interpret.assert_not_called()
@@ -134,7 +133,7 @@ def test_recommended_ai_example_returns_content_from_a_mocked_interpreter(client
     response = client.post(f"/v1/fortunes/{kind}", json=sample["value"])
     assert response.status_code == 200, response.text
     result = response.json()
-    assert result["analysis"]["ready_for_ai"] is True
+    assert result["result"]["kind"] == kind
     assert result["interpretation"]["summary"] in result["content"]
     assert result["interpretation"]["practical_advice"][0] in result["content"]
     for section in result["interpretation"]["sections"]:
@@ -143,20 +142,16 @@ def test_recommended_ai_example_returns_content_from_a_mocked_interpreter(client
     fake.interpret.assert_awaited_once()
 
 
-def test_ready_and_diagnostic_operations_are_visibly_separate(schema):
-    ready_tags = {operation(schema, kind)["tags"][0] for kind in FORTUNES if kind not in DEPENDENT}
-    diagnostic_tags = {operation(schema, kind)["tags"][0] for kind in DEPENDENT}
-    assert len(ready_tags) == len(diagnostic_tags) == 1
-    assert ready_tags.isdisjoint(diagnostic_tags)
-    assert all(korean(tag) for tag in ready_tags | diagnostic_tags)
+def test_only_available_fortunes_are_documented(schema):
+    ready_tags = {operation(schema, kind)["tags"][0] for kind in FORTUNES}
+    assert len(ready_tags) == 1
+    assert all(korean(tag) for tag in ready_tags)
+    assert "/v1/fortunes/compatibility" not in schema["paths"]
 
 
-def test_dependency_limits_are_explained_where_people_test(schema):
+def test_input_limits_are_explained_where_people_test(schema):
     annual = operation(schema, "yearly")["description"]
     assert "2027" in annual and "별점" in annual and "AI" in annual
-    compatibility = operation(schema, "compatibility")["description"]
-    assert "원본" in compatibility
-    assert "데이터" in compatibility or "자료" in compatibility
 
 
 def test_every_documented_request_example_validates(schema):
@@ -198,10 +193,11 @@ def test_the_guide_explains_clicks_and_response_fields(schema):
     guide = schema["info"]["description"]
     assert "Try it out" in guide and "Execute" in guide
     assert "include_ai" in guide
-    assert "ready_for_ai" in guide and "interpretation" in guide
+    assert "result" in guide and "interpretation" in guide
+    assert "ready_for_ai" not in guide
     assert "content" in guide
-    assert "ai_configured" in guide and "ai_missing_settings" in guide
-    assert "첫 번째 실제 AI un 내용 받기" in guide
+    assert "ai_not_configured" in guide
+    assert "AI" in guide
 
 
 def test_saju_example_can_be_executed_directly(client, schema):
@@ -221,18 +217,18 @@ def test_corrected_lunar_example_returns_the_distinct_leap_date(client, schema):
     assert result.status_code == 200
     assert result.json()["solar_birth"].startswith("2023-04-19T")
     assert result.json()["lunar_birth"]["leap_month"] is True
-    assert result.json()["policy"]["lunar_correction_version"] == "lunar-leap-flags-v1"
+    assert "policy" not in result.json()
     body["birth"]["leap_month"] = False
     regular = client.post("/v1/saju", json=body)
     assert regular.status_code == 200
     assert regular.json()["solar_birth"].startswith("2023-03-20T")
 
 
-def test_guide_explains_approved_correction_instead_of_rejecting_known_dates(schema):
+def test_guide_explains_lunar_input_without_internal_correction_metadata(schema):
     guide = schema["info"]["description"]
-    assert "lunar-leap-flags-v1" in guide
-    assert "10행" in guide
-    assert "음력 중복키 4개는 `422 ambiguous_lunar_date`로 거부" not in guide
+    assert "음력" in guide and "윤달" in guide
+    assert "lunar-leap-flags-v1" not in guide
+    assert "ASP" not in guide
 
 
 def test_operations_have_distinct_ids(schema):

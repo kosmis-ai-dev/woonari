@@ -4,12 +4,13 @@ from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
+from test_public_api import assert_public_payload
 
 from app.ai import interpretation_payload
 from app.config import Settings
 from app.main import create_app
 from app.models import Interpretation
-from app.service_engine import analyze_service, handlers
+from app.service_engine import analyze_service, handlers, service_catalog
 from app.service_models import ServiceRequest
 
 BIRTH = {"year": 1990, "month": 5, "day": 17, "hour": 14, "minute": 30, "gender": "male"}
@@ -25,7 +26,7 @@ class ContractInterpreter:
     async def interpret(self, analysis):
         self.calls += 1
         return Interpretation(
-            summary="원본 계산을 따르는 모의 해석입니다.",
+            summary="계산 결과를 따르는 모의 해석입니다.",
             sections=[{
                 "target_id": target.id, "topic": target.topic,
                 "text": "판정 근거를 살펴 차분히 행동해 보세요.",
@@ -64,20 +65,20 @@ def test_every_registered_service_example_runs_its_python_rules(client):
     api, _, interpreter = client
     calls = interpreter.calls
     for service_id, (_, metadata) in handlers().items():
-        response = api.post(f"/v1/un/{service_id}", json=_sample(metadata))
+        body = _sample(metadata)
+        analysis = analyze_service(service_id, ServiceRequest(**body))
+        response = api.post(f"/v1/un/{service_id}", json=body)
+        if analysis.unresolved_dependencies or (not analysis.ready_for_ai and not analysis.calculation_only):
+            assert response.status_code == 503, (service_id, response.text)
+            assert response.json()["error"]["code"] == "result_unavailable"
+            continue
         assert response.status_code == 200, (service_id, response.text)
         data = response.json()
-        assert data["analysis"]["service_id"] == service_id
+        assert_public_payload(data)
+        assert data["result"]["service_id"] == service_id
         assert data["content"] is None
-        if not metadata.get("ready", True):
-            assert data["analysis"]["unresolved_dependencies"], service_id
-        elif metadata.get("calculation_only"):
-            assert data["analysis"]["calculation_only"], service_id
-            assert not data["analysis"]["unresolved_dependencies"], service_id
-        else:
-            assert data["analysis"]["ready_for_ai"], service_id
-        if not data["analysis"]["ready_for_ai"] and not data["analysis"]["calculation_only"]:
-            assert data["analysis"]["unresolved_dependencies"], service_id
+        assert "analysis" not in data
+        assert "unresolved_dependencies" not in data["result"]
     assert interpreter.calls == calls
 
 
@@ -89,9 +90,11 @@ def test_ready_services_deliver_validated_human_content_with_mock_transport(clie
         response = api.post(f"/v1/un/{service_id}", json={**_sample(metadata), "include_ai": True})
         assert response.status_code == 200, (service_id, response.text)
         data = response.json()
+        assert_public_payload(data)
         assert next(iter(data)) == "content"
-        assert data["content"].startswith("원본 계산을 따르는 모의 해석입니다.")
-        assert len(data["interpretation"]["sections"]) == len(data["analysis"]["narrative_contract"])
+        assert data["content"].startswith("계산 결과를 따르는 모의 해석입니다.")
+        analysis = analyze_service(service_id, ServiceRequest(**_sample(metadata)))
+        assert len(data["interpretation"]["sections"]) == len(analysis.narrative_contract)
     assert interpreter.calls > 0
 
 
@@ -101,8 +104,8 @@ def test_missing_algorithm_is_diagnostic_and_never_delegated_to_ai(client, servi
     body = {"target_date": "2026-11-18", "include_ai": False}
     before = interpreter.calls
     result = api.post(f"/v1/un/{service_id}", json=body)
-    assert result.status_code == 200
-    assert result.json()["analysis"]["unresolved_dependencies"]
+    assert result.status_code == 503
+    assert result.json()["error"]["code"] == "result_unavailable"
     blocked = api.post(f"/v1/un/{service_id}", json={**body, "include_ai": True})
     assert blocked.status_code == 503
     assert interpreter.calls == before
@@ -125,9 +128,10 @@ def test_calendar_only_service_rejects_ai_and_returns_calculation(client, servic
     before = interpreter.calls
     response = api.post(f"/v1/un/{service_id}", json=body)
     assert response.status_code == 200
-    analysis = response.json()["analysis"]
-    assert analysis["calculation_only"] and not analysis["ready_for_ai"]
-    assert not analysis["unresolved_dependencies"]
+    result = response.json()["result"]
+    assert result["service_id"] == service_id
+    assert "calculation_only" not in result
+    assert "unresolved_dependencies" not in result
     response = api.post(f"/v1/un/{service_id}", json={**body, "include_ai": True})
     assert response.status_code == 422
     assert response.json()["error"]["code"] == "ai_not_applicable"
@@ -176,7 +180,9 @@ def test_unknown_service_and_invalid_existing_parameters_are_safe(client):
 def test_service_catalog_and_concrete_korean_operations_cover_all_items(client):
     api, schema, _ = client
     items = api.get("/v1/un-services").json()["items"]
-    assert len(items) == len({item["id"] for item in items}) == 291
+    expected = {item["id"] for item in service_catalog() if item["status"] in {"ready", "calculation_only"}}
+    assert len(items) == len({item["id"] for item in items})
+    assert {item["id"] for item in items} == expected
     for item in items:
         operation = schema["paths"][f"/v1/un/{item['id']}"]["post"]
         assert item["name"] in operation["summary"]
@@ -195,7 +201,7 @@ def test_loveunse_api_validates_birth_order_using_its_original_calendar(client, 
     response = api.post(f"/v1/un/{service_id}", json=body)
     assert response.status_code == 200
     if parameters:
-        assert response.json()["analysis"]["evidence"][0]["facts"]["self_profile"]["calendar_action"] == "explicit_original_unconverted_lunar_digits"
+        assert "calendar_action" not in response.text
     previous = api.post(f"/v1/un/{service_id}", json={**body, "target_date": "1990-10-17"})
     assert previous.status_code == 422
     assert previous.json()["error"]["code"] == "target_before_birth"

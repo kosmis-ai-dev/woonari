@@ -5,8 +5,9 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.config import Settings
+from app.fortunes import analyze
 from app.main import create_app, get_interpreter
-from app.models import Interpretation
+from app.models import FortuneKind, FortuneRequest, Interpretation
 
 
 @pytest.fixture
@@ -35,7 +36,7 @@ def test_health_catalog_and_openapi(client):
     assert health["ai_provider"] == "openai"
     assert health["ai_configured"] is False
     assert health["ai_missing_settings"] == ["OPENAI_API_KEY", "OPENAI_MODEL"]
-    assert len(client.get("/v1/fortunes").json()["items"]) == 9
+    assert len(client.get("/v1/fortunes").json()["items"]) == 8
     assert "/v1/saju" in client.get("/openapi.json").json()["paths"]
     assert client.get("/docs").status_code == 200
 
@@ -49,7 +50,7 @@ def test_saju_and_calculation_only(client, payload):
     assert next(iter(fortune.json())) == "content"
     assert fortune.json()["content"] is None
     assert fortune.json()["interpretation"] is None
-    assert len(fortune.json()["analysis"]["scores"]) == 8
+    assert len(fortune.json()["result"]["scores"]) == 8
 
 
 @pytest.mark.parametrize(
@@ -71,7 +72,7 @@ def test_all_routes(client, payload, kind):
         payload["partner"] = payload["birth"] | {"year": 1992, "gender": "female"}
     if kind == "yearly":
         payload["target_date"] = "2014-11-02"
-    assert client.post(f"/v1/fortunes/{kind}", json=payload).status_code == 200
+    assert client.post(f"/v1/fortunes/{kind}", json=payload).status_code == (503 if kind == "compatibility" else 200)
 
 
 def test_ai_misconfiguration_is_explicit(client, payload):
@@ -83,7 +84,8 @@ def test_ai_misconfiguration_is_explicit(client, payload):
 
 
 def test_successful_ai_result_preserves_analysis(app, client, payload):
-    baseline = client.post("/v1/fortunes/daily", json=payload).json()["analysis"]
+    baseline = client.post("/v1/fortunes/daily", json=payload).json()["result"]
+    contract = analyze(FortuneKind.daily, FortuneRequest(**payload)).model_dump(mode="json")
     interpretation = Interpretation(
         summary="오늘의 해석",
         sections=[
@@ -93,7 +95,7 @@ def test_successful_ai_result_preserves_analysis(app, client, payload):
                 "text": f"{t['topic']}에 관한 계산에 따른 제안",
                 "evidence_ids": t["evidence_ids"],
             }
-            for t in baseline["narrative_contract"]
+            for t in contract["narrative_contract"]
         ],
         practical_advice=["순서를 정하세요.", "일정에 여유를 두세요."],
     )
@@ -104,8 +106,8 @@ def test_successful_ai_result_preserves_analysis(app, client, payload):
     payload["include_ai"] = True
     result = client.post("/v1/fortunes/daily", json=payload)
     assert result.status_code == 200
-    assert result.json()["analysis"] == baseline
-    assert result.json()["ai_model"] == "fixture-model"
+    assert result.json()["result"] == baseline
+    assert "ai_model" not in result.json()
     assert result.json()["interpretation"]["summary"] == "오늘의 해석"
     assert next(iter(result.json())) == "content"
     assert result.json()["content"] == (
@@ -170,13 +172,14 @@ def test_bedrock_health_checks_selected_provider_settings_and_never_uses_openai(
 
 
 def test_custom_bedrock_interpreter_factory_generates_content_and_closes(client, payload):
-    baseline = client.post("/v1/fortunes/daily", json=payload).json()["analysis"]
+    baseline = client.post("/v1/fortunes/daily", json=payload).json()["result"]
+    contract = analyze(FortuneKind.daily, FortuneRequest(**payload)).model_dump(mode="json")
     interpretation = Interpretation(
         summary="Bedrock가 작성한 해석",
         sections=[
             {"target_id": item["id"], "topic": item["topic"], "text": "근거에 따른 제안",
              "evidence_ids": item["evidence_ids"]}
-            for item in baseline["narrative_contract"]
+            for item in contract["narrative_contract"]
         ],
         practical_advice=["계획을 확인하세요."],
     )
@@ -198,9 +201,9 @@ def test_custom_bedrock_interpreter_factory_generates_content_and_closes(client,
     assert result.status_code == 200
     assert result.json()["content"].startswith("Bedrock가 작성한 해석\n\n")
     assert "계획을 확인하세요." in result.json()["content"]
-    assert result.json()["analysis"] == baseline
-    assert result.json()["ai_provider"] == "bedrock"
-    assert result.json()["ai_model"] == "fixture-bedrock-model"
+    assert result.json()["result"] == baseline
+    assert "ai_provider" not in result.json()
+    assert "ai_model" not in result.json()
     factory.assert_called_once_with(configured)
     interpreter.interpret.assert_awaited_once()
     interpreter.close.assert_awaited_once_with()
@@ -260,9 +263,10 @@ def test_unresolved_source_dependency_never_calls_ai(app, client, payload):
     payload.update(partner=payload["birth"] | {"year": 1992, "gender": "female"}, include_ai=True)
     result = client.post("/v1/fortunes/compatibility", json=payload)
     assert result.status_code == 503
-    assert result.json()["error"]["code"] == "legacy_dependency_unavailable"
+    assert result.json()["error"]["code"] == "result_unavailable"
     fake.interpret.assert_not_called()
     payload["include_ai"] = False
-    diagnostic = client.post("/v1/fortunes/compatibility", json=payload).json()["analysis"]
-    assert diagnostic["ready_for_ai"] is False
-    assert len(diagnostic["selectors"]) == 2
+    unavailable = client.post("/v1/fortunes/compatibility", json=payload)
+    assert unavailable.status_code == 503
+    assert unavailable.json()["error"]["code"] == "result_unavailable"
+    fake.interpret.assert_not_called()

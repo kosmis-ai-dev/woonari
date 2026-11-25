@@ -11,6 +11,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 from fastapi.testclient import TestClient
+from test_public_api import assert_public_payload
 from test_source_archive import Connection, spec
 
 import app.source_archive as archive
@@ -132,7 +133,7 @@ def test_service_group_is_first_and_contains_exactly_17_canonical_apis(api_with_
     assert len({item["name"] for item in schema["tags"]}) == len(schema["tags"])
     assert set(offered(schema)) == EXPECTED_PATHS
     assert len(offered(schema)) == 17
-    assert len(schema["paths"]) == 600
+    assert not any("asp" in path.lower() for path in schema["paths"])
     ids = [op["operationId"] for ops in schema["paths"].values() for method, op in ops.items()
            if method in {"get", "post", "put", "patch", "delete", "options", "head"}]
     assert len(ids) == len(set(ids))
@@ -141,9 +142,7 @@ def test_service_group_is_first_and_contains_exactly_17_canonical_apis(api_with_
 def test_missing_source_connection_does_not_promote_flower_or_stone(offline_schema):
     assert set(offered(offline_schema)) == EXPECTED_PATHS - FLOWER_STONE_PATHS
     for path in FLOWER_STONE_PATHS:
-        operation = offline_schema["paths"][path]["post"]
-        assert SERVICE_TAG not in operation["tags"]
-        assert next(iter(samples(operation).values()))["value"]["include_ai"] is False
+        assert path not in offline_schema["paths"]
 
 
 def test_aliases_diagnostics_and_general_advice_are_not_in_the_service_group(api_with_sources):
@@ -178,18 +177,20 @@ def test_offered_examples_generate_contract_bound_mock_prose_and_calculation_is_
     baseline = client.post(path, json={**body, "include_ai": False})
     assert baseline.status_code == 200, (path, baseline.text)
     value = baseline.json()
+    assert_public_payload(value)
     assert value["content"] is None and value["interpretation"] is None
-    assert value["analysis"]["ready_for_ai"] is True
-    assert value["analysis"]["narrative_contract"]
+    assert value["result"]["saju"] or value["result"]["calculations"]
+    assert "analysis" not in value
     fake.interpret.assert_not_called()
     assert client.get("/v1/ai-usage").json()["used"] == used
     generated = client.post(path, json=body)
     assert generated.status_code == 200, (path, generated.text)
     result = generated.json()
-    assert result["analysis"] == value["analysis"]
+    assert_public_payload(result)
+    assert result["result"] == value["result"]
     assert result["content"]
-    targets = {target["id"] for target in value["analysis"]["narrative_contract"]}
-    assert {section["target_id"] for section in result["interpretation"]["sections"]} == targets
+    assert result["interpretation"]["sections"]
+    assert all(set(section) == {"topic", "text"} for section in result["interpretation"]["sections"])
     fake.interpret.assert_awaited_once()
 
 

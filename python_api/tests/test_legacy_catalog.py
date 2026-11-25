@@ -63,9 +63,7 @@ def test_all_original_xml_menu_declarations_have_a_traced_target():
     assert inventory["xml_menu"]["source"] in inventory["files"]
     declared = {node["content_code"]: node["original_name"] for node in inventory["xml_menu"]["declarations"]}
     assert len(declared) == len(inventory["xml_menu"]["declarations"])
-    app = create_app(Settings(_env_file=None, api_key=None))
-    with TestClient(app) as client:
-        data = client.get("/v1/asp-services").json()
+    data = full_catalog(ai_key_configured=False, ai_model_configured=False)
     actual = {entry["content_code"]: entry["original_name"] for entry in data["menu_map"]}
     retired_menus = {"IM9", "IM14", "IM34", "IM62", "IM70", "IM71"}
     assert actual == {key: name for key, name in declared.items() if key not in retired_menus}
@@ -87,31 +85,14 @@ def test_audited_source_files_still_match_the_catalog_snapshot():
             assert source_files[entry["path"]]["sha256"] == entry["sha256"], entry["path"]
 
 
-def test_every_catalog_entry_is_visible_and_executable_as_a_diagnostic():
+def test_internal_catalog_diagnostics_are_not_public_routes():
     app = create_app(Settings(_env_file=None, api_key=None, openai_api_key=None, openai_model=""))
     schema = app.openapi()
     with TestClient(app) as client:
-        response = client.get("/v1/asp-services")
-        assert response.status_code == 200
-        data = response.json()
-        assert data["summary"]["records"] == len(data["items"])
-        assert data["ai_configuration"]["key_configured"] is False
-        assert data["ai_configuration"]["provider"] == "openai"
-        assert data["ai_configuration"]["authentication"] == "api_key"
-        assert data["ai_configuration"]["key_required"] is True
-        assert data["ai_configuration"]["configuration_complete"] is False
-        assert data["ai_configuration"]["generation_check"] == "not_run"
-        for item in data["items"]:
-            operation = schema["paths"][item["diagnostic_path"]]["get"]
-            assert item["name"] in operation["summary"]
-            assert "원인" in operation["description"] or not item["issues"]
-            assert "Try it out" in operation["description"]
-            # Capturing a row in a handler must not create a query/body parameter.
-            assert not operation.get("requestBody")
-            assert all(p["in"] == "header" for p in operation.get("parameters", []))
-            result = client.get(item["diagnostic_path"])
-            assert result.status_code == 200, result.text
-            assert result.json() == item, item["id"]
+        assert client.get("/v1/asp-services").status_code == 404
+        for item in services():
+            assert item["diagnostic_path"] not in schema["paths"]
+            assert client.get(item["diagnostic_path"]).status_code == 404
 
 
 def test_catalog_reports_current_ports_without_claiming_every_entry_can_calculate():
@@ -176,18 +157,16 @@ def test_catalog_counts_are_contract_readiness_and_keep_external_ai_gate_separat
     assert any("FTU" in note and "실제 AI 생성 성공을 보장하지 않습니다" in note for note in data["common_notes"])
 
 
-def test_new_catalog_routes_keep_api_key_protection_and_never_return_secret_values():
+def test_public_catalog_keeps_api_key_protection_and_never_returns_secret_values():
     key = "test-secret-value-never-expose"
     app = create_app(Settings(_env_file=None, api_key=key, openai_api_key=key, openai_model="test"))
     with TestClient(app) as client:
-        assert client.get("/v1/asp-services").status_code == 401
-        first = services()[0]["diagnostic_path"]
-        assert client.get(first).status_code == 401
-        response = client.get("/v1/asp-services", headers={"X-API-Key": key})
+        assert client.get("/v1/un-services").status_code == 401
+        response = client.get("/v1/un-services", headers={"X-API-Key": key})
         assert response.status_code == 200
-        assert response.json()["ai_configuration"]["key_configured"] is True
+        assert response.json()["items"]
         assert key not in response.text
-    # Source paths and facts are public documentation; legacy connection strings aren't.
+        assert client.get("/v1/asp-services").status_code == 404
     assert key not in json.dumps(app.openapi())
 
 
@@ -209,15 +188,13 @@ def test_bedrock_catalog_uses_iam_and_reports_only_static_configuration(model, r
     assert configuration["generation_check"] == "not_run"
 
 
-def test_bedrock_catalog_get_does_not_request_an_openai_key_or_expose_model_names():
+def test_public_catalog_get_does_not_request_an_openai_key_or_expose_model_names():
     application = create_app(Settings(
         _env_file=None, ai_provider="bedrock", bedrock_model_id="fixture-private-model-id",
-        bedrock_region="ap-southeast-2", openai_api_key=None, openai_model="",
+        bedrock_region="ap-southeast-2", openai_api_key=None, openai_model=""
     ))
     with TestClient(application) as client:
-        response = client.get("/v1/asp-services")
+        response = client.get("/v1/un-services")
     assert response.status_code == 200
-    assert response.json()["ai_configuration"]["key_configured"] is None
-    assert response.json()["ai_configuration"]["configuration_complete"] is True
-    assert response.json()["ai_configuration"]["generation_check"] == "not_run"
+    assert response.json()["items"]
     assert "fixture-private-model-id" not in response.text
