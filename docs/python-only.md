@@ -14,13 +14,13 @@ Swagger는 http://127.0.0.1:9090/docs, 전용 작업 보드는 http://127.0.0.1:
 
 ## 서비스 수정·테스트
 
-기존 10종은 `app/fortunes.py`와 `app/legacy_*.py`, 추가 전환 서비스는 `app/ported_direct.py`, `ported_loveunse.py`, `ported_remaining.py`, `ported_interlife.py`, `ported_template.py` 및 `ported_interlife_*.py`에 있습니다. 공통 실행은 `service_engine.py`, 입력·출력은 `service_models.py`, API는 `main.py`입니다. 필요한 정적 규칙은 `app/data/*.json`에 포함합니다.
+기본 9종은 `app/fortunes.py`와 `app/legacy_*.py`, 추가 전환 서비스는 `app/ported_direct.py`, `ported_loveunse.py`, `ported_remaining.py`, `ported_interlife.py`, `ported_template.py` 및 `ported_interlife_*.py`에 있습니다. 공통 실행은 `service_engine.py`, 입력·출력은 `service_models.py`, API는 `main.py`입니다. 필요한 정적 규칙은 `app/data/*.json`에 포함합니다.
 
 `GET /v1/un-services`에서 한글 이름과 `id`를 찾고 `python_module`에 표시된 Python 모듈을 수정합니다. 값이 `null`이면 실행 알고리즘이 확보되지 않은 진단 항목입니다. 큰 조건표는 해당 모듈이 읽는 JSON 규칙도 함께 확인합니다.
 
 Swagger의 **Python 추가 전환 · 계산 가능**에서 원하는 한글 이름을 선택합니다. 기본 예시로 AI 해석을 요청하거나 `include_ai=false`로 계산만 확인합니다. 달력 전용 2개는 AI 요청 없이 실행합니다. **자료 진단** 항목에서는 `analysis.unresolved_dependencies`와 전체 목록의 `issues[].required_materials`를 확인합니다.
 
-현재 계산·해석 계약 준비 62개, 달력 계산 전용 2개입니다. 추가 전환 항목 166개에는 부분 계산 109개가 포함됩니다. 기존 10종을 합하면 Python 실행 항목은 176개(해석 계약 준비 62개·달력 전용 2개·부분 계산 112개)입니다. 전체 306개 목록에는 원본·자료·프로필 검증이 필요한 217개, 묶음·보조 17개, 과거판 8개가 있습니다. 실행 코드가 없는 105개는 원본 누락·메뉴 연결 누락·외부 구현 95개와 COM 내부 구현 10개입니다. 자료 진단 POST가 있다는 사실을 완성된 계산으로 세지 않습니다.
+현재 공식 MySQL 실행 기준 해석 준비 **65개**, 달력 계산 전용 **2개**, 부분 계산 **108개**로 Python 실행 경로는 **175개**입니다. 활성 목록 **291개**는 준비65·계산전용2·자료필요199·묶음/보조17·과거판8로 구성됩니다. DLL 의존11종과 실행없는 관련 메뉴 진단4개를 제거했습니다. 추가 Python 핸들러166개와 기본9종을 구분하며, 원본/자료가 필요한 미구현91개를 완료된 운세로 세지 않습니다.
 
 원본 자체의 달력·분기·배열·변수 덮어쓰기 등은 확인된 규칙을 따릅니다. `source_limits`에 설명한 제약과 입력별 오류를 확인하세요. 서로 다른 ASP 엔진의 달력을 공통 라이브러리 값으로 일괄 대체하지 않습니다. 상용 서버의 실제 결과와 전체 동일성은 아직 검증되지 않았습니다.
 

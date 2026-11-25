@@ -2,7 +2,7 @@
 
 상용 ASP의 계산·분류·문구 선택키를 Python으로 옮기고, 원본에서 결과 문구를 읽던 부분을 AI 작성으로 교체합니다. 처리 흐름은 **입력 → 원본 규칙에 따른 사주·un 판정 → 출력항목 확정 → AI 문장 작성**입니다. AI가 계산이나 조건 분기를 대신하지 않습니다.
 
-원본 MSSQL의 문구는 사용하지 않습니다. 기본 만세력은 사용자 제공 `script.sql`의 `tb_manse` DB에서 조회하며, 그 밖의 DB·DLL에 들어 있는 판정은 임의 알고리즘으로 채우지 않습니다. 필요한 판정 의존성이 없으면 계산 근거와 미확보 항목을 반환하고 AI 생성을 막습니다.
+원본 MSSQL의 문구는 사용하지 않습니다. 기본 만세력은 사용자 제공 `script.sql`의 `tb_manse` DB에서 조회하며, 그 밖의 DB에 들어 있는 판정은 임의 알고리즘으로 채우지 않습니다. 필요한 판정 의존성이 없으면 계산 근거와 미확보 항목을 반환하고 AI 생성을 막습니다.
 
 ## 실행
 
@@ -25,7 +25,7 @@ python_api/.venv/bin/python -m pip install -r python_api/requirements.lock
 - 상태: `GET /health`
 - 전체 Python 실행 목록: `GET /v1/un-services`
 - 항목별 실행: `POST /v1/un/{id}` (한글 이름·추가 입력·예시 제공)
-- 기존 Python 10종: `GET /v1/fortunes`
+- 기본 Python 9종: `GET /v1/fortunes`
 - ASP 전체 원본 목록·문제·해결 자료: `GET /v1/asp-services`
 - 원본별 진단: `GET /v1/asp-services/{목록의 id}` (각 항목이 Swagger에 개별 표시됨)
 - 사주 계산: `POST /v1/saju`
@@ -35,11 +35,11 @@ python_api/.venv/bin/python -m pip install -r python_api/requirements.lock
 
 ## 추가 전환 서비스와 Python 전용 개발
 
-계산·해석 계약 준비 **62개**, 달력 계산 전용 **2개**가 있습니다. 추가로 전환한 166개 중 109개는 부분 계산과 부족한 자료를 반환합니다. 기존 10종을 합한 Python 실행 항목은 176개입니다. 전체 조사 306개에는 원본·자료·프로필 검증 필요 217개, 묶음·보조 17개, 과거판 8개가 포함됩니다.
+현재 공식 MySQL 실행 기준 해석 준비 **65개**, 달력 계산 전용 **2개**, 부분 계산 **108개**로 Python 실행 경로는 **175개**입니다. 활성 목록 **291개**는 준비65·계산전용2·자료필요199·묶음/보조17·과거판8로 구성됩니다. DLL 의존11종과 실행없는 관련 메뉴 진단4개를 제거했습니다. 추가 Python 핸들러166개와 기본9종을 구분하며, 원본/자료가 필요한 미구현91개를 완료된 운세로 세지 않습니다.
 
 Swagger **Python 추가 전환 · 계산 가능**에서 한글 이름을 선택하고 예시를 실행하세요. `parameters`에는 서비스별 추가 입력을 넣습니다. 원본 자료 진단 항목은 `include_ai=false`로 실행합니다. [전체 상태](docs/legacy_services.md) · [Python 전용 작업 안내](../docs/python-only.md)
 
-ASP는 활성 작업 폴더에서 분리해 비공개 보관합니다. Python API·회귀 테스트에는 ASP 파일이 필요하지 않습니다. 외부 만세력 계산 패키지의 실행 의존성도 제거했으며 제공 DB·원본 정적표·Python 계산을 사용합니다. 기존 10종 경로도 그대로 사용할 수 있습니다.
+ASP는 활성 작업 폴더에서 분리해 비공개 보관합니다. Python API·회귀 테스트에는 ASP 파일이 필요하지 않습니다. 외부 만세력 계산 패키지의 실행 의존성도 제거했으며 제공 DB·원본 정적표·Python 계산을 사용합니다. 기본 9종 경로도 그대로 사용할 수 있습니다.
 
 ## Swagger에서 실제 un 내용 받기
 
@@ -55,7 +55,7 @@ ASP는 활성 작업 폴더에서 분리해 비공개 보관합니다. Python AP
 
 각 un는 `/v1/fortunes/daily`처럼 고정 경로로 표시됩니다. 기존 공통 `/v1/fortunes/{kind}`의 Examples는 계산·진단 전용입니다. 실제 AI 본문을 받으려면 준비된 8종에서 `include_ai: true`로 변경하거나 개별 un 예시를 사용하세요. 공통 경로에서는 Examples를 바꿔도 `kind`가 자동으로 바뀌지 않으므로 해당 코드도 직접 선택해야 합니다.
 
-**un 테스트 · 원본 자료 대기 2종**은 직업·궁합의 조회키 진단용입니다. 연간 un은 별도 사주 기반 AI 해석으로 2027년을 포함해 실행합니다. 별점·점수·부적은 생성하지 않습니다.
+**un 테스트 · 원본 자료 대기 1종**은 궁합의 조회키 진단용입니다. 연간 un은 별도 사주 기반 AI 해석으로 2027년을 포함해 실행합니다. 별점·점수·부적은 생성하지 않습니다.
 
 ## ASP 전체 이름·문제 확인
 
@@ -64,13 +64,13 @@ Swagger **시작 안내 → GET /v1/asp-services → Try it out → Execute**로
 - `issues[].reason`: 문제가 생기는 이유
 - `issues[].effect`: 현재 계산/판정에 미치는 영향
 - `issues[].resolution`: 구현 또는 자료 복구 순서
-- `issues[].required_materials`: 필요한 원본 데이터/소스/DLL/대조 결과
+- `issues[].required_materials`: 필요한 원본 데이터/소스/대조 결과
 - `issues[].certainty`: 확인된 사실과 추가 검토 대상을 구분
 - `test_path`: 현재 계산 POST가 있는 항목에만 표시
 
 GET의 200은 **상태 조회 성공**입니다. 미이식 항목의 계산이나 최종 해석 성공을 뜻하지 않습니다. 폴더·입력 단계 수를 서비스 수로 세지 않고 하위 서비스/과거판/묶음/보조 코드를 구분합니다. 같은 이름이어도 다른 엔진·메뉴 경로이면 동일한 계산으로 간주하지 않습니다. XML 메뉴 IM1~IM90 전체의 연결 상태도 `menu_map`으로 추적합니다. JS 실행 매핑은 앞의 67개만 있으며, IM68~IM90은 이름만 선언되어 실행 연결을 별도로 확인해야 합니다.
 
-현재 `lifetime`은 `lifeluck`의 **평생un**이며, 메뉴상 **평생사주**로 표기된 `loveunse`와 별개입니다. `love`는 **러브 어드바이스**, `compatibility`는 **숙명의 궁합**, `career`는 **나에게 맞는 직업**, `yearly`는 **2014 도통비결** 원본입니다. `운세`라는 표시 문구는 `un`으로 바꾸되 `original_name`에는 식별을 위한 실제 원본 이름을 보관합니다.
+현재 `lifetime`은 `lifeluck`의 **평생un**이며, 메뉴상 **평생사주**로 표기된 `loveunse`와 별개입니다. `love`는 **러브 어드바이스**, `compatibility`는 **숙명의 궁합**, `yearly`는 **2014 도통비결** 원본입니다. `운세`라는 표시 문구는 `un`으로 바꾸되 `original_name`에는 식별을 위한 실제 원본 이름을 보관합니다.
 
 원본 DB의 문구 조회는 AI로 교체할 수 있습니다. 판정 코드·별점·택일 플래그·점수 구간·날짜 분류·DLL 내부 계산은 문구와 구분해 다룹니다. 원본 DB 미접속이라는 이유만으로 모든 미이식 항목에 DB가 필요하다고 판단하지 않습니다. 전체 조사표는 [legacy_services.md](docs/legacy_services.md), 실제 API 데이터는 [legacy_services.json](app/data/legacy_services.json)입니다.
 
@@ -113,32 +113,32 @@ curl -s http://127.0.0.1:9090/v1/fortunes/daily \
 
 `calculation_profile`은 `dotong`이 기본이며 `today_inline`도 선택할 수 있습니다. un 엔드포인트에서는 해당 ASP가 사용하는 프로필을 자동 적용합니다.
 
-기존 10종 API에서는 궁합에 같은 구조의 `partner`가 필수이며 다른 종류에는 받지 않습니다. 추가 전환 `/v1/un/{id}`의 입력은 개별 Swagger를 따릅니다. 기존 직업운의 `career_category: "A"`~`"F"`는 원본 `accountlist.input10`에 대응하며, 다른 un에는 사용할 수 없습니다.
+기본 9종 API에서는 궁합에 같은 구조의 `partner`가 필수이며 다른 종류에는 받지 않습니다. 추가 전환 `/v1/un/{id}`의 입력은 개별 Swagger를 따릅니다.
 
 ## un별 준비 상태
 
-다음 7종은 제공 만세력 DB를 기준으로 원본의 판정·문구 선택키를 확정할 수 있습니다. 여기서 준비 완료는 실제 AI 호출 검증 완료나 원본 DB/DLL 실행 결과와의 완전 동일성을 뜻하지 않습니다.
+다음8종은 해석 계약이 준비돼 있습니다. 연간은 사주 기반 AI 해석이고 나머지는 제공 만세력 DB를 기준으로 원본의 판정·문구 선택키를 확정합니다. 여기서 준비 완료는 실제 AI 호출 검증 완료나 원본 DB/DLL 실행 결과와의 완전 동일성을 뜻하지 않습니다.
 
 | kind | 보존한 판정·출력 |
 |---|---|
 | daily | 원본 8항목 점수와 `dayfortune(memno,num)`의 어제·오늘·내일 문구 선택키 |
 | weekly | 일요일~토요일 원본 점수·별점·주간 등급, 총평 `weekDesc` |
+| yearly | 기존 사주·연도 관계를 근거로 운세 DB 없이 AI 본문 생성. 별점·점수·부적 미제공 |
 | monthly | 절기 월주·도깨비번호 첫 자리·성별로 `monthfor` 본문 선택 |
 | lifetime | 십격·당사주·일주 분류에 따른 원본 실제 출력 13항목 |
 | wealth | 년·월·일·시주와 일간으로 `Moneyluck.Money` 초년·장년·중년·말년 4항목 선택 |
 | love | 도깨비번호 앞 3자리·성별로 `tbLoveLuck`의 원본 5항목 선택 |
 | biorhythm | 원본 23/28/33일 주기·상태·27가지 멘트 분류 |
 
-아래 2종은 원본의 조회·호출 분기를 보존했지만 판정 의존성이 미확보되어 `ready_for_ai: false`입니다.
+아래 궁합은 원본의 조회·호출 분기를 보존했지만 판정 의존성이 미확보되어 `ready_for_ai: false`입니다.
 
 | kind | 보존한 부분 | 현재 필요한 원본 판정 의존성 |
 |---|---|---|
-| career | A~E 각 3항목, F 전체 15항목의 원본 순서와 `getNHResult('002',...)` 호출 분기 | `NHCP5.NHUnse` 내부 계산. 카테고리를 입력해도 DLL 의존성은 남습니다. |
 | compatibility | 원본 4개 출력항목, 방향성 있는 `AisyoTbl` 전체 표와 후속 문구 선택 공식 | 두 양력 출생일 → `tbAisyo.aisyo` 분류코드. 단순 육합·충으로 대체하지 않습니다. |
 
-위 2종도 `include_ai: false`이면 확인 가능한 선택키·미확보 항목을 볼 수 있습니다. `include_ai: true`이면 `503 legacy_dependency_unavailable`로 중단합니다.
+궁합도 `include_ai: false`이면 확인 가능한 선택키·미확보 항목을 볼 수 있습니다. `include_ai: true`이면 `503 legacy_dependency_unavailable`로 중단합니다.
 
-상세 근거: [월간·연간](docs/legacy_periods.md), [평생·재물](docs/legacy_life_wealth.md), [연애·직업·궁합](docs/legacy_relationships.md). 기존 [legacy_inventory.json](docs/legacy_inventory.json)은 68개 폴더의 정규식 기반 기초 조사입니다. 실제 서비스 이름·하위 항목·메뉴의 누락된 연결·구체적 해결 자료는 새 [전체 조사표](docs/legacy_services.md)를 기준으로 확인하세요.
+상세 근거: [월간·연간](docs/legacy_periods.md), [평생·재물](docs/legacy_life_wealth.md), [연애·궁합](docs/legacy_relationships.md). 기존 [legacy_inventory.json](docs/legacy_inventory.json)은 68개 폴더의 정규식 기반 기초 조사입니다. 실제 서비스 이름·하위 항목·메뉴의 누락된 연결·구체적 해결 자료는 새 [전체 조사표](docs/legacy_services.md)를 기준으로 확인하세요.
 
 ## 원본 계산 정책
 
@@ -231,3 +231,5 @@ AI 생성이 성공하면 응답 첫 항목 `content`에서 자연어 un 본문�
 AI 실제 테스트(2026-11-19): 일일·연인 심리분석·평생의 V5 결과를 확인했습니다. 원본 계산은 변하지 않았고 해석3/4/13항목이 반환됐습니다. 초기 문장 품질 보완을 포함해 모델 전송은 총6회였으며 테스트 시점 잔여94회입니다. 근거가 없는 선택키·당사주 문자만으로 성격이나 시기별 길흉을 단정하지 않고 일반 조언·확인 질문으로 제한합니다. 이 테스트 이후 CR-018에서 연간 사주 기반 AI 해석 모드를 추가했습니다. 기존 DB 점수 재현은 제공하지 않습니다.
 
 연간 실행 예시·해석 범위·미제공 항목은 [연간 AI 안내](docs/annual-ai.md)를 따릅니다.
+
+CR-019: DLL 의존11종과 실행없는 관련 메뉴 진단4개를 제거했습니다. `career`와 `career_category`도 공개 계약에서 제거했습니다. [상세 제거 목록](../docs/removed-dll-services.md)을 참고하세요.

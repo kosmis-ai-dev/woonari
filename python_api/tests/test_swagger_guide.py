@@ -18,12 +18,11 @@ FORTUNES = {
     "yearly": "연간 un",
     "lifetime": "평생un",
     "wealth": "명품 평생재물운",
-    "career": "나에게 맞는 직업",
     "love": "러브 어드바이스",
     "compatibility": "숙명의 궁합",
     "biorhythm": "바이오리듬",
 }
-DEPENDENT = {"career", "compatibility"}
+DEPENDENT = {"compatibility"}
 
 
 def korean(value):
@@ -100,8 +99,6 @@ def test_calculation_swagger_example_is_executable_without_ai(client, app, schem
     assert body["include_ai"] is False
     if kind == "yearly":
         assert body["target_date"].startswith("2027-")
-    elif kind == "career":
-        assert body["career_category"] == "A"
     elif kind == "compatibility":
         assert body["partner"]
     response = client.post(f"/v1/fortunes/{kind}", json=body)
@@ -157,7 +154,6 @@ def test_ready_and_diagnostic_operations_are_visibly_separate(schema):
 def test_dependency_limits_are_explained_where_people_test(schema):
     annual = operation(schema, "yearly")["description"]
     assert "2027" in annual and "별점" in annual and "AI" in annual
-    assert "DLL" in operation(schema, "career")["description"]
     compatibility = operation(schema, "compatibility")["description"]
     assert "원본" in compatibility
     assert "데이터" in compatibility or "자료" in compatibility
@@ -168,7 +164,6 @@ def test_every_documented_request_example_validates(schema):
         for sample in examples(schema, kind).values():
             body = FortuneRequest.model_validate(sample["value"])
             assert (body.partner is not None) is (kind == "compatibility")
-            assert (body.career_category is not None) is (kind == "career")
 
 
 def test_every_calculation_example_runs_without_ai(client, schema):
@@ -190,7 +185,7 @@ def test_the_existing_generic_endpoint_still_works(client, schema):
 def test_schema_contains_korean_input_field_help(schema):
     model_fields = {
         "Birth": ("year", "month", "day", "hour", "minute", "calendar", "gender", "leap_month"),
-        "FortuneRequest": ("birth", "target_date", "include_ai", "partner", "career_category"),
+        "FortuneRequest": ("birth", "target_date", "include_ai", "partner"),
         "SajuRequest": ("birth", "calculation_profile"),
     }
     for model, fields in model_fields.items():

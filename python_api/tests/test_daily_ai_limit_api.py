@@ -110,7 +110,7 @@ def test_calculation_invalid_and_unready_requests_do_not_consume_allowance(tmp_p
         )
         assert annual_calculation.status_code == 200
         assert annual_calculation.json()["analysis"]["ready_for_ai"] is True
-        unavailable = client.post("/v1/un/animalluck", json={"target_date": DAY, "include_ai": True})
+        unavailable = client.post("/v1/un/menu-im90", json={"target_date": DAY, "include_ai": True})
         assert unavailable.status_code == 503
         assert unavailable.json()["error"]["code"] == "legacy_dependency_unavailable"
         calculation = client.post("/v1/un/interlife-free-12", json={**request(), "parameters": {}})

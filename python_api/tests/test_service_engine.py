@@ -95,7 +95,7 @@ def test_ready_services_deliver_validated_human_content_with_mock_transport(clie
     assert interpreter.calls > 0
 
 
-@pytest.mark.parametrize("service_id", ["animalluck", "menu-im90"])
+@pytest.mark.parametrize("service_id", ["menu-im68", "menu-im90"])
 def test_missing_algorithm_is_diagnostic_and_never_delegated_to_ai(client, service_id):
     api, _, interpreter = client
     body = {"target_date": "2026-11-18", "include_ai": False}
@@ -165,9 +165,9 @@ def test_unknown_service_and_invalid_existing_parameters_are_safe(client):
     api, _, _ = client
     response = api.post("/v1/un/no-such-service", json={"target_date": "2026-11-18", "include_ai": False})
     assert response.status_code == 404
-    response = api.post("/v1/un/carrerluck", json={
+    response = api.post("/v1/un/todayluck", json={
         "birth": BIRTH, "target_date": "2026-11-18", "include_ai": False,
-        "parameters": {"career_category": ["private-fixture"]},
+        "parameters": {"unknown_input": ["private-fixture"]},
     })
     assert response.status_code == 422
     assert "private-fixture" not in response.text
@@ -176,7 +176,7 @@ def test_unknown_service_and_invalid_existing_parameters_are_safe(client):
 def test_service_catalog_and_concrete_korean_operations_cover_all_items(client):
     api, schema, _ = client
     items = api.get("/v1/un-services").json()["items"]
-    assert len(items) == len({item["id"] for item in items}) == 306
+    assert len(items) == len({item["id"] for item in items}) == 291
     for item in items:
         operation = schema["paths"][f"/v1/un/{item['id']}"]["post"]
         assert item["name"] in operation["summary"]

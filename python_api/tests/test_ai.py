@@ -142,9 +142,9 @@ def test_unresolved_source_rule_blocks_ai_before_provider_call():
     r = FortuneRequest(
         birth={"year": 1990, "month": 5, "day": 17, "hour": 14, "gender": "male"},
         target_date="2026-11-02",
-        career_category="A",
+        partner={"year": 1992, "month": 7, "day": 15, "hour": 12, "gender": "female"},
     )
-    result = analyze(FortuneKind.career, r)
+    result = analyze(FortuneKind.compatibility, r)
     p = provider()
     p.client = SimpleNamespace(responses=SimpleNamespace(parse=AsyncMock()))
     with pytest.raises(DomainError) as error:

@@ -4,13 +4,12 @@ from copy import deepcopy
 
 from app.fortunes import CATALOG, SOURCE_SERVICE_NAMES
 from app.legacy_catalog import CATALOG_TAGS
-from app.legacy_relationships import CAREER_TITLES
 from app.models import FortuneKind
 from app.restored_fortune import BACKUP_FINDING
 
 READY_TAG = "un 테스트 · AI 해석 가능 8종"
-WAITING_TAG = "un 테스트 · 원본 자료 대기 2종"
-WAITING_KINDS = {FortuneKind.career, FortuneKind.compatibility}
+WAITING_TAG = "un 테스트 · 원본 자료 대기 1종"
+WAITING_KINDS = {FortuneKind.compatibility}
 MANSE_GUIDE = (
     "사주·음양력·절입은 제공된 script.sql의 tb_manse 73,414행을 기준으로 조회합니다. "
     "공식 ./woonari 실행은 적재된 MySQL woonari.tb_manse를 사용하며 조회 실패 시 다른 달력으로 자동 대체하지 않습니다. "
@@ -56,7 +55,6 @@ GUIDES = {
     FortuneKind.love: "**인연의 시기·성격·직업·만날 장소·사랑 스타일**의 5개 원본 출력 항목을 선택합니다. 생년월일시와 성별을 바꾸어 비교할 수 있습니다.",
     FortuneKind.biorhythm: "출생일부터 조회 날짜까지의 일수로 **신체 23일·감성 28일·지성 33일 주기**와 원본 27가지 멘트 분류를 계산합니다. 실제 건강 상태나 사고 확률을 측정하는 값은 아닙니다.",
     FortuneKind.yearly: "**사주 기반 AI 연간 해석입니다.** 기존 만세력·ASP 사주 계산과 대상 연도 간지·십성 관계를 근거로 AI가 본문을 작성합니다. 기본 예시는 `target_date=2027-01-01`이며 1900~2050년을 지원합니다. **운세 DB 본문·별점·점수·부적은 사용하지 않습니다.** `analysis.scores`는 빈 배열이고 연간 근거의 별점·점수는 null입니다. 양력 연도 전체 안내이며 대표 간지는 입춘 이후 7월 1일의 만세력 계산값입니다. 기존 연간 DB 결과 재현이나 월별 확정 예측을 뜻하지 않습니다.",
-    FortuneKind.career: "**진단 전용입니다.** `career_category`로 원본 직업운 주제를 선택합니다. A~E는 각 3항목, F는 전체 15항목입니다. DLL 내부 판정이 없어 조회·호출 경로만 확인할 수 있고, AI 해석 요청은 503으로 차단됩니다.",
     FortuneKind.compatibility: "**진단 전용입니다.** 본인 `birth`와 상대방 `partner`의 생년월일시를 모두 입력합니다. tb_manse의 음양력·간지와 별개인 tbAisyo의 원본 27숙 분류 데이터가 없어 최종 궁합은 생성하지 않습니다. 기본 예시는 필요한 분류 조회키와 `unresolved_dependencies`를 확인하는 용도이며, AI 해석 요청은 503으로 차단됩니다.",
 }
 
@@ -76,8 +74,6 @@ def fortune_examples(kind: FortuneKind) -> dict:
     body = {"birth": deepcopy(BASE_BIRTH), "target_date": "2026-11-02", "include_ai": False}
     if kind == FortuneKind.yearly:
         body["target_date"] = "2027-01-01"
-    if kind == FortuneKind.career:
-        body["career_category"] = "A"
     if kind == FortuneKind.compatibility:
         body["partner"] = {**BASE_BIRTH, "year": 1992, "gender": "female"}
     name = "연간 un · 사주 기반 AI 해석" if kind == FortuneKind.yearly else SOURCE_SERVICE_NAMES[kind].replace("운세", "un")
@@ -117,12 +113,6 @@ def fortune_description(kind: FortuneKind) -> str:
         guide += "\n\n원본 `loveunse`의 메뉴명 '평생사주'와 구분합니다. 현재 API는 `lifeluck`의 평생 un 로직입니다."
     if kind == FortuneKind.yearly:
         guide += "\n\n**과거 ASP 결과 재현 자료의 별도 진단:** " + BACKUP_FINDING + " 현재 사주 기반 연간 AI 해석은 이 자료 대기와 무관하게 실행합니다."
-    if kind == FortuneKind.career:
-        guide += "\n\n| 코드 | 원본 직업운 주제 |\n|---|---|\n"
-        guide += "\n".join(
-            f"| {code} | {' / '.join(titles)} |" for code, titles in CAREER_TITLES.items()
-        )
-        guide += "\n| F | A~E 전체 15개 항목 |"
     execution = (
         """
 ### 실행 방법
@@ -328,7 +318,7 @@ Bedrock Claude는 전용 IAM 또는 명시한 AI 전용 계정의 장기 키로 
 `/health`는 설정 입력 상태를 보여줍니다. 모델 호출 권한과 실제 생성 성공은 POST 결과로 확인합니다.
 `/v1/saju`는 사주팔자 계산용이며 un 해석 문장을 생성하지 않습니다.
 
-## 기존 Python 10종
+## 기본 Python 9종
 
 | 한글 이름 | API 코드 | 현재 상태 |
 |---|---|---|
@@ -336,7 +326,7 @@ Bedrock Claude는 전용 IAM 또는 명시한 AI 전용 계정의 장기 키로 
     + _ROWS
     + """
 
-**연간·직업·궁합은 조회키 진단 전용**이며 첫 예시도 `include_ai=false`입니다. 원본 판정 자료가 없어 최종 un를 생성할 수 없습니다. 연간 예시는 2014년이며 2026년 올해 un는 아직 지원하지 않습니다.
+**궁합은 조회키 진단 전용**이며 첫 예시는 `include_ai=false`입니다. 연간 un은 사주 기반 AI 해석으로 2027년을 지원합니다. DLL 계산이 필요했던 직업운 등11종과 관련 메뉴 진단4개는 CR-019로 제거했습니다.
 
 ## ASP 전체 항목과 문제 확인
 
@@ -353,7 +343,7 @@ AI는 ASP가 확정한 판정과 출력항목을 문장으로 작성합니다. �
 독립 만세력 패키지로 원본 값을 대체하지 않으며 선택한 DB 조회가 실패하면 `503 manse_unavailable`입니다.
 원본 데이터는 **1900~2100년**, 공개 API 지원 범위는 기존 **1900~2050년**입니다.
 원본에 남아 있는 음력 중복 4건을 포함해 윤달 표시 오류 10행은 **`lunar-leap-flags-v1` 교정표**로 해결합니다. 일반 달·윤달을 구분해 입력할 수 있으며 원본 행과 해시는 보존합니다. 교정 후 미해결 중복만 `422 ambiguous_lunar_date`입니다. 존재하지 않는 윤달 30일은 `422 invalid_lunar_date`입니다. 월간 표시 범위의 이전 절입이 없는 1900-01-01~01-05는 `422 calendar_boundary_unavailable`입니다.
-이 DB는 음양력·간지·절입 자료입니다. 연간 `yearfortune`, 궁합 `tbAisyo`, 직업 DLL과 일부 interlife의 별도 판정 자료는 포함하지 않습니다. interlife는 항목별 이식·필요 자료 상태를 확인하세요.
+이 DB는 음양력·간지·절입 자료입니다. 과거 연간 `yearfortune`, 궁합 `tbAisyo`와 일부 interlife의 별도 판정 자료는 포함하지 않습니다. 연간 AI 본문은 별도 운세 DB 없이 실행하며 DLL 의존 운세는 서비스에서 제거했습니다. interlife는 항목별 이식·필요 자료 상태를 확인하세요.
 
 생년월일시는 `birth`, 조회 기준일은 `target_date`입니다. 양력/음력과 성별 코드는 각 항목과 **Schemas**에 설명합니다.
 API_KEY를 설정한 서버에서만 `X-API-Key` 헤더를 입력합니다. 로컬 기본 설정에서는 비워둡니다.

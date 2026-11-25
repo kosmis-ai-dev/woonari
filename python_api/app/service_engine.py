@@ -117,13 +117,12 @@ def _existing(item: dict, request: ServiceRequest) -> ServiceAnalysis:
     if request.birth is None:
         raise DomainError("missing_birth", "이 서비스에는 birth 생년월일시 입력이 필요합니다.")
     parameters = dict(request.parameters)
-    category = parameters.pop("career_category", None)
     if parameters:
         raise DomainError("invalid_service_parameters", "이 기존 서비스에는 해당 추가 입력을 사용할 수 없습니다.")
     try:
         legacy = FortuneRequest(
             birth=request.birth, partner=request.partner, target_date=request.target_date,
-            include_ai=request.include_ai, career_category=category,
+            include_ai=request.include_ai,
         )
     except ValueError:
         raise DomainError("invalid_service_parameters", "추가 입력의 형식·허용 범위를 확인하세요.") from None

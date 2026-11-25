@@ -24,7 +24,7 @@ def test_all_original_directories_and_nested_results_are_accounted_for():
     asp_paths = {path for path in inventory["files"] if path.lower().endswith(".asp")}
     assert len(asp_paths) == 1445
     assert sum(inventory["files"][path]["lines"] for path in asp_paths) == 499008
-    items = services()
+    items = json.loads((ROOT / "python_api/app/data/legacy_services.json").read_text())["items"]
     directories = {item["directory"] for item in items}
     expected = set(inventory["unse_directories"])
     assert expected <= directories
@@ -67,7 +67,10 @@ def test_all_original_xml_menu_declarations_have_a_traced_target():
     with TestClient(app) as client:
         data = client.get("/v1/asp-services").json()
     actual = {entry["content_code"]: entry["original_name"] for entry in data["menu_map"]}
-    assert actual == declared
+    retired_menus = {"IM9", "IM14", "IM34", "IM62", "IM70", "IM71"}
+    assert actual == {key: name for key, name in declared.items() if key not in retired_menus}
+    frozen = json.loads((ROOT / "python_api/app/data/legacy_services.json").read_text())
+    assert {entry["content_code"]: entry["original_name"] for entry in frozen["menu_map"]} == declared
     by_id = {item["id"]: item for item in data["items"]}
     for entry in data["menu_map"]:
         assert entry["content_code"] in by_id[entry["catalog_id"]]["menu_codes"]
@@ -116,12 +119,12 @@ def test_catalog_reports_current_ports_without_claiming_every_entry_can_calculat
     registered = handlers()
     assert len(registered) == 166
     assert Counter(item["status"] for item in items) == {
-        "ready": 63, "calculation_only": 2, "source_required": 216,
+        "ready": 63, "calculation_only": 2, "source_required": 201,
         "reference": 17, "archived": 8
     }
     existing = {item["api_kind"]: item["test_path"] for item in items if item["api_kind"]}
     kinds = {
-        "daily", "weekly", "monthly", "yearly", "lifetime", "wealth", "career", "love",
+        "daily", "weekly", "monthly", "yearly", "lifetime", "wealth", "love",
         "compatibility", "biorhythm"
     }
     assert existing == {kind: f"/v1/fortunes/{kind}" for kind in kinds}
@@ -146,7 +149,6 @@ def test_catalog_preserves_distinct_missing_source_and_external_dependencies():
     for service_id, expected in {
         "interlife-free-9": "result_source_missing",
         "loveunse-love-today": "result_branch_missing",
-        "animalluck": "opaque_com_rule",
         "external-video-a": "external_implementation_missing",
         "interlife-yukim-1": "interlife_woljang_classification_unverified",
         "interlife-jum-2": "interlife_indirect_numeric_score_missing"
@@ -167,8 +169,8 @@ def test_catalog_counts_are_contract_readiness_and_keep_external_ai_gate_separat
         ai_model_configured=True, ai_region_configured=True
     )
     assert data["summary"]["python_execution"]["additional_registered"] == 166
-    assert data["summary"]["python_execution"]["implemented_records_including_existing"] == 176
-    assert data["summary"]["python_execution"]["source_required_without_handler"] == 105
+    assert data["summary"]["python_execution"]["implemented_records_including_existing"] == 175
+    assert data["summary"]["python_execution"]["source_required_without_handler"] == 91
     assert data["summary"]["python_execution"]["ready_does_not_verify_external_ai_generation"] is True
     assert data["ai_configuration"]["generation_check"] == "not_run"
     assert any("FTU" in note and "실제 AI 생성 성공을 보장하지 않습니다" in note for note in data["common_notes"])

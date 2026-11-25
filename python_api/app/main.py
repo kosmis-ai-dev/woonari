@@ -197,8 +197,8 @@ def create_app(
         return archive_status()
 
     @router.get(
-        "/fortunes", tags=["시작 안내"], summary="현재 Python 10종 · un 한글 목록과 테스트 상태",
-        description="현재 계산/조회키 경로가 구현된 10종입니다. **ASP 전체 항목은 GET /v1/asp-services**와 아래 ASP 전체 태그에서 확인하세요.",
+        "/fortunes", tags=["시작 안내"], summary="현재 Python 9종 · un 한글 목록과 테스트 상태",
+        description="현재 계산/조회키 경로가 구현된 9종입니다. **ASP 전체 항목은 GET /v1/asp-services**와 아래 ASP 전체 태그에서 확인하세요.",
     )
     def fortunes():
         return {"items": catalog()}
@@ -255,8 +255,6 @@ def create_app(
                 "year": 1992, "month": 7, "day": 15, "hour": 12, "minute": 0,
                 "gender": "female", "calendar": "solar",
             }
-        if item.get("api_kind") == "career":
-            sample["parameters"] = {"career_category": "A"}
         samples = {"recommended": {
             "summary": "AI 본문 생성" if ready else "계산 전용 실행" if calculation_only and calculation_ready else "계산·자료 진단만 확인",
             "value": sample,

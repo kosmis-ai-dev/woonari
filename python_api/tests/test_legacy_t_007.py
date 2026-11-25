@@ -1,6 +1,5 @@
 import hashlib
 import json
-from types import SimpleNamespace
 
 import pytest
 
@@ -8,8 +7,6 @@ from app.calendar import calculate_saju
 from app.errors import DomainError
 from app.legacy_relationships import (
     AISYO_TABLE,
-    CAREER_TITLES,
-    career_dispatch,
     decide_relationship,
     harmony_content_selectors,
 )
@@ -70,44 +67,6 @@ def test_love_keeps_leading_zero_and_does_not_use_target_day_scores():
     other_day = data.model_copy(update={"target_date": data.target_date.replace(day=3)})
     assert decide_relationship("love", other_day, saju) == result
     assert "scores" not in result["facts"]
-
-
-@pytest.mark.parametrize("category", list("ABCDE"))
-def test_career_single_category_preserves_002_and_three_subcodes(category):
-    calls = career_dispatch(category)
-    assert [c["where"] for c in calls] == [
-        {"method": "getNHResult", "tmpCode": "002", "soCode": f"{category}{i}"} for i in (1, 2, 3)
-    ]
-    assert [c["purpose"] for c in calls] == list(CAREER_TITLES[category])
-    assert all(c["table"] == "NHCP5.NHUnse" for c in calls)
-
-
-def test_career_F_dispatches_all_fifteen_in_source_order():
-    calls = career_dispatch("F")
-    assert len(calls) == 15
-    assert [c["where"]["soCode"] for c in calls] == [f"{a}{i}" for a in "ABCDE" for i in (1, 2, 3)]
-    assert calls[0]["purpose"] == "신분상승을 위하여"
-    assert calls[-1]["purpose"] == "부와 명예를 동시에 갖고 싶어서"
-
-
-def test_career_missing_original_input_and_opaque_dll_remain_unresolved():
-    data = request()
-    result = decide_relationship(
-        "career", SimpleNamespace(career_category=None), calculate_saju(data.birth)
-    )
-    assert len(result["unresolved"]) == 2
-    assert result["selectors"] == []
-    result = decide_relationship(
-        "career", SimpleNamespace(career_category="A"), calculate_saju(data.birth)
-    )
-    assert len(result["unresolved"]) == 1
-    assert "NHCP5.NHUnse" in result["unresolved"][0]
-    assert len(result["selectors"]) == 3
-
-
-def test_invalid_career_category_is_not_silently_defaulted():
-    with pytest.raises(DomainError):
-        career_dispatch("G")
 
 
 def test_compatibility_reads_original_aisyo_classification_before_any_text():

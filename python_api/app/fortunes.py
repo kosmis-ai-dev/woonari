@@ -16,7 +16,6 @@ CATALOG = {
     FortuneKind.yearly: ("연간 운세", "old/unse/2014yearluck/main_end.asp"),
     FortuneKind.lifetime: ("평생 사주", "old/unse/lifeluck/main_end.asp"),
     FortuneKind.wealth: ("재물운", "old/unse/moneyluck/main_end.asp"),
-    FortuneKind.career: ("직업운", "old/unse/carrerluck/main_end.asp"),
     FortuneKind.love: ("연애운", "old/unse/loveluck/main_end.asp"),
     FortuneKind.compatibility: ("궁합", "old/unse/fatewedluck/main_end.asp"),
     FortuneKind.biorhythm: ("바이오리듬", "old/unse/bioluck/main_end.asp"),
@@ -31,7 +30,6 @@ SOURCE_SERVICE_NAMES = {
     FortuneKind.yearly: "2014 도통비결 (연간 운세)",
     FortuneKind.lifetime: "평생운세",
     FortuneKind.wealth: "명품 평생재물운",
-    FortuneKind.career: "나에게 맞는 직업",
     FortuneKind.love: "러브 어드바이스",
     FortuneKind.compatibility: "숙명의 궁합",
     FortuneKind.biorhythm: "바이오리듬",
@@ -41,7 +39,7 @@ SOURCE_SERVICE_NAMES = {
 def catalog():
     result = []
     for kind, (name, source) in CATALOG.items():
-        dependent = kind in {FortuneKind.career, FortuneKind.compatibility}
+        dependent = kind in {FortuneKind.compatibility}
         result.append(
             {
                 "id": kind.value,
@@ -53,7 +51,7 @@ def catalog():
                 "requires_partner": kind == FortuneKind.compatibility,
                 "readiness": "requires-original-dependency" if dependent else "ported",
                 "narrative_only_ai": True,
-                "required_inputs": ["career_category"] if kind == FortuneKind.career else [],
+                "required_inputs": [],
                 "supported_target_years": list(range(1900, 2051))
                 if kind == FortuneKind.yearly
                 else None,
@@ -164,8 +162,6 @@ def _attach_decision(decision, evidence):
 def analyze(kind: FortuneKind, request: FortuneRequest) -> Analysis:
     if (kind == FortuneKind.compatibility) != (request.partner is not None):
         raise DomainError("invalid_partner", "궁합에만 partner가 필수입니다.")
-    if kind != FortuneKind.career and request.career_category is not None:
-        raise DomainError("invalid_career_category", "career_category는 직업운에서만 사용합니다.")
     born = solar_birth(request.birth)
     if born.date() > request.target_date:
         raise DomainError("target_before_birth", "조회 날짜는 출생일 이후여야 합니다.")
@@ -294,7 +290,7 @@ def analyze(kind: FortuneKind, request: FortuneRequest) -> Analysis:
         decision = resolve_decision(kind.value, decision)
         selectors, targets, unresolved = _attach_decision(decision, evidence)
         notes.extend(decision.get("notes", []))
-    elif kind in {FortuneKind.career, FortuneKind.love, FortuneKind.compatibility}:
+    elif kind in {FortuneKind.love, FortuneKind.compatibility}:
         from app.legacy_relationships import decide_relationship
 
         if request.partner is not None:

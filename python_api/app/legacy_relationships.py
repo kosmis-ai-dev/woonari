@@ -1,9 +1,4 @@
-"""CR-001 / T-007: preserve ASP love, career and fate-harmony dispatch.
-
-No DB or DLL is executed here. Love text lookups are fully decidable from CalcMemNo.
-Career interpretation and fate-harmony need their original non-narrative dependencies;
-they remain unresolved instead of using daily scores or a new compatibility algorithm.
-"""
+"""CR-019: ASP love and fate-harmony rules; DLL career service removed."""
 
 from datetime import datetime
 
@@ -11,7 +6,6 @@ from app.errors import DomainError
 from app.models import FortuneRequest, SajuResult
 
 LOVE_SOURCE = "old/unse/loveluck/main_end.asp:91-123"
-CAREER_SOURCE = "old/unse/carrerluck/main_end.asp:1351-1559"
 COMPAT_SOURCE = "old/unse/fatewedluck/main_end.asp:5-15,280-330"
 HARMONY_HELPER = "function/b_include/lib_sajumaster.asp:4-28,223-260"
 
@@ -860,17 +854,6 @@ AISYO_TABLE = (
     ),
 )
 
-CAREER_TITLES = {
-    "A": ("신분상승을 위하여", "안정된 생활을 위하여", "이름을 떨치기 위해서"),
-    "B": ("복잡한 사회생활이 싫어서", "참 인간답게 살고 싶어서", "이상적인 사회를 만들고 싶어서"),
-    "C": ("희생과 봉사를 하고 싶어서", "선각자가 되고 싶어서", "야망을 이루려고"),
-    "D": ("돈을 많이 벌고 싶어서", "화려하고 재미난 삶을 위하여", "이성에게 인기를 얻고 싶어서"),
-    "E": (
-        "사회에 영향력을 펼치고 싶어서",
-        "올바르고 정직하게 살고 싶어서",
-        "부와 명예를 동시에 갖고 싶어서",
-    ),
-}
 
 
 def _selector(identifier, table, where, columns, purpose):
@@ -883,22 +866,6 @@ def _selector(identifier, table, where, columns, purpose):
     }
 
 
-def career_dispatch(category: str) -> list[dict]:
-    """Port soCode A-E/F and tmpCode='002'; do not invent DLL internals."""
-    if category not in {*CAREER_TITLES, "F"}:
-        raise DomainError("invalid_career_category", "직업운 career_category는 A~F여야 합니다.")
-    groups = list(CAREER_TITLES) if category == "F" else [category]
-    return [
-        _selector(
-            f"career.{group}{i}",
-            "NHCP5.NHUnse",
-            {"method": "getNHResult", "tmpCode": "002", "soCode": f"{group}{i}"},
-            ["unseResult[0]"],
-            title,
-        )
-        for group in groups
-        for i, title in enumerate(CAREER_TITLES[group], 1)
-    ]
 
 
 def harmony_content_selectors(my_aisyo: int, other_aisyo: int) -> list[dict]:
@@ -967,36 +934,6 @@ def _love(request: FortuneRequest, saju: SajuResult) -> dict:
     }
 
 
-def _career(request: FortuneRequest) -> dict:
-    category = getattr(request, "career_category", None)
-    unresolved = [
-        "NHCP5.NHUnse.getNHResult('002', soCode): DLL 내부의 직업운 판정·결과 규칙이 "
-        "ASP 소스에 없으므로 원본 DLL/구현 명세가 필요합니다."
-    ]
-    if category is None:
-        unresolved.insert(
-            0, "accountlist.input10에 해당하는 career_category(A~F) 입력이 필요합니다."
-        )
-    calls = career_dispatch(category) if category is not None else []
-    return {
-        "source": CAREER_SOURCE,
-        "facts": {
-            "tmpCode": "002",
-            "soCode": category,
-            "categories": {key: list(value) for key, value in CAREER_TITLES.items()},
-            "all_categories_code": "F",
-            "expected_output_count": 15 if category == "F" else (3 if category else None),
-            "original_output_fields": (
-                [f"mResult{group}({i})" for group in range(1, 6) for i in range(3)]
-                if category == "F"
-                else ["mDesc1", "mDesc2", "mDesc3"]
-            ),
-            "dependency_type": "opaque_business_calculation_and_text",
-            "dispatch_only": True,
-        },
-        "selectors": calls,
-        "unresolved": unresolved,
-    }
 
 
 def _compatibility(saju: SajuResult, partner_saju: SajuResult | None) -> dict:
@@ -1071,8 +1008,6 @@ def decide_relationship(
 ) -> dict:
     if kind == "love":
         return _love(request, saju)
-    if kind == "career":
-        return _career(request)
     if kind == "compatibility":
         return _compatibility(saju, partner_saju)
     raise DomainError("unsupported_relationship_kind", "지원하지 않는 관계 운세입니다.")

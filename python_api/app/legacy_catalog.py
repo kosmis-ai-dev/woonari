@@ -89,11 +89,61 @@ CATALOG_TAGS = {
     "reference": "ASP 전체 · 묶음·보조 코드",
 }
 
+# CR-019 / T-039: filter the active product without rewriting frozen provenance.
+DLL_ISSUES = {"opaque_com_rule", "nhcp5_calculation_missing"}
+
+
+def _remove_dll_services(data: dict) -> None:
+    direct = {
+        item["id"] for item in data["items"]
+        if any(issue["code"] in DLL_ISSUES for issue in item["issues"])
+    }
+    unavailable_menus = {
+        row["catalog_id"] for row in data["menu_map"] if not row["source_exists"]
+    }
+    # These are menu-only diagnostics with no independent implementation, not
+    # additional proven DLL algorithms. Keep unrelated similarly named services.
+    menu_only = {
+        item["id"] for item in data["items"]
+        if item["id"].startswith("menu-") and item["id"] in unavailable_menus
+        and item["related_service_ids"]
+        and set(item["related_service_ids"]) <= direct
+    }
+    removed = direct | menu_only
+    data["items"] = [item for item in data["items"] if item["id"] not in removed]
+    data["menu_map"] = [row for row in data["menu_map"] if row["catalog_id"] not in removed]
+    for item in data["items"]:
+        for field in ("children", "related_service_ids"):
+            item[field] = [identifier for identifier in item[field] if identifier not in removed]
+        if item.get("parent_id") in removed:
+            item["parent_id"] = None
+        if item["id"] == "adultluck":
+            for issue in item["issues"]:
+                if issue["code"] == "collection_needs_subservice_audit":
+                    issue["reason"] = "원본 8개 하위 서비스 중 DLL 의존 항목을 CR-019로 제거했습니다. 현재 7개 하위 서비스는 각자의 사주·주기·별도 분류 자료 상태를 따릅니다."
+                    issue["resolution"][0] = "남은 7개를 각각 명칭·입력·소스·필수 의존성으로 확인합니다."
+    data["summary"].update(
+        source_records=data["summary"]["records"],
+        source_menu_declarations=data["summary"]["menu_declarations"],
+        records=len(data["items"]), menu_declarations=len(data["menu_map"]),
+        removed_dll_services=len(direct), removed_menu_diagnostics=len(menu_only)
+    )
+    data["common_notes"][0] = "현재 활성 서비스 수량과 Python 실행 범위는 summary의 records/statuses/python_execution에 집계합니다. 원본 동결 인벤토리에는 제거 전 감사 기록이 남아 있습니다."
+    data["common_notes"] = [
+        note.replace("ASP/DB/DLL", "원본 ASP/DB")
+        .replace("기존 10개 /v1/fortunes/{kind}", "기존 9개 /v1/fortunes/{kind}")
+        .replace("DLL 내부 판정 불투명, ", "")
+        if not note.startswith("tb_manse 적재가") else
+        "만세력과 별도인 궁합 tbAisyo 및 일부 interlife 판정 자료의 미확보 상태는 유지합니다. 연간 본문은 사주 기반 AI 해석으로 제공하고 DLL 의존 운세는 제거했습니다."
+        for note in data["common_notes"]
+    ]
+
 
 @lru_cache(maxsize=1)
 def _catalog_data() -> dict:
     source = Path(__file__).with_name("data") / "legacy_services.json"
     data = json.loads(source.read_text(encoding="utf-8"))
+    _remove_dll_services(data)
     for item in data["items"]:
         if item.get("api_kind") == "yearly":
             item.setdefault("review_notes", []).append(BACKUP_FINDING)
@@ -145,6 +195,25 @@ def full_catalog(
         issues_by_certainty=dict(
             Counter(issue["certainty"] for item in items for issue in item["issues"])
         ),
+    )
+    from app.service_engine import handlers
+
+    registered = handlers()
+    extra = [item for item in items if item["id"] in registered]
+    existing = [item for item in items if item.get("api_kind")]
+    data["summary"]["python_execution"].update(
+        additional_registered=len(extra),
+        additional_ready_for_ai_contract=sum(item["status"] == "ready" for item in extra),
+        additional_partial=sum(item["status"] == "source_required" for item in extra),
+        calculation_only=sum(item["status"] == "calculation_only" for item in extra),
+        existing_fortune_routes=len(existing),
+        existing_ready_for_ai_contract=sum(item["status"] == "ready" for item in existing),
+        existing_diagnostic_only=sum(item["status"] != "ready" for item in existing),
+        implemented_records_including_existing=len(extra) + len(existing),
+        source_required_without_handler=sum(
+            item["status"] == "source_required" and item["id"] not in registered
+            and not item.get("api_kind") for item in items
+        )
     )
     bedrock = ai_provider == "bedrock"
     bearer = bedrock and ai_auth_mode == "api_key"

@@ -35,7 +35,7 @@ def test_health_catalog_and_openapi(client):
     assert health["ai_provider"] == "openai"
     assert health["ai_configured"] is False
     assert health["ai_missing_settings"] == ["OPENAI_API_KEY", "OPENAI_MODEL"]
-    assert len(client.get("/v1/fortunes").json()["items"]) == 10
+    assert len(client.get("/v1/fortunes").json()["items"]) == 9
     assert "/v1/saju" in client.get("/openapi.json").json()["paths"]
     assert client.get("/docs").status_code == 200
 
@@ -61,7 +61,6 @@ def test_saju_and_calculation_only(client, payload):
         "yearly",
         "lifetime",
         "wealth",
-        "career",
         "love",
         "biorhythm",
         "compatibility",
@@ -258,12 +257,12 @@ def test_api_key_is_enforced_without_affecting_health(payload):
 def test_unresolved_source_dependency_never_calls_ai(app, client, payload):
     fake = SimpleNamespace(name="test", model="fixture", interpret=AsyncMock())
     app.dependency_overrides[get_interpreter] = lambda: fake
-    payload.update(career_category="A", include_ai=True)
-    result = client.post("/v1/fortunes/career", json=payload)
+    payload.update(partner=payload["birth"] | {"year": 1992, "gender": "female"}, include_ai=True)
+    result = client.post("/v1/fortunes/compatibility", json=payload)
     assert result.status_code == 503
     assert result.json()["error"]["code"] == "legacy_dependency_unavailable"
     fake.interpret.assert_not_called()
     payload["include_ai"] = False
-    diagnostic = client.post("/v1/fortunes/career", json=payload).json()["analysis"]
+    diagnostic = client.post("/v1/fortunes/compatibility", json=payload).json()["analysis"]
     assert diagnostic["ready_for_ai"] is False
-    assert len(diagnostic["selectors"]) == 3
+    assert len(diagnostic["selectors"]) == 2

@@ -37,7 +37,11 @@
     "python_api/app/main.py",
     "python_api/app/swagger_guide.py",
     "python_api/tests/test_yearly_ai.py",
-    "python_api/docs/annual-ai.md"
+    "python_api/docs/annual-ai.md",
+    "python_api/app/models.py",
+    "python_api/app/legacy_relationships.py",
+    "python_api/tests/test_removed_dll_services.py",
+    "docs/removed-dll-services.md"
   ],
   "tasks": [
     "T-003",
@@ -52,7 +56,8 @@
     "T-031",
     "T-034",
     "T-035",
-    "T-038"
+    "T-038",
+    "T-039"
   ],
   "changes": [
     "CR-001",
@@ -63,11 +68,12 @@
     "CR-013",
     "CR-014",
     "CR-015",
-    "CR-018"
+    "CR-018",
+    "CR-019"
   ],
-  "spec": "## 문장 생성 경계\nPython이사주·점수·분기·선택키·기간·narrative_contract를확정하고AI는요약/항목본문/실천조언을작성한다. ready_for_ai=false는503,계산전용의AI요청은422다. 이름·원시생년월일시·번호·쿠키·회원정보·키는모델입력/사용량원장에넣지않는다.\n현재fortune-ko-v7-annual-saju는항목별작성범위를정한다. 사주/점수/원본anchor없는불투명키는일반조언만,어제/내일은미제공날짜판정금지다. 서버가검증한해당source_anchors만grounded_source_definition으로문장화하고실제전생/가족/미래를입증한사실로단정하지않는다. 민감한수명/사망/질병원문과없는문구는Saju존재여부와무관하게항목별일반조언으로제한한다. 검증된당사주원문이있으면해당항목만근거범위를확장한다. 본문내내부변수·수식·조회키·테이블명노출은502로거부한다.\n## 제공자와 고정 출력\nBedrockClaudeSonnet4.6/global추론프로필/ap-northeast-2의명시iam|api_key모드만사용한다. 사용자승인AI별도계정을BEDROCK_ACCOUNT_ID와authenticated profile ARN으로대조하고DB/CLI계정과혼용/자동fallback하지않는다. 장기키는전용ai/bedrock.env,설정은api.env만읽는다. trust_env=false/리다이렉트0/자동재시도0/계정검증300초cache/maxTokens8192/timeout90초다. OpenAI선택모드는기존Responses/store=false/엄격검증을유지한다.\nClaude요청스키마는해당요청의허용targetID/topic/evidenceID enum을제공한다. 정확한항목집합·누락·중복·본문·필수근거를검증한뒤복사본의제목만Python고정계약으로바인딩한다. 본문·계산·근거는변경하거나누락을채우지않는다. 최종API검증은고정제목/항목/근거를다시확인한다.\n## 호출 상한과 검증\n한국시간자정기준일100시도상한을전용영속SQLite원장으로모든경로/별칭/모델이공유한다. 모델전송예약후오류/타임아웃/계약실패도환불없고입력/자료/인증사전검증실패는미차감이다. 초과429,원장삭제/손상/권한/시계역행503,자동재시도없음. GET /v1/ai-usage는인증과상한을유지한다.\nCR015실제평생13항목과탄생화2항목생성/계산불변/사람본문검토통과. 최초꽃계약불일치1회는유지하고고정제목바인딩보강후재검증했다. 이번3시도/기존포함당일9/100이며사용량초기화없다.\nCR018 / T038: 연간 un은 asp-saju-ai-yearly-v1 모드로 기존 ASP dotong 사주와 만세력 대상 연도 근거를 AI가 해석한다. 운세 DB 조회·별점·점수·부적은 사용하지 않는다. 양력 연도 전체를 안내하며 대표 연도 간지는 해당 연도 입춘 이후7월1일12시KST의 기존 절입 계산으로 확정한다. 일간 기준 간지/오행/십성/십이운성과 원국 각 천간 대비 연도 천간의 십성 관계를 전달한다. 7개 고정 본문 항목과 natal+annual-context 근거를 모두 검증하고 수치 평점/별 표시는502 ai_unrequested_rating으로 거부한다. 기존 ASP 연간 DB 동일 결과 재현과 구분하며 다른 미확보 COM/판정 차단은 유지한다.\n검증: API 전체1195개를 검사했고 준비 수량 기대값2개 수정 후 관련29개 재검증 통과. 게시/비밀값 도구25개·Ruff·compileall 통과. 독립 wheel49런타임 파일의 소스 바이트 동일성과 ASP 없는 연간 실행을 확인했다. 공식 MySQL9090에서 2027계산·별칭·AI미차감·Swagger8종을 확인하고 Claude1회 실제 생성200/7항목/1855자/analysis불변/별점·점수없음을 확인했다. 이번 실제 전송1회 차감, 테스트 종료 시점2026-11-24 사용2/100(잔여98)이며 원장 초기화나 추가 호출 없음.",
+  "spec": "## 문장 생성 경계\nPython이사주·점수·분기·선택키·기간·narrative_contract를확정하고AI는요약/항목본문/실천조언을작성한다. ready_for_ai=false는503,계산전용의AI요청은422다. 이름·원시생년월일시·번호·쿠키·회원정보·키는모델입력/사용량원장에넣지않는다.\n현재fortune-ko-v7-annual-saju는항목별작성범위를정한다. 사주/점수/원본anchor없는불투명키는일반조언만,어제/내일은미제공날짜판정금지다. 서버가검증한해당source_anchors만grounded_source_definition으로문장화하고실제전생/가족/미래를입증한사실로단정하지않는다. 민감한수명/사망/질병원문과없는문구는Saju존재여부와무관하게항목별일반조언으로제한한다. 검증된당사주원문이있으면해당항목만근거범위를확장한다. 본문내내부변수·수식·조회키·테이블명노출은502로거부한다.\n## 제공자와 고정 출력\nBedrockClaudeSonnet4.6/global추론프로필/ap-northeast-2의명시iam|api_key모드만사용한다. 사용자승인AI별도계정을BEDROCK_ACCOUNT_ID와authenticated profile ARN으로대조하고DB/CLI계정과혼용/자동fallback하지않는다. 장기키는전용ai/bedrock.env,설정은api.env만읽는다. trust_env=false/리다이렉트0/자동재시도0/계정검증300초cache/maxTokens8192/timeout90초다. OpenAI선택모드는기존Responses/store=false/엄격검증을유지한다.\nClaude요청스키마는해당요청의허용targetID/topic/evidenceID enum을제공한다. 정확한항목집합·누락·중복·본문·필수근거를검증한뒤복사본의제목만Python고정계약으로바인딩한다. 본문·계산·근거는변경하거나누락을채우지않는다. 최종API검증은고정제목/항목/근거를다시확인한다.\n## 호출 상한과 검증\n한국시간자정기준일100시도상한을전용영속SQLite원장으로모든경로/별칭/모델이공유한다. 모델전송예약후오류/타임아웃/계약실패도환불없고입력/자료/인증사전검증실패는미차감이다. 초과429,원장삭제/손상/권한/시계역행503,자동재시도없음. GET /v1/ai-usage는인증과상한을유지한다.\nCR015실제평생13항목과탄생화2항목생성/계산불변/사람본문검토통과. 최초꽃계약불일치1회는유지하고고정제목바인딩보강후재검증했다. 이번3시도/기존포함당일9/100이며사용량초기화없다.\nCR018 / T038: 연간 un은 asp-saju-ai-yearly-v1 모드로 기존 ASP dotong 사주와 만세력 대상 연도 근거를 AI가 해석한다. 운세 DB 조회·별점·점수·부적은 사용하지 않는다. 양력 연도 전체를 안내하며 대표 연도 간지는 해당 연도 입춘 이후7월1일12시KST의 기존 절입 계산으로 확정한다. 일간 기준 간지/오행/십성/십이운성과 원국 각 천간 대비 연도 천간의 십성 관계를 전달한다. 7개 고정 본문 항목과 natal+annual-context 근거를 모두 검증하고 수치 평점/별 표시는502 ai_unrequested_rating으로 거부한다. 기존 ASP 연간 DB 동일 결과 재현과 구분하며 남은 미확보 판정 차단은 유지한다. DLL 운세는 CR019로 제거했다.\n검증: API 전체1195개를 검사했고 준비 수량 기대값2개 수정 후 관련29개 재검증 통과. 게시/비밀값 도구25개·Ruff·compileall 통과. 독립 wheel49런타임 파일의 소스 바이트 동일성과 ASP 없는 연간 실행을 확인했다. 공식 MySQL9090에서 2027계산·별칭·AI미차감·Swagger8종을 확인하고 Claude1회 실제 생성200/7항목/1855자/analysis불변/별점·점수없음을 확인했다. 이번 실제 전송1회 차감, 테스트 종료 시점2026-11-24 사용2/100(잔여98)이며 원장 초기화나 추가 호출 없음.\nCR019 / T039 현재 범위: 실제 DLL/COM 계산 의존11종과 실행없는 단독 관련 메뉴 진단4개를 활성 카탈로그·GET·POST·Swagger에서 제거했다. 직업 career kind와 career_category 입력·COM 선택 함수도 삭제했다. 메뉴6개와 부모/관련 연결을 정리했고 원본 동결JSON306/90과 DB/비공개ASP는 감사 이력으로 보존한다. 현재 공개291항목/84메뉴/기본9종/OpenAPI600경로이며 공식 MySQL 기준 준비65·계산전용2·자료필요199·보조17·과거판8이다. Python 실행175(추가166+기본9)=준비65/달력2/부분108이며 미구현91을 완료로 세지 않는다. 삭제 서비스ID의 숨은 POST는404, career kind는유효성거부하며 AI호출/한도차감없다. adultluck다른7개·menu-im30·Python template·일일/연간 직장 항목은 유지한다. T008/T026의 DLL 확보 요구는 삭제 범위에서 제외한다.\nCR019 최종 검증: 완료 검증: API 전체1218개·관련207개·부모설명1개 재검증·게시/비밀값25개·Ruff·compileall 통과. 실제9090에서 활성291/메뉴84/경로600/준비65·계산2·자료필요199·보조17·과거8, 삭제POST30/GET15 거부·career422·annual2027MySQL200·부모7개/AI사용량차이0 확인. wheel49런타임 소스바이트동일/독립291목록·기본9종·연간계산통과. 이번 모델 호출없음. frozenJSON SHA/원본/DB 유지. 부모 adultluck 설명도 원본8개 중DLL1개제거/현재7개로 갱신했고, 삭제한 서비스는 향후 복원 대기 범위에서 제외했다.",
   "createdAt": "2026-11-02",
-  "updatedAt": "2026-11-24",
+  "updatedAt": "2026-11-25",
   "history": [
     {
       "date": "2026-11-02",
@@ -238,6 +244,24 @@
       "by": "ai",
       "change": "CR-018",
       "text": "T038 구현·실제 연간 Claude 생성·회귀·패키지 검증 완료 및 현재 연간 AI 해석 명세 반영."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-019",
+      "text": "사용자의 전체 DLL 의존 운세 삭제 지시로 착수. 실제 COM 의존11종과 실행없는 관련 메뉴4개를 식별했고, 공통 문서 DLL 단어만으로 비의존 운세를 삭제하지 않는다."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-019",
+      "text": "DLL11종/연결 메뉴진단4개·career 계약 제거와 활성 집계/참조/지침을 현재 코드로 갱신. 회귀 검증 진행."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-019",
+      "text": "T039 DLL 운세 제거·전체1218회귀·실서버 무차감·독립패키지 검증 완료. 원본 감사 이력과 다른 서비스 보존."
     }
   ]
 }

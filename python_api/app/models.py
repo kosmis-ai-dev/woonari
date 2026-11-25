@@ -108,7 +108,6 @@ class FortuneKind(StrEnum):
     yearly = "yearly"
     lifetime = "lifetime"
     wealth = "wealth"
-    career = "career"
     love = "love"
     compatibility = "compatibility"
     biorhythm = "biorhythm"
@@ -121,7 +120,7 @@ class FortuneRequest(Model):
     )
     target_date: date = Field(
         title="조회 기준 날짜",
-        description="un을 확인할 양력 날짜입니다. YYYY-MM-DD 형식이며 출생일 이후여야 합니다. 주간·월간은 이 날짜가 속한 기간을 봅니다. 연간은 2001~2014년만 허용합니다.",
+        description="un을 확인할 양력 날짜입니다. YYYY-MM-DD 형식이며 출생일 이후여야 합니다. 주간·월간은 이 날짜가 속한 기간을 봅니다. 연간은 해당 양력 연도 전체를 해석하며 1900~2050년을 지원합니다.",
         examples=["2026-11-02"],
     )
     partner: Birth | None = Field(
@@ -133,11 +132,6 @@ class FortuneRequest(Model):
         default=True,
         title="AI 해석 포함 여부",
         description="true는 실제 AI un 본문을 생성합니다. 연간 un은 사주·연도 근거를 AI가 해석하며 별점/점수 없이 2027년도 지원합니다. 전용 AI 인증·모델 설정이 필요하며 false는 계산 근거만 확인합니다.",
-    )
-    career_category: Literal["A", "B", "C", "D", "E", "F"] | None = Field(
-        default=None,
-        title="직업운 주제 코드",
-        description="직업운(career)에서 원본 A~E 주제 또는 F=전체 15항목을 선택합니다. 다른 un에서는 생략합니다. 주제별 설명은 직업운 항목을 펼쳐 확인하세요.",
     )
 
     @model_validator(mode="after")
@@ -171,10 +165,10 @@ class CalendarPolicy(Model):
     hour_boundary: str = "01:30부터 2시간 간격; 23:30부터 자시"
     limitations: list[str] = [
         "역사적 표준시/DST/출생지별 진태양시 보정 미지원",
-        "tb_manse를 기존 manse 필드에 대응함; ASP 실 실행 및 DLL 결과 동일성 미검증",
+        "tb_manse를 기존 manse 필드에 대응함; ASP 실 실행 결과 동일성 미검증",
         "원본과 해시를 보존하고 검증된 윤달 표시 교정표 10행을 조회 시 적용함",
         "교정표 적용 후에도 남는 중복 음력키는 임의 선택하지 않음",
-        "원본 함수별 야자시 규칙 적용; 원본 미확보 대운/DLL 판정은 생성하지 않음",
+        "원본 함수별 야자시 규칙 적용; 원본 미확보 대운 판정은 생성하지 않음",
     ]
 
 

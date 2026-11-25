@@ -138,10 +138,6 @@ def test_unresolved_legacy_dependencies_are_not_ai_targets():
     assert not compatibility.ready_for_ai
     assert not compatibility.narrative_contract
     assert compatibility.unresolved_dependencies
-    career = analyze(FortuneKind.career, request(career_category="F"))
-    assert not career.ready_for_ai
-    assert len(career.selectors) == 15
-    assert not career.narrative_contract
 
 
 def test_original_week_star_threshold_gaps_are_preserved():
