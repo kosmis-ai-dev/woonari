@@ -1,0 +1,59 @@
+{
+  "id": "T-042",
+  "title": "3사 OAuth 로그인·회원/세션저장·Swagger·검증",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F04",
+    "F05",
+    "F06",
+    "F07",
+    "F10",
+    "F12"
+  ],
+  "dependsOn": [
+    "T-041"
+  ],
+  "changes": [
+    "CR-022"
+  ],
+  "description": "OAuth2 인증코드 방식의3사 로그인을 추가한다. 전용DB 신규회원/소셜연결/세션/일회상태를 저장하고 자체Bearer토큰·갱신·로그아웃과한국어Swagger를 제공한다. 과거회원데이터와이메일자동병합은사용하지않고전용제공자설정만읽는다.",
+  "acceptance": [
+    "카카오·구글·네이버 인증URL/콜백/회원생성·로그인 및 내정보/갱신/로그아웃 제공",
+    "state의 일회성·브라우저바인딩·제공자바인딩·PKCE지원 제공자적용·고정redirect 검증",
+    "제공자토큰 미저장·자체토큰 해시저장·갱신회전/재사용차단·계정자동병합금지",
+    "신규woonari인증표만생성·원본/기존운세DB와계정설정 보존·설정미비503",
+    "모의제공자/DB트랜잭션/실제MySQL빈표검증·기존회귀·게시와전용main push",
+    "제공자별필요설정/리다이렉트URI/실제로그인미검증상태를명확히안내"
+  ],
+  "tests": [
+    "python_api/tests/test_auth_providers.py",
+    "python_api/tests/test_auth_store.py",
+    "python_api/tests/test_social_auth.py",
+    "tools/test_auth_setup.py",
+    "python_api/tests/",
+    "tools/test_repository_secrets.py"
+  ],
+  "createdAt": "2026-11-25",
+  "updatedAt": "2026-11-25",
+  "history": [
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-022",
+      "text": "사용자 구현 지시로 카카오·구글·네이버 소셜 로그인 API 접수. 제공자별고유ID/회원저장/보안상태/토큰회전/프로필/로그아웃·Swagger·전용설정을 구현한다. 실제 제공자 로그인은 전용 앱 설정 후 확인한다."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-022",
+      "text": "사용자답변: 키설정은나중에진행. 구현/DB/Swagger/모의보안검증을완료하고실제제공자계정인증은미검증으로명시한다."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-022",
+      "text": "T042 완료 — 전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다. 최종wheel·게시사본검증후main게시."
+    }
+  ]
+}

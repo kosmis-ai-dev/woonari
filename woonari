@@ -21,6 +21,8 @@ def main():
               "  ./woonari git ...              전용 인증으로 Git 실행\n"
               "  ./woonari gh ...               전용 GitHub 인증\n"
               "  ./woonari db check             inter 시크릿으로 MySQL 연결 점검\n"
+              "  ./woonari auth init|status     소셜 로그인 전용 설정 준비/확인\n"
+              "  ./woonari db init-auth         woonari 신규 인증 테이블 생성·검증\n"
               "  ./woonari db import-manse SQL  SQL 원본으로 로컬 만세력 DB 구축\n"
               "  ./woonari db sync-manse        로컬 만세력을 MySQL woonari에 적재\n"
               "  ./woonari db sync-restored DIR 복원 판정 자료를 woonari의 별도 표에 적재\n"
@@ -62,6 +64,16 @@ def main():
     if command == "aws":
         from isolated_aws import main as run
         return run(rest)
+    if command == "auth":
+        import subprocess
+
+        from project_context import ROOT, clean_env, fail
+        if rest not in (["init"], ["status"]):
+            fail("사용법: ./woonari auth init|status")
+        return subprocess.run(
+            [str(ROOT / "python_api/.venv/bin/python"), "-I", str(ROOT / "tools/auth_setup.py"), *rest],
+            cwd=ROOT, env=clean_env(), check=False
+        ).returncode
     if command == "db":
         import subprocess
 
@@ -69,6 +81,8 @@ def main():
 
         if rest == ["check"]:
             script, arguments = "isolated_db.py", ["check"]
+        elif rest == ["init-auth"]:
+            script, arguments = "auth_setup.py", ["init-db"]
         elif len(rest) == 2 and rest[0] == "import-manse":
             script, arguments = "import_manse.py", rest[1:]
         elif rest == ["sync-manse"] or (

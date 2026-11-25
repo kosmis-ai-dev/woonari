@@ -62,6 +62,24 @@ _HOST_REFERENCE = re.compile(
     rb'(?:data\s+source|server)\s*=\s*"\s*&\s*([A-Za-z_]\w*)', re.IGNORECASE
 )
 
+# Reviewed public OAuth/schema literals, not credentials. Keep this keyed by the
+# exact repository path, finding kind and literal bytes: a changed value or any
+# other credential in these modules must still pass through normal redaction.
+_PUBLIC_AUTH_LITERALS = {
+    ("python_api/app/auth_providers.py", "api_secret_literal"): frozenset({
+        b"https://kauth.kakao.com/oauth/token",
+        b"https://oauth2.googleapis.com/token",
+        b"https://nid.naver.com/oauth2/token"
+    }),
+    ("python_api/app/auth_settings.py", "api_secret_literal"): frozenset({
+        b"kakao_client_secret", b"google_client_secret", b"naver_client_secret"
+    }),
+    ("python_api/app/auth_settings.py", "service_host"): frozenset({b"127.0.0.1"}),
+    ("python_api/app/auth_store.py", "api_secret_literal"): frozenset({
+        b"VARCHAR(128) CHARACTER SET ascii COLLATE ascii_bin"
+    })
+}
+
 
 def _kind(key: bytes, path: str) -> str | None:
     key = re.sub(rb'[^a-z0-9]', b'', key.lower())
@@ -113,7 +131,10 @@ def redact(content: bytes, path: str) -> tuple[bytes, list[dict]]:
     host_variables = {match.group(1).lower() for match in _HOST_REFERENCE.finditer(content)}
 
     def add(start: int, end: int, kind: str) -> None:
-        if start < end and _usable(content[start:end]):
+        value = content[start:end]
+        if value in _PUBLIC_AUTH_LITERALS.get((path, kind), ()):
+            return
+        if start < end and _usable(value):
             ranges.append((start, end, kind))
 
     for match in _PRIVATE_KEY.finditer(content):

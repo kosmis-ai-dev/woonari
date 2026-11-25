@@ -119,3 +119,7 @@ CR-013 / T-027: `AI_PROVIDER=bedrock`은 명시한 `BEDROCK_AUTH_MODE`만 사용
 
 ## main 전환 · CR-017
 `./woonari git promote-main`으로 기존 게시 커밋을 유지하며 main으로 이름을 바꾸고 `./woonari git push`로 게시합니다. `./woonari gh set-default-main`은 로컬과 원격 main 커밋 일치를 확인한 뒤 기본 브랜치를 main으로 설정합니다. 이 명령은 토큰의 저장소 Administration 쓰기 권한이 필요할 수 있습니다. `./woonari git delete-published-branch`는 원격 main 일치·기본 브랜치 main·기존 게시 커밋의 조상 보존을 확인한 경우에만 승인된 이전 게시 브랜치를 삭제합니다. 이후 변경은 관련 검증·보드 갱신·배포 사본 검증 후 main에 커밋/push합니다.
+
+## 소셜 로그인 전용 설정 · CR-022
+
+`./woonari auth init|status`로 `.local/woonari/auth/providers.env`를 준비·확인합니다. 외부 환경변수나 다른 프로젝트의 OAuth 키를 읽지 않습니다. 공식 MySQL `woonari`의 신규 `woonari_auth_*` 5개 표만 사용하며 초기 생성은 `./woonari db init-auth`, 런타임은 읽기 전용 스키마 검증입니다. 과거 회원 데이터를 이관하지 않습니다. [소셜 로그인 가이드](social-login.md)를 참고하세요.

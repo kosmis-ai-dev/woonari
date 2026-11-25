@@ -59,6 +59,7 @@ PUBLICATION_CODE = {
     "tools/test_mysql_fortune_archive.py",
     "tools/test_isolated_bedrock.py",
     "tools/test_bedrock_key.py",
+    "tools/test_auth_setup.py",
     "tools/aws_cli_entry.py",
     "tools/woonari_git_credential.py",
 }

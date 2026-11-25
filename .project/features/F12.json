@@ -1,0 +1,51 @@
+{
+  "id": "F12",
+  "name": "소셜 로그인 및 회원 세션",
+  "status": "done",
+  "summary": "카카오·구글·네이버 OAuth2 신규회원과 자체 로그인 세션을 관리한다.",
+  "dependsOn": [
+    "F07",
+    "F06"
+  ],
+  "code": [
+    "python_api/app/auth_models.py",
+    "python_api/app/auth_settings.py",
+    "python_api/app/auth_providers.py",
+    "python_api/app/auth_service.py",
+    "python_api/app/auth_router.py",
+    "python_api/app/auth_store.py",
+    "python_api/tests/test_auth_providers.py",
+    "python_api/tests/test_auth_store.py",
+    "python_api/tests/test_social_auth.py",
+    "tools/auth_setup.py",
+    "tools/test_auth_setup.py",
+    "docs/social-login.md",
+    "docs/social-login-sources.md",
+    "python_api/app/main.py",
+    "tools/isolated_runtime.py",
+    "woonari"
+  ],
+  "tasks": [
+    "T-042"
+  ],
+  "changes": [
+    "CR-022"
+  ],
+  "spec": "## API\nSwagger 소셜 로그인 · 카카오·구글·네이버 그룹에13개경로를제공한다. GET /v1/auth/providers, 제공자별GET /v1/auth/{kakao|google|naver}/authorize·login·callback, GET /v1/auth/me, POST /v1/auth/refresh·logout이다. authorize는인가URL/만료와브라우저쿠키를반환하고login은302로제공자에이동한다. callback은JSON서비스토큰/회원정보를반환한다. 임의프론트리다이렉트/클라이언트제공토큰로그인은제공하지않는다.\nOAuth시작·콜백·갱신은기존X-API-Key를요구하지않고me/logout은자체HTTPBearer로인증한다. 기존운세API키계약은유지한다. auth응답은no-store/no-cache/no-referrer이며401은WWW-AuthenticateBearer이다.\n## 설정과 제공자\n전용.local/woonari/auth/providers.env의BASE URL/제공자별clientID·secret만읽는다. ambient키·공용설정·기존.env를사용하지않는다. 파일600/소유자/심볼릭링크를검사하고운영HTTPS·개발loopback9090만허용한다. ./woonari auth init|status는기존설정값을보존하며값을출력하지않고configured는필수항목존재만뜻한다. 미설정제공자는503 social_not_configured이다.\n고정HTTPS허용엔드포인트에만코드/PKCE교환을실행하고프록시/리다이렉트/자동재시도를사용하지않는다. 카카오는REST코드·사용자정보,구글·네이버최신OIDC는RS256서명/JWKS/iss/aud/azp/exp/iat/nonce/sub와프로필ID결합을검증한다. 네이버는/oauth2경로를쓰고기존/oauth2.0와혼합하지않는다. 카카오클라이언트secret은설정된안전기본모드로요구하며nickname/email미동의는회원ID로그인을막지않는다.\n## 회원/세션\n(provider,subject)로신규회원을만들거나기존회원을조회한다. 이메일로자동병합하지않고각제공자의대소문자ID를보존한다. 이메일확인값은Google엄격boolean/카카오valid+verified,네이버false다. 공개AuthUser는회원uuid/nickname/선택email/email_verified/providers/생성시각만제공한다. 제공자ID·토큰은반환하지않는다.\n자체opaque access최대15분/refresh세션최초30일절대만료이다. 토큰은해시만저장하고갱신시두토큰을교체한다. 이전refresh재사용은해당세션을commit폐기한다. state는10분/브라우저·제공자바인딩/원자적일회소비와PKCE·nonce를사용한다. 실패콜백도유효state를소비해재사용하지않는다. logout은현재세션만종료한다.\n## DB\n공식MySQLwoonari에woonari_auth_users/identities/sessions/used_refresh/states5표를추가한다. ./woonari db init-auth는실제DB명·기존스키마·타입·바이너리ID·유일키·FK를사전검사하고없는표만생성한다. 런타임은읽기전용verify이며실패시SQLite대체나DDL을하지않는다. 독립개발SQLite는전용private경로0700/0600에생성한다. 과거회원/운세표는변경·이관하지않는다. 동시첫로그인/state/refresh는트랜잭션과해시이름잠금으로보호한다.\n## 실제 검증 범위\n키설정은나중에하겠다는사용자답변에따라앱키미설정상태로게시한다. 모의제공자·서명토큰·저장소/라우트검증은완료했지만실제3사계정로그인은미검증이다. 네이버IDtoken.sub와프로필ID동일성도실제앱으로최종확인해야한다.\n전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다.",
+  "createdAt": "2026-11-25",
+  "updatedAt": "2026-11-25",
+  "history": [
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-022",
+      "text": "사용자 구현 지시로 카카오·구글·네이버 소셜 로그인 API 접수. 제공자별고유ID/회원저장/보안상태/토큰회전/프로필/로그아웃·Swagger·전용설정을 구현한다. 실제 제공자 로그인은 전용 앱 설정 후 확인한다."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-022",
+      "text": "T042 구현·전용DB인증표생성·모의검증을현재명세에반영. 사용자지시로실제앱키/계정검증은이후진행."
+    }
+  ]
+}

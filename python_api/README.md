@@ -129,3 +129,7 @@ node .project/_tools/project-dashboard.mjs check
 ```
 
 내부 규칙·출처 관리 절차는 [Python 전용 작업 안내](../docs/python-only.md)와 [계산 규칙 관리](docs/source-rules.md)를 따릅니다. 설정·인증·키·로그·개인 입력·사용량 기록은 배포하지 않습니다.
+
+## 소셜 로그인
+
+카카오·구글·네이버 로그인 API를 Swagger의 **소셜 로그인 · 카카오·구글·네이버** 그룹에서 확인합니다. 로그인 시작·콜백·신규회원 생성·Bearer 토큰·내정보·갱신·로그아웃을 제공합니다. `./woonari auth init|status`로 전용 앱 설정을 준비하고 `./woonari db init-auth`로 신규 인증 표를 생성합니다. 실제 로그인은 앱 키 설정 후 확인합니다. [설정과 호출 가이드](../docs/social-login.md)

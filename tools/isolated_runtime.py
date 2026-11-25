@@ -347,6 +347,8 @@ def serve_api(args: list[str]) -> int:
     os.environ.update(environment)
     sys.path.insert(0, str(ROOT / "python_api"))
     import uvicorn
+    from app.auth_settings import load_auth_settings
+    from app.auth_store import MySQLAuthStore, SQLiteAuthStore
     from app.config import Settings
     from app.main import create_app
     from app.manse_store import configure_manse_store
@@ -367,11 +369,13 @@ def serve_api(args: list[str]) -> int:
         if not database["database"]:
             fail("MySQL 만세력 연결에 전용 DB 이름이 필요합니다.")
         connector = mysql_connector(database["database"])
+        auth_store = MySQLAuthStore(connector)
         configure_manse_store(lambda: MySQLManseStore(connector))
         configure_restored_fortune_store(lambda: MySQLRestoredFortuneStore(connector))
         source_archive = MySQLSourceArchiveStore(connector)
         configure_source_archive_store(lambda: source_archive)
     else:
+        auth_store = SQLiteAuthStore(STATE / "auth/auth.sqlite3")
         configure_manse_store(None)
         configure_restored_fortune_store(None)
         configure_source_archive_store(None)
@@ -401,9 +405,14 @@ def serve_api(args: list[str]) -> int:
             settings,
             interpreter_factory=lambda configured: BedrockInterpreter(configured, invoker=invoker),
             ai_quota=quota,
+            auth_settings=load_auth_settings(STATE / "auth/providers.env"),
+            auth_store=auth_store,
         )
     else:
-        application = create_app(settings, ai_quota=quota)
+        application = create_app(
+            settings, ai_quota=quota,
+            auth_settings=load_auth_settings(STATE / "auth/providers.env"), auth_store=auth_store
+        )
 
     @application.middleware("http")
     async def owned_instance(request, call_next):

@@ -13,6 +13,10 @@ from fastapi.responses import JSONResponse
 
 from app.ai import Interpreter, OpenAIInterpreter, validate_interpretation
 from app.ai_quota import DailyAIQuota
+from app.auth_router import TAG as AUTH_TAG
+from app.auth_router import social_auth_router
+from app.auth_service import AuthService
+from app.auth_settings import AuthSettings
 from app.calendar import calculate_saju
 from app.config import Settings, get_settings
 from app.errors import DomainError
@@ -82,6 +86,10 @@ def create_app(
     *,
     interpreter_factory: Callable[[Settings], Interpreter] | None = None,
     ai_quota: DailyAIQuota | None = None,
+    auth_settings: AuthSettings | None = None,
+    auth_store=None,
+    oauth_gateway=None,
+    auth_clock: Callable[[], int] | None = None,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(application: FastAPI):
@@ -93,14 +101,17 @@ def create_app(
         try:
             yield
         finally:
-            await application.state.interpreter.close()
+            try:
+                await application.state.interpreter.close()
+            finally:
+                await application.state.auth_service.gateway.close()
 
     application = FastAPI(
         title="un API",
         version="0.1.0",
         lifespan=lifespan,
         description=DESCRIPTION,
-        openapi_tags=TAGS,
+        openapi_tags=[*TAGS, {"name": AUTH_TAG, "description": "카카오·구글·네이버 로그인, 회원 정보와 로그인 세션을 관리합니다."}],
         swagger_ui_parameters={
             "docExpansion": "list",
             "defaultModelsExpandDepth": 0,
@@ -114,11 +125,30 @@ def create_app(
         state_root / "ai/usage.sqlite3", private_root=state_root,
         limit=application.state.settings.ai_daily_call_limit,
     )
+    from app.auth_providers import SocialOAuthGateway
+    from app.auth_store import SQLiteAuthStore
+
+    application.state.auth_service = AuthService(
+        auth_settings or AuthSettings(),
+        auth_store if auth_store is not None else SQLiteAuthStore(state_root / "auth/auth.sqlite3"),
+        oauth_gateway if oauth_gateway is not None else SocialOAuthGateway(),
+        clock=auth_clock
+    )
+
+    @application.middleware("http")
+    async def auth_privacy(request: Request, call_next):
+        response = await call_next(request)
+        if request.url.path.startswith("/v1/auth/"):
+            response.headers["Cache-Control"] = "no-store"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Referrer-Policy"] = "no-referrer"
+        return response
 
     @application.exception_handler(DomainError)
     async def domain_error(request: Request, exc: DomainError):
         status, content = public_error(exc)
-        return JSONResponse(status_code=status, content=content)
+        headers = {"WWW-Authenticate": "Bearer"} if status == 401 and request.url.path.startswith("/v1/auth/") else None
+        return JSONResponse(status_code=status, content=content, headers=headers)
 
     @application.exception_handler(RequestValidationError)
     async def validation_error(request: Request, exc: RequestValidationError):
@@ -350,6 +380,7 @@ def create_app(
     ):
         return await run_fortune(kind, body, interpreter)
 
+    application.include_router(social_auth_router())
     application.include_router(router)
     return application
 

@@ -7,6 +7,69 @@ from repository_secrets import redact
 
 
 class RedactionTests(unittest.TestCase):
+    def test_reviewed_social_constants_are_public_in_only_their_exact_paths(self):
+        cases = [
+            ('python_api/app/auth_providers.py', b'token = "https://kauth.kakao.com/oauth/token"\n'),
+            ('python_api/app/auth_providers.py', b'token = "https://oauth2.googleapis.com/token"\n'),
+            ('python_api/app/auth_providers.py', b'token = "https://nid.naver.com/oauth2/token"\n'),
+            ('python_api/app/auth_settings.py', b'"KAKAO_CLIENT_SECRET": "kakao_client_secret"\n'),
+            ('python_api/app/auth_settings.py', b'"GOOGLE_CLIENT_SECRET": "google_client_secret"\n'),
+            ('python_api/app/auth_settings.py', b'"NAVER_CLIENT_SECRET": "naver_client_secret"\n'),
+            ('python_api/app/auth_settings.py', b'auth_public_base_url = "http://127.0.0.1:9090"\n'),
+            ('python_api/app/auth_store.py', b'secret = "VARCHAR(128) CHARACTER SET ascii COLLATE ascii_bin"\n')
+        ]
+        for path, source in cases:
+            with self.subTest(path=path, source=source):
+                self.assertEqual(redact(source, path), (source, []))
+                other, findings = redact(source, 'other_project/' + path)
+                self.assertNotEqual(other, source)
+                self.assertEqual(len(findings), 1)
+
+    def test_social_module_allowlist_does_not_exempt_actual_credentials(self):
+        cases = [
+            ('python_api/app/auth_providers.py', b'token = "fixture_changed_provider_secret"\n'),
+            ('python_api/app/auth_settings.py', b'"KAKAO_CLIENT_SECRET": "fixture_changed_kakao_secret"\n'),
+            ('python_api/app/auth_settings.py', b'"GOOGLE_CLIENT_SECRET": "fixture_changed_google_secret"\n'),
+            ('python_api/app/auth_settings.py', b'"NAVER_CLIENT_SECRET": "fixture_changed_naver_secret"\n'),
+            ('python_api/app/auth_store.py', b'secret = "fixture_changed_schema_secret"\n')
+        ]
+        for path, source in cases:
+            with self.subTest(path=path):
+                result, findings = redact(source, path)
+                self.assertEqual(len(findings), 1)
+                self.assertEqual(findings[0]['kind'], 'api_secret_literal')
+                self.assertNotIn(b'fixture_changed_', result)
+
+    def test_social_public_literals_do_not_hide_adjacent_secrets_or_changed_urls(self):
+        source = (
+            b'token = "https://oauth2.googleapis.com/token"\n'
+            b'client_secret = "fixture_adjacent_secret"\n'
+            b'token = "https://oauth2.googleapis.com/token?client_secret=fixture_query_secret"\n'
+        )
+        result, findings = redact(source, 'python_api/app/auth_providers.py')
+        self.assertEqual(len(findings), 2)
+        self.assertIn(b'token = "https://oauth2.googleapis.com/token"', result)
+        self.assertNotIn(b'fixture_', result)
+        self.assertEqual([source[row['start']:row['end']] for row in findings], [
+            b'fixture_adjacent_secret',
+            b'https://oauth2.googleapis.com/token?client_secret=fixture_query_secret'
+        ])
+
+    def test_social_loopback_exception_is_exact_and_does_not_cover_passwords(self):
+        source = (
+            b'auth_public_base_url = "http://127.0.0.1:9090"\n'
+            b'auth_public_base_url = "http://192.0.2.20:9090"\n'
+            b'auth_public_base_url = "http://127.0.0.2:9090"\n'
+            b'password = "127.0.0.1"\n'
+        )
+        result, findings = redact(source, 'python_api/app/auth_settings.py')
+        self.assertEqual(len(findings), 3)
+        self.assertIn(b'"http://127.0.0.1:9090"', result)
+        self.assertNotIn(b'192.0.2.20', result)
+        self.assertNotIn(b'127.0.0.2', result)
+        self.assertIn(b'password = "REDACTED_CREDENTIAL_PASSWORD"', result)
+        self.assertEqual(redact(result, 'python_api/app/auth_settings.py'), (result, []))
+
     def test_large_single_line_rules_preserve_data_and_redact_only_credentials(self):
         rules = [{"name": "normal-rule", "value": "harmless-value"} for _ in range(20000)]
         source = json.dumps({"rules": rules, "api_key": "fixture_private_key"}).encode()

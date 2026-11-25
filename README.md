@@ -52,3 +52,7 @@ python3 tools/prepare_github.py --verify
 ```
 
 배포 사본은 `.publish/woonari`이며 `.local`의 인증·키·로그·개인 입력·사용량 기록과 가상환경·빌드 결과는 제외합니다. Git은 `./woonari git ...`, AWS는 `./woonari aws ...`로 관리하며 다른 프로젝트의 인증이나 기본 계정을 사용하지 않습니다.
+
+## 소셜 로그인
+
+카카오·구글·네이버 로그인 API를 Swagger의 **소셜 로그인 · 카카오·구글·네이버** 그룹에서 확인합니다. 로그인 시작·콜백·신규회원 생성·Bearer 토큰·내정보·갱신·로그아웃을 제공합니다. `./woonari auth init|status`로 전용 앱 설정을 준비하고 `./woonari db init-auth`로 신규 인증 표를 생성합니다. 실제 로그인은 앱 키 설정 후 확인합니다. [설정과 호출 가이드](docs/social-login.md)
