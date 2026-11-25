@@ -63,3 +63,6 @@ AI 실제 테스트(2026-11-19): 일일·연인 심리분석·평생의 V5 결�
 Swagger의 `POST /v1/fortunes/yearly`에서 2027년 첫 예시를 실행합니다. `include_ai=true`는 실제 Claude 본문, false는 개인 사주와 연도 근거만 반환합니다. 점수는 빈 배열이고 연간 근거의 별점·점수는 null입니다. 세부 안내는 [연간 AI 해석](python_api/docs/annual-ai.md)을 따릅니다.
 
 DLL 의존 운세11종과 중복 메뉴 안내4개는 CR-019로 서비스에서 제거했습니다. [제거 목록과 범위](docs/removed-dll-services.md)를 참고하세요.
+
+## 서비스 운세만 실행하기 · CR-020
+Swagger 최상단 **서비스 운세 · AI 본문 제공**에 선별17종의 대표 API를 모았습니다. 첫 예시는 AI 본문 생성이고 두 번째는 계산 전용입니다. 현재 복원 자료가 준비된 항목만 이 그룹에 표시하며 일반조언/별칭·계산도구·개발진단은 별도 그룹입니다. [17종과 입력 조건](docs/service-offerings.md)을 확인하세요.

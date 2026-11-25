@@ -30,6 +30,11 @@ from app.models import FortuneKind, FortuneRequest, FortuneResponse, SajuRequest
 from app.restored_fortune import restored_data_status
 from app.service_engine import analyze_service, service_catalog, service_metadata
 from app.service_models import ServiceRequest, ServiceResponse
+from app.service_offerings import (
+    SERVICE_TAG,
+    service_offering_description,
+    service_operation_tag,
+)
 from app.source_archive import archive_status
 from app.swagger_guide import (
     DESCRIPTION,
@@ -95,10 +100,7 @@ def create_app(
         version="0.1.0",
         lifespan=lifespan,
         description=DESCRIPTION,
-        openapi_tags=[*TAGS,
-            {"name": "Python 추가 전환 · 계산 가능", "description": "원본에서 옮긴 추가 계산·문구 선택 규칙을 실행합니다."},
-            {"name": "Python 추가 전환 · 자료 진단", "description": "부분 계산과 필요한 원본 자료를 확인합니다. 진단 성공은 최종 un 생성 성공을 뜻하지 않습니다."},
-        ],
+        openapi_tags=TAGS,
         swagger_ui_parameters={
             "docExpansion": "list",
             "defaultModelsExpandDepth": 0,
@@ -282,11 +284,17 @@ def create_app(
             descriptions.append("원본이 날짜·그래프 등 계산 결과만 출력하는 서비스이므로 AI 해석을 요청하지 않습니다.")
         if item["status"] == "source_required":
             descriptions.append("원본에 없는 계산을 AI로 대체하지 않습니다. unresolved_dependencies를 확인하세요.")
+        path = f"/v1/un/{item['id']}"
+        tag = service_operation_tag(
+            path, ready=ready, calculation_only=calculation_only and calculation_ready,
+        )
+        if tag == SERVICE_TAG:
+            descriptions.insert(0, service_offering_description(path))
         router.add_api_route(
             f"/un/{item['id']}", make_service_endpoint(item["id"], samples), methods=["POST"],
-            response_model=ServiceResponse, summary=f"{item['name']} · {'계산·해석' if ready else '계산 전용' if calculation_only and calculation_ready else '원본 자료 진단'}",
+            response_model=ServiceResponse, summary=f"{item['name']} · {'AI 본문 생성' if tag == SERVICE_TAG else '계산·해석' if ready else '계산 전용' if calculation_only and calculation_ready else '원본 자료 진단'}",
             description="\n\n".join(descriptions),
-            tags=["Python 추가 전환 · 계산 가능" if calculation_ready else "Python 추가 전환 · 자료 진단"],
+            tags=[tag],
             operation_id=f"run_python_un_{item['id'].replace('-', '_')}", responses=ERROR_RESPONSES,
         )
 
@@ -403,7 +411,7 @@ def create_app(
             make_fortune_endpoint(kind),
             methods=["POST"],
             response_model=FortuneResponse,
-            summary=f"{item['name']} · {'조회키 진단 전용' if waiting else '계산·해석 테스트'}",
+            summary=f"{item['name']} · {'조회키 진단 전용' if waiting else 'AI 본문 생성'}",
             description=fortune_description(kind),
             tags=[WAITING_TAG if waiting else READY_TAG],
             operation_id=f"test_fortune_{kind.value}",

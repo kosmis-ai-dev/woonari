@@ -6,9 +6,16 @@ from app.fortunes import CATALOG, SOURCE_SERVICE_NAMES
 from app.legacy_catalog import CATALOG_TAGS
 from app.models import FortuneKind
 from app.restored_fortune import BACKUP_FINDING
+from app.service_offerings import (
+    CALCULATION_TAG,
+    DIAGNOSTIC_TAG,
+    OTHER_TAG,
+    SERVICE_TAG,
+    service_offering_description,
+)
 
-READY_TAG = "un 테스트 · AI 해석 가능 8종"
-WAITING_TAG = "un 테스트 · 원본 자료 대기 1종"
+READY_TAG = SERVICE_TAG
+WAITING_TAG = DIAGNOSTIC_TAG
 WAITING_KINDS = {FortuneKind.compatibility}
 MANSE_GUIDE = (
     "사주·음양력·절입은 제공된 script.sql의 tb_manse 73,414행을 기준으로 조회합니다. "
@@ -18,18 +25,29 @@ MANSE_GUIDE = (
 )
 
 TAGS = [
+    {
+        "name": SERVICE_TAG,
+        "description": "개인 사주·연도 또는 연결된 원문 자료를 근거로 본문을 작성하는 선별 운세입니다. "
+        "같은 운세의 대표 API만 모았습니다. 첫 번째 AI 본문 생성 예시를 실행하고 응답 content에서 결과 글을 확인하세요. "
+        "만세력·복원 자료가 연결된 공식 환경에서는 17종이며, 자료가 준비되지 않은 항목은 이 그룹에 표시하지 않습니다. "
+        "개별 설명의 양력·상대방 입력 등 조건을 확인하세요.",
+    },
     {"name": "시작 안내", "description": "un별 한글 이름과 현재 테스트 가능 상태를 확인합니다."},
     {
         "name": "사주 계산",
         "description": "un 해석 전에 사주팔자와 음양력 변환을 확인할 수 있습니다. " + MANSE_GUIDE,
     },
     {
-        "name": READY_TAG,
-        "description": "첫 예시 include_ai=true로 실제 AI un 본문(content)을 생성합니다. 선택한 AI 제공자의 전용 인증·모델 설정이 필요하며, 두 번째 계산 전용 예시는 AI 호출 없이 근거만 확인합니다.",
+        "name": OTHER_TAG,
+        "description": "별칭 API, 오락·일반 조언형 또는 추가 검토 대상 콘텐츠입니다. AI 본문 생성 여부와 서비스 선정은 별개이며 개별 작성 범위를 확인하세요.",
+    },
+    {
+        "name": CALCULATION_TAG,
+        "description": "음양력 변환 등 계산 결과만 제공하는 도구입니다. 운세 본문을 생성하지 않습니다.",
     },
     {
         "name": WAITING_TAG,
-        "description": "조회키와 미확보 의존성만 확인합니다. 정상적인 최종 un·AI 해석은 아직 생성할 수 없습니다.",
+        "description": "계산·원본 자료·출력 규칙의 미완성 이유를 확인하는 개발용 API입니다. 정상 운세 본문은 생성하지 않습니다.",
     },
     {
         "name": "공통 호출",
@@ -134,7 +152,8 @@ def fortune_description(kind: FortuneKind) -> str:
 선택한 AI 제공자의 설정이 없으면 `503 ai_not_configured`입니다. 계산 근거만 점검할 때는 두 번째 **계산 전용 · 근거 확인** 예시를 선택하세요. 이 경우 `include_ai: false`이며 AI 문장을 생성하지 않습니다.
 """
     )
-    return guide + "\n" + execution + """
+    selected_guide = service_offering_description(f"/v1/fortunes/{kind.value}")
+    return (selected_guide + "\n\n" if selected_guide else "") + guide + "\n" + execution + """
 ### 응답에서 볼 항목
 - `content`: 실제 AI가 작성한 un 본문. 요약·항목별 해석·조언을 한 문자열로 제공합니다.
 - `interpretation`: 요약·항목·근거 참조·조언으로 나눈 구조화된 AI 해석
@@ -297,7 +316,7 @@ DESCRIPTION = (
     """## Python 전체 실행 안내
 
 **GET /v1/un-services**에서 현재 실행 경로와 추가 입력을 확인합니다.
-**Python 추가 전환 · 계산 가능**의 한글 이름을 펼쳐 **POST /v1/un/{id}** 예시를 실행하세요.
+**서비스 운세 · AI 본문 제공**에서 선별 운세의 첫 번째 AI 본문 생성 예시를 실행하세요. 기타 콘텐츠·계산 도구·개발 진단은 별도 그룹입니다.
 자료 진단 항목은 `include_ai=false`로 실행해 `analysis.unresolved_dependencies`와 필요한 원본 자료를 확인합니다.
 달력 계산 전용 항목에는 AI 해석을 요청하지 않습니다. ASP 파일·IIS 없이 Python 코드만으로 실행·개발합니다.
 

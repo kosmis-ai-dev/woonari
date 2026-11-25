@@ -1,0 +1,39 @@
+{
+  "id": "CR-020",
+  "title": "서비스 제공 대상 운세 Swagger 별도 그룹",
+  "request": "서비스로 제공할수 있는 운세만 따로 api 를 swagger 에서 별도로 모아줘",
+  "summary": "앞서 선별한17종의 대표 POST만 Swagger 최상단 서비스 운세 그룹으로 모은다. 실제 호출경로/operationId·계산/AI 동작은 유지하고 별칭 중복·일반조언/오락형·계산도구·진단을 분리한다. 현재 실행자료가 준비된 항목만 선택 그룹에 노출하며 입력조건과 AI/계산 예시를 제공한다. 정식 상용 품질 전수검증 완료를 의미하는 표시로 사용하지 않는다.",
+  "status": "done",
+  "impact": {
+    "features": [
+      "F04",
+      "F05",
+      "F09",
+      "F10"
+    ],
+    "verifyFeatures": [],
+    "tasksAdded": [
+      "T-040"
+    ],
+    "tasksReworked": [],
+    "tasksUpdated": [],
+    "tasksVerify": [],
+    "planChanged": true
+  },
+  "createdAt": "2026-11-25",
+  "updatedAt": "2026-11-25",
+  "history": [
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-020",
+      "text": "사용자 지시로 서비스 제공 대상만 Swagger 별도 그룹에 모으는 작업 착수. 17대표경로·현재ready조건·별칭중복제외·자료조건 설명을 적용한다."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-020",
+      "text": "T040 완료: Swagger 최상단17개선정그룹·현재자료준비조건·별칭/진단/계산분리. 기존600경로/계산/AI/한도유지. 112회귀·실제17계산무차감·wheel50파일검증 후 main게시."
+    }
+  ]
+}

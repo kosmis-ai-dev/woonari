@@ -1,0 +1,48 @@
+{
+  "id": "T-040",
+  "title": "서비스 운세17종 대표 API Swagger 그룹·조건·예시 정리",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F04",
+    "F05",
+    "F09",
+    "F10"
+  ],
+  "dependsOn": [
+    "T-039"
+  ],
+  "changes": [
+    "CR-020"
+  ],
+  "description": "앞서 선별한17종의 대표 POST만 Swagger 최상단 서비스 운세 그룹으로 모은다. 실제 호출경로/operationId·계산/AI 동작은 유지하고 별칭 중복·일반조언/오락형·계산도구·진단을 분리한다. 현재 실행자료가 준비된 항목만 선택 그룹에 노출하며 입력조건과 AI/계산 예시를 제공한다. 정식 상용 품질 전수검증 완료를 의미하는 표시로 사용하지 않는다.",
+  "acceptance": [
+    "최상단 서비스그룹에 현재ready인 선정17대표경로만 노출·별칭/진단/오락형 혼입 없음",
+    "첫 예시 실제AI true/계산false 및 입력조건 안내",
+    "경로600·operationId·인증·원본계산·AI한도 유지",
+    "17모의계약/계산무차감/자료미연결 분류·실서버/OpenAPI 검증",
+    "코드·현재기능명세·보드·문서 검증과 main push"
+  ],
+  "tests": [
+    "python_api/tests/test_service_offerings.py",
+    "python_api/tests/test_swagger_guide.py",
+    "python_api/tests/test_yearly_ai.py",
+    "python_api/tests/test_removed_dll_services.py"
+  ],
+  "createdAt": "2026-11-25",
+  "updatedAt": "2026-11-25",
+  "history": [
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-020",
+      "text": "사용자 지시로 서비스 제공 대상만 Swagger 별도 그룹에 모으는 작업 착수. 17대표경로·현재ready조건·별칭중복제외·자료조건 설명을 적용한다."
+    },
+    {
+      "date": "2026-11-25",
+      "by": "ai",
+      "change": "CR-020",
+      "text": "신규 서비스그룹21개+기존Swagger/연간/DLL회귀 합112개·게시/비밀값25개·Ruff·compileall 통과. 합성 꽃/보석 자료와모의AI로17개 계산/본문/계약/analysis불변·무차감 검증. 자료미연결15개/연결17개 분류검증. 실제MySQL9090에서17대표 경로의 계산예시200·ready/본문계약·600경로유지·사용량0차감을 확인했다. 실제AI모델은 호출하지 않았다. wheel50런타임 소스바이트일치 확인. 최종 문서·Swagger 화면·게시 사본 검증 후 main에 게시한다."
+    }
+  ]
+}
