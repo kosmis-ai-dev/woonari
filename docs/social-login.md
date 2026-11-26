@@ -48,6 +48,9 @@
 | GET | `/v1/auth/me` | Bearer 토큰으로 내 회원 정보 조회 |
 | POST | `/v1/auth/refresh` | 갱신 토큰으로 새 토큰 발급 |
 | POST | `/v1/auth/logout` | 현재 로그인 세션 폐기 |
+| GET | `/v1/auth/me/birth` | 내 생년월일시·성별·달력 정보 조회 |
+| PUT | `/v1/auth/me/birth` | 내 사주 입력 최초 저장·전체 수정 |
+| PATCH | `/v1/auth/me/birth` | 내 사주 입력 일부 수정 |
 
 1. 브라우저 주소창에서 `http://127.0.0.1:9090/v1/auth/kakao/login`처럼 시작 주소를 엽니다.
 2. 제공자에서 로그인·동의를 완료합니다. 같은 브라우저의 쿠키가 필요합니다.
@@ -70,16 +73,56 @@ Swagger에서 URL만 받을 때는 `/authorize`를 실행하고 반환된 `autho
 
 기존 운세 API의 `X-API-Key` 방식은 유지합니다. 소셜 로그인 시작·콜백에는 이 키를 요구하지 않고 내 정보·로그아웃에는 자체 Bearer 토큰을 사용합니다. 운세 API를 자동으로 회원 전용으로 바꾸지는 않습니다.
 
+## 회원 사주 정보 저장·수정
+
+Swagger의 **회원 사주 정보** 그룹에서 `GET`, `PUT`, `PATCH /v1/auth/me/birth`를 사용합니다. 세 API 모두 로그인 응답의 access token을 `Authorization: Bearer <access_token>`으로 보냅니다. 회원 ID는 요청에서 받지 않으며, 토큰으로 확인한 본인의 정보만 조회·수정합니다.
+
+아직 저장한 정보가 없으면 GET은 다음과 같이 응답합니다.
+
+```json
+{"birth": null, "updated_at": null}
+```
+
+최초 저장하거나 전체 값을 교체할 때는 PUT에 다음 본문을 보냅니다. `hour`와 `minute`는 한국시간 기준이며 `gender`는 `male` 또는 `female`, `calendar`는 `solar` 또는 `lunar`입니다.
+
+```json
+{
+  "year": 1974,
+  "month": 3,
+  "day": 2,
+  "hour": 8,
+  "minute": 30,
+  "gender": "male",
+  "calendar": "solar",
+  "leap_month": false
+}
+```
+
+성공 응답은 `birth`에 저장한 입력값, `updated_at`에 마지막 저장 시각(Unix 초)을 반환합니다. PUT은 전체 교체입니다. 생략 가능한 `minute`, `calendar`, `leap_month`는 각각 `0`, `solar`, `false`가 되므로 기존 일부 값을 유지하려면 PATCH를 사용하세요.
+
+예를 들어 분만0분으로 수정하려면 PATCH에 다음과 같이 보냅니다.
+
+```json
+{"minute": 0}
+```
+
+PATCH는 보낸 항목만 기존 값과 합쳐 검증합니다. `0`과 `false`도 적용하며 생략한 항목을 유지합니다. 빈 객체나 `null` 값은422로 거절합니다. 저장하기 전 PATCH는 `404 birth_profile_not_found`이므로 먼저 PUT으로 저장하세요. 날짜·달력·윤달을 바꿀 때는 관련 항목을 함께 보내야 합니다.
+
+양력의 실제 날짜와 음력·윤달의 존재를 기존 만세력으로 확인합니다. 입력 범위는1900~2050년이지만 양력으로 변환한 생일이 한국시간 오늘 이후이면 `422 future_birth_date`입니다. 잘못된 날짜·존재하지 않는 음력/윤달 등도422이며, 검증에 실패하면 기존 저장값을 유지합니다. 음력 날짜는 양력으로 덮어쓰지 않고 입력한 `year`, `month`, `day`, `calendar`, `leap_month`를 그대로 보관합니다.
+
+저장·수정 자체는 AI를 호출하지 않습니다. 운세를 요청할 때는 GET으로 받은 `birth`를 기존 운세 API 요청의 `birth`에 넣습니다. 저장 정보가 운세 요청에 자동 적용되는 방식은 아닙니다. 실제 소셜 계정 로그인 확인은 앱 키 설정 후 진행한다는 기존 상태를 유지합니다.
+
 ## DB·검증
 
-공식 실행은 전용 Secrets Manager 연결의 MySQL `woonari`를 사용합니다. 신규 설치 시 `./woonari db init-auth`로 다음 인증 전용 표5개를 생성·검증합니다.
+공식 실행은 전용 Secrets Manager 연결의 MySQL `woonari`를 사용합니다. 신규 설치와 기존5개 표에서의 확장 모두 `./woonari db init-auth`로 다음 인증 전용 표6개를 생성·검증합니다.
 
 - `woonari_auth_users`
 - `woonari_auth_identities`
 - `woonari_auth_sessions`
 - `woonari_auth_used_refresh`
 - `woonari_auth_states`
+- `woonari_auth_birth_profiles` — 회원별 사주 입력 정보
 
-런타임은 스키마를 검증하며 자동 변경하지 않습니다. 과거 회원을 가져오거나 기존 운세 자료를 바꾸지 않습니다. 독립 개발·테스트용 SQLite는 전용 `.local/woonari/auth/`에 저장합니다. MySQL 실패 시 SQLite로 대체하지 않습니다.
+회원 사주 입력은 별도 표에 저장하며 기존5개 인증 표의 회원·세션을 초기화하지 않습니다. 런타임은 스키마를 검증하며 자동 변경하지 않습니다. 과거 회원을 가져오거나 기존 운세 자료를 바꾸지 않습니다. 독립 개발·테스트용 SQLite는 전용 `.local/woonari/auth/`에 저장하고 기존5개 표의 DB를 데이터 보존 방식으로 확장합니다. MySQL 실패 시 SQLite로 대체하지 않습니다.
 
 제공자 토큰은 저장하지 않고 자체 토큰은 해시만 저장합니다. State는10분 유효·브라우저/제공자 바인딩·일회성을 적용합니다. PKCE를 사용하며 Google·Naver ID 토큰의 서명·발급자·대상·만료·nonce를 검증합니다. 외부 오류 원문·키를 응답에 넣지 않습니다. 공식 실행기는 인증 코드가 포함될 수 있는 접근 로그를 출력하지 않습니다.

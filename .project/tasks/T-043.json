@@ -1,0 +1,49 @@
+{
+  "id": "T-043",
+  "title": "회원 본인 사주 입력 GET·PUT·PATCH와 DB 저장",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F04",
+    "F05",
+    "F06",
+    "F07",
+    "F10",
+    "F12"
+  ],
+  "dependsOn": [
+    "T-042"
+  ],
+  "changes": [
+    "CR-023"
+  ],
+  "description": "로그인회원의생년월일·태어난시/분·성별·양력/음력·윤달정보를본인전용API로조회/저장/수정한다. 기존Birth모델/만세력검증을재사용하고전용MySQL신규1표에입력값을보존한다. 회원ID는요청에서받지않고인증세션에서결정한다.",
+  "acceptance": [
+    "본인Bearer전용GET/PUT/PATCH /v1/auth/me/birth를한글Swagger에제공",
+    "빈정보GETnull·PUTupsert·PATCH병합/미저장404·null/빈patch/잘못된날짜422",
+    "양력/음력·윤달존재/미래생일검증·시/분0·false보존과실패시원상보존",
+    "동시수정/다른회원/만료·폐기토큰격리·토큰과생일원문오류미노출·AI미호출",
+    "woonari신규profile1표만추가하고기존5인증표/운세/계정자료보존·기존SQLite무손실업그레이드",
+    "관련/기존회귀·실제DB스키마·패키지·문서/명세/보드·전용main게시"
+  ],
+  "tests": [
+    "python_api/tests/test_member_birth.py",
+    "python_api/tests/test_auth_store.py"
+  ],
+  "createdAt": "2026-11-26",
+  "updatedAt": "2026-11-26",
+  "history": [
+    {
+      "date": "2026-11-26",
+      "by": "ai",
+      "change": "CR-023",
+      "text": "사용자지시로소셜회원본인의사주입력저장/조회/전체·부분수정착수. Bearer본인소유범위,기존달력검증과음력원입력/윤달보존,신규전용표를적용한다."
+    },
+    {
+      "date": "2026-11-26",
+      "by": "ai",
+      "change": "CR-023",
+      "text": "완료 — 전체Python1425테스트·도구62개+13subtests·Ruff·compileall통과. 회원API44/저장소59/기존인증·공개·운세62회귀와최종Swagger오류1건재검증통과. 실제전용MySQL기존5인증표를보존해birth_profiles1표추가/6표스키마·각0행검증. 공식9090의95경로/회원GETPUTPATCH/Bearer401차단4건/개인캐시헤더/AI사용량차이0확인. wheel60런타임소스바이트일치·독립추출본의모의회원GETPUTPATCH200/6표확인. 실제제공자로그인은사용자의키설정나중에지시에따라미검증이고실제DB에테스트회원을만들지않았다. 코드·명세·보드·가이드를동일커밋으로main게시."
+    }
+  ]
+}

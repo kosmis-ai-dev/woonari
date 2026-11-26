@@ -56,3 +56,5 @@ python3 tools/prepare_github.py --verify
 ## 소셜 로그인
 
 카카오·구글·네이버 로그인 API를 Swagger의 **소셜 로그인 · 카카오·구글·네이버** 그룹에서 확인합니다. 로그인 시작·콜백·신규회원 생성·Bearer 토큰·내정보·갱신·로그아웃을 제공합니다. `./woonari auth init|status`로 전용 앱 설정을 준비하고 `./woonari db init-auth`로 신규 인증 표를 생성합니다. 실제 로그인은 앱 키 설정 후 확인합니다. [설정과 호출 가이드](docs/social-login.md)
+
+**회원 사주 정보** 그룹의 `GET/PUT/PATCH /v1/auth/me/birth`로 로그인한 본인의 생년월일·태어난 시/분·성별·양력/음력·윤달 정보를 조회·저장·수정합니다. [입력 예시와 수정 규칙](docs/social-login.md#회원-사주-정보-저장수정)을 참고하세요.

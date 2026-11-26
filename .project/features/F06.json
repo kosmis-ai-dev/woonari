@@ -48,7 +48,8 @@
     "tools/auth_setup.py",
     "tools/test_auth_setup.py",
     "docs/social-login.md",
-    "docs/social-login-sources.md"
+    "docs/social-login-sources.md",
+    "python_api/tests/test_member_birth.py"
   ],
   "tasks": [
     "T-013",
@@ -69,7 +70,8 @@
     "T-035",
     "T-036",
     "T-037",
-    "T-042"
+    "T-042",
+    "T-043"
   ],
   "changes": [
     "CR-006",
@@ -83,11 +85,12 @@
     "CR-015",
     "CR-016",
     "CR-017",
-    "CR-022"
+    "CR-022",
+    "CR-023"
   ],
-  "spec": "공식 ./woonari 진입점과 독립 .local/woonari 설정·키·토큰·로그·캐시·PID만 사용한다. API9090/전용 보드18101 고정이며 다른 프로젝트8000/4800/허브 프로세스나 전역 설정을 변경하지 않는다. 서버 종료는 전용 PID·시작 시각·전체 명령·인스턴스가 일치하는 프로세스만 가능하다.\nGit/GitHub는 승인 HTTPS 저장소·전용 작성자·전용 인증만 사용한다. GitHub 토큰은 소유자 UID와 권한600의 일반 파일 .local/woonari/github/token에서 읽는다. symlink·다중 행·잘못된 소유자/권한은 거부하고 비밀값은 argv·로그·소스에 쓰지 않는다. 기존 전용 hosts.yml의 활성 사용자 토큰도 지원한다. 상속 GH_TOKEN·공용 인증·글로벌 Git 작성자·Keychain·SSH를 사용하지 않는다. ./woonari gh auth login/status는 파일 토큰으로 API 계정을 검증할 뿐 CLI 웹 로그인이나 Keychain 저장/삭제를 실행하지 않는다. push 전에 실제 로그인 일치와 정확한 저장소 쓰기 권한을 확인한다. 게시 이력 준비는 인증 없이 가능하다.\nAWS는 ./woonari aws와 신규 전용 프로필의 실제 계정을 검증하며 default·공유 ~/.aws·환경 키로 대체하지 않는다. DB/SecretsManager 프로젝트 계정과 사용자 승인 AI 별도 계정을 분리한다. 확인하지 못한 인증을 성공으로 보고하지 않는다. AI는 api.env와 ai/bedrock.env만 사용한다.\nDB 명령은 check/import-manse/sync-manse/sync-restored/sync-fortune-data DIR이며 TLS 전용 connector로 woonari만 접근한다. 공식 서버는 MySQL 만세력과 캐시된 읽기 전용 SourceArchiveStore를 같은 전용 DB connector로 주입하고 ASP/.bak/원본 저장 프로시저를 실행하지 않는다. 복원 전용 SQLServer는 network=none/공개 포트 없음/읽기 전용으로 분리했다.\nCR016 검증: Git/게시/계정 경계 관련83테스트와 Ruff 통과. 게시 원본224파일+PUBLICATION.json을 합친225파일을 publish/python-api-20261123 미커밋 브랜치에 준비했다. ASP0·LFS0·정제변경0이며 이전 import 브랜치14c12715를 보존했다. 실제 원격 업로드 및 fetch 재조회 검증을 완료했다.\nCR016 현재 연결: 사용자 지정 전용 로그인·작성자·이메일을 설정하고 토큰으로 실제 계정 일치 및 승인 저장소 쓰기 권한을 검증했다. T012에서 실제 push 및 원격 커밋 일치 검증을 완료했다.\nCR016 완료: 승인 원격의 publish/python-api-20261123 브랜치에 Python 전용225파일을 게시했고 fetch로 원격 HEAD 일치를 확인했다. 전용 토큰·개인 설정·DB 원문·ASP는 제외했다. 기존 로컬 ASP 이력은 새 게시 이력의 조상에 포함되지 않고 보존되며 main/force/merge는 수행하지 않았다.\nCR017 현재 정책: 향후 관련 검증·보드 갱신·게시 검증을 마친 변경은 전용 계정으로 main에 계속 커밋/push한다. promote-main은 승인 게시 브랜치의 깨끗한 Python 이력만 main으로 이름을 변경하며 기존 main을 덮어쓰지 않는다. set-default-main은 원격 main과 HEAD 일치·계정/쓰기 권한을 검사한 뒤 정확한 저장소의 기본 브랜치만 수정한다. delete-published-branch는 원격 main 동일성·기본 main·기존 게시 커밋 조상 보존을 확인한 경우에만 publish/python-api-20261123을 삭제한다.\nCR017 실제 상태: 로컬/원격 main 생성과 기존 커밋 보존을 확인했다. GitHub 기본 브랜치는 아직 publish/python-api-20261123이며 기본 변경 API 요청이 거부돼 전용 토큰 Administration 쓰기 권한 추가를 기다린다. 기존 브랜치는 아직 삭제하지 않았다. 관련91테스트와 Ruff를 통과했다.\nCR017 게시 검증: main에 전환 도구·테스트·지침·보드를 실제 push했다. 게시226파일+PUBLICATION.json으로227파일이며 ASP0·LFS0·비밀값 정제 변경0이다. main 기본 브랜치 변경·기존 원격 게시 브랜치 삭제는 토큰 권한 보완 대기로 T037에서 추적한다.\n\n## CR-022 소셜 로그인\n./woonari auth init|status와db init-auth를전용진입점에추가했다. OAuth설정은.local/woonari/auth/providers.env만읽고파일권한·소유자·심볼릭링크를검사한다. 공식runtime은기존전용MySQLconnector를AuthStore에주입하고코드/토큰이포함될접근로그를출력하지않는다. 외부앱키·AWS·Git계정의환경변수를혼용하지않는다.\n전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다.",
+  "spec": "공식 ./woonari 진입점과 독립 .local/woonari 설정·키·토큰·로그·캐시·PID만 사용한다. API9090/전용 보드18101 고정이며 다른 프로젝트8000/4800/허브 프로세스나 전역 설정을 변경하지 않는다. 서버 종료는 전용 PID·시작 시각·전체 명령·인스턴스가 일치하는 프로세스만 가능하다.\nGit/GitHub는 승인 HTTPS 저장소·전용 작성자·전용 인증만 사용한다. GitHub 토큰은 소유자 UID와 권한600의 일반 파일 .local/woonari/github/token에서 읽는다. symlink·다중 행·잘못된 소유자/권한은 거부하고 비밀값은 argv·로그·소스에 쓰지 않는다. 기존 전용 hosts.yml의 활성 사용자 토큰도 지원한다. 상속 GH_TOKEN·공용 인증·글로벌 Git 작성자·Keychain·SSH를 사용하지 않는다. ./woonari gh auth login/status는 파일 토큰으로 API 계정을 검증할 뿐 CLI 웹 로그인이나 Keychain 저장/삭제를 실행하지 않는다. push 전에 실제 로그인 일치와 정확한 저장소 쓰기 권한을 확인한다. 게시 이력 준비는 인증 없이 가능하다.\nAWS는 ./woonari aws와 신규 전용 프로필의 실제 계정을 검증하며 default·공유 ~/.aws·환경 키로 대체하지 않는다. DB/SecretsManager 프로젝트 계정과 사용자 승인 AI 별도 계정을 분리한다. 확인하지 못한 인증을 성공으로 보고하지 않는다. AI는 api.env와 ai/bedrock.env만 사용한다.\nDB 명령은 check/import-manse/sync-manse/sync-restored/sync-fortune-data DIR이며 TLS 전용 connector로 woonari만 접근한다. 공식 서버는 MySQL 만세력과 캐시된 읽기 전용 SourceArchiveStore를 같은 전용 DB connector로 주입하고 ASP/.bak/원본 저장 프로시저를 실행하지 않는다. 복원 전용 SQLServer는 network=none/공개 포트 없음/읽기 전용으로 분리했다.\nCR016 검증: Git/게시/계정 경계 관련83테스트와 Ruff 통과. 게시 원본224파일+PUBLICATION.json을 합친225파일을 publish/python-api-20261123 미커밋 브랜치에 준비했다. ASP0·LFS0·정제변경0이며 이전 import 브랜치14c12715를 보존했다. 실제 원격 업로드 및 fetch 재조회 검증을 완료했다.\nCR016 현재 연결: 사용자 지정 전용 로그인·작성자·이메일을 설정하고 토큰으로 실제 계정 일치 및 승인 저장소 쓰기 권한을 검증했다. T012에서 실제 push 및 원격 커밋 일치 검증을 완료했다.\nCR016 완료: 승인 원격의 publish/python-api-20261123 브랜치에 Python 전용225파일을 게시했고 fetch로 원격 HEAD 일치를 확인했다. 전용 토큰·개인 설정·DB 원문·ASP는 제외했다. 기존 로컬 ASP 이력은 새 게시 이력의 조상에 포함되지 않고 보존되며 main/force/merge는 수행하지 않았다.\nCR017 현재 정책: 향후 관련 검증·보드 갱신·게시 검증을 마친 변경은 전용 계정으로 main에 계속 커밋/push한다. promote-main은 승인 게시 브랜치의 깨끗한 Python 이력만 main으로 이름을 변경하며 기존 main을 덮어쓰지 않는다. set-default-main은 원격 main과 HEAD 일치·계정/쓰기 권한을 검사한 뒤 정확한 저장소의 기본 브랜치만 수정한다. delete-published-branch는 원격 main 동일성·기본 main·기존 게시 커밋 조상 보존을 확인한 경우에만 publish/python-api-20261123을 삭제한다.\nCR017 실제 상태: 로컬/원격 main 생성과 기존 커밋 보존을 확인했다. GitHub 기본 브랜치는 아직 publish/python-api-20261123이며 기본 변경 API 요청이 거부돼 전용 토큰 Administration 쓰기 권한 추가를 기다린다. 기존 브랜치는 아직 삭제하지 않았다. 관련91테스트와 Ruff를 통과했다.\nCR017 게시 검증: main에 전환 도구·테스트·지침·보드를 실제 push했다. 게시226파일+PUBLICATION.json으로227파일이며 ASP0·LFS0·비밀값 정제 변경0이다. main 기본 브랜치 변경·기존 원격 게시 브랜치 삭제는 토큰 권한 보완 대기로 T037에서 추적한다.\n\n## CR-022 소셜 로그인\n./woonari auth init|status와db init-auth를전용진입점에추가했다. OAuth설정은.local/woonari/auth/providers.env만읽고파일권한·소유자·심볼릭링크를검사한다. 공식runtime은기존전용MySQLconnector를AuthStore에주입하고코드/토큰이포함될접근로그를출력하지않는다. 외부앱키·AWS·Git계정의환경변수를혼용하지않는다.\n전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다.\n\n## CR-023 회원 사주 정보\n인증저장은6표이며회원사주는woonari_auth_birth_profiles에회원단위로보관한다. OAuth키/공용환경/AWS계정은변경하지않는다. API9090/보드18101공식실행을유지하며인증키설정이없는실제소셜로그인은추후검증한다.\n전체Python1425테스트·도구62개+13subtests·Ruff·compileall통과. 회원API44/저장소59/기존인증·공개·운세62회귀와최종Swagger오류1건재검증통과. 실제전용MySQL기존5인증표를보존해birth_profiles1표추가/6표스키마·각0행검증. 공식9090의95경로/회원GETPUTPATCH/Bearer401차단4건/개인캐시헤더/AI사용량차이0확인. wheel60런타임소스바이트일치·독립추출본의모의회원GETPUTPATCH200/6표확인. 실제제공자로그인은사용자의키설정나중에지시에따라미검증이고실제DB에테스트회원을만들지않았다.",
   "createdAt": "2026-11-04",
-  "updatedAt": "2026-11-25",
+  "updatedAt": "2026-11-26",
   "history": [
     {
       "date": "2026-11-04",
@@ -316,6 +319,18 @@
       "by": "ai",
       "change": "CR-022",
       "text": "T042 구현·전용DB인증표생성·모의검증을현재명세에반영. 사용자지시로실제앱키/계정검증은이후진행."
+    },
+    {
+      "date": "2026-11-26",
+      "by": "ai",
+      "change": "CR-023",
+      "text": "사용자지시로소셜회원본인의사주입력저장/조회/전체·부분수정착수. Bearer본인소유범위,기존달력검증과음력원입력/윤달보존,신규전용표를적용한다."
+    },
+    {
+      "date": "2026-11-26",
+      "by": "ai",
+      "change": "CR-023",
+      "text": "T043완료:본인사주입력계약·격리/동시수정·6표/추가마이그레이션·검증결과를현재명세에반영했다."
     }
   ]
 }

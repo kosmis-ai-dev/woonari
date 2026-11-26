@@ -40,7 +40,8 @@
     "tools/auth_setup.py",
     "tools/test_auth_setup.py",
     "docs/social-login.md",
-    "docs/social-login-sources.md"
+    "docs/social-login-sources.md",
+    "python_api/tests/test_member_birth.py"
   ],
   "tasks": [
     "T-015",
@@ -51,7 +52,8 @@
     "T-032",
     "T-033",
     "T-035",
-    "T-042"
+    "T-042",
+    "T-043"
   ],
   "changes": [
     "CR-007",
@@ -59,11 +61,12 @@
     "CR-010",
     "CR-012",
     "CR-015",
-    "CR-022"
+    "CR-022",
+    "CR-023"
   ],
-  "spec": "전용AWS/SecretsManager inter의사용자지정시크릿을프로젝트전용wrapper로조회하고TLS서버/호스트인증을검증한PyMySQL로woonari에접속한다. 전역/default/다른프로젝트·ASP과거접속정보를재사용하지않고키/암호를argv/로그/소스에기록하지않는다. 실제계정·연결은검증됐으며설정은.local/woonari/db에있다.\n공식APIconnector는전용시크릿/CA설정을300초갱신하며매조회새연결을관리한다. 기본만세력/연간진단/전체SourceArchive가동일DB에연결되며SQL값은parameter로전달한다. Importer는SELECT DATABASE()가woonari인지확인하고아카이브신규표에만DDL/INSERT한다. 회원/개인운영43표를선택하지않는다. 실제78표100929행/재적재동일성/원본만세력73414전체해시보존/실API조회검증완료.\n\n## CR-022 소셜 로그인\n기존승인inter시크릿/전용TLSconnector로woonari의신규인증표5개를추가했다. auth_setup은다른DB/SQLite설정을거부하고기존표를변경하지않는다. 실제schema검증과0행상태확인완료. 인증표도만세력/사전자료와동일DB연결을쓰지만과거회원복원과분리한다.\n전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다.",
+  "spec": "전용AWS/SecretsManager inter의사용자지정시크릿을프로젝트전용wrapper로조회하고TLS서버/호스트인증을검증한PyMySQL로woonari에접속한다. 전역/default/다른프로젝트·ASP과거접속정보를재사용하지않고키/암호를argv/로그/소스에기록하지않는다. 실제계정·연결은검증됐으며설정은.local/woonari/db에있다.\n공식APIconnector는전용시크릿/CA설정을300초갱신하며매조회새연결을관리한다. 기본만세력/연간진단/전체SourceArchive가동일DB에연결되며SQL값은parameter로전달한다. Importer는SELECT DATABASE()가woonari인지확인하고아카이브신규표에만DDL/INSERT한다. 회원/개인운영43표를선택하지않는다. 실제78표100929행/재적재동일성/원본만세력73414전체해시보존/실API조회검증완료.\n\n## CR-022 소셜 로그인\n기존승인inter시크릿/전용TLSconnector로woonari의신규인증표5개를추가했다. auth_setup은다른DB/SQLite설정을거부하고기존표를변경하지않는다. 실제schema검증과0행상태확인완료. 인증표도만세력/사전자료와동일DB연결을쓰지만과거회원복원과분리한다.\n전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다.\n\n## CR-023 회원 사주 정보\n./woonari db init-auth로woonari_auth_birth_profiles1표만추가하고기존5인증표/운세표를그대로보존했다. 회원별user_idPK/FK·원력year/month/day/hour/minute/gender/calendar/leap_month·생성/갱신시각을저장한다. 런타임은6표읽기전용검증이며MySQL오류를SQLite로대체하지않는다. 독립SQLite는정확한표식의기존v1만v2로추가업그레이드하며기존회원/세션/state를보존한다.\n전체Python1425테스트·도구62개+13subtests·Ruff·compileall통과. 회원API44/저장소59/기존인증·공개·운세62회귀와최종Swagger오류1건재검증통과. 실제전용MySQL기존5인증표를보존해birth_profiles1표추가/6표스키마·각0행검증. 공식9090의95경로/회원GETPUTPATCH/Bearer401차단4건/개인캐시헤더/AI사용량차이0확인. wheel60런타임소스바이트일치·독립추출본의모의회원GETPUTPATCH200/6표확인. 실제제공자로그인은사용자의키설정나중에지시에따라미검증이고실제DB에테스트회원을만들지않았다.",
   "createdAt": "2026-11-13",
-  "updatedAt": "2026-11-25",
+  "updatedAt": "2026-11-26",
   "history": [
     {
       "date": "2026-11-13",
@@ -142,6 +145,18 @@
       "by": "ai",
       "change": "CR-022",
       "text": "T042 구현·전용DB인증표생성·모의검증을현재명세에반영. 사용자지시로실제앱키/계정검증은이후진행."
+    },
+    {
+      "date": "2026-11-26",
+      "by": "ai",
+      "change": "CR-023",
+      "text": "사용자지시로소셜회원본인의사주입력저장/조회/전체·부분수정착수. Bearer본인소유범위,기존달력검증과음력원입력/윤달보존,신규전용표를적용한다."
+    },
+    {
+      "date": "2026-11-26",
+      "by": "ai",
+      "change": "CR-023",
+      "text": "T043완료:본인사주입력계약·격리/동시수정·6표/추가마이그레이션·검증결과를현재명세에반영했다."
     }
   ]
 }

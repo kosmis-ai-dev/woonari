@@ -122,4 +122,4 @@ CR-013 / T-027: `AI_PROVIDER=bedrock`은 명시한 `BEDROCK_AUTH_MODE`만 사용
 
 ## 소셜 로그인 전용 설정 · CR-022
 
-`./woonari auth init|status`로 `.local/woonari/auth/providers.env`를 준비·확인합니다. 외부 환경변수나 다른 프로젝트의 OAuth 키를 읽지 않습니다. 공식 MySQL `woonari`의 신규 `woonari_auth_*` 5개 표만 사용하며 초기 생성은 `./woonari db init-auth`, 런타임은 읽기 전용 스키마 검증입니다. 과거 회원 데이터를 이관하지 않습니다. [소셜 로그인 가이드](social-login.md)를 참고하세요.
+`./woonari auth init|status`로 `.local/woonari/auth/providers.env`를 준비·확인합니다. 외부 환경변수나 다른 프로젝트의 OAuth 키를 읽지 않습니다. 공식 MySQL `woonari`의 신규 `woonari_auth_*` 6개 표만 사용하며 초기 생성·회원 사주 표 추가는 `./woonari db init-auth`, 런타임은 읽기 전용 스키마 검증입니다. 기존5개 표의 회원·세션을 보존하고 과거 회원 데이터를 이관하지 않습니다. [소셜 로그인 가이드](social-login.md)를 참고하세요.

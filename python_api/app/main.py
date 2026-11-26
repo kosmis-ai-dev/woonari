@@ -13,8 +13,8 @@ from fastapi.responses import JSONResponse
 
 from app.ai import Interpreter, OpenAIInterpreter, validate_interpretation
 from app.ai_quota import DailyAIQuota
+from app.auth_router import MEMBER_BIRTH_TAG, social_auth_router
 from app.auth_router import TAG as AUTH_TAG
-from app.auth_router import social_auth_router
 from app.auth_service import AuthService
 from app.auth_settings import AuthSettings
 from app.calendar import calculate_saju
@@ -111,7 +111,11 @@ def create_app(
         version="0.1.0",
         lifespan=lifespan,
         description=DESCRIPTION,
-        openapi_tags=[*TAGS, {"name": AUTH_TAG, "description": "카카오·구글·네이버 로그인, 회원 정보와 로그인 세션을 관리합니다."}],
+        openapi_tags=[
+            *TAGS,
+            {"name": AUTH_TAG, "description": "카카오·구글·네이버 로그인, 회원 정보와 로그인 세션을 관리합니다."},
+            {"name": MEMBER_BIRTH_TAG, "description": "로그인한 본인의 생년월일·태어난 시각·성별·양력/음력·윤달 정보를 저장하고 수정합니다."}
+        ],
         swagger_ui_parameters={
             "docExpansion": "list",
             "defaultModelsExpandDepth": 0,

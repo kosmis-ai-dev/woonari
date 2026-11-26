@@ -1,6 +1,6 @@
 """CR-022 / T-042: private OAuth attempts and hashed application sessions.
 
-Only the five new authentication tables are created. Existing tables are never
+Only the dedicated authentication tables are created. Existing tables are never
 altered, and an incompatible schema stops authentication instead of being reset.
 """
 
@@ -17,8 +17,16 @@ from contextlib import contextmanager, suppress
 from pathlib import Path
 from typing import Any, Protocol
 
-from app.auth_models import AuthUser, OAuthAttempt, SocialIdentity, SocialProvider, StoredLogin
+from app.auth_models import (
+    AuthUser,
+    MemberBirthProfile,
+    OAuthAttempt,
+    SocialIdentity,
+    SocialProvider,
+    StoredLogin,
+)
 from app.errors import DomainError
+from app.models import Birth
 
 _APPLICATION_ID = 0x574E4155
 _HASH = re.compile(r"[a-f0-9]{64}\Z")
@@ -36,8 +44,14 @@ _TABLES = {
     "woonari_auth_used_refresh": ("token_hash", "session_id", "expires_at"),
     "woonari_auth_states": (
         "state_hash", "cookie_hash", "provider", "code_verifier", "nonce", "expires_at", "created_at"
+    ),
+    "woonari_auth_birth_profiles": (
+        "user_id", "birth_year", "birth_month", "birth_day", "birth_hour", "birth_minute",
+        "gender", "calendar", "leap_month", "created_at", "updated_at"
     )
 }
+_LEGACY_TABLES = tuple(_TABLES)[:-1]
+_BIRTH_FIELDS = ("year", "month", "day", "hour", "minute", "gender", "calendar", "leap_month")
 
 
 def _unavailable() -> DomainError:
@@ -97,6 +111,14 @@ class AuthStore(Protocol):
 
     def logout(self, access_hash: str, *, now: int) -> None: ...
 
+    def get_birth_profile(self, access_hash: str, *, now: int) -> MemberBirthProfile: ...
+
+    def put_birth_profile(self, access_hash: str, birth: Birth, *, now: int) -> MemberBirthProfile: ...
+
+    def patch_birth_profile(
+        self, access_hash: str, changes: dict, *, now: int, validator: Callable[[Birth], None]
+    ) -> MemberBirthProfile: ...
+
 
 def _schema(mysql: bool) -> list[str]:
     text = "VARCHAR(100)" if mysql else "TEXT"
@@ -128,7 +150,13 @@ def _schema(mysql: bool) -> list[str]:
         f"CREATE TABLE IF NOT EXISTS woonari_auth_states (state_hash {digest} PRIMARY KEY, "
         f"cookie_hash {digest} NOT NULL, provider {provider} NOT NULL, "
         f"code_verifier {secret} NOT NULL, nonce {secret} NOT NULL, "
-        f"expires_at {integer} NOT NULL, created_at {integer} NOT NULL){suffix}"
+        f"expires_at {integer} NOT NULL, created_at {integer} NOT NULL){suffix}",
+        f"CREATE TABLE IF NOT EXISTS woonari_auth_birth_profiles (user_id {identifier} PRIMARY KEY, "
+        f"birth_year {integer} NOT NULL, birth_month {integer} NOT NULL, birth_day {integer} NOT NULL, "
+        f"birth_hour {integer} NOT NULL, birth_minute {integer} NOT NULL, "
+        "gender VARCHAR(6) NOT NULL, calendar VARCHAR(5) NOT NULL, "
+        f"leap_month {integer} NOT NULL, created_at {integer} NOT NULL, updated_at {integer} NOT NULL, "
+        "FOREIGN KEY (user_id) REFERENCES woonari_auth_users(id))" + suffix
     ]
 
 
@@ -387,6 +415,113 @@ class _Store:
                 (now, now, row["id"])
             )
 
+    def _birth_user(self, cursor: _Cursor, access_hash: str, now: int, *, lock: bool) -> str:
+        cursor.execute(
+            "SELECT user_id FROM woonari_auth_sessions WHERE access_hash=%s "
+            "AND access_expires_at>%s AND refresh_expires_at>%s AND revoked_at IS NULL"
+            + (self._locked if lock else ""),
+            (access_hash, now, now)
+        )
+        session = cursor.one()
+        if session is None:
+            raise _unauthorized()
+        user_id = session["user_id"]
+        if lock:
+            # All sessions of one member serialize through the same user row,
+            # including the first profile insert when no profile row exists yet.
+            cursor.execute("SELECT id FROM woonari_auth_users WHERE id=%s" + self._locked, (user_id,))
+            if cursor.one() is None:
+                raise _unavailable()
+        return user_id
+
+    def _birth_row(self, cursor: _Cursor, user_id: str, *, lock: bool = False) -> dict | None:
+        cursor.execute(
+            "SELECT birth_year,birth_month,birth_day,birth_hour,birth_minute,gender,calendar,"
+            "leap_month,created_at,updated_at FROM woonari_auth_birth_profiles WHERE user_id=%s"
+            + (self._locked if lock else ""), (user_id,)
+        )
+        return cursor.one()
+
+    @staticmethod
+    def _birth_profile(row: dict | None) -> MemberBirthProfile:
+        if row is None:
+            return MemberBirthProfile()
+        try:
+            if type(row["leap_month"]) is not int or row["leap_month"] not in (0, 1):
+                raise ValueError
+            if (
+                type(row["created_at"]) is not int or type(row["updated_at"]) is not int
+                or row["created_at"] < 0 or row["updated_at"] < row["created_at"]
+            ):
+                raise ValueError
+            values = {
+                field: row[f"birth_{field}"] if field in {"year", "month", "day", "hour", "minute"}
+                else bool(row["leap_month"]) if field == "leap_month" else row[field]
+                for field in _BIRTH_FIELDS
+            }
+            return MemberBirthProfile(birth=Birth.model_validate(values), updated_at=row["updated_at"])
+        except (KeyError, TypeError, ValueError):
+            # Database corruption is a storage failure, not user-supplied data.
+            raise _unavailable() from None
+
+    @staticmethod
+    def _validated_birth(values: dict) -> Birth:
+        try:
+            return Birth.model_validate(values)
+        except (TypeError, ValueError):
+            raise DomainError("invalid_birth_profile", "생년월일시·성별·양력/음력 입력을 확인하세요.", 422) from None
+
+    def get_birth_profile(self, access_hash: str, *, now: int) -> MemberBirthProfile:
+        _hash(access_hash)
+        with self._transaction() as cursor:
+            user_id = self._birth_user(cursor, access_hash, now, lock=False)
+            return self._birth_profile(self._birth_row(cursor, user_id))
+
+    @staticmethod
+    def _write_birth(cursor: _Cursor, user_id: str, birth: Birth, now: int, *, existing: bool) -> None:
+        values = (
+            birth.year, birth.month, birth.day, birth.hour, birth.minute,
+            birth.gender, birth.calendar, int(birth.leap_month)
+        )
+        if existing:
+            cursor.execute(
+                "UPDATE woonari_auth_birth_profiles SET birth_year=%s,birth_month=%s,birth_day=%s,"
+                "birth_hour=%s,birth_minute=%s,gender=%s,calendar=%s,leap_month=%s,updated_at=%s "
+                "WHERE user_id=%s", (*values, now, user_id)
+            )
+        else:
+            cursor.execute(
+                "INSERT INTO woonari_auth_birth_profiles "
+                "(user_id,birth_year,birth_month,birth_day,birth_hour,birth_minute,gender,calendar,"
+                "leap_month,created_at,updated_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                (user_id, *values, now, now)
+            )
+
+    def put_birth_profile(self, access_hash: str, birth: Birth, *, now: int) -> MemberBirthProfile:
+        _hash(access_hash)
+        birth = self._validated_birth(birth.model_dump())
+        with self._transaction() as cursor:
+            user_id = self._birth_user(cursor, access_hash, now, lock=True)
+            row = self._birth_row(cursor, user_id, lock=True)
+            if row is not None:
+                self._birth_profile(row)
+            self._write_birth(cursor, user_id, birth, now, existing=row is not None)
+            return MemberBirthProfile(birth=birth, updated_at=now)
+
+    def patch_birth_profile(
+        self, access_hash: str, changes: dict, *, now: int, validator: Callable[[Birth], None]
+    ) -> MemberBirthProfile:
+        _hash(access_hash)
+        with self._transaction() as cursor:
+            user_id = self._birth_user(cursor, access_hash, now, lock=True)
+            profile = self._birth_profile(self._birth_row(cursor, user_id, lock=True))
+            if profile.birth is None:
+                raise DomainError("birth_profile_not_found", "저장된 생년월일시가 없습니다. 먼저 전체 정보를 저장하세요.", 404)
+            birth = self._validated_birth({**profile.birth.model_dump(), **changes})
+            validator(birth)
+            self._write_birth(cursor, user_id, birth, now, existing=True)
+            return MemberBirthProfile(birth=birth, updated_at=now)
+
     def counts(self) -> dict[str, int]:
         with self._transaction() as cursor:
             result = {}
@@ -439,7 +574,7 @@ class SQLiteAuthStore(_Store):
                 if application_id != _APPLICATION_ID and not (created and application_id == 0):
                     raise _unavailable()
                 existing = {row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
-                if existing and existing != set(_TABLES):
+                if existing and existing not in (set(_TABLES), set(_LEGACY_TABLES)):
                     raise _unavailable()
                 if not existing:
                     for statement in _schema(False):
@@ -451,7 +586,13 @@ class SQLiteAuthStore(_Store):
                     ):
                         connection.execute(f"CREATE INDEX idx_{table}_{columns} ON {table}({columns})")
                     connection.execute(f"PRAGMA application_id={_APPLICATION_ID}")
-                    connection.execute("PRAGMA user_version=1")
+                    connection.execute("PRAGMA user_version=2")
+                elif existing == set(_LEGACY_TABLES):
+                    # Only the exact, marked v1 schema can receive this additive
+                    # migration. Existing users, identities and sessions survive.
+                    self._verify_sqlite(connection, legacy=True)
+                    connection.execute(_schema(False)[-1])
+                    connection.execute("PRAGMA user_version=2")
                 self._verify_sqlite(connection)
                 connection.commit()
                 self._initialized = True
@@ -468,13 +609,14 @@ class SQLiteAuthStore(_Store):
                     connection.close()
 
     @staticmethod
-    def _verify_sqlite(connection) -> None:
-        if connection.execute("PRAGMA user_version").fetchone()[0] != 1:
+    def _verify_sqlite(connection, *, legacy: bool = False) -> None:
+        if connection.execute("PRAGMA user_version").fetchone()[0] != (1 if legacy else 2):
             raise _unavailable()
         def normalize(sql):
             return " ".join(sql.replace("IF NOT EXISTS ", "").split()).lower()
 
-        for (table, expected), statement in zip(_TABLES.items(), _schema(False)):
+        tables = list(_TABLES.items())[:len(_LEGACY_TABLES)] if legacy else _TABLES.items()
+        for (table, expected), statement in zip(tables, _schema(False)):
             columns = tuple(row[1] for row in connection.execute(f"PRAGMA table_info({table})"))
             if columns != expected:
                 raise _unavailable()
@@ -561,6 +703,8 @@ class MySQLAuthStore(_Store):
                 else "varchar(128)" if field in {"code_verifier", "nonce"}
                 else "varchar(100)" if field == "nickname"
                 else "varchar(320)" if field == "email"
+                else "varchar(6)" if field == "gender"
+                else "varchar(5)" if field == "calendar"
                 else "bigint"
             )
             if expected_type == "bigint":
@@ -571,7 +715,7 @@ class MySQLAuthStore(_Store):
             nullable = field in {"nickname", "email", "revoked_at"}
             if (row["Null"] == "YES") != nullable or row["Extra"]:
                 raise _unavailable()
-            if row["Field"] in {"id", "user_id", "session_id", "provider", "subject", "state_hash", "cookie_hash", "access_hash", "refresh_hash", "token_hash"}:
+            if row["Field"] in {"id", "user_id", "session_id", "provider", "subject", "state_hash", "cookie_hash", "access_hash", "refresh_hash", "token_hash", "gender", "calendar"}:
                 if not str(row["Collation"]).endswith("_bin"):
                     raise _unavailable()
         cursor.execute(f"SHOW INDEX FROM {table}")
@@ -586,7 +730,8 @@ class MySQLAuthStore(_Store):
             "woonari_auth_identities": {("provider", "subject")},
             "woonari_auth_sessions": {("id",), ("access_hash",), ("refresh_hash",)},
             "woonari_auth_used_refresh": {("token_hash",)},
-            "woonari_auth_states": {("state_hash",)}
+            "woonari_auth_states": {("state_hash",)},
+            "woonari_auth_birth_profiles": {("user_id",)}
         }[table]
         if unique_columns != expected_unique:
             raise _unavailable()
@@ -600,7 +745,7 @@ class MySQLAuthStore(_Store):
             for row in cursor.all()
         }
         expected_foreign = (
-            {("user_id", "woonari_auth_users", "id")} if table in {"woonari_auth_identities", "woonari_auth_sessions"}
+            {("user_id", "woonari_auth_users", "id")} if table in {"woonari_auth_identities", "woonari_auth_sessions", "woonari_auth_birth_profiles"}
             else {("session_id", "woonari_auth_sessions", "id")} if table == "woonari_auth_used_refresh"
             else set()
         )

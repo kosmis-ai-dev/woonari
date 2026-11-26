@@ -5,13 +5,16 @@ import re
 import secrets
 import time
 from collections.abc import Callable
+from datetime import datetime
 
 from fastapi.concurrency import run_in_threadpool
 
 from app.auth_models import (
     AuthorizationResult,
     AuthUser,
+    BirthProfilePatch,
     LoginResult,
+    MemberBirthProfile,
     ProviderInfo,
     ProviderList,
     SocialProvider,
@@ -20,7 +23,9 @@ from app.auth_models import (
 from app.auth_providers import SocialOAuthGateway
 from app.auth_settings import AuthSettings
 from app.auth_store import AuthStore
+from app.calendar import KST, solar_birth
 from app.errors import DomainError
+from app.models import Birth
 
 ACCESS_SECONDS = 15 * 60
 REFRESH_SECONDS = 30 * 24 * 60 * 60
@@ -143,3 +148,30 @@ class AuthService:
     async def logout(self, access_token: str) -> None:
         await self.me(access_token)
         await run_in_threadpool(self.store.logout, token_hash(access_token), now=self.clock())
+
+    def _validate_member_birth(self, birth: Birth) -> None:
+        converted = solar_birth(birth)
+        today = datetime.fromtimestamp(self.clock(), KST).date()
+        if converted.date() > today:
+            raise DomainError("future_birth_date", "생년월일은 오늘 이후로 입력할 수 없습니다.", 422)
+
+    async def get_birth(self, access_token: str) -> MemberBirthProfile:
+        if not _valid_token(access_token, "wn_at_"):
+            raise DomainError("unauthorized", "유효한 로그인 토큰이 필요합니다.", 401)
+        return await run_in_threadpool(self.store.get_birth_profile, token_hash(access_token), now=self.clock())
+
+    async def put_birth(self, access_token: str, birth: Birth) -> MemberBirthProfile:
+        await self.me(access_token)
+        await run_in_threadpool(self._validate_member_birth, birth)
+        return await run_in_threadpool(
+            self.store.put_birth_profile, token_hash(access_token), birth, now=self.clock()
+        )
+
+    async def patch_birth(self, access_token: str, changes: BirthProfilePatch) -> MemberBirthProfile:
+        if not _valid_token(access_token, "wn_at_"):
+            raise DomainError("unauthorized", "유효한 로그인 토큰이 필요합니다.", 401)
+        return await run_in_threadpool(
+            self.store.patch_birth_profile, token_hash(access_token),
+            changes.model_dump(exclude_unset=True), now=self.clock(),
+            validator=self._validate_member_birth
+        )
