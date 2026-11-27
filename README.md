@@ -19,7 +19,7 @@ Python 3.11 이상과 프로젝트 보드용 Node가 필요합니다. 준비된 
 - 운세 실행: `POST /v1/un/{id}` 또는 `POST /v1/fortunes/{kind}`
 - 사주 계산: `POST /v1/saju`
 
-설치·입력·응답·AI 설정은 [API 안내](python_api/README.md), 계정별 설정은 [독립 환경 안내](docs/isolated-environment.md)를 따릅니다.
+설치·입력·응답은 [API 안내](python_api/README.md), 소셜 로그인·AI·DB의 로컬·배포 설정은 [Python 환경설정 안내](docs/python-runtime-config.md)를 따릅니다. 기존 `.local` API 설정을 사용하는 환경은 `./woonari config migrate-api`로 `python_api/.env`에 이전한 뒤 재시작합니다. 관리용 계정 설정은 [독립 환경 안내](docs/isolated-environment.md)를 따릅니다.
 
 ## 운세 결과 보기
 
@@ -31,7 +31,7 @@ Swagger 최상단 **서비스 운세 · AI 본문 제공**에 선별17종의 대
 
 연간 un은 **2027년 포함1900~2050년**을 지원하며 개인 사주와 대상 연도를 바탕으로 본문을 작성합니다. 별점·점수·부적은 제공하지 않습니다.
 
-AI는 사용자가 지정한 전용 Bedrock 계정을 사용하며 DB·Secrets Manager 계정과 분리합니다. 설정·키·로그·사용량은 `.local/woonari/`에만 저장합니다. 모델 전송은 **한국시간 하루 최대100회**이고 전송 후 오류도 차감합니다. `GET /v1/ai-usage`에서 잔여 사용량을 확인할 수 있으며 계산 요청은 차감하지 않습니다.
+AI는 사용자가 지정한 전용 Bedrock 계정을 사용하며 DB 계정과 분리합니다. API 설정·키는 비공개 `python_api/.env`에서 읽고, 로컬 관리용 계정·로그·사용량은 `.local/woonari/`에 보존합니다. 모델 전송은 **한국시간 하루 최대100회**이고 전송 후 오류도 차감합니다. `GET /v1/ai-usage`에서 잔여 사용량을 확인할 수 있으며 계산 요청은 차감하지 않습니다.
 
 ## 개발 구성과 검증
 
@@ -51,10 +51,10 @@ python3 tools/prepare_github.py
 python3 tools/prepare_github.py --verify
 ```
 
-배포 사본은 `.publish/woonari`이며 `.local`의 인증·키·로그·개인 입력·사용량 기록과 가상환경·빌드 결과는 제외합니다. Git은 `./woonari git ...`, AWS는 `./woonari aws ...`로 관리하며 다른 프로젝트의 인증이나 기본 계정을 사용하지 않습니다.
+배포 사본은 `.publish/woonari`이며 `python_api/.env`, `.local`의 인증·키·로그·개인 입력·사용량 기록과 가상환경·빌드 결과는 제외합니다. 배포 환경의 비공개 설정은 별도로 준비합니다. Git은 `./woonari git ...`, AWS 관리 명령은 `./woonari aws ...`로 실행하며 다른 프로젝트의 인증이나 기본 계정을 사용하지 않습니다.
 
 ## 소셜 로그인
 
-카카오·구글·네이버 로그인 API를 Swagger의 **소셜 로그인 · 카카오·구글·네이버** 그룹에서 확인합니다. 로그인 시작·콜백·신규회원 생성·Bearer 토큰·내정보·갱신·로그아웃을 제공합니다. `./woonari auth init|status`로 전용 앱 설정을 준비하고 `./woonari db init-auth`로 신규 인증 표를 생성합니다. 실제 로그인은 앱 키 설정 후 확인합니다. [설정과 호출 가이드](docs/social-login.md)
+카카오·구글·네이버 로그인 API를 Swagger의 **소셜 로그인 · 카카오·구글·네이버** 그룹에서 확인합니다. 로그인 시작·콜백·신규회원 생성·Bearer 토큰·내정보·갱신·로그아웃을 제공합니다. 기존 환경은 `./woonari config migrate-api`, 새 환경은 `./woonari auth init`으로 Python 설정을 준비하고 `./woonari auth status`로 설정 여부를 확인합니다. 신규 인증 표 생성은 관리 명령 `./woonari db init-auth`를 사용합니다. 실제 제공자 로그인은 아직 검증하지 않았으며 앱 키 설정 후 확인합니다. [설정과 호출 가이드](docs/social-login.md)
 
 **회원 사주 정보** 그룹의 `GET/PUT/PATCH /v1/auth/me/birth`로 로그인한 본인의 생년월일·태어난 시/분·성별·양력/음력·윤달 정보를 조회·저장·수정합니다. [입력 예시와 수정 규칙](docs/social-login.md#회원-사주-정보-저장수정)을 참고하세요.

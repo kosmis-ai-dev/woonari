@@ -75,6 +75,7 @@ _PUBLIC_AUTH_LITERALS = {
         b"kakao_client_secret", b"google_client_secret", b"naver_client_secret"
     }),
     ("python_api/app/auth_settings.py", "service_host"): frozenset({b"127.0.0.1"}),
+    ("python_api/app/config.py", "service_host"): frozenset({b"127.0.0.1"}),
     ("python_api/app/auth_store.py", "api_secret_literal"): frozenset({
         b"VARCHAR(128) CHARACTER SET ascii COLLATE ascii_bin"
     })

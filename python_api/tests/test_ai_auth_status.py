@@ -31,9 +31,24 @@ def test_health_requires_pinned_ai_account_and_never_returns_its_value():
             response = client.get("/health")
             health = response.json()
             assert health["bedrock_auth_mode"] == "api_key"
-            assert health["ai_configured"] == bool(account)
+            assert health["ai_configured"] is False
             assert ("BEDROCK_ACCOUNT_ID" in health["ai_missing_settings"]) == (not account)
+            assert "AWS_BEARER_TOKEN_BEDROCK" in health["ai_missing_settings"]
             assert "111122223333" not in response.text
             catalog = client.get("/v1/asp-services")
             assert catalog.status_code == 404
             assert "111122223333" not in catalog.text
+
+
+def test_health_recognizes_python_owned_bedrock_key_without_invoking_model():
+    settings = Settings(
+        _env_file=None, ai_provider="bedrock", bedrock_auth_mode="api_key",
+        bedrock_model_id="global.anthropic.claude-sonnet-4-6",
+        bedrock_region="ap-northeast-2", bedrock_account_id="111122223333",
+        aws_bearer_token_bedrock="ABSK" + "a" * 100,
+    )
+    with TestClient(create_app(settings)) as client:
+        response = client.get("/health")
+        assert response.json()["ai_configured"] is True
+        assert response.json()["ai_missing_settings"] == []
+        assert "ABSK" not in response.text

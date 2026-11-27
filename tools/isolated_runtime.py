@@ -44,6 +44,15 @@ API_DEFAULTS = {
     "API_KEY": "",
 }
 SERVICES = ("api", "dashboard")
+PYTHON_ENV_FILE = ROOT / "python_api/.env"
+
+
+def api_process_environment() -> dict[str, str]:
+    """Canonical Python settings replace the legacy runtime config as one source."""
+    environment = clean_env()
+    if not PYTHON_ENV_FILE.exists() and not PYTHON_ENV_FILE.is_symlink():
+        environment.update(api_environment(STATE / "api.env"))
+    return environment
 
 
 def runtime_dir() -> Path:
@@ -208,7 +217,7 @@ def launch(service: str, config: dict) -> dict:
     spec = specification(service, config, instance)
     environment = clean_env()
     if service == "api":
-        environment.update(api_environment(STATE / "api.env"))
+        environment = api_process_environment()
     logfile = runtime_dir() / f"{service}.log"
     if logfile.is_symlink():
         fail("로그 경로가 심볼릭 링크이므로 실행하지 않았습니다.")
@@ -341,16 +350,22 @@ def serve_api(args: list[str]) -> int:
     options = parser.parse_args(args)
     if options.port != API_PORT or not re.fullmatch(r"[a-f0-9]{32}", options.instance):
         fail("잘못된 전용 API 실행 인수입니다.")
-    environment = clean_env()
-    environment.update(api_environment(STATE / "api.env"))
+    environment = api_process_environment()
     os.environ.clear()
     os.environ.update(environment)
     sys.path.insert(0, str(ROOT / "python_api"))
     import uvicorn
-    from app.auth_settings import load_auth_settings
+    from app.main import create_app
+
+    if PYTHON_ENV_FILE.exists() or PYTHON_ENV_FILE.is_symlink():
+        # create_app owns all DB, social and AI dependencies from Python settings.
+        # No legacy secret files, AWS CLI profile or ambient app keys are consulted.
+        application = create_app()
+        return run_api(application, options.instance, uvicorn)
+
+    from app.auth_settings import load_local_auth_settings
     from app.auth_store import MySQLAuthStore, SQLiteAuthStore
     from app.config import Settings
-    from app.main import create_app
     from app.manse_store import configure_manse_store
     from app.restored_fortune import (
         MySQLRestoredFortuneStore,
@@ -405,19 +420,23 @@ def serve_api(args: list[str]) -> int:
             settings,
             interpreter_factory=lambda configured: BedrockInterpreter(configured, invoker=invoker),
             ai_quota=quota,
-            auth_settings=load_auth_settings(STATE / "auth/providers.env"),
+            auth_settings=load_local_auth_settings(),
             auth_store=auth_store,
         )
     else:
         application = create_app(
             settings, ai_quota=quota,
-            auth_settings=load_auth_settings(STATE / "auth/providers.env"), auth_store=auth_store
+            auth_settings=load_local_auth_settings(), auth_store=auth_store
         )
 
+    return run_api(application, options.instance, uvicorn)
+
+
+def run_api(application, instance: str, uvicorn) -> int:
     @application.middleware("http")
     async def owned_instance(request, call_next):
         response = await call_next(request)
-        response.headers["X-Woonari-Instance"] = options.instance
+        response.headers["X-Woonari-Instance"] = instance
         return response
 
     uvicorn.run(application, host="127.0.0.1", port=API_PORT, access_log=False)

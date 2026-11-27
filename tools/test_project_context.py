@@ -76,3 +76,34 @@ def test_private_files_are_created_with_owner_only_permissions(tmp_path, monkeyp
     context.write_private(path, "{}\n")
     assert path.stat().st_mode & 0o777 == 0o600
     assert path.parent.stat().st_mode & 0o777 == 0o700
+
+
+def test_new_project_initializes_python_env_without_legacy_runtime_config(tmp_path, monkeypatch):
+    monkeypatch.setattr(context, "ROOT", tmp_path)
+    monkeypatch.setattr(context, "STATE", tmp_path / ".local/woonari")
+    monkeypatch.setattr(context, "CONFIG_FILE", tmp_path / ".local/woonari/config.json")
+    monkeypatch.setattr(context.shutil, "which", lambda _: None)
+    api = tmp_path / "python_api"
+    api.mkdir()
+    (api / ".env.example").write_text("WOONARI_ENV=development\n")
+    context.init()
+    settings = api / ".env"
+    assert settings.read_text() == "WOONARI_ENV=development\n"
+    assert settings.stat().st_mode & 0o777 == 0o600
+    assert not (context.STATE / "api.env").exists()
+    settings.write_text("API_KEY=synthetic-user-edit\n")
+    context.init()
+    assert settings.read_text() == "API_KEY=synthetic-user-edit\n"
+
+
+def test_existing_project_keeps_legacy_config_until_explicit_migration(tmp_path, monkeypatch):
+    monkeypatch.setattr(context, "ROOT", tmp_path)
+    monkeypatch.setattr(context, "STATE", tmp_path / ".local/woonari")
+    monkeypatch.setattr(context, "CONFIG_FILE", tmp_path / ".local/woonari/config.json")
+    monkeypatch.setattr(context.shutil, "which", lambda _: None)
+    api = tmp_path / "python_api"
+    api.mkdir()
+    context.write_private(context.STATE / "api.env", "API_KEY=synthetic-original\n")
+    context.init()
+    assert not (api / ".env").exists()
+    assert (context.STATE / "api.env").read_text() == "API_KEY=synthetic-original\n"

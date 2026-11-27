@@ -4,12 +4,16 @@
 
 ## 설정
 
+기존 `.local` 설정으로 API를 실행하던 환경은 먼저 전체 설정을 이전합니다.
+
 ```sh
-./woonari auth init
+./woonari config migrate-api
 ./woonari auth status
 ```
 
-앱 설정은 `/Users/kosmis/work/kosmis/un/.local/woonari/auth/providers.env`에만 입력합니다. 파일 권한은600이며 Git·채팅에 키 값을 넣지 마세요.
+새 환경은 `./woonari auth init`으로 `python_api/.env`를 만든 뒤 소셜 로그인·AI·DB 값을 입력합니다. `auth init`은 소셜 설정만 준비하므로 기존 AI·DB 설정이 있다면 전체 이전을 먼저 진행하세요. 이미 있는 `.env`는 덮어쓰지 않습니다.
+
+앱 설정은 `python_api/.env`에 입력하며 Python의 `app.config.Settings`가 직접 읽습니다. 파일 권한은600이며 Git·채팅에 키 값을 넣지 마세요. 배포 서버도 같은 항목을 사용하고, 별도 비공개 파일은 절대 경로 `WOONARI_ENV_FILE`로 지정합니다. [로컬·배포 환경설정](python-runtime-config.md)을 참고하세요.
 
 | 설정 | 값 |
 |---|---|
@@ -31,7 +35,7 @@
 
 카카오는 로그인 사용 설정과 프로필 동의 항목을, Google은 웹 애플리케이션 자격증명·동의 화면을, 네이버는 로그인 애플리케이션과 프로필 제공 항목을 준비합니다. 네이버는 최신 OIDC 경로를 사용합니다. 닉네임·이메일 동의를 받지 못해도 제공자 고유 ID로 로그인합니다. [공식 문서 근거](social-login-sources.md)
 
-`localhost`를 사용할 경우 BASE URL·등록한 콜백·브라우저 주소를 모두 같은 호스트로 통일하세요. 운영은 HTTPS를 사용합니다. BASE URL에는 경로·query·fragment를 붙이지 않습니다.
+`localhost`를 사용할 경우 BASE URL·등록한 콜백·브라우저 주소를 모두 같은 호스트로 통일하세요. 운영은 공개 HTTPS 주소와 세 제공자의 Client ID·secret 6개를 모두 설정해야 시작할 수 있습니다. BASE URL에는 경로·query·fragment를 붙이지 않습니다. 실제 운영 배포와 제공자 계정 로그인은 아직 별도 검증이 필요합니다.
 
 설정 후 `./woonari stop`과 `./woonari start`로 적용합니다. 미설정 제공자는 `503 social_not_configured`입니다. `configured: true`는 설정값 존재를 뜻하며 실제 로그인 성공을 뜻하지 않습니다.
 
@@ -114,7 +118,7 @@ PATCH는 보낸 항목만 기존 값과 합쳐 검증합니다. `0`과 `false`�
 
 ## DB·검증
 
-공식 실행은 전용 Secrets Manager 연결의 MySQL `woonari`를 사용합니다. 신규 설치와 기존5개 표에서의 확장 모두 `./woonari db init-auth`로 다음 인증 전용 표6개를 생성·검증합니다.
+API 런타임은 Python 설정의 `WOONARI_DB_BACKEND=mysql`과 `WOONARI_DB_*`로 MySQL `woonari`에 직접 접속하며 TLS 인증서와 호스트명을 검증합니다. 시작 시 인증 스키마를 읽기 전용으로 확인하고 AI 클라이언트를 준비합니다. 신규 설치와 기존5개 표에서의 확장은 관리 명령 `./woonari db init-auth`로 다음 인증 전용 표6개를 생성·검증합니다. 이 관리 명령은 기존 전용 DB 설정·Secrets Manager 연결을 사용하며 API 런타임과 구분합니다.
 
 - `woonari_auth_users`
 - `woonari_auth_identities`
@@ -123,6 +127,6 @@ PATCH는 보낸 항목만 기존 값과 합쳐 검증합니다. `0`과 `false`�
 - `woonari_auth_states`
 - `woonari_auth_birth_profiles` — 회원별 사주 입력 정보
 
-회원 사주 입력은 별도 표에 저장하며 기존5개 인증 표의 회원·세션을 초기화하지 않습니다. 런타임은 스키마를 검증하며 자동 변경하지 않습니다. 과거 회원을 가져오거나 기존 운세 자료를 바꾸지 않습니다. 독립 개발·테스트용 SQLite는 전용 `.local/woonari/auth/`에 저장하고 기존5개 표의 DB를 데이터 보존 방식으로 확장합니다. MySQL 실패 시 SQLite로 대체하지 않습니다.
+회원 사주 입력은 별도 표에 저장하며 기존5개 인증 표의 회원·세션을 초기화하지 않습니다. 런타임은 스키마를 검증하며 자동 변경하지 않습니다. 과거 회원을 가져오거나 기존 운세 자료를 바꾸지 않습니다. 독립 개발·테스트용 SQLite는 상태 경로의 `auth/`에 저장하며 로컬 기본 경로는 `.local/woonari/auth/`입니다. 기존5개 표의 DB는 데이터 보존 방식으로 확장합니다. 운영은 SQLite를 허용하지 않으며 MySQL 실패 시 SQLite로 대체하지 않습니다.
 
 제공자 토큰은 저장하지 않고 자체 토큰은 해시만 저장합니다. State는10분 유효·브라우저/제공자 바인딩·일회성을 적용합니다. PKCE를 사용하며 Google·Naver ID 토큰의 서명·발급자·대상·만료·nonce를 검증합니다. 외부 오류 원문·키를 응답에 넣지 않습니다. 공식 실행기는 인증 코드가 포함될 수 있는 접근 로그를 출력하지 않습니다.

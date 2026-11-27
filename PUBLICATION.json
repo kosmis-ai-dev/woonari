@@ -1,12 +1,12 @@
 {
   "change": "CR-012",
   "task": "T-025",
-  "prepared_date": "2026-11-26",
+  "prepared_date": "2026-11-27",
   "repository": "https://github.com/kosmis-ai-dev/woonari.git",
   "branch": "import/asp-python-20261103",
   "scope": "Python API, source-derived rules, frozen provenance, tests, tools and project board. Original ASP and site assets are excluded.",
-  "files": 266,
-  "bytes": 60293019,
+  "files": 277,
+  "bytes": 60447799,
   "asp_files": 0,
   "credential_values_stored_in_report": false,
   "original_source_modified": false,
@@ -15,6 +15,22 @@
     {
       "path": ".DS_Store",
       "reason": "OS metadata"
+    },
+    {
+      "path": "python_api/.env",
+      "reason": "runtime environment secrets"
+    },
+    {
+      "path": ".project/tasks/T-044.json",
+      "reason": "Unrelated frontend task preserved locally"
+    },
+    {
+      "path": ".project/features/F13.json",
+      "reason": "Unrelated frontend task preserved locally"
+    },
+    {
+      "path": ".project/changes/CR-024.json",
+      "reason": "Unrelated frontend task preserved locally"
     }
   ],
   "excluded_directory_rules": [
@@ -34,7 +50,9 @@
     "venv"
   ],
   "exclusion_counts": {
-    "OS metadata": 1
+    "OS metadata": 1,
+    "runtime environment secrets": 1,
+    "Unrelated frontend task preserved locally": 3
   },
   "lfs": [],
   "validation": {

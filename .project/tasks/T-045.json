@@ -1,0 +1,60 @@
+{
+  "id": "T-045",
+  "title": "AI·DB·소셜 설정 이관 및 Python 부트스트랩",
+  "stage": "SM",
+  "status": "done",
+  "features": [
+    "F04",
+    "F05",
+    "F06",
+    "F07",
+    "F10",
+    "F12"
+  ],
+  "dependsOn": [
+    "T-043"
+  ],
+  "changes": [
+    "CR-025"
+  ],
+  "description": "사용자의 추가 요청에 따라 소셜뿐 아니라 .local에서 참조한 AI/API·Bedrock 장기 키·DB 연결값을 Python .env로 실제 이관한다. 기존 원본과 호출 원장을 보존하며 공식 실행과 직접 ASGI가 같은 Python 설정을 사용한다.",
+  "acceptance": [
+    "Python .env/프로세스환경의6소셜키·BASE주소를Settings→AuthService에서참조하며직접uvicorn도동일동작",
+    "AI/API·Bedrock 토큰·실제 MySQL 연결값·소셜 설정을 비공개 python_api/.env로 이관하고 공식 실행도 사용. 기존 원본·계정·사용량 원장을 보존하며 관리용 Git/AWS 키는 복사하지 않는다.",
+    "운영모드HTTPS/키/명시MySQL/절대지속state필수검증·실패시기동중단/SQLite자동선택금지",
+    "설정값/비밀파일Git미포함·오류/로그비밀값미노출·미설정개발모드는503유지",
+    "새설정/정상·실패운영초기화/기존API/독립패키지/로컬실서버/게시검증·보드명세문서/전용mainpush",
+    "실제소셜계정검증·운영리소스배포는별도이며이번작업에서하지않음"
+  ],
+  "tests": [
+    "python_api/tests/test_python_auth_config.py",
+    "python_api/tests/test_production_runtime.py",
+    "python_api/tests/test_bedrock_transport.py",
+    "python_api/tests/test_python_bootstrap.py",
+    "tools/test_python_env_migration.py",
+    "tools/test_auth_setup.py",
+    "tools/test_isolated_runtime.py"
+  ],
+  "createdAt": "2026-11-27",
+  "updatedAt": "2026-11-27",
+  "history": [
+    {
+      "date": "2026-11-27",
+      "by": "ai",
+      "change": "CR-025",
+      "text": "사용자가SecretsManager대신Python환경설정으로운영배포후에도소셜키참조를요청했다. 패키지내설정로더/일관된실행초기화·운영필수설정실패차단을구현한다. 실제클라우드배포/계정/키생성은수행하지않는다."
+    },
+    {
+      "date": "2026-11-27",
+      "by": "ai",
+      "change": "CR-025",
+      "text": "사용자의 추가 요청에 따라 소셜뿐 아니라 .local에서 참조한 AI/API·Bedrock 장기 키·DB 연결값을 Python .env로 실제 이관한다. 기존 원본과 호출 원장을 보존하며 공식 실행과 직접 ASGI가 같은 Python 설정을 사용한다."
+    },
+    {
+      "date": "2026-11-27",
+      "by": "ai",
+      "change": "CR-025",
+      "text": "완료 — 전체 Python1595개 통과; 설정·게시 도구109개+14subtests 및 신규 init2개 통과; Ruff/compileall/pipcheck 통과. wheel62/62 소스바이트 일치·비밀파일0·외부cwd 독립실행2종/18API 확인. 실제29항목을 private Python .env로 이관하고 MySQL6인증표·Bedrock 실제 AI 계정 GET 검증 성공. 공식9090/18101 재기동, Swagger95/선정17/목록67, 연간2027·꽃·보석 계산200/회원401 검증. 원본6파일과호출원장불변·모델호출0. 실제소셜로그인/운영배포는미수행."
+    }
+  ]
+}

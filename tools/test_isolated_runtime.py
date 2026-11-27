@@ -73,6 +73,36 @@ def test_api_env_rejects_symlink(tmp_path):
         runtime.api_environment(link)
 
 
+def test_canonical_runtime_does_not_read_legacy_or_inherited_settings(tmp_path, monkeypatch):
+    canonical = tmp_path / ".env"
+    canonical.touch(mode=0o600)
+    monkeypatch.setattr(runtime, "PYTHON_ENV_FILE", canonical)
+    monkeypatch.setenv("AWS_BEARER_TOKEN_BEDROCK", "synthetic-other-project-key")
+    monkeypatch.setenv("WOONARI_ENV_FILE", "/other/project.env")
+
+    def forbidden(_):
+        raise AssertionError("Canonical runtime must not read legacy settings")
+
+    monkeypatch.setattr(runtime, "api_environment", forbidden)
+    environment = runtime.api_process_environment()
+    assert "AWS_BEARER_TOKEN_BEDROCK" not in environment
+    assert "WOONARI_ENV_FILE" not in environment
+
+
+def test_runtime_without_canonical_uses_legacy_settings(tmp_path, monkeypatch):
+    monkeypatch.setattr(runtime, "PYTHON_ENV_FILE", tmp_path / "missing.env")
+    monkeypatch.setattr(runtime, "api_environment", lambda _: {"AI_PROVIDER": "bedrock"})
+    assert runtime.api_process_environment()["AI_PROVIDER"] == "bedrock"
+
+
+def test_canonical_symlink_is_not_silently_replaced_by_legacy(tmp_path, monkeypatch):
+    canonical = tmp_path / ".env"
+    canonical.symlink_to(tmp_path / "missing-target")
+    monkeypatch.setattr(runtime, "PYTHON_ENV_FILE", canonical)
+    monkeypatch.setattr(runtime, "api_environment", lambda _: pytest.fail("Unsafe fallback"))
+    assert "AI_PROVIDER" not in runtime.api_process_environment()
+
+
 def owned_record():
     instance = "a" * 32
     argv = ["/project/python", "/project/isolated_runtime.py", instance]

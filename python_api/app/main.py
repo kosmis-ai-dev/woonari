@@ -16,7 +16,7 @@ from app.ai_quota import DailyAIQuota
 from app.auth_router import MEMBER_BIRTH_TAG, social_auth_router
 from app.auth_router import TAG as AUTH_TAG
 from app.auth_service import AuthService
-from app.auth_settings import AuthSettings
+from app.auth_settings import AuthSettings, auth_settings_from_python, validate_production_auth
 from app.calendar import calculate_saju
 from app.config import Settings, get_settings
 from app.errors import DomainError
@@ -24,6 +24,7 @@ from app.fortunes import analyze, catalog
 from app.legacy_catalog import services
 from app.manse_store import get_manse_store
 from app.models import FortuneKind, FortuneRequest, SajuRequest
+from app.production import build_mysql_runtime, production_state_root, verify_production_store
 from app.public_catalog import (
     PublicServiceCatalog,
     available_services,
@@ -73,11 +74,21 @@ def authorize(
             raise DomainError("unauthorized", "유효한 X-API-Key가 필요합니다.", 401)
 
 
-def _default_interpreter(settings: Settings) -> Interpreter:
+def _default_interpreter(settings: Settings, *, reserve_call=None) -> Interpreter:
     if settings.ai_provider == "bedrock":
         from app.bedrock import BedrockInterpreter
 
-        return BedrockInterpreter(settings)
+        invoker = None
+        if (
+            settings.bedrock_auth_mode == "api_key"
+            and settings.aws_bearer_token_bedrock.get_secret_value()
+            and settings.bedrock_model_id and settings.bedrock_region
+            and settings.bedrock_account_id
+        ):
+            from app.bedrock_transport import make_bedrock_api_key_invoker
+
+            invoker = make_bedrock_api_key_invoker(settings, reserve_call=reserve_call)
+        return BedrockInterpreter(settings, invoker=invoker, reserve_call=reserve_call)
     return OpenAIInterpreter(settings)
 
 
@@ -91,18 +102,47 @@ def create_app(
     oauth_gateway=None,
     auth_clock: Callable[[], int] | None = None,
 ) -> FastAPI:
+    configuration = settings if settings is not None else get_settings()
+    social_configuration = auth_settings if auth_settings is not None else auth_settings_from_python(configuration)
+    validate_production_auth(configuration, social_configuration)
+    production = configuration.woonari_env == "production"
+    uses_mysql = configuration.woonari_db_backend == "mysql"
+    if production and not uses_mysql:
+        raise RuntimeError("운영 환경은 WOONARI_DB_BACKEND=mysql 설정이 필요합니다.")
+    if production or uses_mysql:
+        from app.auth_store import MySQLAuthStore
+
+        if auth_store is not None and not isinstance(auth_store, MySQLAuthStore):
+            raise RuntimeError("운영 회원 저장소는 명시적인 MySQL 연결이 필요합니다.")
+        state_root = production_state_root(configuration)
+        if auth_store is None:
+            auth_store = build_mysql_runtime(configuration)
+    else:
+        state_root = configuration.woonari_state_dir or FilePath(__file__).resolve().parents[2] / ".local/woonari"
+        if not state_root.is_absolute():
+            raise RuntimeError("Woonari 상태 저장 경로는 절대 경로여야 합니다.")
+
     @asynccontextmanager
     async def lifespan(application: FastAPI):
-        factory = interpreter_factory or _default_interpreter
-        application.state.interpreter = factory(application.state.settings)
-        # Both production providers share one ledger across routes and aliases.
-        if hasattr(application.state.interpreter, "reserve_call"):
-            application.state.interpreter.reserve_call = application.state.ai_quota.reserve
+        interpreter = None
         try:
+            if production or uses_mysql:
+                await run_in_threadpool(verify_production_store, application.state.auth_service.store)
+            interpreter = (
+                interpreter_factory(application.state.settings) if interpreter_factory
+                else _default_interpreter(
+                    application.state.settings, reserve_call=application.state.ai_quota.reserve
+                )
+            )
+            application.state.interpreter = interpreter
+            # Providers and route aliases share the same persistent daily ledger.
+            if hasattr(interpreter, "reserve_call"):
+                interpreter.reserve_call = application.state.ai_quota.reserve
             yield
         finally:
             try:
-                await application.state.interpreter.close()
+                if interpreter is not None:
+                    await interpreter.close()
             finally:
                 await application.state.auth_service.gateway.close()
 
@@ -123,8 +163,7 @@ def create_app(
             "displayRequestDuration": True,
         },
     )
-    application.state.settings = settings or get_settings()
-    state_root = FilePath(__file__).resolve().parents[2] / ".local/woonari"
+    application.state.settings = configuration
     application.state.ai_quota = ai_quota or DailyAIQuota(
         state_root / "ai/usage.sqlite3", private_root=state_root,
         limit=application.state.settings.ai_daily_call_limit,
@@ -133,7 +172,7 @@ def create_app(
     from app.auth_store import SQLiteAuthStore
 
     application.state.auth_service = AuthService(
-        auth_settings or AuthSettings(),
+        social_configuration,
         auth_store if auth_store is not None else SQLiteAuthStore(state_root / "auth/auth.sqlite3"),
         oauth_gateway if oauth_gateway is not None else SocialOAuthGateway(),
         clock=auth_clock
@@ -185,6 +224,11 @@ def create_app(
                 missing_settings.append("BEDROCK_REGION")
             if configuration.bedrock_auth_mode == "api_key" and not configuration.bedrock_account_id:
                 missing_settings.append("BEDROCK_ACCOUNT_ID")
+            if (
+                configuration.bedrock_auth_mode == "api_key" and interpreter_factory is None
+                and not configuration.aws_bearer_token_bedrock.get_secret_value()
+            ):
+                missing_settings.append("AWS_BEARER_TOKEN_BEDROCK")
         else:
             if not (
                 configuration.openai_api_key
@@ -389,4 +433,17 @@ def create_app(
     return application
 
 
-app = create_app()
+class LazyASGIApp:
+    """Resolve Python deployment settings on ASGI startup, not module import."""
+
+    def __init__(self, factory: Callable[[], FastAPI] | None = None):
+        self.factory = factory
+        self.application: FastAPI | None = None
+
+    async def __call__(self, scope, receive, send):
+        if self.application is None:
+            self.application = (self.factory or create_app)()
+        await self.application(scope, receive, send)
+
+
+app = LazyASGIApp()

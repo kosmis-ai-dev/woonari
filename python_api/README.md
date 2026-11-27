@@ -18,8 +18,10 @@ Python 3.11 이상을 사용합니다. 준비된 작업 환경에서는 저장�
 python3 -m venv python_api/.venv
 python_api/.venv/bin/python -m pip install -r python_api/requirements.lock
 ./woonari init
-./woonari start
+./woonari auth init
 ```
+
+새 환경은 `python_api/.env`에 필요한 소셜 로그인·AI·DB 값을 입력한 뒤 `./woonari start`로 실행합니다. 기존 `.local` API 설정을 사용하는 환경은 `auth init`보다 먼저 `./woonari config migrate-api`를 실행하여 기존 설정을 함께 이전합니다. [로컬·배포 환경설정](../docs/python-runtime-config.md)을 참고하세요.
 
 - Swagger: <http://127.0.0.1:9090/docs>
 - 프로젝트 보드: <http://127.0.0.1:18101/>
@@ -98,23 +100,25 @@ AI 본문을 요청하면 다음 값을 제공합니다.
 
 ## AI 설정과 호출 한도
 
-공식 실행기는 이 프로젝트의 `.local/woonari/api.env`만 읽습니다. 다른 프로젝트의 키나 터미널에 상속된 설정을 사용하지 않습니다. 현재 연결 대상은 Amazon Bedrock의 Claude입니다.
+소셜 로그인·AI·DB 설정은 `python_api/.env`를 Python의 `app.config.Settings`에서 직접 읽습니다. 공식 실행기는 다른 프로젝트의 키나 터미널에 상속된 앱 설정을 가져오지 않습니다. 현재 연결 대상은 Amazon Bedrock의 Claude입니다. 기존 설정을 이전할 때는 `./woonari config migrate-api`를 먼저 실행합니다.
 
 ```dotenv
 AI_PROVIDER=bedrock
-BEDROCK_MODEL_ID=global.anthropic.claude-sonnet-4-6
-BEDROCK_REGION=ap-northeast-2
+BEDROCK_MODEL_ID=
+BEDROCK_REGION=
 BEDROCK_AUTH_MODE=api_key
+BEDROCK_ACCOUNT_ID=
+AWS_BEARER_TOKEN_BEDROCK=
 AI_DAILY_CALL_LIMIT=100
 AI_TIMEOUT_SECONDS=45
 AI_MAX_CONCURRENCY=4
 ```
 
-모델과 리전은 실제 사용할 값으로 설정합니다. 장기 키는 `.local/woonari/ai/bedrock.env`에만 저장하며, `api.env`의 `BEDROCK_ACCOUNT_ID`에 승인된 AI 계정을 지정합니다. DB·Secrets Manager 계정과 AI 계정은 분리합니다. 전용 `iam` 모드도 지원하며 다른 인증·계정으로 자동 전환하지 않습니다. 자세한 절차는 [독립 환경 안내](../docs/isolated-environment.md)를 따릅니다.
+모델·리전·장기 키·승인된 AI 계정은 같은 `.env`에서 설정합니다. DB 계정과 AI 계정은 분리하며 다른 인증·계정으로 자동 전환하지 않습니다. 배포용 Python 직접 실행은 `api_key` 방식을 사용합니다. `iam`은 Python 설정 파일이 없는 기존 공식 로컬 실행기의 호환 경로에만 남겨 둡니다. 설정 파일 권한·직접 실행 시 환경변수 우선순위·운영 필수값은 [Python 환경설정 안내](../docs/python-runtime-config.md)를 따릅니다.
 
 설정 후 `./woonari stop` / `./woonari start`로 재시작합니다. `/health`의 설정 상태는 실제 모델 호출 성공과 다르며 POST 결과로 생성 여부를 확인합니다. AI 연결이 준비되지 않은 경우는 `503 ai_not_configured`, 모델 응답을 처리하지 못하면 `502`, 응답 대기 시간 초과는 `504`입니다.
 
-AI 모델 전송 시도는 **한국시간 하루 최대 100회**입니다. 모든 경로가 같은 영속 사용량 기록을 공유하며 재시작·동시 요청·조회 날짜 변경으로 초기화되지 않습니다. 전송 후 오류도 차감합니다. `GET /v1/ai-usage`에서 사용·잔여·다음 초기화 시각을 확인할 수 있습니다. 한도 초과는 `429`이며 계산 요청·입력 오류·전송 전 차단은 차감하지 않습니다. 사용량 DB를 삭제하지 마세요.
+AI 모델 전송 시도는 **한국시간 하루 최대 100회**입니다. 모든 경로가 같은 영속 사용량 기록을 공유하며 재시작·동시 요청·조회 날짜 변경으로 초기화되지 않습니다. 로컬 설정 이전 후에도 기존 `.local/woonari/ai/usage.sqlite3`와 잠금 기록을 보존합니다. 전송 후 오류도 차감합니다. `GET /v1/ai-usage`에서 사용·잔여·다음 초기화 시각을 확인할 수 있습니다. 한도 초과는 `429`이며 계산 요청·입력 오류·전송 전 차단은 차감하지 않습니다. 사용량 DB를 삭제하지 마세요.
 
 OpenAI도 전용 `AI_PROVIDER=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL`로 선택할 수 있습니다. 키는 채팅·명령 인자·소스에 기록하지 않습니다.
 
@@ -132,6 +136,6 @@ node .project/_tools/project-dashboard.mjs check
 
 ## 소셜 로그인
 
-카카오·구글·네이버 로그인 API를 Swagger의 **소셜 로그인 · 카카오·구글·네이버** 그룹에서 확인합니다. 로그인 시작·콜백·신규회원 생성·Bearer 토큰·내정보·갱신·로그아웃을 제공합니다. `./woonari auth init|status`로 전용 앱 설정을 준비하고 `./woonari db init-auth`로 신규 인증 표를 생성합니다. 실제 로그인은 앱 키 설정 후 확인합니다. [설정과 호출 가이드](../docs/social-login.md)
+카카오·구글·네이버 로그인 API를 Swagger의 **소셜 로그인 · 카카오·구글·네이버** 그룹에서 확인합니다. 로그인 시작·콜백·신규회원 생성·Bearer 토큰·내정보·갱신·로그아웃을 제공합니다. 기존 환경은 `./woonari config migrate-api`, 새 환경은 `./woonari auth init`으로 Python 설정을 준비하고 `./woonari auth status`로 설정 여부를 확인합니다. 신규 인증 표 생성은 관리 명령 `./woonari db init-auth`를 사용합니다. 실제 제공자 로그인은 아직 검증하지 않았으며 앱 키 설정 후 확인합니다. [설정과 호출 가이드](../docs/social-login.md)
 
 **회원 사주 정보** 그룹의 `GET/PUT/PATCH /v1/auth/me/birth`로 본인의 생년월일·태어난 시/분·성별·양력/음력·윤달 정보를 관리합니다. Bearer 인증이 필요하며 PUT은 최초 저장·전체 교체, PATCH는 저장값의 일부 수정입니다. [입력 예시와 검증 규칙](../docs/social-login.md#회원-사주-정보-저장수정)을 참고하세요.

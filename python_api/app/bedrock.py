@@ -61,7 +61,7 @@ class BedrockInterpreter:
         self.reserve_call = reserve_call
 
     async def close(self):
-        # The injected transport owns and closes each individual CLI process.
+        # Each transport owns and closes its individual HTTP client or CLI process.
         pass
 
     async def interpret(self, analysis: Analysis | ServiceAnalysis) -> Interpretation:
@@ -72,7 +72,7 @@ class BedrockInterpreter:
         if not self.invoker or not self.model.strip() or not self.region.strip():
             raise DomainError(
                 "bedrock_not_configured",
-                "Woonari 전용 Bedrock 모델·리전과 AWS 호출 연결이 필요합니다. ./woonari start로 실행하세요.",
+                "Python 환경설정의 Bedrock 모델·리전·인증 연결을 확인하세요.",
                 503,
             )
         request = {

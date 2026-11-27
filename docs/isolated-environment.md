@@ -14,7 +14,8 @@ CR-006 / T-013 · 공식 실행·계정 진입점은 저장소 루트의 `./woon
 - Swagger: http://127.0.0.1:9090/docs
 - 이 프로젝트 전용 보드: http://127.0.0.1:18101/
 - Python 가상환경: `python_api/.venv/`
-- 전용 설정/계정/로그: `.local/woonari/` (디렉터리 700, 설정 파일 600)
+- API 설정·키: `python_api/.env` (파일600, Git·배포 사본 제외)
+- 관리용 계정·로그·영속 사용량: `.local/woonari/` (디렉터리700, 설정 파일600)
 - 계정 지정 상태: `./woonari config show` (토큰·키는 표시하지 않음)
 
 서버는 127.0.0.1에만 바인딩합니다. 다른 프로세스가 포트를 점유하면 실패하며 자동 종료하지 않습니다. 종료 시 전용 상태 기록과 실제 프로세스 식별을 비교합니다. 보드는 이 프로젝트의 `.project`만 표시합니다.
@@ -27,22 +28,27 @@ Node·Git·GitHub CLI·AWS CLI 실행 파일은 설치된 도구를 사용하며
 python3 -m venv python_api/.venv
 python_api/.venv/bin/python -m pip install -r python_api/requirements.lock
 ./woonari init
+./woonari auth init
+```
+
+새 환경의 설정값을 아래 안내에 따라 입력한 뒤 `./woonari start`로 실행합니다.
+
+## Python API 설정
+
+CR-025 / T-045부터 소셜 로그인·AI·DB 설정은 `python_api/.env`를 Python의 `app.config.Settings`에서 직접 읽습니다. 기존 환경은 다음 명령으로 설정을 이전한 뒤 재시작합니다. 기존 AI 설정이 있다면 `auth init`으로 소셜 전용 파일을 먼저 만들지 마세요.
+
+```sh
+./woonari config migrate-api
+./woonari auth status
+./woonari stop
 ./woonari start
 ```
 
-## AI 설정
+이전 명령은 기존 `.local/woonari/api.env`, Bedrock 장기 키, 소셜 앱 설정과 지정 DB 접속정보를 Python 설정으로 모읍니다. 원본 파일과 기존 AI 사용량 기록은 보존하고, 기존 `.env`를 교체할 때는 전용 비공개 폴더에 백업합니다. GitHub·AWS CLI 관리 계정은 이전하지 않습니다. MySQL 접속정보를 가져오는 이전 작업에는 기존 전용 AWS 계정의 Secrets Manager 조회 권한이 필요하지만, 이전 후 API 실행은 Python 설정으로 직접 접속합니다.
 
-`.local/woonari/api.env`의 빈 값을 직접 입력합니다. 비밀값은 채팅·명령 인자·Git에 저장하지 않습니다.
+새 환경은 `./woonari auth init`으로 비공개 `.env`를 만든 뒤 소셜 로그인·AI·DB 값을 편집기에서 입력합니다. 이미 이전한 설정은 해당 파일에서 수정하며 이전 명령을 설정 변경용으로 반복 실행하지 않습니다. 비밀값은 채팅·명령 인자·Git에 저장하지 않습니다.
 
-```dotenv
-OPENAI_API_KEY=
-OPENAI_MODEL=
-AI_TIMEOUT_SECONDS=45
-AI_MAX_CONCURRENCY=4
-API_KEY=
-```
-
-실행기는 허용한 운영체제 변수로 자식 환경을 새로 만듭니다. 상속된 AI/GitHub/AWS/SSH 인증, 외부 Python 경로·프록시 설정을 가져오지 않습니다. API는 전용 파일의 5개 설정만 사용하며 기존 `python_api/.env`도 읽지 않습니다. 변경 후 서버를 재시작합니다. 사주 계산 규칙과 AI 출력 계약은 유지합니다.
+공식 실행기는 허용한 운영체제 변수로 자식 환경을 새로 만듭니다. 상속된 AI/GitHub/AWS/SSH 인증, 외부 Python 경로·프록시 설정을 가져오지 않습니다. `python_api/.env`가 있으면 이전 `.local` API 설정과 혼합하지 않습니다. 파일이 없는 기존 환경에만 호환 실행 경로를 유지합니다. Python을 직접 실행할 때는 프로세스 환경변수가 파일보다 우선하며, 별도 비공개 파일은 절대 경로 `WOONARI_ENV_FILE`로 지정합니다. 운영 필수값과 배포 방법은 [Python 환경설정 안내](python-runtime-config.md)를 따릅니다. 변경 후 서버를 재시작하며 사주 계산 규칙과 AI 출력 계약은 유지합니다.
 
 ## GitHub 전용 계정
 
@@ -80,7 +86,7 @@ GitHub에서 출판본을 clone한 경우에는 `PUBLICATION.json`과 `.git`이 
 ./woonari aws sts get-caller-identity
 ```
 
-프로필명은 `woonari`, 설정·자격증명·SSO 및 세션 캐시는 `.local/woonari/aws/`에 둡니다. `~/.aws`, 상속된 키·프로필·EC2 metadata를 사용하지 않습니다. 서비스 실행 전 STS 계정 ID를 신규 계정 ID와 비교하며 불일치하면 중단합니다. CLI 옵션으로 프로필·endpoint를 바꿔 검사를 우회할 수 없습니다.
+프로필명은 `woonari`, 설정·자격증명·SSO 및 세션 캐시는 `.local/woonari/aws/`에 둡니다. `~/.aws`, 상속된 키·프로필·EC2 metadata를 사용하지 않습니다. AWS 관리 명령 실행 전 STS 계정 ID를 신규 계정 ID와 비교하며 불일치하면 중단합니다. CLI 옵션으로 프로필·endpoint를 바꿔 검사를 우회할 수 없습니다. Python 설정으로 실행하는 API에는 이 관리용 프로필을 복사하지 않습니다.
 
 공유 도구 설정을 쓰는 `codeartifact login`, `eks update-kubeconfig` 및 역할 전환 옵션은 차단합니다. 프로젝트별 패키지 레지스트리나 Kubernetes 연결은 전용 설정 경로를 구현한 후 추가합니다.
 
@@ -105,13 +111,13 @@ T-014의 남은 항목은 전용 GitHub 로그인명·커밋 작성자 및 저�
 
 ## 만세력 DB 연결
 
-CR-009 / T-017·T-018. [만세력 데이터베이스 안내](../python_api/docs/manse_database.md)의 가져오기 명령을 사용합니다. 공식 API 실행기는 전용 DB 설정의 `manse_backend=mysql`일 때 같은 시크릿으로 지정 DB에 접속합니다. 암호는 메모리에서만 유지하며 연결 정보와 TLS 컨텍스트는 최대 300초간 캐시한 뒤 갱신합니다. DB 오류가 나면 사주 계산은 503으로 중단하며 SQLite나 달력 패키지로 자동 전환하지 않습니다.
+CR-009 / T-017·T-018. [만세력 데이터베이스 안내](../python_api/docs/manse_database.md)의 가져오기 명령을 사용합니다. 현재 API는 Python 설정의 `WOONARI_DB_BACKEND=mysql`과 `WOONARI_DB_*`로 `woonari` DB에 직접 접속하며 TLS 인증서와 호스트명을 검증합니다. 만세력·운세 자료·인증 저장소는 같은 명시적 연결 설정을 사용합니다. DB 오류가 나면 사주 계산은503으로 중단하며 SQLite나 달력 패키지로 자동 전환하지 않습니다. 기존 DB 적재·점검용 CLI는 전용 DB 설정과 Secrets Manager 연결을 계속 사용합니다.
 
 CR-010 / T-019·T-020: 원본 MySQL 만세력은 유지하고 사주 조회에 `lunar-leap-flags-v1` 교정표를 적용합니다. 일반 달·윤달 말일의 윤달 여부 10건만 바꾸며, 원본 출처 해시와 예상 행 값이 맞지 않으면 계산을 중단합니다. API 정책은 `asp-manse-db-v4`와 `lunar_correction_version`으로 적용 버전을 표시합니다. 원본 내보내기·재적재·출처 해시는 교정 전 값을 유지합니다.
 
-CR-013 / T-027: `AI_PROVIDER=bedrock`은 명시한 `BEDROCK_AUTH_MODE`만 사용합니다. `iam`은 전용 `./woonari aws` 프로필·계정 검증과 CLI 이력 차단을 사용합니다. `api_key`는 사용자가 승인한 별도 AI 계정의 장기 키로 고정 Bedrock HTTPS 엔드포인트를 호출합니다. 프록시·리다이렉트·자동 재시도는 사용하지 않습니다. DB·Secrets Manager의 AWS 프로필과 계정은 바꾸지 않습니다.
+CR-013 / T-027: `AI_PROVIDER=bedrock`은 명시한 `BEDROCK_AUTH_MODE`만 사용합니다. 현재 Python 설정·배포용 실행은 `api_key`로 승인된 별도 AI 계정의 장기 키를 사용해 고정 Bedrock HTTPS 엔드포인트를 호출합니다. `iam`은 Python 설정 파일이 없는 기존 공식 로컬 실행기의 호환 경로에서만 전용 `./woonari aws` 프로필·계정 검증과 CLI 이력 차단을 사용합니다. 프록시·리다이렉트·자동 재시도는 사용하지 않습니다. DB 관리용 AWS 프로필과 계정은 바꾸지 않습니다.
 
-장기 키는 `.local/woonari/ai/bedrock.env`에 `AWS_BEARER_TOKEN_BEDROCK` 한 항목으로 저장하고 권한600을 유지합니다. `api.env`에 `BEDROCK_AUTH_MODE=api_key`, 확인된 AI 계정의 `BEDROCK_ACCOUNT_ID`, 모델·리전을 설정합니다. 발급 계정은 해당 키로 조회한 추론 프로필의 ARN·리전·ID·활성 상태로 검증하며 키 해시와 계정에 묶인 검증 결과를 최대300초 캐시합니다. 키가 바뀌면 다시 검증합니다. 불일치 시503이며 IAM이나 다른 계정으로 대체하지 않습니다. 키·프롬프트·오류 원문은 argv·로그·사용량 DB에 넣지 않습니다.
+장기 키는 `python_api/.env`의 `AWS_BEARER_TOKEN_BEDROCK`에 넣고 같은 파일에 `BEDROCK_AUTH_MODE=api_key`, 확인된 AI 계정의 `BEDROCK_ACCOUNT_ID`, 모델·리전을 설정합니다. 파일 권한600을 유지합니다. 기존 `.local/woonari/ai/bedrock.env`는 설정 이전의 원본으로 보존합니다. 발급 계정은 해당 키로 조회한 추론 프로필의 ARN·리전·ID·활성 상태로 검증하며 키가 바뀌면 다시 검증합니다. 불일치 시503이며 IAM이나 다른 계정으로 대체하지 않습니다. 키·프롬프트·오류 원문은 argv·로그·사용량 DB에 넣지 않습니다.
 
 `AI_DAILY_CALL_LIMIT=100`은 1~100 범위입니다. 공식 실행기와 모든 API 별칭·제공자는 `.local/woonari/ai/usage.sqlite3`를 공유합니다. 한국시간 매일00:00을 기준으로 실제 모델 전송 직전 영속 예약합니다. 전송 후 실패·시간 초과·출력계약 오류도 환불하지 않습니다. 계산·미완성 판정·입력 오류·전송 전 키 검증 실패는 차감하지 않습니다. 101번째 시도는429, 기록 삭제·손상·권한 이상·시계 역행은503으로 차단합니다. 기록을 삭제하거나 자동 초기화하지 않습니다. GET `/v1/ai-usage`에서 `limit`, `used`, `remaining`, `date`, `timezone`, `reset_at`을 확인합니다. 이 한도는 Woonari의 모델 호출에 적용되며 AWS 콘솔이나 다른 앱의 호출까지 제한하지 않습니다.
 
@@ -122,4 +128,4 @@ CR-013 / T-027: `AI_PROVIDER=bedrock`은 명시한 `BEDROCK_AUTH_MODE`만 사용
 
 ## 소셜 로그인 전용 설정 · CR-022
 
-`./woonari auth init|status`로 `.local/woonari/auth/providers.env`를 준비·확인합니다. 외부 환경변수나 다른 프로젝트의 OAuth 키를 읽지 않습니다. 공식 MySQL `woonari`의 신규 `woonari_auth_*` 6개 표만 사용하며 초기 생성·회원 사주 표 추가는 `./woonari db init-auth`, 런타임은 읽기 전용 스키마 검증입니다. 기존5개 표의 회원·세션을 보존하고 과거 회원 데이터를 이관하지 않습니다. [소셜 로그인 가이드](social-login.md)를 참고하세요.
+기존 환경은 `./woonari config migrate-api`, 새 환경은 `./woonari auth init`으로 `python_api/.env`를 준비하고 `./woonari auth status`로 설정 여부를 확인합니다. 공식 실행기는 외부 환경변수나 다른 프로젝트의 OAuth 키를 가져오지 않습니다. MySQL `woonari`의 신규 `woonari_auth_*` 6개 표만 사용하며 초기 생성·회원 사주 표 추가는 관리 명령 `./woonari db init-auth`, API 런타임은 읽기 전용 스키마 검증입니다. 기존5개 표의 회원·세션을 보존하고 과거 회원 데이터를 이관하지 않습니다. 실제 제공자 로그인과 운영 배포는 별도 확인이 필요합니다. [소셜 로그인 가이드](social-login.md)를 참고하세요.

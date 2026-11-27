@@ -72,7 +72,8 @@
     "tools/test_auth_setup.py",
     "docs/social-login.md",
     "docs/social-login-sources.md",
-    "python_api/tests/test_member_birth.py"
+    "python_api/tests/test_member_birth.py",
+    "python_api/tests/test_python_bootstrap.py"
   ],
   "tasks": [
     "T-004",
@@ -100,7 +101,8 @@
     "T-040",
     "T-041",
     "T-042",
-    "T-043"
+    "T-043",
+    "T-045"
   ],
   "changes": [
     "CR-001",
@@ -121,11 +123,12 @@
     "CR-020",
     "CR-021",
     "CR-022",
-    "CR-023"
+    "CR-023",
+    "CR-025"
   ],
-  "spec": "## 공개 API / Swagger · CR-021\n공식 ./woonari로 loopback API9090 API와18101 전용보드를실행한다. /health, GET /v1/ai-usage, GET /v1/fortunes, GET /v1/un-services, POST /v1/saju와실행가능한운세POST를문서화한다. 기존운세/v1은설정된X-API-Key인증을유지하며auth는독립인증경계를쓴다.\n운세성공응답은content/interpretation/result이다. include_ai=false는content/interpretation=null이며사주·점수·기간·계산값만제공한다. interpretation은요약/항목제목·본문/조언이며결과에는ASP출처·이식상태·파일·선택키·내부근거ID·출력계약·AI제공자/모델을노출하지않는다. POST /saju도공개사주필드만반환한다. 내부Analysis/ServiceAnalysis는별도로보존한다.\n공개목록은id/name/path/requires_birth/requires_partner/calculation_only/parameter_examples/parameter_help만반환한다. 공식MySQL기준un65해석+2계산=67항목과기본8종을안내한다. 꽃/보석자료미연결환경은un63해석+2계산=65항목이다. 준비되지않은항목의고정POST는Swagger에서숨기고503 result_unavailable로차단한다. 실제의존성없는계산전용입력은결과를계속제공한다.\nGET /v1/asp-services 및291개개발진단GET, /v1/source-data, /v1/restored-data는제거한다. 진단이성공결과처럼노출되지않는다. OpenAPI경로는공식95/미연결93개다. 알수없는서비스는404, 입력오류422, AI한도429, 자료불가503을유지하며오류에도과거출처문구를노출하지않는다.\n## Swagger\n첫그룹서비스 운세 · AI 본문 제공은기본8+추가9=17대표POST다. DB미연결은15다. 별칭/기타콘텐츠/계산도구는별도그룹이고공개안내에ASP관계나이식상태를표시하지않는다. AI본문true첫예시/계산false예시/한글명/입력범위/탄생석양력·상대방필요·띠별12띠·상징풀이제약을안내한다. input birth_profile standard/as_entered 및gender_code/partner_gender_code는기존내부계산입력으로변환하며출처연관명칭을표시하지않는다.\n\n## CR-021 검증\n전체 Python API1244개·게시/비밀값25개·Ruff·compileall 통과. 공식MySQL81경로/공개목록67/선정17, 실제75계산POST200·사주200·삭제진단GET4건404·미준비503·AI사용량차이0 확인. 첫 전체DB점검은30초클라이언트대기를초과했으나90초제한의경로별재검증은75개모두성공했다. 54런타임파일wheel소스바이트동일/독립추출2027연간200·79경로검증. 실제모델호출없음.\n\n## CR-022 소셜 로그인\n소셜인증13개경로와HTTPBearer스키마/한국어Swagger를추가했다. 기존운세API의X-API-Key는보존하고auth는독립인증경계를쓴다. 미설정제공자503/회원인증401/개인응답캐시차단을제공한다. 공식95/미연결93경로이며선정운세17/15와결과전용계약은유지한다.\n전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다.\n\n## CR-023 회원 사주 정보\n회원 사주 정보Swagger그룹에GET/PUT/PATCH /v1/auth/me/birth를추가한다. 직접user_id를받지않고Bearer세션에서소유자를결정한다. GET미저장null/PUT전체교체upsert/PATCH부분병합과미저장404·입력/날짜422·저장소503을제공한다. auth응답캐시금지와기존운세계약은유지한다. 현재공식95/미연결93경로, auth14경로/16동작이며소셜13동작과회원3동작을구분한다.\n전체Python1425테스트·도구62개+13subtests·Ruff·compileall통과. 회원API44/저장소59/기존인증·공개·운세62회귀와최종Swagger오류1건재검증통과. 실제전용MySQL기존5인증표를보존해birth_profiles1표추가/6표스키마·각0행검증. 공식9090의95경로/회원GETPUTPATCH/Bearer401차단4건/개인캐시헤더/AI사용량차이0확인. wheel60런타임소스바이트일치·독립추출본의모의회원GETPUTPATCH200/6표확인. 실제제공자로그인은사용자의키설정나중에지시에따라미검증이고실제DB에테스트회원을만들지않았다.",
+  "spec": "## 공개 API / Swagger · CR-021\n공식 ./woonari로 loopback API9090 API와18101 전용보드를실행한다. /health, GET /v1/ai-usage, GET /v1/fortunes, GET /v1/un-services, POST /v1/saju와실행가능한운세POST를문서화한다. 기존운세/v1은설정된X-API-Key인증을유지하며auth는독립인증경계를쓴다.\n운세성공응답은content/interpretation/result이다. include_ai=false는content/interpretation=null이며사주·점수·기간·계산값만제공한다. interpretation은요약/항목제목·본문/조언이며결과에는ASP출처·이식상태·파일·선택키·내부근거ID·출력계약·AI제공자/모델을노출하지않는다. POST /saju도공개사주필드만반환한다. 내부Analysis/ServiceAnalysis는별도로보존한다.\n공개목록은id/name/path/requires_birth/requires_partner/calculation_only/parameter_examples/parameter_help만반환한다. 공식MySQL기준un65해석+2계산=67항목과기본8종을안내한다. 꽃/보석자료미연결환경은un63해석+2계산=65항목이다. 준비되지않은항목의고정POST는Swagger에서숨기고503 result_unavailable로차단한다. 실제의존성없는계산전용입력은결과를계속제공한다.\nGET /v1/asp-services 및291개개발진단GET, /v1/source-data, /v1/restored-data는제거한다. 진단이성공결과처럼노출되지않는다. OpenAPI경로는공식95/미연결93개다. 알수없는서비스는404, 입력오류422, AI한도429, 자료불가503을유지하며오류에도과거출처문구를노출하지않는다.\n## Swagger\n첫그룹서비스 운세 · AI 본문 제공은기본8+추가9=17대표POST다. DB미연결은15다. 별칭/기타콘텐츠/계산도구는별도그룹이고공개안내에ASP관계나이식상태를표시하지않는다. AI본문true첫예시/계산false예시/한글명/입력범위/탄생석양력·상대방필요·띠별12띠·상징풀이제약을안내한다. input birth_profile standard/as_entered 및gender_code/partner_gender_code는기존내부계산입력으로변환하며출처연관명칭을표시하지않는다.\n\n## CR-021 검증\n전체 Python API1244개·게시/비밀값25개·Ruff·compileall 통과. 공식MySQL81경로/공개목록67/선정17, 실제75계산POST200·사주200·삭제진단GET4건404·미준비503·AI사용량차이0 확인. 첫 전체DB점검은30초클라이언트대기를초과했으나90초제한의경로별재검증은75개모두성공했다. 54런타임파일wheel소스바이트동일/독립추출2027연간200·79경로검증. 실제모델호출없음.\n\n## CR-022 소셜 로그인\n소셜인증13개경로와HTTPBearer스키마/한국어Swagger를추가했다. 기존운세API의X-API-Key는보존하고auth는독립인증경계를쓴다. 미설정제공자503/회원인증401/개인응답캐시차단을제공한다. 공식95/미연결93경로이며선정운세17/15와결과전용계약은유지한다.\n전체Python1351테스트통과, HTTPS쿠키보완후관련33재검증통과. 도구62테스트+13subtests/Ruff/compileall/pipcheck통과. 제공자45/저장소30/인증통합33/설정도구16모의검증을포함한다. 실제전용MySQL에신규인증5표생성·구조검증·각0행확인. 공식9090에서94OpenAPI/인증13/운세선정17/3제공자미설정·9개설정오류503/인증오류4건401/기존2027계산200·AI사용량차이0확인. 실제OAuth·AI모델호출없음. 사용자키설정나중에지시에따라실제계정로그인은미검증이다.\n\n## CR-023 회원 사주 정보\n회원 사주 정보Swagger그룹에GET/PUT/PATCH /v1/auth/me/birth를추가한다. 직접user_id를받지않고Bearer세션에서소유자를결정한다. GET미저장null/PUT전체교체upsert/PATCH부분병합과미저장404·입력/날짜422·저장소503을제공한다. auth응답캐시금지와기존운세계약은유지한다. 현재공식95/미연결93경로, auth14경로/16동작이며소셜13동작과회원3동작을구분한다.\n전체Python1425테스트·도구62개+13subtests·Ruff·compileall통과. 회원API44/저장소59/기존인증·공개·운세62회귀와최종Swagger오류1건재검증통과. 실제전용MySQL기존5인증표를보존해birth_profiles1표추가/6표스키마·각0행검증. 공식9090의95경로/회원GETPUTPATCH/Bearer401차단4건/개인캐시헤더/AI사용량차이0확인. wheel60런타임소스바이트일치·독립추출본의모의회원GETPUTPATCH200/6표확인. 실제제공자로그인은사용자의키설정나중에지시에따라미검증이고실제DB에테스트회원을만들지않았다.\n\n## Python 설정 부트스트랩 · CR-025\napp.config.Settings가 Python .env/전용 프로세스 환경변수의 소셜·AI·DB 설정을 참조한다. app.main:app는 지연 ASGI이며 모듈 import만으로 키·DB·원장에 접근하지 않는다. 직접 실행과 공식 실행에서 같은 create_app 초기화를 사용한다. explicit mysql 또는 production은 기존 인증 스키마를 읽기 전용 검증한 뒤 AI를 준비하며, 초기화 실패 때 OAuth/AI 자원을 닫는다. /health는 Python Bedrock 키 누락도 안내하고 값·계정 ID는 노출하지 않는다. 기존 운세·회원 API 응답 계약은 유지한다.\n\n## CR-025 검증\n전체 Python1595개 통과; 설정·게시 도구109개+14subtests 및 신규 init2개 통과; Ruff/compileall/pipcheck 통과. wheel62/62 소스바이트 일치·비밀파일0·외부cwd 독립실행2종/18API 확인. 실제29항목을 private Python .env로 이관하고 MySQL6인증표·Bedrock 실제 AI 계정 GET 검증 성공. 공식9090/18101 재기동, Swagger95/선정17/목록67, 연간2027·꽃·보석 계산200/회원401 검증. 원본6파일과호출원장불변·모델호출0. 실제소셜로그인/운영배포는미수행.",
   "createdAt": "2026-11-02",
-  "updatedAt": "2026-11-26",
+  "updatedAt": "2026-11-27",
   "history": [
     {
       "date": "2026-11-02",
@@ -447,6 +450,24 @@
       "by": "ai",
       "change": "CR-023",
       "text": "T043완료:본인사주입력계약·격리/동시수정·6표/추가마이그레이션·검증결과를현재명세에반영했다."
+    },
+    {
+      "date": "2026-11-27",
+      "by": "ai",
+      "change": "CR-025",
+      "text": "사용자가SecretsManager대신Python환경설정으로운영배포후에도소셜키참조를요청했다. 패키지내설정로더/일관된실행초기화·운영필수설정실패차단을구현한다. 실제클라우드배포/계정/키생성은수행하지않는다."
+    },
+    {
+      "date": "2026-11-27",
+      "by": "ai",
+      "change": "CR-025",
+      "text": "T-045: Python API 전체 설정·직접 DB/Bedrock 연결과 안전 이관을 현재 명세에 반영했다. 실제 설정값은 Git에 기록하지 않는다."
+    },
+    {
+      "date": "2026-11-27",
+      "by": "ai",
+      "change": "CR-025",
+      "text": "T-045 완료: 전체 실행 설정 이관 및 Python 독립 연결·실서버 무차감 검증 완료. 이전부터 존재한 타 요청/외부 권한 대기 상태는 보존한다."
     }
   ]
 }

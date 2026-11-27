@@ -16,6 +16,7 @@ class RedactionTests(unittest.TestCase):
             ('python_api/app/auth_settings.py', b'"GOOGLE_CLIENT_SECRET": "google_client_secret"\n'),
             ('python_api/app/auth_settings.py', b'"NAVER_CLIENT_SECRET": "naver_client_secret"\n'),
             ('python_api/app/auth_settings.py', b'auth_public_base_url = "http://127.0.0.1:9090"\n'),
+            ('python_api/app/config.py', b'auth_public_base_url = "http://127.0.0.1:9090"\n'),
             ('python_api/app/auth_store.py', b'secret = "VARCHAR(128) CHARACTER SET ascii COLLATE ascii_bin"\n')
         ]
         for path, source in cases:

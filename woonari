@@ -17,6 +17,7 @@ def main():
               "  ./woonari init                  프로젝트 전용 설정 생성\n"
               "  ./woonari start|stop|status     API(9090)·별도 대시보드 관리\n"
               "  ./woonari config show          계정 지정 상태(비밀값 제외)\n"
+              "  ./woonari config migrate-api   기존 API 설정을 Python .env로 이관\n"
               "  ./woonari config set KEY VALUE dashboard_port, git.login/name/email, aws.account_id/region\n"
               "  ./woonari git ...              전용 인증으로 Git 실행\n"
               "  ./woonari gh ...               전용 GitHub 인증\n"
@@ -38,6 +39,14 @@ def main():
         print("Woonari 전용 설정: .local/woonari/ (다른 프로젝트의 설정을 가져오지 않음)")
         return 0
     if command == "config":
+        if rest == ["migrate-api"]:
+            import subprocess
+
+            from project_context import ROOT, clean_env
+            return subprocess.run(
+                [str(ROOT / "python_api/.venv/bin/python"), "-I", str(ROOT / "tools/python_env_migration.py")],
+                cwd=ROOT, env=clean_env(), check=False
+            ).returncode
         config = load_config()
         if rest == ["show"]:
             print(json.dumps(config, ensure_ascii=False, indent=2))

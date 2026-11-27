@@ -122,8 +122,14 @@ def init() -> dict:
         save_config(copy.deepcopy(DEFAULTS))
     config = load_config()
     env_file = STATE / "api.env"
-    if not env_file.exists():
-        write_private(env_file, (ROOT / "python_api/.env.example").read_text(encoding="utf-8"))
+    python_env = ROOT / "python_api/.env"
+    if not env_file.exists() and not python_env.exists():
+        if python_env.is_symlink() or python_env.parent.is_symlink():
+            fail("Python API settings cannot use a symlink.")
+        template = (ROOT / "python_api/.env.example").read_bytes()
+        descriptor = os.open(python_env, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(template)
     for folder in ("aws", "github", "xdg", "bin", "logs"):
         private_dir(STATE / folder)
     # Register the installed Node executable once; child processes never inherit
